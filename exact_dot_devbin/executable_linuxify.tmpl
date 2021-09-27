@@ -1,0 +1,188 @@
+{{- if eq .chezmoi.os "darwin" }}
+#!/bin/bash
+
+# https://github.com/fabiomaia/linuxify
+# removed bash conversion prompt
+# used the echo-* commands
+set -euo pipefail
+
+export CPU_BRAND_STRING="$(sysctl -a | /usr/bin/awk '/machdep.cpu.brand_string/{print $2}')"
+
+linuxify_check_os() {
+    if ! [[ "$OSTYPE" =~ darwin* ]]; then
+        echo-warn "This is meant to be run on macOS only"
+        exit
+    fi
+}
+
+linuxify_check_brew() {
+    if ! command -v brew >/dev/null; then
+        echo-warn "Homebrew not installed!"
+        echo-warn "In order to use this script please install homebrew from https://brew.sh"
+        exit
+    fi
+}
+
+linuxify_set_prefix() {
+    export BREW_PREFIX="$(brew --prefix)"
+}
+
+linuxify_check_dirs() {
+    result=0
+    for dir in ${BREW_PREFIX}/bin ${BREW_PREFIX}/sbin; do
+        if [[ ! -d $dir || ! -w $dir ]]; then
+            echo-error "$dir must exist and be writeable"
+            result=1
+        fi
+    done
+
+    return $result
+}
+
+linuxify_formulas=(
+    # GNU programs non-existing in macOS
+    "watch"
+    "wget"
+    "wdiff"
+    # intel only remove if M1
+    "gdb"
+    "autoconf"
+    "automake"
+
+    # GNU programs whose BSD counterpart is installed in macOS
+    "coreutils"
+    "binutils"
+    "diffutils"
+    "ed"
+    "findutils"
+    "gawk"
+    "gcc"
+    "gnu-indent"
+    "gnu-sed"
+    "gnu-tar"
+    "gnu-which"
+    "grep"
+    "gzip"
+    "screen"
+
+    # GNU programs existing in macOS which are outdated
+    "bash"
+    "gpatch"
+    "less"
+    "m4"
+    "make"
+    "nano"
+    "bison"
+
+    # BSD programs existing in macOS which are outdated
+    "flex"
+
+    # Other common/preferred programs in GNU/Linux distributions
+    "libressl"
+    "file-formula"
+    "git"
+    "openssh"
+    "perl"
+    "python"
+    "rsync"
+    "unzip"
+)
+
+linuxify_install_gdb() {
+    if ! brew ls --versions gdb >/dev/null; then
+        echo-info "Installing gdb"
+        echo-run brew install gdb
+    fi
+    # gdb requires special privileges to access Mach ports.
+    # One can either codesign the binary as per https://sourceware.org/gdb/wiki/BuildingOnDarwin
+    # Or, on 10.12 Sierra or later with SIP, declare `set startup-with-shell off` in `~/.gdbinit`:
+    grep -qF 'set startup-with-shell off' ~/.gdbinit || echo 'set startup-with-shell off' | tee -a ~/.gdbinit >/dev/null
+}
+
+linuxify_install() {
+    linuxify_check_os
+    linuxify_check_brew
+    linuxify_set_prefix
+    linuxify_check_dirs
+
+    # Install all formulas
+    for ((i = 0; i < ${#linuxify_formulas[@]}; i++)); do
+        if brew ls --versions ${linuxify_formulas[i]}; then
+            echo-info "Found Existing ${linuxify_formulas[i]}"
+        else
+            echo-info "Installing ${linuxify_formulas[i]}"
+            echo-run brew install ${linuxify_formulas[i]}
+        fi
+    done
+
+    if [[ $CPU_BRAND_STRING != 'Apple' ]]; then
+        linuxify_install_gdb
+    fi
+}
+
+linuxify_uninstall() {
+    linuxify_check_os
+    linuxify_check_brew
+    linuxify_set_prefix
+
+    # Remove gdb fix
+    [ -f ~/.gdbinit ] && sed -i.bak '/set startup-with-shell off/d' ~/.gdbinit && rm ~/.gdbinit.bak
+
+    # Uninstall all formulas in reverse order
+    for ((i = ${#linuxify_formulas[@]} - 1; i >= 0; i--)); do
+        if [[ ${linuxify_formulas[i]} != bash ]]; then
+            echo-run brew uninstall -f $(echo "${linuxify_formulas[i]}" | cut -d ' ' -f1)
+        fi
+    done
+
+    # Only remove bash if the user didn't elect to keep it as their shell
+    if [[ "$bash_is_local" != true ]]; then
+        echo-run brew uninstall bash
+    fi
+
+    # Remove changes to PATH/MANPATH/INFOPATH/LDFLAGS/CPPFLAGS
+    echo-info "remove the "
+    echo-info "Remove '. ~/.gnubin_path' from PATH"
+}
+
+linuxify_info() {
+    linuxify_check_os
+    linuxify_check_brew
+
+    for ((i = 0; i < ${#linuxify_formulas[@]}; i++)); do
+        echo-run brew info $(echo "${linuxify_formulas[i]}" | cut -d ' ' -f1)
+        printf "\n\n===============================================================================================================================\n\n"
+    done
+}
+
+linuxify_help() {
+    echo "usage: linuxify [-h] [command]"
+    echo ""
+    echo "valid commands:"
+    echo "  install    install GNU/Linux utilities"
+    echo "  uninstall  uninstall GNU/Linux utilities"
+    echo "  info       show info on GNU/Linux utilities"
+    echo ""
+    echo "optional arguments:"
+    echo "  -h, --help  show this help message and exit"
+}
+
+linuxify_main() {
+    if [ $# -eq 1 ]; then
+        case $1 in
+        "install") linuxify_install ;;
+        "uninstall") linuxify_uninstall ;;
+        "info") linuxify_info ;;
+        "-h") linuxify_help ;;
+        "--help") linuxify_help ;;
+        esac
+    else
+        linuxify_help
+        exit
+    fi
+}
+
+linuxify_main "$@"
+{{ else }}
+echo-warn "This is only templated for MacOS"
+{{ end -}}

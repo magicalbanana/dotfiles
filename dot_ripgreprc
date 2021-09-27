@@ -1,0 +1,14 @@
+# Ignore case, unless the pattern includes capital letters
+--smart-case
+
+# Include hidden files (good for .eslinrc kind of files)
+--hidden
+
+# include .env files
+--glob=*.env.*
+--glob=*
+
+# Ignore npm/Yarn lock files, etc.
+--glob=!package-lock.json
+--glob=!yarn.lock
+--glob=!.git

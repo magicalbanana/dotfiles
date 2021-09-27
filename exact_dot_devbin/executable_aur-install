@@ -1,0 +1,20 @@
+#!/bin/sh
+
+set -e
+
+if [ -z "$1" ]; then
+  echo "Usage: $0 PACKAGE"
+  return 1
+fi
+
+echo-run mkdir -p "$HOME/.cache/aur"
+echo-run cd "$HOME/.cache/aur"
+echo-run git clone "https://aur.archlinux.org/$1.git" "$1" || true
+echo-run cd "$1"
+echo-run git pull --rebase
+printf "\033[33mWant to read the PKGBUILD? (Y/n)?\033[0m "
+read -r reply
+if ! [ "$reply" != "${reply#[Nn]}" ]; then
+  echo-run less PKGBUILD
+fi
+safe-run makepkg --syncdeps --noconfirm --install --clean || echo "Failed to install"

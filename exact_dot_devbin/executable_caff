@@ -1,0 +1,4 @@
+#!/bin/sh
+
+tmux has-session -t caffeinate >/dev/null 2>&1 ||
+  echo-run tmux new-session -d -s caffeinate -c "$HOME" -- caffeinate -d

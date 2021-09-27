@@ -1,0 +1,45 @@
+#!/bin/sh
+
+USAGE="Change the author of a commit.
+
+Usage:
+  $(basename "$0") -h | --help
+  $(basename "$0") -n <name> -e <email>
+  $(basename "$0") --name <name> --email <email>
+"
+
+die() {
+  [ "$#" -ge 2 ] && echo-err "$2"
+  exit "$1"
+}
+
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+    -[[:alnum:]][[:alnum:]]*)
+      _value="-${1##-?}"
+      _arg="${1%%${1##-?}}"
+      ;;
+  esac
+  if [ -n "${_arg:-}${_value:-}" ]; then
+    shift
+    set -- "$_arg" "$_value" "$@"
+  fi
+  unset _arg _value
+  case "$1" in
+    -h | --help) echo "$USAGE"; exit ;;
+    -n | --name) new_name="$2"; shift ;;
+    -e | --email) new_email="$2"; shift ;;
+    -- ) shift; break ;;
+    -?*) die 1 "unknown option: ${1}" ;;
+    *) break ;;
+  esac
+  shift
+done
+
+if [ -z "$new_name" ] || [ -z "$new_email" ]; then
+  echo-err 'A name and email are required.'
+  echo "$USAGE"
+  exit 1
+fi
+
+safe-run git commit --amend --author="${new_name} <${new_email}>"

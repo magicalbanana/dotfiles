@@ -1,0 +1,8 @@
+#!/bin/sh
+
+file="$(mktemp).profile"
+time python -m cProfile -o "$file" "$(command -v nosetests)" "$@"
+echo
+echo "Profile: $file"
+echo "Run: snakeviz $file"
+# snakeviz "$file"

@@ -1,0 +1,28 @@
+#!/bin/sh
+
+if ! in-git-repo; then
+  echo-err "Not in a git repository."
+  exit 128
+fi
+
+if is-clean-repo git; then
+  echo "There are no changes to be amended."
+  exit 1
+fi
+
+current_commit_author="$(git show --no-patch --format='%ae')"
+repo_email="$(git config --get user.email)"
+if [ -z "$repo_email" ]; then
+  repo_email="$(git config --global --get user.email)"
+fi
+
+if [ "$current_commit_author" != "$repo_email" ]; then
+  echo "Are you sure you want to amend a commit that you don't own?"
+  echo "Current commit author email: $current_commit_author"
+  echo "Your email: $repo_email"
+  exit 1
+fi
+
+prev_head="$(git rev-parse HEAD)"
+echo-run git commit --amend --no-edit "$@"
+echo "Use 'git reset $prev_head' if you want to un-amend."

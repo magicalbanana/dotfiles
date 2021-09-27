@@ -1,0 +1,2 @@
+#!/bin/sh
+git log --reverse --pretty=%H "$(get-remote-head)" | grep -A 1 "$(git rev-parse HEAD)" | tail -n1 | xargs git checkout

@@ -1,0 +1,26 @@
+#!/bin/sh
+
+if [ "$1" = "" ] || [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+  echo "Usage: extract <file> [-h|--help]"
+  exit 1
+fi
+
+if [ -f "$1" ]; then
+  case "$1" in
+    *.dmg) echo-run hdiutil mount "$1" ;;
+    *.tar) echo-run tar -xvf "$1" ;;
+    *.zip) echo-run unzip "$1" ;;
+    *.ZIP) echo-run unzip "$1" ;;
+    *.pax) echo-run pax -r <"$1" ;;
+    *.pax.Z) echo-run uncompress "$1" --stdout | pax -r ;;
+    *.rar) echo-run unrar x "$1" ;;
+    *.7z) echo-run 7z x "$1" ;;
+    *.xar) echo-run xar -xvf "$1" ;;
+    *.pkg) echo-run xar -xvf "$1" ;;
+    # Rely on GNU's tar autodetection. List of recognized suffixes:
+    # https://www.gnu.org/software/tar/manual/html_node/gzip.html#auto_002dcompress
+    *) echo-run tar -xvf "$1" ;;
+  esac
+else
+  echo "'$1' can not be extracted"
+fi

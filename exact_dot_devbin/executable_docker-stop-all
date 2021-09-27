@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+format='table '
+format+='{{.Names}}\t'
+format+='{{.Image}}\t'
+format+='{{.Command}}\t'
+
+echo-run docker ps --no-trunc --format="$format"
+
+containers=()
+while IFS= read -r container_name; do
+  containers+=("$container_name")
+done < <(docker ps --no-trunc --format='{{.Names}}')
+
+if [[ ${#containers} -le 0 ]]; then
+  echo
+  echo 'Nothing to stop.'
+  exit
+fi
+
+printf '\nStopping... '
+output="$(docker stop "${containers[@]}" 2>&1)"
+ret="$?"
+if [[ $ret -ne 0 ]]; then
+  echo $'\033[31mError!\033[0m\n'
+  echo "$output"
+  exit "$ret"
+fi
+
+echo $'\033[32mDone!\033[0m'

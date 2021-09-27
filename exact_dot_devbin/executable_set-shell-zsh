@@ -1,0 +1,24 @@
+#!/bin/sh
+
+set -e
+
+zsh_path="$(command -v zsh)"
+if command -v brew; then
+  zsh_path="$(brew --prefix)/bin/zsh"
+fi
+
+# -q be quiet
+# -x match the whole line
+# -F pattern is a plain string
+if grep -qxF "$zsh_path" /etc/shells; then
+  echo-ok "$zsh_path already in /etc/shells"
+else
+  echo-info "Adding $zsh_path to /etc/shells"
+  echo "$zsh_path" | sudo tee -a /etc/shells >/dev/null
+fi
+
+if [ "$SHELL" != "$zsh_path" ]; then
+  echo-run chsh -s "$zsh_path"
+else
+  echo-ok "User '$USER' already has $zsh_path as their shell"
+fi

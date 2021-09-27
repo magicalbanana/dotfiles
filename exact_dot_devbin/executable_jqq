@@ -1,0 +1,7 @@
+#!/bin/sh
+
+if test ! -t 0; then
+  jq --color-output --unbuffered --raw-input --raw-output '. as $raw | try fromjson catch $raw'
+else
+  printf "jq --color-output --unbuffered --raw-input --raw-output '. as \$raw | try fromjson catch \$raw'" | pbcopy
+fi

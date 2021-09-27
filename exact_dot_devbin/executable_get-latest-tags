@@ -1,0 +1,84 @@
+#!/usr/bin/env bash
+
+# Gets the latest tags by date and by version, and verifies that they are the same
+
+num_tags=1
+
+die() {
+  [ "$#" -ge 2 ] && echo-err "$2"
+  exit "$1"
+}
+
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+    -[[:alnum:]][[:alnum:]]*)
+      _value="-${1##-?}"
+      _arg="${1%%${1##-?}}"
+      ;;
+  esac
+  if [ -n "${_arg:-}${_value:-}" ]; then
+    shift
+    set -- "$_arg" "$_value" "$@"
+  fi
+  unset _arg _value
+  case "$1" in
+    -v | --by-version) by_version=1 ;;
+    -d | --by-date) by_date=1 ;;
+    -p | --pattern) pattern="$2"; shift ;;
+    -n | --num-tags) num_tags="$2"; shift ;;
+    -g | --egrep-pattern) egrep_pattern="$2"; shift ;;
+    -- ) shift; break ;;
+    -?*) die 1 "unknown option: ${1}" ;;
+    *) break ;;
+  esac
+  shift
+done
+
+egrep_cmd=(cat)
+if [[ -n "$egrep_pattern" ]]; then
+  egrep_cmd=(egrep -v "$egrep_pattern")
+fi
+
+if [[ -z "$pattern" ]]; then
+  echo "Invalid arguments. A --pattern= is required." >&2
+  exit 1
+fi
+
+IFS=$'\n' read -r -d '' -a latest_tags_by_date < <(git tag --sort=taggerdate --list "$pattern" | "${egrep_cmd[@]}" | tail -"$num_tags")
+IFS=$'\n' read -r -d '' -a latest_tags_by_version < <(git tag --sort=version:refname --list "$pattern" | "${egrep_cmd[@]}" | tail -"$num_tags")
+
+echo "${latest_tags_by_date[@]}"
+echo "${latest_tags_by_version[@]}"
+
+if [[ "$by_version$by_date" = "1" ]]; then
+  if (( by_version )); then
+    printf "%s\n" "${latest_tags_by_version[@]}"
+    exit
+  elif (( by_date )); then
+    printf "%s\n" "${latest_tags_by_date[@]}"
+    exit
+  fi
+fi
+
+if [[ "${#latest_tags_by_date}" != "${#latest_tags_by_version}" ]]; then
+  echo "Different number of tags returned" >&2
+  exit 1
+fi
+
+if [[ "${#latest_tags_by_date[@]}" -eq 0 ]]; then
+  exit 1
+fi
+if [[ "${#latest_tags_by_version[@]}" -eq 0 ]]; then
+  exit 1
+fi
+
+[[ "${#latest_tags_by_date}" -eq 0 ]] && exit 1
+
+for i in $(seq 0 "$(( num_tags - 1 ))"); do
+  if [[ "${latest_tags_by_date[$i]}" != "${latest_tags_by_version[$i]}" ]]; then
+    echo "index $i: ${latest_tags_by_date[$i]} != ${latest_tags_by_version[$i]}" >&2
+    exit 1
+  fi
+done
+
+printf "%s\n" "${latest_tags_by_version[@]}"

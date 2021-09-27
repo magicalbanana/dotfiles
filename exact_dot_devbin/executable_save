@@ -1,0 +1,68 @@
+#!/bin/sh
+
+set -o errexit
+
+USAGE="usage: $(basename "$0") [-p | --push] [-f | --force] [<commit message>]"
+
+push=false
+message=''
+force=false
+
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+    -h | --help)
+      echo "$USAGE"
+      exit
+      ;;
+    -f | --force)
+      force=true
+      ;;
+    -p | --push)
+      push=true
+      ;;
+    -*)
+      echo-err "unknown option: ${1}"
+      exit 1
+      ;;
+    *)
+      if [ -n "$message" ]; then
+        echo-err "unexpected argument: ${1}"
+        exit 1
+      fi
+      message="$1"
+      ;;
+  esac
+  shift
+done
+
+add
+
+status="$(git status --porcelain)"
+
+if [ -z "$status" ] && [ -n "$message" ]; then
+  echo-err "There are no changes so we can't create your commit: ${message}"
+  exit 1
+fi
+
+if [ -n "$status" ]; then
+  echo-info "Undo these changes with 'git reset $(git rev-parse --short HEAD)'"
+  if [ -n "$message" ]; then
+    echo-run git commit -m "$message"
+  else
+    echo-run git commit
+  fi
+else
+  echo-info "Skipping commit since there were no changes."
+fi
+
+if $push; then
+  remote="$(git rev-parse --abbrev-ref --symbolic-full-name '@{upstream}' 2>/dev/null || true)"
+  if [ -n "$remote" ]; then
+    echo-run git pull --rebase
+  fi
+  if $force; then
+    push --force
+  else
+    push
+  fi
+fi

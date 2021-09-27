@@ -1,0 +1,38 @@
+#!/bin/sh
+# This script acts as a launcher for apps that observes the following rules:
+#   1. If the app is not running, then start it up
+#   2. If the app is running, don't start a second instance, instead:
+#     2a. If the app does not have focus, give it focus
+#     2b. If the app has focus, minimize it
+# Reference link: http://forum.xfce.org/viewtopic.php?id=6168&p=1
+
+# there has to be at least one parameter, the name of the file to execute
+if [ $# -lt 1 ]; then
+  echo "Usage: $(basename "$0") <executable_name parameters>"
+  exit 1
+fi
+
+# export WINIT_X11_SCALE_FACTOR=2
+
+BNAME="$(basename "$1")"
+
+# Test to see if program is already running
+if wmctrl -lx | tr -s ' ' | cut -d' ' -f1-3 | grep -i "$BNAME" | grep -q; then
+  # Means it must already be running
+  ACTIVE_WIN="$(xdotool getactivewindow getwindowpid)"
+  # LAUNCH_WIN="$(ps -ef | grep "$BNAME" | grep -v grep | tr -s ' ' | cut -d' ' -f2 | head -n 1)"
+  LAUNCH_WIN="$(pgrep "$BNAME")"
+
+  if [ "$ACTIVE_WIN" != "$LAUNCH_WIN" ]; then
+    # launched app is not in focus, so raise and bring to focus
+    for win in $(wmctrl -lx | tr -s ' ' | cut -d' ' -f1-3 | grep -i "$BNAME" | cut -d' ' -f1); do
+      wmctrl -i -a "$win"
+    done
+  fi
+  exit
+fi
+
+# Start it up
+"$@" &
+
+exit

@@ -1,0 +1,112 @@
+#!/usr/bin/env bash
+
+__kill_process () {
+  local pid
+  pid=$(ps -ef | sed 1d | eval "fzf ${FZF_DEFAULT_OPTS} -m --header='[kill:process]'" | awk '{print $2}')
+
+  if [ "x$pid" != "x" ]
+  then
+    CAN_I_RUN_SUDO=$(sudo -n uptime 2>&1 | grep "load" | wc -l)
+    if [ ${CAN_I_RUN_SUDO} -gt 0 ]
+    then
+        echo "I can run the sudo command"
+        echo $pid | xargs kill -${1:-9}
+    else
+        echo "I can't run the Sudo command"
+        echo $pid | xargs sudo kill -${1:-9}
+    fi
+    __kill_process
+  fi
+}
+
+# FZF functions
+# fe [FUZZY PATTERN] - Open the selected file with the default editor
+#   - Bypass fuzzy finder if there's only one match (--select-1)
+#   - Exit if there's no match (--exit-0)
+__find_edit () {
+  local files
+  IFS=$'\n' files=($(fzf-tmux --query="$1" --multi --select-1 --exit-0))
+  # [[ -n "$files" ]] && ${EDITOR:-vim} "${files[@]}"
+  [[ -n "$files" ]] && vim "${files[@]}"
+}
+
+# Modified version where you can press
+#   - CTRL-O to open with `open` command,
+#   - CTRL-E or Enter key to open with the $EDITOR
+__find_open () {
+  local out file key
+  IFS=$'\n' out=($(fzf-tmux --query="$1" --exit-0 --expect=ctrl-o,ctrl-e))
+  key=$(head -1 <<< "$out")
+  file=$(head -2 <<< "$out" | tail -1)
+  if [ -n "$file" ]; then
+    # [ "$key" = ctrl-o ] && open "$file" || ${EDITOR:-vim} "$file"
+    [ "$key" = ctrl-o ] && open "$file" || vim "$file"
+  fi
+}
+
+__search_find () {
+  local line
+  line=`rg "$1" | fzf` \
+    && vim $(cut -d':' -f1 <<< "$line") +$(cut -d':' -f2 <<< "$line")
+}
+
+PARAMS=""
+fzf_command=""
+while (( "$#" )); do
+  case "$1" in
+    kp|kill-process)
+      fzf_command="kill-process"
+      shift
+      ;;
+    fe|find-edit)
+      fzf_command="find-edit"
+      shift
+      ;;
+    fo|find-open)
+      fzf_command="find-open"
+      shift
+      ;;
+    sf|search-find)
+      fzf_command="search-find"
+      shift
+      ;;
+    se|search-edit)
+      fzf_command="search-edit"
+      shift
+      ;;
+    -*|--*=) # unsupported flags
+      echo "Error: Unsupported flag $1" >&2
+      exit 1
+      ;;
+    *) # preserve positional arguments
+      PARAMS="$PARAMS $1"
+      shift
+      ;;
+  esac
+done
+
+# set positional arguments in their proper place
+eval set -- "$PARAMS"
+
+case $fzf_command in
+  kill-process)
+    __kill_process
+    ;;
+  find-edit)
+    __find_edit
+    ;;
+  find-open)
+    __find_open
+    ;;
+  search-find)
+    __search_find
+    ;;
+  search-edit)
+    __search_edit
+    ;;
+  *)
+    echo "Error: Unsupported command $1" >&2
+    exit 1
+    ;;
+esac
+

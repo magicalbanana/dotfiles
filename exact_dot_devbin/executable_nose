@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+if ! command -v nosetests >/dev/null 2>&1; then
+  echo-err "The 'nosetests' command is not available."
+  return 127
+fi
+
+# nose_profile just doesn't work, so lets just get rid of it so we don't always see that error
+for nose_profile_dir in "$VIRTUAL_ENV"/lib/python*/site-packages/nose_profile*/; do
+  [[ -d "$nose_profile_dir" ]] && echo-run rm -rf "$nose_profile_dir"
+done
+
+if ! python -c 'import noseprogressive.result' >/dev/null 2>&1; then
+  echo-run pip install nose-progressive
+fi
+
+# if ! python -c 'import ipdbplugin' >/dev/null 2>&1; then
+#   echo-run pip install ipdbplugin
+# fi
+
+typeset -a nose_args=()
+nose_args+=('--verbose')
+nose_args+=('--nologcapture')
+for arg in "$@"; do
+  nose_args+=("${arg/#$PWD\//./}")
+done
+
+TZ=UTC echo-run /usr/bin/time nosetests "${nose_args[@]}" # "${file_or_dir##${run_dir}/}"

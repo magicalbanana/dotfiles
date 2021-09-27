@@ -1,0 +1,7 @@
+#!/bin/sh
+
+WIFI_DEVICE="$(networksetup -listallhardwareports | grep --after-context=1 Wi-Fi | sed -n -e 's/^Device: //p')"
+
+echo-run networksetup -setairportpower "$WIFI_DEVICE" off
+echo-run sleep 5
+echo-run networksetup -setairportpower "$WIFI_DEVICE" on

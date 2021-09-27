@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+
+if ! in-git-repo; then
+  echo-err "Not in a git repository."
+  exit 128
+fi
+
+ref="$(git show "$@" --quiet --format="%H")"
+
+if ! git rev-parse "$ref" >/dev/null 2>&1; then
+  echo "Invalid ref: ${ref}"
+  exit 1
+fi
+
+IFS=$'\n' read -r -d '' -a refs < <(git show-ref --dereference | grep "$(git rev-parse "$ref")" | cut -d' ' -f2)
+
+tags=() heads=()
+for ref in "${refs[@]}"; do
+  tag="${ref#refs/tags/}"
+  tag="${tag%'^{}'}"
+  head="${ref#refs/heads/}"
+  head="${head#refs/remotes/}"
+  if [[ "$ref" != "$tag" ]]; then
+    tags+=("$tag")
+  elif [[ "$ref" != "$head" ]]; then
+    heads+=("$head")
+  fi
+done
+
+diff_url="$(git show --quiet --format="%b" "$ref" | grep "^Differential Revision: " | cut -d' ' -f 3)"
+
+diff_status=""
+if [ -n "$diff_url" ]; then
+  diff_id="${diff_url##*/D}"
+  diff_status="$(echo '{"constraints":{"ids": ['"$diff_id"']}}' \
+    | arc call-conduit -- differential.revision.search \
+    | jq --raw-output '.response.data[0].fields.status.name')"
+fi
+
+header="======== git show --format=\"…\" $* ========"
+footer="$(printf '=%.0s' $(seq 1 "${#header}"))"
+
+join_by() {
+  local d="${1-}" f="${2-}"
+  if shift 2; then
+    printf %s "$f" "${@/#/$d}"
+  fi
+}
+
+commit_fmt=()
+commit_fmt+=("$header")
+commit_fmt+=("   Hash: %h")
+commit_fmt+=("   %C(cyan)Tags:%Creset %C(bold)$(join_by ', ' "${tags[@]}")%Creset")
+commit_fmt+=("  %C(red)Heads:%Creset $(join_by ', ' "${heads[@]}")")
+[[ -n "$diff_url" ]] && commit_fmt+=("   %C(yellow)Diff:%Creset ${diff_url} (${diff_status:-Unknown})")
+commit_fmt+=(" %C(green)Author:%Creset %an <%ae>")
+commit_fmt+=("   %C(blue)Date:%Creset %cd (%ar)")
+commit_fmt+=("%C(magenta)Subject:%Creset %C(bold)%s%Creset")
+commit_fmt+=("$footer")
+
+# For some reason piping makes git show run way faster (~500ms -> ~20ms)
+git show --color=always --format="$(join_by "%Creset%n" "${commit_fmt[@]}")" "$@" | cat

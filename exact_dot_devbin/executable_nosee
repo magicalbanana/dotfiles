@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+
+build_regex() {
+  local IFS="|"
+  echo "($*)"
+}
+
+
+test_classes=()
+test_functions=()
+test_files=()
+test_args=()
+
+for arg in "$@"; do
+  if [[ "$arg" =~ ^-.*$ ]]; then
+    test_args+=("$arg")
+  elif [[ "$arg" =~ ^[A-Z].*$ ]]; then
+    test_classes+=("$arg")
+  elif [[ "$arg" =~ ^.*\.py$ ]]; then
+    test_files+=("$arg")
+  elif [[ "$arg" =~ ^test_.*$ ]]; then
+    test_functions+=("$arg")
+  else
+    test_files+=("$arg")
+  fi
+done
+
+if [[ ${#test_files} -gt 0 ]]; then
+  nose "${test_args[@]}" "${test_files[@]}"
+fi
+
+if [[ ${#test_classes} -gt 0 ]]; then
+  files_with_classes=()
+  for test_class in "${test_classes[@]}"; do
+    files_for_class=()
+
+    # If the class is of the form Class.test_function then only do the search
+    # for the class part
+    test_class_without_function="${test_class%%.test_*}"
+
+    IFS=$'\n' read -r -d '' -a files_for_class < <(rg --glob '**/tests/**/test_*.py' --files-with-matches "$(build_regex "$test_class_without_function")" "$(git rev-parse --show-toplevel)")
+
+    for file_for_class in "${files_for_class[@]}"; do
+      files_with_classes+=("${file_for_class}:${test_class}")
+    done
+  done
+
+  if [[ ${#files_with_classes} -le 0 ]]; then
+    echo-warn "Could not find any files with classes: ${test_classes[*]}"
+  else
+    nose "${test_args[@]}" "${files_with_classes[@]}"
+  fi
+fi
+
+if [[ ${#test_functions} -gt 0 ]]; then
+  file_data=()
+  IFS=$'\n' read -r -d '' -a file_data < <(rg --glob '**/tests/**/test_*.py' --files-with-matches "$(build_regex "${test_functions[@]}")" "$(git rev-parse --show-toplevel)")
+
+  if [[ ${#file_data} -le 0 ]]; then
+    echo-warn "Could not find any files with functions: ${test_functions[*]}"
+  else
+    nose "${test_args[@]}" "${file_data[@]}" --match="$(build_regex "${test_functions[@]}")"
+  fi
+
+fi

@@ -1,0 +1,3 @@
+#!/bin/sh
+vim --startuptime _startup.log "$@" +qall && vim _startup.log
+rm _startup.log

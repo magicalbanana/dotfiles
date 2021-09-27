@@ -1,0 +1,24 @@
+#!/bin/sh
+
+for log_level in DEBUG TRACE OK SUCCESS WARN ERROR ERR FATAL INFO; do
+  LOG_DATE=1 echo-log "$log_level" "This is a ${log_level} log."
+done
+
+for log_level in DEBUG TRACE OK SUCCESS WARN ERROR ERR FATAL INFO; do
+  echo-log "$log_level" "This is a ${log_level} log."
+done
+
+if echo-run false; then
+  echo-err "echo-run returns incorrect status code: $?"
+else
+  echo-ok "echo-run returns correct status code: $?"
+fi
+
+if echo-run true; then
+  echo-ok "echo-run returns correct status code: $?"
+else
+  echo-err "echo-run returns incorrect status code: $?"
+fi
+
+# shellcheck disable=SC2016
+echo-eval 'TESTVAR=second; echo -n first && echo "$TESTVAR"'

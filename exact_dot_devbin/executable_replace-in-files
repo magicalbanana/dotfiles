@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+#
+# Find and replace by a given list of files.
+#
+# replace foo bar **/*.rb
+
+USAGE="usage: $(basename "$0") [-v|--verbose] <pattern> <replacement> [<file>...]"
+
+find_this=''
+replace_with=''
+verbose=false
+
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+    -h | --help) echo "$USAGE"; exit ;;
+    -v | --verbose) verbose=true ;;
+    *)
+      if [ -z "$find_this" ]; then
+        find_this="$1"
+      elif [ -z "$replace_with" ]; then
+        replace_with="$1"
+      else
+        break
+      fi
+  esac
+  shift
+done
+
+if [ $# -eq 0 ]; then
+  set -- "$PWD"
+fi
+
+if command -v rg >/dev/null 2>&1; then
+  items=$(rg --files-with-matches --color never "$find_this" "$@")
+else
+  items=$(grep --files-with-matches --extended-regexp "$find_this" "$@")
+fi
+
+temp="${TMPDIR:-/tmp}/replace_temp_file.$$"
+IFS=$'\n'
+for item in $items; do
+  if $verbose; then
+    echo-info "Replacing in '${item}'"
+  fi
+  if sed "s+${find_this}+${replace_with}+g" "$item" > "$temp"; then
+    chmod "$(stat -f '%p' "$item")" "$temp"
+    mv "$temp" "$item"
+  else
+    echo-err "Failed to replace in ${item}"
+  fi
+done

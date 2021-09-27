@@ -1,0 +1,280 @@
+set encoding=utf-8
+
+filetype off
+syntax on
+
+" asdf - python {{{
+if (!empty($ASDF_DIR))
+  let g:python3_host_prog = $ASDF_DIR.'/shims/python3'
+endif
+" }}}
+
+" vim-plug - install {{{
+" Install vim-plug if not found
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+" }}}
+
+" vim-plug - init {{{
+call plug#begin('~/.vim/plugged')
+
+" pomodoro {{{
+" Focused editing :Goyo https://github.com/junegunn/goyo.vim
+Plug 'junegunn/goyo.vim'
+" }}}
+
+" utils {{{
+" find root directory (used wiht fzf)
+Plug 'airblade/vim-rooter'
+Plug 'Konfekt/FastFold'
+Plug 'pbrisbin/vim-mkdir'
+Plug 'tpope/vim-eunuch'
+" }}}
+
+" syntax {{{
+Plug 'guns/xterm-color-table.vim'
+Plug 'frazrepo/vim-rainbow'
+Plug 'vim-scripts/SyntaxAttr.vim'
+" }}}
+
+" ctags {{{
+Plug 'preservim/tagbar'
+" }}}
+
+" edit/insert {{{
+Plug 'tomtom/tcomment_vim'
+Plug 'kurkale6ka/vim-blockinsert'
+Plug 'dhruvasagar/vim-table-mode'
+Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-surround'
+Plug 'AndrewRadev/splitjoin.vim'
+Plug 'junegunn/vim-easy-align'
+Plug 'Yggdroot/indentLine'
+" }}}
+
+" git {{{
+Plug 'rhysd/committia.vim'
+Plug 'tpope/vim-fugitive'
+Plug 'junegunn/gv.vim'
+Plug 'mhinz/vim-signify'
+Plug 'jreybert/vimagit'
+Plug 'chrisbra/vim-diff-enhanced'
+" }}}
+
+" motion {{{
+Plug 'chaoren/vim-wordmotion'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-repeat'
+Plug 'dahu/vim-fanfingtastic'
+Plug 'easymotion/vim-easymotion'
+Plug 'justinmk/vim-sneak'
+Plug 'kana/vim-textobj-user'
+" }}}
+
+" recover {{{
+Plug 'chrisbra/Recover.vim'
+" }}}
+
+" search {{{
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
+Plug 'wincent/ferret'
+Plug 'brooth/far.vim'
+Plug 'jesseleite/vim-agriculture'
+Plug 'liuchengxu/vim-clap'
+" }}}
+
+" window/pane {{{
+Plug 't9md/vim-choosewin'
+" }}}
+
+" float terms
+" Plug 'voldikss/vim-floaterm'
+
+" decorations {{{
+Plug 'itchyny/lightline.vim'
+Plug 'josa42/vim-lightline-coc'
+" }}}
+
+" spellcheck {{{
+Plug 'reedes/vim-lexical'
+" }}}
+
+" testing {{{
+Plug 'vim-test/vim-test'
+" }}}
+
+" tmux {{{
+Plug 'wellle/tmux-complete.vim'
+Plug 'christoomey/vim-tmux-runner'
+" }}}
+
+" movement {{{
+" Jump to ay definition and references https://github.com/pechorin/any-jump.vim
+Plug 'pechorin/any-jump.vim'
+" }}}
+
+" plist {{{
+Plug 'darfink/vim-plist'
+" }}}
+
+" go {{{
+Plug 'fatih/vim-go', {'branch':'master'}
+Plug 'benmills/vimux-golang', {'for':'go'}
+" }}}
+
+" html/erb
+Plug 'mattn/emmet-vim', {'for':['html','eruby']}
+Plug 'alvan/vim-closetag', {'for':['html','eruby']}
+Plug 'whatyouhide/vim-textobj-erb', {'for':'eruby'}
+
+" json
+Plug 'elzr/vim-json', {'for':'json'}
+Plug 'kevinoid/vim-jsonc', {'for':'json'}
+
+" markdown
+Plug 'godlygeek/tabular', {'for':'markdown'} " must come before vim-markdown
+Plug 'plasticboy/vim-markdown', {'for':'markdown'}
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+
+" ruby {{{
+Plug 'vim-ruby/vim-ruby', {'for':'ruby'}
+Plug 'Shougo/vimproc.vim', {'for':'ruby', 'build':'make'}
+Plug 'osyo-manga/vim-monster', {'for':'ruby'}
+Plug 'tpope/vim-rails', {'for':['ruby','eruby', 'slim', 'haml']}
+Plug 'tpope/vim-endwise', {'for':'ruby'}
+Plug 'slim-template/vim-slim', {'for':['ruby','eruby','slim']}
+" }}}
+
+" sql {{{
+Plug 'magicalbanana/sql-syntax-vim', {'for':'sql'}
+Plug 'lifepillar/pgsql.vim', {'for':'sql'}
+" }}}
+
+" csv {{{
+Plug 'mechatroner/rainbow_csv', {'for':'csv'}
+" }}}
+
+" swift {{{
+Plug 'keith/swift.vim'
+" }}}
+
+" project folders {{{
+" this conflicts with fl floatterm so try this out
+Plug 'vifm/vifm.vim'
+" }}}
+
+" cucumber {{{
+Plug 'tpope/vim-cucumber', {'for':'cucumber'}
+" }}}
+
+" elixir {{{
+Plug 'elixir-lsp/elixir-ls', { 'do': { -> g:ElixirLS.compile() } }
+Plug 'elixir-editors/vim-elixir'
+Plug 'slashmili/alchemist.vim'
+" }}}
+
+" erlang {{{
+Plug 'vim-erlang/vim-erlang'
+Plug 'vim-erlang/vim-erlang-compiler'
+Plug 'vim-erlang/vim-erlang-runtime'
+" }}}
+
+" database {{{
+Plug 'tpope/vim-dadbod'
+Plug 'kristijanhusak/vim-dadbod-ui'
+" }}}
+
+" javascript/jsx {{{
+Plug 'pangloss/vim-javascript'
+Plug 'maxmellon/vim-jsx-pretty'
+" }}}
+
+" typescript {{{
+Plug 'leafgarland/typescript-vim'
+Plug 'peitalin/vim-jsx-typescript'
+" }}}
+
+" python {{{
+Plug 'davidhalter/jedi-vim', {'for':'python'}
+" }}}
+
+" hcl {{{
+Plug 'b4b4r07/vim-hcl', {'for':'hcl'}
+" }}}
+
+" protobuf {{{
+Plug 'uarun/vim-protobuf'
+" }}}
+
+" graphql {{{
+Plug 'jparise/vim-graphql'
+" }}}
+
+" html {{{
+Plug 'turbio/bracey.vim'
+" }}}
+
+" vue {{{
+Plug 'leafOfTree/vim-vue-plugin'
+" }}}
+
+" yaml {{{
+Plug 'stephpy/vim-yaml'
+" }}}
+
+" language-servers {{{
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'dense-analysis/ale'
+" }}}
+
+" colorscheme {{{
+Plug 'arcticicestudio/nord-vim'
+" }}}
+
+" devicons {{{
+" This must be the last plugin to be loaded
+Plug 'ryanoasis/vim-devicons'
+" }}}
+
+" Initialize plugin system
+call plug#end()
+" }}}
+
+set noswapfile
+set undodir=~/.vim-undo
+set undofile
+
+filetype on
+filetype plugin on
+filetype indent on
+
+let $LANG = "en_US.UTF-8"
+let $LC_COLLATE = "en_US.UTF-8"
+let $LC_CTYPE = "en_US.UTF-8"
+let $LC_MESSAGES = "en_US.UTF-8"
+let $LC_MONETARY = "en_US.UTF-8"
+let $LC_NUMERIC = "en_US.UTF-8"
+let $LC_TIME = "en_US.UTF-8"
+let $LC_ALL = "en_US.UTF-8"
+
+syntax on
+
+" may need to set this if terminal doesn't support true colors
+" 24-bit color support (this should only be used with Alacritty)
+" set termguicolors
+" let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+" let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+colorscheme nord
+
+" https://www.reddit.com/r/vim/comments/7uac23/are_swap_files_necessary/
+" set autoread
+" autocmd! FocusGained, BufEnter * checktime
+
+augroup reloadvimrc
+    au!
+    autocmd bufwritepost .vimrc source ~/.vimrc
+augroup END

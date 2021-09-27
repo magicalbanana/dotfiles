@@ -1,0 +1,20 @@
+#!/bin/bash
+
+set -o errexit
+
+case "$1" in
+  *.com)
+    ;;
+  *)
+    set -- "${1}.com"
+    ;;
+esac
+
+printf '.'
+if whois "$1" | grep -Eq '^No match|^NOT FOUND|^Not fo|AVAILABLE|^No Data Fou|has not been regi|No entri'; then
+# if FORCE_COLOR=1 echo-run whois "$1" | egrep -q '^No match|^NOT FOUND|^Not fo|AVAILABLE|^No Data Fou|has not been regi|No entri'; then
+  echo "${1}: available"
+else
+  # echo "${1}: unavailable"
+  exit 1
+fi

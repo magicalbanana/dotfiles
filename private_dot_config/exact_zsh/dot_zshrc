@@ -1,0 +1,170 @@
+# vim:ft=zsh
+
+source "${HOME}/.shtils"
+
+echo-eval() { echo_eval "$@" }
+echo-run() { echo_run "$@" }
+safe-run() { safe_run "$@" }
+
+alias echo-path="echo-array path"
+alias echo-fpath="echo-array fpath"
+
+echo-array() {
+  local variable_name="${1:-path}"
+  local count="${#${(P)variable_name}}"
+  local width="${#count}"
+  local i
+  for i in {1..$count}; do
+    echo "${(l:$width:)i}: ${${(P)variable_name}[$i]}"
+  done
+}
+
+echo-assoc-array() {
+  local key val var_name="$1"
+  for key val ("${(@Pkv)var_name}"); do
+    echo "$key -> $val"
+  done
+}
+
+zinitScript="${HOME}/.zinit/bin/zinit.zsh"
+zinitBin=$(dirname "${zinitScript}")
+zinitDir=$(dirname "${zinitBin}")
+
+if [[ ! -f "${zinitScript}" ]]; then
+  echo-info "zinit not found, dowloading"
+  if [[ -d "${zinitDir}" ]]; then
+    rm -rf "${zinitDir}"
+  fi
+  mkdir -p "${zinitBin}"
+  git clone https://github.com/zdharma-continuum/zinit.git "${zinitBin}"
+fi
+
+source "${zinitScript}"
+
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+zinit ice wait"0a" lucid atload"_zsh_autosuggest_start"
+zinit light zsh-users/zsh-autosuggestions
+
+zinit ice wait"0b" lucid
+zinit light b4b4r07/enhancd
+
+zinit snippet OMZL::clipboard.zsh
+zinit snippet OMZL::completion.zsh
+zinit snippet OMZL::directories.zsh
+zinit snippet OMZL::key-bindings.zsh
+
+zinit ice as"completion"
+zinit snippet OMZ::plugins/docker/_docker
+zinit ice as"completion"
+zinit snippet OMZ::plugins/docker-compose/_docker-compose
+zinit ice as "completion"
+zinit snippet https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
+
+zinit ice wait lucid
+zinit load wfxr/forgit
+
+zinit ice wait'0' blockf lucid
+zinit light zsh-users/zsh-completions
+
+zinit ice wait"0" lucid;
+zinit load zdharma-continuum/history-search-multi-word
+
+zinit ice lucid wait"0" atclone"sed -ie 's/fc -rl 1/fc -rli 1/' shell/key-bindings.zsh" \
+  atpull"%atclone" multisrc"shell/{completion,key-bindings}.zsh" id-as"junegunn/fzf_completions" \
+  pick"/dev/null"
+zinit light junegunn/fzf
+
+zinit ice wait"1" lucid
+zinit light Aloxaf/fzf-tab
+
+# Load theme file
+export IGLOO_ZSH_PROMPT_THEME_ALWAYS_SHOW_USER=true
+export IGLOO_ZSH_PROMPT_THEME_ALWAYS_SHOW_HOST=true
+# https://github.com/arcticicestudio/igloo/tree/master/snowblocks/zsh#line-c
+export GIT_PS1_SHOWDIRTYSTATE=true
+export GIT_PS1_SHOWSTASHSTATE=true
+export GIT_PS1_SHOWUNTRACKEDFILES=true
+zinit ice pick"snowblocks/zsh/lib/themes/igloo.zsh"
+zinit load arcticicestudio/igloo
+
+zinit ice lucid wait"1" lucid atload"!_zsh_autosuggest_start"
+zinit load "zsh-users/zsh-autosuggestions"
+zinit ice wait"1" atinit"zpcompinit; zpcdreplay" lucid
+zinit light zdharma-continuum/fast-syntax-highlighting
+zinit light zsh-users/zsh-history-substring-search
+  zmodload zsh/terminfo
+  [ -n "${terminfo[kcuu1]}" ] && bindkey "${terminfo[kcuu1]}" history-substring-search-up
+  [ -n "${terminfo[kcud1]}" ] && bindkey "${terminfo[kcud1]}" history-substring-search-down
+  bindkey -M emacs '^P' history-substring-search-up
+  bindkey -M emacs '^N' history-substring-search-down
+  bindkey -M vicmd 'k' history-substring-search-up
+  bindkey -M vicmd 'j' history-substring-search-down
+
+autoload -Uz compinit
+
+if [ $(date +'%j') != $(date -r ${ZDOTDIR:-$HOME}/.zcompdump +'%j') ]; then
+  compinit;
+else
+  compinit -C;
+fi
+
+if command -v kubectl >/dev/null 2>&1; then
+  source <(kubectl completion zsh)
+fi
+
+if command -v helm >/dev/null 2>&1; then
+  source <(helm completion zsh)
+fi
+
+if [ ! -d "${HOME}/.local/share/zsh" ]; then
+  mkdir -p "${HOME}/.local/share/zsh"
+fi
+HISTFILE="${HOME}/.local/share/zsh/history"
+
+# make some commands not show up in history
+HISTIGNORE="ls:ll:la:cd:cd -:pwd:exit:date:* --help"
+HISTSIZE=10000000
+SAVEHIST=10000000
+
+# setopts
+setopt extended_history       # record timestamp of command in HISTFILE
+setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
+setopt hist_ignore_all_dups   # ignore duplicated commands history list
+setopt hist_ignore_space      # ignore commands that start with space
+setopt hist_verify            # show command with history expansion to user before running it
+setopt inc_append_history     # add commands to HISTFILE in order of execution
+setopt share_history          # share command history data
+setopt always_to_end          # cursor moved to the end in full completion
+setopt hash_list_all          # hash everything before completion
+setopt completealiases        # complete alisases
+setopt always_to_end          # when completing from the middle of a word, move the cursor to the end of the word
+setopt complete_in_word       # allow completion from within a word/phrase
+setopt nocorrect              # spelling correction for commands
+setopt list_ambiguous         # complete as much of a completion until it gets ambiguous.
+setopt nolisttypes
+setopt listpacked
+setopt automenu
+setopt autocd                 # no need ot put CD when traversing directories
+unsetopt BEEP
+setopt vi
+
+alias gohome='cd $HOME'
+alias dcomp="docker-compose"
+alias ktl="kubectl"
+
+source-env() {
+  if [ $# -eq 0 ]; then
+    echo "${usage}"
+    exit 1
+  fi
+
+  for file in "$@"
+  do
+    if [ ! -f "${file}" ]; then
+      echo-error "the given file : ${file} does not exist"
+      exit 1
+    fi
+
+    source <(cat "${file}" | sed -n -e '/^#/d;/^\s*$/d' -e "s/'/'\\\''/g" -e "s/=\(.*\)/='\1'/g" -e 's/.*/export &/p')
+  done
+}

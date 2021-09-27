@@ -1,0 +1,14 @@
+#!/bin/sh
+
+edit_path="${1:-"$PWD"}"
+
+vim \
+  -c 'profile start _full.log' \
+  -c 'profile file *' \
+  -c 'profile func *' \
+  -c "e ${edit_path}" \
+  -c 'qall'
+
+vim _full.log
+
+rm _full.log

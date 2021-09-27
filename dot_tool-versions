@@ -1,0 +1,34 @@
+erlang 24.0.6
+elixir 1.12.3-otp-24
+golang 1.17.2
+nodejs lts-gallium
+python 3.7.12
+ruby 2.7.4
+rust 1.56.0
+
+fzf 0.27.2
+jq 1.6
+yq v4.13.0
+gcloud 357.0.0
+kubectl 1.22.2
+
+bat 0.18.3
+broot 1.6.6
+concourse 7.5.0
+delta 0.8.3
+dyff 1.4.5
+exa 0.10.1
+fd 8.2.1
+ghq 1.2.1
+gitui 0.17.1
+github-cli 2.2.0
+go-jsonnet 0.17.0
+helm 3.7.0
+k3d 5.0.1
+k9s 0.24.15
+kubectx 0.9.4
+kubespy 0.6.0
+ripgrep 13.0.0
+shfmt 3.3.1
+tmux 3.2a
+trdsql 0.9.0

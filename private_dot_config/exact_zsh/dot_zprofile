@@ -1,0 +1,4 @@
+# -*- mode: sh; sh-set-shell: zsh -*-
+# vim:ft=zsh
+
+source "${HOME}/.profile"

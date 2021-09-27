@@ -1,0 +1,102 @@
+#!/usr/bin/env bash
+
+build_regex() {
+  local IFS="|"
+  echo "($*)"
+}
+
+
+test_classes=()
+test_functions=()
+test_files=()
+test_args=(--with-progressive)
+
+for arg in "$@"; do
+  if [[ "$arg" =~ ^-.*$ ]]; then
+    test_args+=("$arg")
+  elif [[ "$arg" =~ ^[A-Z].*$ ]]; then
+    test_classes+=("$arg")
+  elif [[ "$arg" =~ ^.*\.py$ ]]; then
+    if [[ ! -e "$arg" ]]; then
+      echo-warn "Skipping ${arg} because it doesn't exist"
+      continue
+    fi
+    test_files+=("$arg")
+  elif [[ "$arg" =~ ^test_.*$ ]]; then
+    test_functions+=("$arg")
+  else
+    test_files+=("$arg")
+  fi
+done
+
+# Nothing passed
+if [[ ${#test_files} -le 0 ]] && [[ ${#test_classes} -le 0 ]] && [[ ${#test_functions} -le 0 ]]; then
+  echo-err 'You must pass test files, classes, or functions.'
+  exit 1
+fi
+
+# Only files
+if [[ ${#test_classes} -le 0 ]] && [[ ${#test_functions} -le 0 ]]; then
+  nose "${test_args[@]}" "${test_files[@]}"
+  exit "$?"
+fi
+
+# Functions without classes
+if [[ ${#test_classes} -le 0 ]] && [[ ${#test_functions} -gt 0 ]]; then
+  if [[ ${#test_files} -le 0 ]]; then
+    test_files=("$(git rev-parse --show-toplevel)")
+  fi
+  IFS=$'\n' read -r -d '' -a file_data < <(rg --glob '**/tests/**/test_*.py' --files-with-matches "$(build_regex "${test_functions[@]}")" "${test_files[@]}")
+
+  if [[ ${#file_data} -le 0 ]]; then
+    echo-err "Could not find any tests matching the criteria"
+    exit 1
+  else
+    nose "${test_args[@]}" "${file_data[@]}" --match="$(build_regex "${test_functions[@]}")"
+    exit "$?"
+  fi
+fi
+
+# Classes with or without files and functions
+if [[ ${#test_classes} -gt 0 ]]; then
+
+  files_with_classes=()
+  for test_class in "${test_classes[@]}"; do
+    files_for_class=()
+
+    # If the class is of the form Class.test_function then only do the search
+    # for the class part
+    test_class_without_function="${test_class%%.test_*}"
+
+    # If no files were passed explicitly then search the whole repo
+    if [[ ${#test_files} -le 0 ]]; then
+      test_files=("$(git rev-parse --show-toplevel)")
+    fi
+
+    IFS=$'\n' read -r -d '' -a files_for_class < <(rg --glob '**/tests/**/test_*.py' --files-with-matches "$(build_regex "$test_class_without_function")" "${test_files[@]}")
+
+    # If any test functions were passed limit the files to only those that contain any of the test functions
+    if [[ ${#test_functions} -gt 0 ]]; then
+      IFS=$'\n' read -r -d '' -a files_for_class_with_functions < <(rg --glob '**/tests/**/test_*.py' --files-with-matches "$(build_regex "${test_functions[@]}")" "${files_for_class[@]}")
+    else
+      files_for_class_with_functions=("${files_for_class[@]}")
+    fi
+
+    for file_for_class in "${files_for_class_with_functions[@]}"; do
+      files_with_classes+=("${file_for_class}:${test_class}")
+    done
+  done
+
+  if [[ ${#files_with_classes} -le 0 ]]; then
+    echo-err "Could not find any tests matching the criteria"
+    exit 1
+  fi
+
+  if [[ ${#test_functions} -gt 0 ]]; then
+    nose "${test_args[@]}" "${files_with_classes[@]}" --match="$(build_regex "${test_functions[@]}")"
+    exit "$?"
+  else
+    nose "${test_args[@]}" "${files_with_classes[@]}"
+    exit "$?"
+  fi
+fi

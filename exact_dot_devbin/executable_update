@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+set -e
+
+# Using 'command ls' here because regular ls is aliased to add color and
+# formatting.
+IFS=$'\n' read -r -d '' -a files < <(command ls "$PRIVATE_BIN" | sort | grep update- | grep -v update-all; printf '\0')
+
+for i in $(seq 1 "${#files[@]}"); do
+  file="${files[$i-1]}"
+  if ! command -v "$(basename "$file")" >/dev/null 2>&1; then
+    continue
+  fi
+
+  if [ -n "$GITHUB_WORKFLOW" ]; then
+    printf "::group::"
+  else
+    echo "============================================================="
+  fi
+
+  printf "Running: \033[32m%s\033[0m (%s/%s)\n" "$file" "$i" "${#files[@]}"
+
+  if [ -z "$GITHUB_WORKFLOW" ]; then
+    echo "============================================================="
+  fi
+
+  if ! "${PRIVATE_BIN}/${file}"; then
+    echo-err "${file} failed"
+    exit 1
+  fi
+
+  if [ -n "$GITHUB_WORKFLOW" ]; then
+    echo "::endgroup::"
+  elif [[ "$i" -lt "${#files[@]}" ]]; then
+    echo
+  fi
+done

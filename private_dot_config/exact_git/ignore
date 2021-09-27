@@ -1,0 +1,79 @@
+# OSX       taken from: https://github.com/github/gitignore/blob/master/Global/OSX.gitignore
+# ----------------------------------------------------------------------------------------------
+.DS_Store
+# Thumbnails
+._*
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+
+# Windows   taken from: https://github.com/github/gitignore/blob/master/Global/Windows.gitignore
+# ----------------------------------------------------------------------------------------------
+# Windows image file caches
+Thumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Tags      taken from: https://github.com/github/gitignore/blob/master/Global/Tags.gitignore
+# ----------------------------------------------------------------------------------------------
+# Ignore tags created by etags and ctags
+TAGS
+tags
+tags.*
+!tags.go
+# custom ctags file
+.ctags.file
+
+# Vim       taken from: https://github.com/github/gitignore/blob/master/Global/vim.gitignore
+# ----------------------------------------------------------------------------------------------
+.*.sw[a-z]
+*.un~
+Session.vim
+
+# SASS
+# ----------------------------------------------------------------------------------------------
+.sass-cache
+
+# JAVA/Eclipse
+# ----------------------------------------------------------------------------------------------
+.project
+.classpath
+
+# Sublime Text
+# ----------------------------------------------------------------------------------------------
+*.sublime-workspace
+
+# Markdown generated HTML files
+*.md.html
+
+# Exhuberant Tags
+gutentags
+
+# Temp files
+tmp/
+
+# devlepment files
+.tokens
+
+# Python
+# ---------------------------------------------------------------------------------------------
+venv/
+
+*.pyc
+__pycache__/
+*.pyo
+instance/
+
+.pytest_cache/
+.coverage
+htmlcov/
+
+dist/
+build/
+*.egg-info/
+
+tagged
+
+# Go
+.cover

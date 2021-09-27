@@ -1,0 +1,4 @@
+#!/bin/sh
+git stash
+git stash -u
+git stash pop 'stash@{1}'

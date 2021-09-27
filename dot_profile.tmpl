@@ -1,0 +1,79 @@
+#!/bin/sh
+
+export DEVBIN="${HOME}/.devbin"
+PATH="${DEVBIN}:${PATH}"
+
+# Don't write python .pyc files, because they're not necessary and clutter
+# directories with binary files
+export PYTHONDONTWRITEBYTECODE=1
+
+if command -v fzf >/dev/null 2>&1; then
+  export FZF_DEFAULT_OPTS="--bind='?:toggle-preview' --bind='ctrl-u:preview-page-up' --bind='ctrl-d:preview-page-down'"
+
+  if command -v fd >/dev/null 2>&1; then
+    export FZF_DEFAULT_COMMAND="${FZF_DEFAULT_COMMAND:-fd --type f --hidden --exclude .git}"
+  fi
+
+  if command -v bat >/dev/null 2>&1 && command -v tree >/dev/null 2>&1; then
+    export FZF_PREVIEW_OPTS="--preview-window 'right:60%:hidden:wrap' --preview '([[ -d {} ]] && tree -C {}) || ([[ -f {} ]] && bat --style=full --color=always {}) || echo {}'"
+    export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} ${FZF_PREVIEW_OPTS}"
+  fi
+
+  export FORGIT_STASH_FZF_OPTS='
+  --bind="ctrl-d:reload(git stash drop $(cut -d: -f1 <<<{}) 1>/dev/null && git stash list)"
+  '
+
+  export FORGIT_LOG_FZF_OPTS='
+  --bind="ctrl-e:execute(echo {} |grep -Eo [a-f0-9]+ |head -1 |xargs git show |vim -)"
+  '
+fi
+
+export RIPGREP_CONFIG_PATH="${HOME}/.ripgreprc"
+
+export VIFM="${HOME}/.config/vifm"
+export MYVIFMRC="${VIFM}/vifmrc"
+
+# this should only be used when gpg was installed using brew
+# https://stackoverflow.com/questions/39494631/gpg-failed-to-sign-the-data-fatal-failed-to-write-commit-object-git-2-10-0
+export GPG_TTY=$(command tty)
+
+if [ -f "${HOME}/.gnubin_path" ]; then
+    export GNUBIN_PATH="${HOME}/.gnubin_path"
+    source "${GNUBIN_PATH}"
+fi
+
+local_bin="${HOME}/.local/bin"
+if [[ ! -d "${local_bin}" ]]; then
+  echo-info "local bin directory not found, creating"
+  mkdir -p "${local_bin}"
+fi
+export LOCAL_BIN="${local_bin}"
+
+local_sbin="${HOME}/.local/sbin"
+if [ ! -d "${local_sbin}" ]; then
+  echo-info "local sbin directory not found, creating"
+  mkdir -p "${local_sbin}"
+fi
+export LOCAL_SBIN="${local_sbin}"
+
+PATH="${LOCAL_SBIN}:${LOCAL_BIN}:${PATH}"
+
+if [ ! -d "${HOME}/.asdf" ]; then
+  echo-info "asdf not found, dowloading"
+  git clone https://github.com/asdf-vm/asdf.git "${HOME}/.asdf"
+fi
+
+source "${HOME}/.asdf/asdf.sh"
+
+if asdf where golang >/dev/null 2>&1; then
+  GOBIN_PATH="$(asdf where golang)/bin"
+  if [ -d "${GOBIN_PATH}" ]; then
+    PATH="${GOBIN_PATH}:${PATH}"
+
+    if [ -z $(go env GOBIN) ]; then
+      go env -u GOBIN
+    fi
+    go env -w GOBIN=$GOBIN_PATH
+    export GOBIN_PATH
+  fi
+fi

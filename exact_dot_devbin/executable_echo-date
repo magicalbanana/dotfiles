@@ -1,0 +1,10 @@
+#!/bin/sh
+
+date_format='+%Y-%m-%dT%H:%M:%S'
+
+if [ "${1:-}" = '-n' ]; then
+  printf "%s" "$(date "$date_format")"
+  exit $?
+fi
+
+date "$date_format"

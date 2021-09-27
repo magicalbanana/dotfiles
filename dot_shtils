@@ -1,0 +1,333 @@
+#!/bin/sh
+
+# Tmux sessions
+alias default='new_or_switch_tab default ${HOME}'
+alias misc='default'
+
+alias ll='ls -l --color=auto'
+alias la='ls -la --color=auto'
+
+if command -v nvim >/dev/null 2>&1; then
+  alias vim='nvim'
+fi
+
+alias vim.='vim .'
+
+if ! command -v sudoedit >/dev/null 2>&1; then
+  alias sudoedit='sudo --edit'
+fi
+
+if command -v shfmt >/dev/null 2>&1; then
+  alias my-shfmt="shfmt -i 2 -w -ci"
+fi
+
+# 1Password
+if command -v op >/dev/null 2>&1; then
+  op_signin() {
+    if ! op get account >/dev/null 2>&1; then
+      # shellcheck disable=SC2016
+      echo_eval 'eval "$(op signin)"'
+      # Verify we are signed in now
+      op get account >/dev/null 2>&1
+    fi
+  }
+fi
+
+bootstrap() {
+  if ! command -v op >/dev/null 2>&1; then
+    echo-err "1Password CLI needs to be installed to run bootstrap scripts."
+    return 1
+  fi
+  op_signin || return "$?"
+  command bootstrap "$@"
+}
+
+alias c='clear'
+
+if command -v brew >/dev/null 2>&1; then
+  if [ -d "${PYENV_ROOT}" ]; then
+    brew() {
+      if [ -n "$VIRTUAL_ENV" ]; then
+        echo-warn "Don't run brew from inside a venv. https://docs.brew.sh/Homebrew-and-Python"
+        return 1
+      fi
+      env "PATH=$(remove_from_path "$PYENV_ROOT")" command brew "$@" || return $?
+    }
+  fi
+  alias brew-upgrade='echo_run brew upgrade --ignore-pinned --display-times'
+fi
+
+remove_from_path() {
+  REPLY="$PATH"
+  while true; do
+    case ":$REPLY" in
+      *:"$1"/*:*) REPLY="${REPLY%%${1}*}${REPLY#*${1}*:}" ;;
+      *"$1"/*) REPLY="${REPLY%%${1}*}" ;;
+      *)
+        echo "${REPLY%:}"
+        break
+        ;;
+    esac
+  done
+}
+
+autoload_script() {
+  # usage: autoload_script func_name /path/to/func_name
+  eval "${1}() {
+    eval \"
+      ${1}() {
+        \$(cat ${2})
+      }
+    ${1} \\\"\\\$@\\\"\"
+  }"
+}
+
+autoload_script echo_eval "${DEVBIN}/echo-eval"
+autoload_script echo_run "${DEVBIN}/echo-run"
+autoload_script safe_run "${DEVBIN}/safe-run"
+
+take() {
+  # shellcheck disable=SC2164
+  mkdir -p "$1" && cd "$1"
+}
+
+alias rc="restart_sh" # Reload Config
+alias resh="restart_sh"
+restart_sh() {
+  # Sometimes the shell will be started with a dash in front of the name of the
+  # shell to indicate that it's a login shell. This breaks the restart because
+  # exec thinks that the name of the shell is actually an argument.
+  set -- "$(ps -p $$ | tail -1 | awk '{print $4}')"
+  set -- "${1#-}"
+  set -- "$(command -v "$1")"
+
+  if command -v zplug >/dev/null 2>&1; then
+    echo_run zplug reinit
+  fi
+
+  if [ -n "$(jobs)" ]; then
+    echo-warn "Current shell has backgrounded jobs. Not restarting ${1}"
+    return 1
+  fi
+
+  # Since we reset $PATH and the autoloading requires cat we need to run this
+  # first to load the echo_run script
+  echo_run echo >/dev/null 2>&1
+
+  echo_eval 'PATH="/usr/bin:/bin:/usr/sbin:/sbin"'
+  # shellcheck disable=SC2153
+  if [ -n "$FPATH" ]; then
+    echo_eval 'FPATH=""'
+  fi
+
+  echo_run exec "$1" -li
+}
+
+new_or_switch_tab() {
+  echo_run cd "$2"
+  tab "$1"
+  echo_run cd -
+}
+
+new_or_switch_tmux() {
+  if ! tmux has-session -t "$1" >/dev/null 2>&1; then
+    echo_run tmux new-session -d -s "$1" -c "$2"
+    if [ "$#" -ge 3 ]; then
+      tmux send-keys -t "$1" "clear; $3" Enter
+    fi
+  fi
+
+  if [ -z "$TMUX" ]; then
+    echo_run tmux attach-session -t "$1"
+  elif [ "$(tmux display-message -p '#S')" != "$1" ]; then
+    echo_run tmux switch-client -t "$1"
+  else
+    # shellcheck disable=SC2164
+    echo_run cd "$2"
+  fi
+}
+
+alias exit='_exit'
+_exit() {
+  # NOTE: The exit calls are prefixed with a \ so that they ignore alias
+  # expansion and prevent infinite loops
+  if [ -z "$TMUX" ]; then
+    # echo 'Exit if we are not in a tmux session'
+    \exit
+  fi
+
+  if [ "$(tmux list-windows 2>/dev/null | wc -l | tr -d ' ')" -ge 2 ]; then
+    # echo 'Exit if there are other windows in the same session'
+    \exit
+  fi
+
+  if ! tmux list-sessions 2>/dev/null | grep --invert-match caffeinate | grep --invert-match --quiet "$(tmux display-message -p '#{session_name}')"; then
+    # echo 'Exit if there are no other (useful) sessions to switch to'
+    \exit
+  fi
+
+  # echo 'Switch to another session'
+  tmux switch-client -t "$(tmux list-sessions 2>/dev/null | grep --invert-match caffeinate | grep --invert-match "$(tmux display-message -p '#{session_name}')" | head -n 1 | cut -d ':' -f 1)"
+  \exit
+}
+
+novenv() {
+  save_venv --quiet
+  "$@"
+  set -- $?
+  restore_venv --quiet
+  return "$1"
+}
+
+save_venv() {
+  if [ -z "$VIRTUAL_ENV" ]; then
+    return
+  fi
+
+  if [ "${1:-}" != "--quiet" ]; then
+    echo "Saving venv '${VIRTUAL_ENV}'."
+  fi
+  SAVED_VENVS="${VIRTUAL_ENV}:${SAVED_VENVS:-}"
+  deactivate
+}
+
+restore_venv() {
+  if command -v deactivate >/dev/null 2>&1; then
+    echo_run deactivate
+  fi
+
+  if [ -n "${SAVED_VENVS:-}" ]; then
+    if [ "${1:-}" != "--quiet" ]; then
+      echo "Restoring '${SAVED_VENVS%%:*}'."
+    fi
+    # shellcheck disable=SC1090,SC1091
+    . "${SAVED_VENVS%%:*}/bin/activate"
+    SAVED_VENVS="${SAVED_VENVS#${SAVED_VENVS%%:*}:}"
+  fi
+}
+
+tmp() {
+  set -- "${TMPDIR}$(date +%Y-%m-%dT%H%M%S)"
+  echo_run mkdir -p "$1"
+  echo_run cd "$1"
+}
+
+venv() {
+  while [ $# -gt 0 ]; do
+    case "$1" in
+      -h | --help)
+        echo "usage: $(basename "$0") [--create|--create3] [--create2] [<venv name>]" >&2
+        return
+        ;;
+      --create2)
+        shift
+        if [ -n "$VIRTUAL_ENV" ]; then
+          echo_run deactivate
+        fi
+        if [ -d "${1:-.venv}" ]; then
+          echo_run rm -rf "${1:-.venv}"
+        fi
+        echo_run python2 -m pip install virtualenv
+        echo_run python2 -m virtualenv "${1:-.venv}"
+        echo_run . "${1:-.venv}/bin/activate"
+        if [ -f requirements.txt ]; then
+          echo_run pip install -r requirements.txt
+        fi
+        return $?
+        ;;
+      --create | --create3)
+        shift
+        if [ -n "$VIRTUAL_ENV" ]; then
+          echo_run deactivate
+        fi
+        if [ -d "${1:-.venv}" ]; then
+          echo_run rm -rf "${1:-.venv}"
+        fi
+        echo_run python3 -m venv "${1:-.venv}"
+        echo_run . "${1:-.venv}/bin/activate"
+        if [ -f requirements.txt ]; then
+          echo_run pip install -r requirements.txt
+        fi
+        return $?
+        ;;
+      *)
+        break
+        ;;
+    esac
+    shift
+  done
+
+  # Recursively search up until home directory for a virtual environment with
+  # the desired name. This allows you to activate a venv from the root of your
+  # project while you're deep in the directory structure
+  set -- "${1:-.venv}" "$PWD" "$1"
+  while [ "$2" != "$HOME" ] && [ "$2" != "/" ] && [ ! -f "${2}/${1}/bin/activate" ]; do
+    set -- "$1" "$(dirname "$2")" "$3"
+  done
+
+  # If you're in a venv and you didn't specify a different one explicitly then
+  # you probably want to deactivate the current one
+  if [ -n "$VIRTUAL_ENV" ] && [ -z "$3" ]; then
+    echo_run deactivate
+    return
+  fi
+
+  if [ ! -f "${2}/${1}/bin/activate" ]; then
+    echo-err "Couldn't find a valid venv for '${1}'"
+    return 1
+  fi
+
+  # shellcheck disable=SC1090
+  echo_run . "${2}/${1}/bin/activate"
+}
+
+dotfiles() {
+  case "$1" in
+    'cd')
+      shift
+      echo_run cd "$(chezmoi source-path "$@")"
+      ;;
+    *)
+      op_signin || return "$?"
+      command dotfiles "$@"
+      ;;
+  esac
+}
+
+presentation_setup() {
+  new_home="$(mktemp -d)"
+  echo "Copying .terminfo to new HOME"
+  cp -r ~/.terminfo "${new_home}/.terminfo"
+  echo "Copying .vim to new HOME"
+  cp -r ~/.vim "${new_home}/.vim"
+  echo "Adding empty .zshrc"
+  touch "${new_home}/.zshrc"
+  cd "$new_home" || return
+  clear
+  HOME="$new_home" exec zsh -li
+}
+
+remove_from_front_of_path() {
+  while true; do
+    case ":$PATH" in
+      *:"$1"/*:*) PATH="${PATH%%${1}*}${PATH#*${1}*:}" ;;
+      *"$1"/*) PATH="${PATH%%${1}*}" ;;
+      *) PATH="${PATH%:}"; break ;;
+    esac
+  done
+}
+
+if [ -n "$VIRTUAL_ENV" ]; then
+  # Allows you to `rc` (reload config, see aliases below) from inside a virtual
+  # environment without losing the virtual environment. Normally `exec` keeps
+  # all environment variables, but certain ones get overwritten during zsh
+  # initialization. This reinitializes them. Keep this after anything else that
+  # sets the path.
+
+  # Clean the front of $PATH. This is really only used when starting a subshell
+  # while in a virtual environment
+  remove_from_front_of_path "$VIRTUAL_ENV"
+
+  # shellcheck disable=SC1090
+  echo_run . "$VIRTUAL_ENV/bin/activate"
+fi

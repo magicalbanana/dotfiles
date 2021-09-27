@@ -1,0 +1,54 @@
+#!/bin/sh
+
+set -o errexit
+
+log_newline='true'
+if [ "$1" = "-n" ]; then
+  log_newline='false'
+  shift
+fi
+
+log_level="$1"
+log_color="\033[44m"
+shift
+
+if [ "${1:-}" = "-n" ]; then
+  log_newline='false'
+  shift
+fi
+
+case "$log_level" in
+  DEBUG | TRACE)
+    log_level="DEBUG"
+    log_color="\033[46m"
+    ;;
+  OK | SUCCESS)
+    log_level="OK"
+    log_color="\033[42m"
+    ;;
+  WARN) log_color="\033[43m" ;;
+  ERROR | ERR | FATAL)
+    log_level="ERROR"
+    log_color="\033[41m"
+    ;;
+  INFO) log_color="\033[44m" ;;
+  *)
+    set -- "$log_level" "$@"
+    log_level="INFO"
+    log_color="\033[44m"
+    ;;
+esac
+
+if [ -n "${LOG_DATE:-}" ]; then
+  printf '%s ' "$(echo-date)"
+fi
+
+printf "%b\033[97m %s \033[0m " "$log_color" "$log_level"
+
+if $log_newline; then
+  unset log_color log_level log_newline
+  echo "$@"
+else
+  unset log_color log_level log_newline
+  printf "%s" "$@"
+fi

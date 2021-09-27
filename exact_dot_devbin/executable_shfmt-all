@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if ! command -v shfmt >/dev/null; then
+  echo-err "Install shfmt first: https://github.com/mvdan/sh"
+  exit 1
+fi
+
+shellcheck-all shfmt -i 2 -ci -w

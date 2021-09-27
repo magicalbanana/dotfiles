@@ -1,0 +1,22 @@
+#!/bin/sh
+
+if ! command -v zsh >/dev/null 2>&1; then
+  echo-ok "Skipping $0 because zsh is not installed"
+  exit
+fi
+
+# shellcheck disable=SC2016
+exec zsh -c '
+set -e
+source "$HOME/.zshrc"
+
+if [[ -f "$HOME/.zcompdump" ]]; then
+  echo-run rm "$HOME/.zcompdump"
+else
+  echo-info "No zcompdump file to remove"
+fi
+
+if [ -t 0 ] && [ -t 1 ] && [ -z "$CI" ]; then
+  compaudit | xargs echo-run chmod g-w
+  echo-run zplug update || true
+fi

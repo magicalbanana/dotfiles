@@ -1,0 +1,79 @@
+#!/bin/sh
+
+set -o errexit
+
+USAGE="usage: $(basename "$0") [--verbose] [--skip-existing] <version>"
+
+if [ $# -le 0 ]; then
+  echo "$USAGE"
+  exit 1
+fi
+
+verbose=false
+skip_existing=false
+version=
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+    -h | --help)
+      echo "$USAGE"
+      exit
+      ;;
+    --verbose)
+      verbose=true;
+      ;;
+    --skip-existing)
+      skip_existing=true;
+      ;;
+    *.*.*)
+      version="$1"
+      ;;
+    *)
+      echo-err "unknown argument: ${1}"
+      exit 1
+      ;;
+  esac
+  shift
+done
+
+if [ -z "$version" ]; then
+  echo-err "A version is required"
+  exit 1
+fi
+
+set --
+if $verbose; then
+  set -- "$@" --verbose
+fi
+if $skip_existing; then
+  set -- "$@" --skip-existing
+fi
+
+
+case "$version" in
+  3.8.* | 3.9.*)
+    echo-run command pyenv install "$@" "$version"
+    exit $?
+    ;;
+  *)
+    # openssl_path="$(brew --prefix "openssl@1.0.2t")"
+    sdk_path="$(xcrun --show-sdk-path)"
+    # https://github.com/pyenv/pyenv/wiki/Common-build-problems
+    # CFLAGS: "You can set your CFLAGS to accepted safe values to help get a little
+    # more speed."
+    echo-info "Running pyenv with a bunch of extra flags to make things work" >&2
+
+    export SYSTEM_VERSION_COMPAT=1
+    export CFLAGS="-I${sdk_path}/usr/include"
+    export LDFLAGS="-L${sdk_path}/usr/lib"
+
+    # export PYTHON_BUILD_HOMEBREW_OPENSSL_FORMULA="openssl@1.0.2t"
+    # export CPPFLAGS="${CPPFLAGS} -I${sdk_path}/usr/include"
+    # export LDFLAGS="${LDFLAGS} -L${sdk_path}/usr/lib"
+    # export CFLAGS="${CFLAGS} -I${sdk_path}/usr/include"
+
+    echo-run command pyenv install "$@" "$version"
+
+    echo-run "${PYENV_ROOT}/versions/${version}/bin/python" -m pip install virtualenv
+    ;;
+esac

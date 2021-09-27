@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+port="${1:-8000}"
+
+if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+  echo "usage: $(basename "$0") [PORT]"
+  return 1
+fi
+
+# Open after server is set up
+( sleep 1; open "http://127.0.0.1:${port}" ) &
+
+if command -v python3 >/dev/null 2>&1; then
+  echo-run python3 -m http.server "$port" --bind 127.0.0.1 || return $?
+elif command -v python2 >/dev/null 2>&1; then
+  echo-run python -m SimpleHTTPServer "$port" || return $?
+elif command -v ruby >/dev/null 2>&1; then
+  echo-run ruby -rwebrick -e'WEBrick::HTTPServer.new(:Port => '"$port"', :DocumentRoot => Dir.pwd).start' || return $?
+elif command -v php >/dev/null 2>&1; then
+  echo-run php -S 127.0.0.1:"$port" || return $?
+fi

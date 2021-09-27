@@ -1,0 +1,20 @@
+#!/bin/sh
+
+set -o errexit
+
+if ! in-git-repo; then
+  echo-err "Not in a git repository."
+  return 128
+fi
+
+git_dir="$(git rev-parse --git-dir)"
+
+if [ -f "$git_dir/gc.log" ]; then
+  echo-run cat "${git_dir}/gc.log"
+  echo-run git prune
+  echo-run rm "${git_dir}/gc.log"
+  exit $?
+fi
+
+echo-run git remote prune origin
+echo-run git gc

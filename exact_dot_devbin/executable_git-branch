@@ -1,0 +1,61 @@
+#!/bin/sh
+
+set -o errexit
+
+# if ! is-clean-repo; then
+#   echo-warn "You have uncommitted changes. Commit or stash your changes."
+#   echo-run git status
+#   return 1
+# fi
+print_arc_lines() {
+  for branchref in $(git --no-pager branch --sort=-committerdate --format='%(refname)'); do
+    diff_id="$(git for-each-ref "$branchref" --format='%(contents:body)' | grep 'Differential Revision: ' || true)"
+    if [ -n "$diff_id" ]; then
+      # diff_status="$(echo '{"constraints":{"ids": ['${diff_id##*/D}']}}' \
+      #   | arc call-conduit -- differential.revision.search \
+      #   | jq --raw-output '.response.data[0].fields.status.name')"
+      diff_id="${diff_id##*/}:"
+    else
+      # diff_status="No diff"
+      diff_id="       "
+    fi
+    git for-each-ref --color=always "$branchref" --format='%(HEAD) %(color:bold)'"${diff_id}"'%(color:reset) %(contents:subject) - %(color:yellow)%(committerdate:relative)%(color:reset) - %(color:green)%(refname:short)%(color:reset)'
+  done
+}
+
+if [ -f "$(git rev-parse --show-toplevel)/.arcconfig" ]; then
+  branch="$(print_arc_lines | fzf --no-multi --delimiter ' - ' --preview='git show --color=always {-1}' --ansi)"
+  branch="${branch##* - }"
+  echo-run git switch "$branch" || exit $?
+  git-show --quiet
+  exit $?
+fi
+
+branch="$(git for-each-ref --sort=-committerdate --color=always refs/heads/ --format='%(HEAD) %(color:green)%(refname:short)%(color:reset) - %(contents:subject) - %(color:yellow)%(committerdate:relative)%(color:reset)' | fzf --no-multi --delimiter ' - ' --preview='git show --color=always {-1}' --ansi)"
+branch="${branch%% - *}"
+branch="${branch##\* }"
+branch="${branch##  }"
+echo-run git switch "$branch" || exit $?
+git-show --quiet
+
+# local branches branch
+# branches=$(
+#   git \
+#     --no-pager \
+#     branch \
+#     --sort=-committerdate \
+#     --format="%(if)%(HEAD)%(then)*%(else) %(end) %(refname:short) (%(committerdate:relative))"
+# ) &&
+# branch=$(
+#   echo "$branches" |
+#   fzf --no-multi --nth=1,2 \
+#     --preview="git show --color=always {1}" --preview-window="70%"
+# ) &&
+# branch_name=$(echo "$branch" | awk '{print $1}' | sed "s/.* //") &&
+# if [ "$branch_name" = "*" ]; then
+#   echo -n "Already on branch $bold_color$(echo "$branch" | awk '{print $2}' | sed 's/.* //')"
+#   echo "$reset_color"
+#   return
+# fi &&
+# echo-run git checkout $branch_name || return "$status"
+# git-show --quiet
