@@ -1,6 +1,7 @@
 {{- if eq .chezmoi.os "darwin" -}}
 #!/bin/sh
 
+. "${HOME}/.shtils"
 . "${HOME}/.profile"
 
 if [ -n "$GITHUB_WORKFLOW" ]; then

@@ -22,6 +22,7 @@ kubectl,https://github.com/Banno/asdf-kubectl.git
 kubectx,https://gitlab.com/wt0f/asdf-kubectx
 kubespy,https://github.com/jfreeland/asdf-kubespy.git
 nodejs,https://github.com/asdf-vm/asdf-nodejs.git
+noevim,https://github.com/richin13/asdf-neovim.git
 python,https://github.com/danhper/asdf-python.git
 ripgrep,https://gitlab.com/wt0f/asdf-ripgrep.git
 ruby,https://github.com/asdf-vm/asdf-ruby.git
@@ -30,3 +31,4 @@ shfmt,https://github.com/luizm/asdf-shfmt.git
 tmux,https://github.com/aphecetche/asdf-tmux.git
 trdsql,https://github.com/johnlayton/asdf-trdsql.git
 yq,https://github.com/sudermanjr/asdf-yq.git
+zoxide,https://github.com/nyrst/asdf-zoxide.git

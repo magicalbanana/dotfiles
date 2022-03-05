@@ -1,4 +1,4 @@
-#!/bin/sh
+# vim: ft=zsh
 
 export DEVBIN="${HOME}/.devbin"
 PATH="${DEVBIN}:${PATH}"
@@ -38,8 +38,8 @@ export MYVIFMRC="${VIFM}/vifmrc"
 export GPG_TTY=$(command tty)
 
 if [ -f "${HOME}/.gnubin_path" ]; then
-    export GNUBIN_PATH="${HOME}/.gnubin_path"
-    source "${GNUBIN_PATH}"
+  export GNUBIN_PATH="${HOME}/.gnubin_path"
+  source "${GNUBIN_PATH}"
 fi
 
 local_bin="${HOME}/.local/bin"

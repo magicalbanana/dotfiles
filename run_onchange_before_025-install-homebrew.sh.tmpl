@@ -1,8 +1,6 @@
 {{- if eq .chezmoi.os "darwin" -}}
 #!/bin/sh
 
-set -e
-
 if command -v brew >/dev/null 2>&1; then
   echo "Skipping homebrew install since it's already available"
   exit

@@ -2,6 +2,14 @@
 
 [init]
   defaultBranch = main
+[advice]
+  statusHints = false
+[core]
+  autocrlf = input
+  page = delta
+  editor = vim
+  excludesfile = {{ expandenv "${HOME}/.config/git/ignore"}}
+  hooksPath = {{ expandenv "${HOME}/.config/git/hooks"}}
 [color]
   ui = true
 [color "branch"]
@@ -50,7 +58,7 @@
   dc = diff --cached                # diff staged changes
   last = diff HEAD^                 # diff last committed change
 
-  # list
+  # list untracked files
   lsu = ls-files --others --exclude-standard
 
   # log
@@ -87,18 +95,15 @@
 
   # status
   s = status --ignore-submodules    # status
-  st = status                       # status
-  stat = status                     # status
-
-  # tag
-  t = tag -n                        # show tags with <n> lines of each tag message
-
-  # svn helpers
-  svnr = svn rebase
-  svnd = svn dcommit
-  svnl = svn log --oneline --show-commit
 [format]
   pretty = format:%C(blue)%ad%Creset %C(yellow)%h%C(green)%d%Creset %C(blue)%s %C(magenta) [%an]%Creset
+[interactive]
+  diffFilter = delta --color-only
+[delta]
+  side-by-side = true
+  line-numbers-left-format = ""
+  line-numbers-right-format = "? "
+  syntax-theme = Nord
 [mergetool]
   prompt = false
 [mergetool "vimdiff"]
@@ -119,13 +124,6 @@
 [pull]
   default = current
   rebase = true
-[core]
-  autocrlf = input
-  editor = vim
-  excludesfile = {{ expandenv "${HOME}/.config/git/ignore"}}
-  hooksPath = {{ expandenv "${HOME}/.config/git/hooks"}}
-[advice]
-  statusHints = false
 [diff]
   # Git diff will use (i)ndex, (w)ork tree, (c)ommit and (o)bject
   # instead of a/b/c/d as prefixes for patches

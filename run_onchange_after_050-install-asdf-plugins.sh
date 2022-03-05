@@ -1,9 +1,8 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 set -e
 
 . "${HOME}/.shtils"
-
 
 if [ -n "$GITHUB_WORKFLOW" ]; then
   echo-info "::group::Adding asdf plugins"
@@ -12,7 +11,7 @@ else
 fi
 
 if [ ! -d "${HOME}/.asdf" ]; then
-  git clone https://github.com/asdf-vm/asdf.git "${HOME}/.asdf"
+  git clone -b v0.9.0 --single-branch https://github.com/asdf-vm/asdf.git "${HOME}/.asdf"
 fi
 
 . "${HOME}/.asdf/asdf.sh"

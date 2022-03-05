@@ -9,11 +9,11 @@ __kill_process () {
     CAN_I_RUN_SUDO=$(sudo -n uptime 2>&1 | grep "load" | wc -l)
     if [ ${CAN_I_RUN_SUDO} -gt 0 ]
     then
-        echo "I can run the sudo command"
-        echo $pid | xargs kill -${1:-9}
+      echo-info "I can run the sudo command"
+      echo $pid | xargs kill -${1:-9}
     else
-        echo "I can't run the Sudo command"
-        echo $pid | xargs sudo kill -${1:-9}
+      echo-info "I can't run the sudo command"
+      echo $pid | xargs sudo kill -${1:-9}
     fi
     __kill_process
   fi
@@ -75,7 +75,7 @@ while (( "$#" )); do
       shift
       ;;
     -*|--*=) # unsupported flags
-      echo "Error: Unsupported flag $1" >&2
+      echo-err "Unsupported flag $1" >&2
       exit 1
       ;;
     *) # preserve positional arguments
@@ -105,8 +105,7 @@ case $fzf_command in
     __search_edit
     ;;
   *)
-    echo "Error: Unsupported command $1" >&2
+    echo-err "Unsupported command $1" >&2
     exit 1
     ;;
 esac
-

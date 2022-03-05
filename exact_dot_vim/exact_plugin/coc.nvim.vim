@@ -180,20 +180,20 @@ let g:coc_global_extensions = [
 \         'coc-yaml',
 \]
 
-let g:coc_filetypes_disable = ['ruby']
-
-function! s:disable_coc_for_type()
-  if index(g:coc_filetypes_disable, &filetype) == -1
-    :silent! CocEnable
-  else
-    :silent! CocDisable
-  endif
-endfunction
-
-augroup CocGroup
- autocmd!
- autocmd BufNew,BufEnter,BufAdd,BufCreate * call s:disable_coc_for_type()
-augroup end
+" let g:coc_filetypes_disable = ['ruby']
+"
+" function! s:disable_coc_for_type()
+"   if index(g:coc_filetypes_disable, &filetype) == -1
+"     :silent! CocEnable
+"   else
+"     :silent! CocDisable
+"   endif
+" endfunction
+"
+" augroup CocGroup
+"  autocmd!
+"  autocmd BufNew,BufEnter,BufAdd,BufCreate * call s:disable_coc_for_type()
+" augroup end
 
 let s:gopls_path = trim(system('go env GOBIN')).'/gopls'
 if filereadable(s:gopls_path)

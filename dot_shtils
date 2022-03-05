@@ -1,5 +1,24 @@
 #!/bin/sh
 
+pathmunge() {
+  if ! echo "${PATH}" | grep -Eq "(^|:)$1($|:)" ; then
+     if [ "${2}" = "after" ] ; then
+      PATH="${PATH}:${1}"
+     else
+      PATH="${1}:${PATH}"
+     fi
+  fi
+}
+
+if [ -z "${DEVBIN}" ]; then
+  echo "DEVBIN not set, checking if DEVBIN dir exists"
+  if [ ! -d "${HOME}/.devbin" ]; then
+    echo "DEVBIN dir does not exist, custom functions will fail"
+  else
+    pathmunge "${HOME}/.devbin"
+  fi
+fi
+
 # Tmux sessions
 alias default='new_or_switch_tab default ${HOME}'
 alias misc='default'

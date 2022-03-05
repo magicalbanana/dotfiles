@@ -1,4 +1,4 @@
-# vim:ft=zsh
+# vim: ft=zsh
 
 source "${HOME}/.shtils"
 
@@ -151,6 +151,28 @@ setopt vi
 alias gohome='cd $HOME'
 alias dcomp="docker-compose"
 alias ktl="kubectl"
+
+if command -v nvim >/dev/null 2>&1; then
+  alias vim="nvim"
+fi
+
+if command -v exa >/dev/null 2>&1; then
+  unalias -m 'll'
+  unalias -m 'l'
+  unalias -m 'la'
+  unalias -m 'ls'
+  alias ls='exa -G  --color auto --icons -a -s type'
+  alias ll='exa -l --color always --icons -a -s type'
+fi
+
+if command -v bat >/dev/null 2>&1; then
+  unalias -m 'cat'
+  alias cat='bat -pp --theme="Nord"'
+fi
+
+if command -v zoxide >/dev/null 2>&1; then
+  eval "$(zoxide init zsh --cmd z)"
+fi
 
 source-env() {
   if [ $# -eq 0 ]; then

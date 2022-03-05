@@ -1,0 +1,96 @@
+#!/usr/bin/env bash
+
+__new_session () {
+  if [ "$#" -eq 0 ]; then
+    echo-err "You need to pass in a session name"
+  else
+    local session_name=$1
+    tmux new-session -s $session_name
+  fi
+}
+
+__kill_server () {
+  tmux kill-server
+}
+
+__kill_session () {
+  if [ "$#" -eq 0 ]; then
+    echo-err "You need to pass in a tmux session"
+  else
+    local session_name=$1
+    tmux kill-session -t $1
+  fi
+}
+
+__list_sessions () {
+  tmux ls
+}
+
+__attach () {
+  if [ "$#" -eq 0 ]; then
+    echo-err "You need to pass in a tmux session"
+  else
+    local tmux_client=$1
+    tmux attach -d -t $tmux_client
+  fi
+}
+
+PARAMS=""
+tmux_command=""
+while (( "$#" )); do
+  case "$1" in
+    ns|new-session)
+      tmux_command="new-session"
+      shift
+      ;;
+    ksv|kill-server)
+      tmux_command="kill-server"
+      shift
+      ;;
+    ks|kill-session)
+      tmux_command="kill-session"
+      shift
+      ;;
+    l|list-sessions)
+      tmux_command="list-sessions"
+      shift
+      ;;
+    a|attach)
+      tmux_command="attach"
+      shift
+      ;;
+    -*|--*=) # unsupported flags
+      echo-err "unsupported flag $1" >&2
+      exit 1
+      ;;
+    *) # preserve positional arguments
+      PARAMS="$PARAMS $1"
+      shift
+      ;;
+  esac
+done
+
+# set positional arguments in their proper place
+eval set -- "$PARAMS"
+
+case $tmux_command in
+  new-session)
+    __new_session $PARAMS
+    ;;
+  kill-server)
+    __kill_server $PARAMS
+    ;;
+  kill-session)
+    __kill_session $PARAMS
+    ;;
+  list-sessions)
+    __list_sessions $PARAMS
+    ;;
+  attach)
+    __attach $PARAMS
+    ;;
+  *)
+    echo-err "unsupported command $PARAMS" >&2
+    exit 1
+    ;;
+esac
