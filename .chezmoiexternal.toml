@@ -2,8 +2,6 @@
   type = "git-repo"
   refreshPeriod = "168h"
   url = "https://github.com/asdf-vm/asdf.git"
-  clone.args = ["--branch v0.9.0"]
-  pull.args = ["origin ", "main ", "--rebase ", "-s ", "recursive ", "-X ", "ours"]
 [".vim/autoload/plug.vim"]
   type = "file"
   url = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
@@ -12,4 +10,3 @@
   type = "git-repo"
   refreshPeriod = "168h"
   url = "https://github.com/zdharma-continuum/zinit.git"
-  pull.args = ["origin ", "main ", "--rebase ", "-s ", "recursive ", "-X ", "ours"]
