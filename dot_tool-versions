@@ -34,3 +34,4 @@ shfmt 3.4.3
 sqlite 3.38.1
 tmux 3.2a
 trdsql 0.9.1
+usql 0.10.0
