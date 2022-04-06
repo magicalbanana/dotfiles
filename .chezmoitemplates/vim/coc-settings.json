@@ -1,0 +1,46 @@
+{
+  "codeLens.enable": true,
+  "coc.preferences.extensionUpdateCheck": "daily",
+  "suggest.noselect": false,
+  "diagnostic.errorSign": "✘",
+  "diagnostic.warningSign": "!",
+  "diagnostic.infoSign": "?",
+  "diagnostic.checkCurrentLine": true,
+  "coc.preferences.formatOnSaveFiletypes": [
+    "css",
+    "graphql",
+    "html",
+    "javascript",
+    "javascriptreact",
+    "json",
+    "scss",
+    "typescript",
+    "typescript.tsx",
+    "typescriptreact"
+  ],
+  "javascript.suggestionActions.enabled": false,
+  "hover.target": "float",
+  "go.goplsOptions": {
+    "completeUnimported": true,
+    "staticcheck": true
+  },
+  "go.goplsArgs": ["-remote=auto"],
+  "tsserver.watchOptions": {
+    "watchFile": "useFsEvents"
+  },
+  "list.source.symbols.excludes": [
+    "**/node_modules/**",
+    "**/node_modules/**/.*",
+    "**/node_modules/**/.*/**"
+  ],
+  "diagnostic-languageserver.filetypes": {
+    "elixir": ["mix_credo", "mix_credo_compile"],
+    "eelixir": ["mix_credo", "mix_credo_compile"]
+  },
+  "languageserver": {
+    "erlang": {
+      "command": "erlang_ls",
+      "filetypes": ["erlang"]
+    }
+  }
+}
