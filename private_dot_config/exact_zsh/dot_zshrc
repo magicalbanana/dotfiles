@@ -31,12 +31,7 @@ zinitBin=$(dirname "${zinitScript}")
 zinitDir=$(dirname "${zinitBin}")
 
 if [[ ! -f "${zinitScript}" ]]; then
-  echo-info "zinit not found, dowloading"
-  if [[ -d "${zinitDir}" ]]; then
-    rm -rf "${zinitDir}"
-  fi
-  mkdir -p "${zinitBin}"
-  git clone https://github.com/zdharma-continuum/zinit.git "${zinitBin}"
+  echo-error "zinit not found, dowloading"
 fi
 
 source "${zinitScript}"

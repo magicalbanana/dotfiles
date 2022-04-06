@@ -1,7 +1,8 @@
 [".asdf"]
-  type = "git-repo"
+  type = "archive"
   refreshPeriod = "168h"
-  url = "https://github.com/asdf-vm/asdf.git"
+  exact = true
+  url = "https://github.com/asdf-vm/asdf/archive/refs/tags/v0.9.0.tar.gz"
 [".vim/autoload/plug.vim"]
   type = "file"
   url = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
