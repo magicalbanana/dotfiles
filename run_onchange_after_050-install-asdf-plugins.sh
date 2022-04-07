@@ -33,6 +33,7 @@ plugins=(
   "gitui;https://github.com/looztra/asdf-gitui.git"
   "go-jsonnet;https://gitlab.com/craigfurman/asdf-go-jsonnet.git"
   "golang;https://github.com/kennyp/asdf-golang.git"
+  "gomigrate,https://github.com/joschi/asdf-gomigrate",
   "helm;https://github.com/Antiarchitect/asdf-helm.git"
   "jq;https://github.com/azmcode/asdf-jq.git"
   "k3d;https://github.com/spencergilbert/asdf-k3d.git"
