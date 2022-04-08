@@ -1,6 +1,13 @@
 *.tar.gz
 *.zcompdump
+.asdf/downloads
+.asdf/installs
+.asdf/plugins
+.asdf/shims
+.asdf/tmp
 .config/ranger/plugins
+.config/vifm/scripts
+.config/vifm/vifm-help.txt
 .config/zsh/.zcompdump
 .ctags.tag_file
 .netrwhist
@@ -9,8 +16,8 @@
 .vim/pack
 .vim/plugged
 README.md
-docs/
 bin/chezmoi
+docs/
 install.sh
 tab.yml
 tags
