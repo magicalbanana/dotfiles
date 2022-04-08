@@ -8,6 +8,7 @@
 .config/ranger/plugins
 .config/vifm/scripts
 .config/vifm/vifm-help.txt
+.config/vifm/viminfo.json
 .config/zsh/.zcompdump
 .ctags.tag_file
 .netrwhist
