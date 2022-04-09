@@ -17,6 +17,7 @@ export LC_ALL=en_US.UTF-8
 export LC_MONETARY=en_FI.UTF-8
 export LC_TIME=en_FI.UTF-8
 
+export LESSOPEN="|/usr/local/bin/lesspipe.sh %s"
 export VISUAL="vim"
 export EDITOR="${VISUAL}"
 export PAGER=less

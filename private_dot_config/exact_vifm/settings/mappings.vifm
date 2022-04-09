@@ -40,3 +40,6 @@ nnoremap <f8> :delete<cr>
 nnoremap ,H :history<cr>
 
 nnoremap Q :quit<cr>
+
+nnoremap <c-g> :FZFlocate<cr>
+nnoremap <c-f> :FZFfind<cr>

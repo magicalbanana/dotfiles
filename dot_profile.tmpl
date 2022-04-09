@@ -8,7 +8,17 @@ PATH="${DEVBIN}:${PATH}"
 export PYTHONDONTWRITEBYTECODE=1
 
 if command -v fzf >/dev/null 2>&1; then
-  export FZF_DEFAULT_OPTS="--bind='?:toggle-preview' --bind='ctrl-u:preview-page-up' --bind='ctrl-d:preview-page-down'"
+  export FZF_DEFAULT_OPTS='
+  --multi
+  --preview-window=:hidden
+  --bind="?:toggle-preview"
+  --bind="ctrl-u:preview-page-up"
+  --bind="ctrl-d:preview-page-down"
+  --bind="ctrl-a:select-all"
+  --bind="ctrl-y:execute-silent(echo {+} | pbcopy)"
+  --bind="ctrl-e:execute(echo {+} | xargs -o vim)"
+  --bind="ctrl-v:execute(code {+})"
+  '
 
   if command -v fd >/dev/null 2>&1; then
     export FZF_DEFAULT_COMMAND="${FZF_DEFAULT_COMMAND:-fd --type f --hidden --exclude .git}"

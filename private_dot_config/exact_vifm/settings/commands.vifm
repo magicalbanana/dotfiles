@@ -27,3 +27,20 @@ command! make !!make
 command! mkcd :mkdir %a | cd %a
 command! reload :write | restart
 
+command! FZFlocate : set noquickview
+                  \| let $FZF_PICK = term('locate $HOME | fzf --height 10 2>/dev/tty')
+                  \| if $FZF_PICK != ''
+                  \|     execute 'goto' fnameescape($FZF_PICK)
+                  \| endif
+command! FZFfind : set noquickview
+                \| let $FZF_PICK = term('find | fzf --height 10 2>/dev/tty')
+                \| if $FZF_PICK != ''
+                \|     execute 'goto' fnameescape($FZF_PICK)
+                \| endif
+
+" variation that automatically enters directories
+command! FZFlocate : set noquickview
+                  \| let $FZF_PICK = term('locate $HOME | fzf-tmux --height 10 2>/dev/tty')
+                  \| if $FZF_PICK != ''
+                  \|     execute 'goto' fnameescape($FZF_PICK)
+                  \| endif
