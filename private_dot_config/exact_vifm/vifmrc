@@ -35,6 +35,12 @@ source $VIFM/settings/mappings.vifm
 " If you would like to use another vi clone such as Elvis or Vile
 " you will need to change this setting.
 set vicmd=vim
+if executable('nvim')
+  set vicmd=nvim
+elseif $EDITOR != ''
+  echo 'Note: using `'.$EDITOR.'` as an editor'
+  let &vicmd = $EDITOR
+endif
 
 " Trash Directory
 " The default is to move files that are deleted with dd or :d to
