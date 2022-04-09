@@ -16,8 +16,6 @@ if command -v fzf >/dev/null 2>&1; then
   --bind="ctrl-d:preview-page-down"
   --bind="ctrl-a:select-all"
   --bind="ctrl-y:execute-silent(echo {+} | pbcopy)"
-  --bind="ctrl-e:execute(echo {+} | xargs -o $aliases[vim])"
-  --bind="ctrl-v:execute(code {+})"
   '
 
   if command -v fd >/dev/null 2>&1; then
