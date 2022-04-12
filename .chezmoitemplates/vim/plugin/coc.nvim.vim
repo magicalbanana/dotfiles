@@ -171,6 +171,8 @@ let g:coc_global_extensions = [
 \         'coc-json',
 \         'coc-pairs',
 \         'coc-prettier',
+\         'coc-rls',
+\         'coc-rust-analyzer',
 \         'coc-snippets',
 \         'coc-solargraph',
 \         'coc-sql',
