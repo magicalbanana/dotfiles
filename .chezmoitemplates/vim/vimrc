@@ -118,6 +118,10 @@ Plug 'fatih/vim-go', {'branch':'master'}
 Plug 'benmills/vimux-golang', {'for':'go'}
 " \}\}\}
 
+" rust \{\{\{
+Plug 'rust-lang/rust.vim'
+" \}\}\}
+
 " html/erb
 Plug 'mattn/emmet-vim', {'for':['html','eruby']}
 Plug 'alvan/vim-closetag', {'for':['html','eruby']}
