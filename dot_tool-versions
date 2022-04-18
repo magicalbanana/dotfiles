@@ -1,6 +1,6 @@
 erlang 24.3.2
 elixir 1.13.3-otp-24
-golang 1.17.8
+golang 1.18
 nodejs lts-gallium
 python 3.10.3
 ruby 2.7.4
