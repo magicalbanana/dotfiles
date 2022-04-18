@@ -6,6 +6,7 @@
 .asdf/shims
 .asdf/tmp
 .config/ranger/plugins
+.config/erlang_ls/snippets
 .config/vifm/scripts
 .config/vifm/vifm-help.txt
 .config/vifm/vifminfo.json
