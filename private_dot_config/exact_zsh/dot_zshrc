@@ -30,10 +30,6 @@ zinitScript="${HOME}/.zinit/bin/zinit.zsh"
 zinitBin=$(dirname "${zinitScript}")
 zinitDir=$(dirname "${zinitBin}")
 
-if [[ ! -f "${zinitScript}" ]]; then
-  echo-error "zinit not found, dowloading"
-fi
-
 source "${zinitScript}"
 
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
@@ -178,7 +174,7 @@ source-env() {
   for file in "$@"
   do
     if [ ! -f "${file}" ]; then
-      echo-error "the given file : ${file} does not exist"
+      echo-err "the given file : ${file} does not exist"
       exit 1
     fi
 
