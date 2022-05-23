@@ -15,7 +15,6 @@
   url = "https://github.com/zdharma-continuum/zinit.git"
 [".config/fzf/fzf-zsh-plugin"]
   type = "git-repo"
-  exact = true
   refreshPeriod = "168h"
   url = "https://github.com/unixorn/fzf-zsh-plugin.git"
 [".config/nvim/autoload/plug.vim"]
