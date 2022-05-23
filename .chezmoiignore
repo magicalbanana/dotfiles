@@ -14,7 +14,6 @@
 .ctags.tag_file
 .netrwhist
 .tmux/plugins
-.vim/autoload/plug.vim
 .vim/pack
 .vim/plugged
 README.md
