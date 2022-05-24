@@ -8,8 +8,8 @@ let g:go_echo_go_info = 0
 
 let g:go_fmt_command = 'gopls'
 let g:go_imports_autosave = 1
-let g:go_fmt_autosave = 1
-let g:gopls_gofumpt = 1
+let g:go_fmt_autosave = 0
+let g:go_gopls_gofumpt = 0
 
 let g:go_diagnostics_enabled = 0
 let g:go_metalinter_command = 'golangci-lint'
