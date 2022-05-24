@@ -24,6 +24,7 @@
     "completeUnimported": true,
     "staticcheck": true
   },
+  "go.goplsUseDaemon": true,
   "go.goplsArgs": ["-remote=auto"],
   "tsserver.watchOptions": {
     "watchFile": "useFsEvents"
@@ -41,6 +42,13 @@
     "erlang": {
       "command": "erlang_ls",
       "filetypes": ["erlang"]
+    },
+    "golangci-lint-languageserver": {
+      "command": "golangci-lint-langserver",
+      "filetypes": ["go"],
+      "initializationOptions": {
+        "command": ["golangci-lint", "run", "--enable-all", "--disable", "lll", "--out-format", "json"]
+      }
     }
   }
 }

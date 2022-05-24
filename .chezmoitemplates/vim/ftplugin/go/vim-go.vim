@@ -11,10 +11,10 @@ let g:go_imports_autosave = 1
 let g:go_fmt_autosave = 1
 let g:gopls_gofumpt = 1
 
-let g:go_diagnostics_enabled = 1
+let g:go_diagnostics_enabled = 0
 let g:go_metalinter_command = 'golangci-lint'
-let g:go_metalinter_autosave = 1
-let g:go_metalinter_enabled = ['all']
+let g:go_metalinter_autosave = 0
+let g:go_metalinter_enabled = []
 
 " don't jump to errors after metalinter is invoked
 let g:go_jump_to_error = 0
