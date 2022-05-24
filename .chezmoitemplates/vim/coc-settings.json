@@ -8,6 +8,7 @@
   "diagnostic.checkCurrentLine": true,
   "coc.preferences.formatOnSaveFiletypes": [
     "css",
+    "go",
     "graphql",
     "html",
     "javascript",
