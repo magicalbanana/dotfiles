@@ -26,10 +26,6 @@ alias misc='default'
 alias ll='ls -l --color=auto'
 alias la='ls -la --color=auto'
 
-if command -v nvim >/dev/null 2>&1; then
-  alias vim='nvim'
-fi
-
 alias vim.='vim .'
 
 if ! command -v sudoedit >/dev/null 2>&1; then
