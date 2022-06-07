@@ -53,6 +53,7 @@ plugins=(
   "trdsql;https://github.com/johnlayton/asdf-trdsql.git"
   "usql;https://github.com/itspngu/asdf-usql.git"
   "yq;https://github.com/sudermanjr/asdf-yq.git"
+  "vim;https://github.com/tsuyoshicho/asdf-vim.git"
 )
 
 if command -v asdf >/dev/null 2>&1; then
