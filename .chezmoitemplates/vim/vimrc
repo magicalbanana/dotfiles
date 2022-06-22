@@ -262,8 +262,6 @@ let $LC_NUMERIC = "en_US.UTF-8"
 let $LC_TIME = "en_US.UTF-8"
 let $LC_ALL = "en_US.UTF-8"
 
-syntax on
-
 " may need to set this if terminal doesn't support true colors
 " 24-bit color support (this should only be used with Alacritty)
 " set termguicolors
@@ -276,6 +274,9 @@ syntax on
 if (has("termguicolors"))
  set termguicolors
 endif
+
+syntax enable
+colorscheme shades_of_purple
 
 " https://www.reddit.com/r/vim/comments/7uac23/are_swap_files_necessary/
 " set autoread

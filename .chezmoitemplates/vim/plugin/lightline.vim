@@ -1,6 +1,6 @@
 " itchyny/lightline.vim \{\{\{
 let g:lightline = {
-\   'colorscheme': 'nord',
+\   'colorscheme': 'shades_of_purple',
 \   'active': {
 \    'left':  [[ 'mode', 'paste' ],
 \              [ 'readonly', 'filename', 'modified' ]],
