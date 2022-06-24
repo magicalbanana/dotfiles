@@ -262,27 +262,13 @@ let $LC_NUMERIC = "en_US.UTF-8"
 let $LC_TIME = "en_US.UTF-8"
 let $LC_ALL = "en_US.UTF-8"
 
-" may need to set this if terminal doesn't support true colors
-" 24-bit color support (this should only be used with Alacritty)
-" set termguicolors
-" let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-" let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-" colorscheme nord
-
-"""" enable 24bit true color
-" If you have vim >=8.0 or Neovim >= 0.1.5
-if (has("termguicolors"))
- set termguicolors
+" You might have to force true color when using regular vim inside tmux as the
+" colorscheme can appear to be grayscale with "termguicolors" option enabled.
+if !has('gui_running') && &term =~ '^\%(screen\|tmux\)'
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 endif
 
-syntax enable
-colorscheme shades_of_purple
-
-" https://www.reddit.com/r/vim/comments/7uac23/are_swap_files_necessary/
-" set autoread
-" autocmd! FocusGained, BufEnter * checktime
-
-" augroup reloadvimrc
-"     au!
-"     autocmd bufwritepost .vimrc source ~/.vimrc
-" augroup END
+syntax on
+set termguicolors
+colorscheme nord
