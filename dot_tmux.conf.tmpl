@@ -11,13 +11,13 @@ set -g default-command "$SHELL -l"
 set -g default-shell "$SHELL"
 
 # tmux should be pretty, we need 256 color for that
-set -g terminal-overrides ',xterm-256color:Tc'
 set -g default-terminal "tmux-256color"
-set -as terminal-overrides ,xterm*:sitm=\E'3m'
 set -a terminal-overrides ",alacritty:RGB"
 set -a terminal-overrides ",alacritty:Tc"
 set -a terminal-overrides ",*256col*:RGB"
 set -a terminal-overrides ",*256col*:Tc"
+
+set -as terminal-overrides ,xterm*:sitm=\E'3m'
 
 # scrollback buffer n lines
 set -g history-limit 20000
