@@ -41,6 +41,7 @@ plugins=(
   "kubectl;https://github.com/Banno/asdf-kubectl.git"
   "kubectx;https://gitlab.com/wt0f/asdf-kubectx"
   "kubespy;https://github.com/jfreeland/asdf-kubespy.git"
+  "lua;https://github.com/Stratus3D/asdf-lua.git"
   "neovim;https://github.com/richin13/asdf-neovim.git"
   "nodejs;https://github.com/asdf-vm/asdf-nodejs.git"
   "python;https://github.com/danhper/asdf-python.git"
@@ -52,8 +53,8 @@ plugins=(
   "tmux;https://github.com/aphecetche/asdf-tmux.git"
   "trdsql;https://github.com/johnlayton/asdf-trdsql.git"
   "usql;https://github.com/itspngu/asdf-usql.git"
-  "yq;https://github.com/sudermanjr/asdf-yq.git"
   "vim;https://github.com/tsuyoshicho/asdf-vim.git"
+  "yq;https://github.com/sudermanjr/asdf-yq.git"
 )
 
 if command -v asdf >/dev/null 2>&1; then

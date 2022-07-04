@@ -1,10 +1,13 @@
 erlang 24.3.2
 elixir 1.13.3-otp-24
+
 golang 1.18
-nodejs lts-gallium
+rust 1.59.0
+
+lua 5.4.4
 python 3.9.13
 ruby 2.7.4
-rust 1.59.0
+nodejs lts-gallium
 
 fzf 0.29.0
 jq 1.6
