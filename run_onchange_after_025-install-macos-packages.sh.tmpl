@@ -1,5 +1,6 @@
-{{- if eq .chezmoi.os "darwin" -}}
 #!/bin/sh
+
+{{ template "script_darwin_only" . }}
 
 . "${HOME}/.shtils"
 . "${HOME}/.profile"
@@ -16,4 +17,3 @@ echo-run linuxify install
 if [ -n "$GITHUB_WORKFLOW" ]; then
   echo "::endgroup::"
 fi
-{{ end -}}
