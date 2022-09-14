@@ -1,5 +1,11 @@
-{{- if eq .chezmoi.os "darwin" -}}
 #!/bin/sh
+
+{{ template "script_darwin_only" . }}
+
+# Install Rosetta on Apple M1
+{{ if (eq .chezmoi.arch "arm64")) }}
+softwareupdate --install-rosetta --agree-to-license
+{{ end }}
 
 if command -v brew >/dev/null 2>&1; then
   echo "Skipping homebrew install since it's already available"
@@ -15,4 +21,3 @@ fi
 if [ -n "$GITHUB_WORKFLOW" ]; then
   echo "::endgroup::"
 fi
-{{ end -}}
