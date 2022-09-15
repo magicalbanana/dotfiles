@@ -17,8 +17,10 @@ fi
 . "${HOME}/.asdf/asdf.sh"
 
 plugins=(
+  {{ if (and (eq .chezmoi.os "darwin") (ne .chezmoi.arch "arm64")) }}
   "bat;https://gitlab.com/wt0f/asdf-bat.git"
   "broot;https://github.com/cmur2/asdf-broot.git"
+  {{ end }}
   "concourse;https://github.com/mattysweeps/asdf-concourse.git"
   "delta;https://github.com/andweeb/asdf-delta.git"
   "dyff;https://gitlab.com/wt0f/asdf-dyff.git"
