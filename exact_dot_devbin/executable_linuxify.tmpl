@@ -45,8 +45,10 @@ linuxify_formulas=(
     "watch"
     "wget"
     "wdiff"
+    {{ if (and (eq .chezmoi.os "darwin") (ne .chezmoi.arch "arm64")) }}
     # intel only remove if M1
     "gdb"
+    {{ end }}
     "autoconf"
     "automake"
 
