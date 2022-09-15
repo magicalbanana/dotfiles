@@ -89,6 +89,7 @@ linuxify_formulas=(
     "unzip"
 )
 
+{{- if (ne .chezmoi.os "darwin") -}}
 linuxify_install_gdb() {
     if ! brew ls --versions gdb >/dev/null; then
         echo-info "Installing gdb"
@@ -99,6 +100,7 @@ linuxify_install_gdb() {
     # Or, on 10.12 Sierra or later with SIP, declare `set startup-with-shell off` in `~/.gdbinit`:
     grep -qF 'set startup-with-shell off' ~/.gdbinit || echo 'set startup-with-shell off' | tee -a ~/.gdbinit >/dev/null
 }
+{{ end -}}
 
 linuxify_install() {
     linuxify_check_os
@@ -116,9 +118,9 @@ linuxify_install() {
         fi
     done
 
-    if [[ $CPU_BRAND_STRING != 'Apple' ]]; then
-        linuxify_install_gdb
-    fi
+  {{- if (and (eq .chezmoi.os "darwin") (ne .chezmoi.arch "arm64")) }}
+    linuxify_install_gdb
+  {{ end -}}
 }
 
 linuxify_uninstall() {
