@@ -3,7 +3,7 @@
 {{ template "script_darwin_only" . }}
 
 # Install Rosetta on Apple M1
-{{ if (eq .chezmoi.arch "arm64")) }}
+{{ if (eq .chezmoi.arch "arm64") }}
 softwareupdate --install-rosetta --agree-to-license
 {{ end }}
 
