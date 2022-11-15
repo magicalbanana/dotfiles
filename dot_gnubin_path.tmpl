@@ -63,7 +63,7 @@ export PATH="${BREW_HOME}/opt/gnu-which/libexec/gnubin:$PATH"
 # grep
 export PATH="${BREW_HOME}/opt/grep/libexec/gnubin:$PATH"
 
-{{ if (and (eq .chezmoi.os "darwin") (ne .chezmoi.arch "arm64")) }}
+{{ if (and (eq .chezmoi.os "darwin") (eq .chezmoi.arch "arm64")) }}
 # ncurses PATH
 export PATH="${BREW_HOME}/opt/ncurses/bin:$PATH"
 {{ end }}
