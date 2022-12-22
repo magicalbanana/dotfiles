@@ -20,6 +20,10 @@
     "typescriptreact"
   ],
   "javascript.suggestionActions.enabled": false,
+  "eslint.packageManager": "yarn",
+  "eslint.nodePath": ".yarn/sdks",
+  "workspace.workspaceFolderCheckCwd": false,
+  "tsserver.tsdk": ".yarn/sdks/typescript/lib",
   "hover.target": "float",
   "go.goplsOptions": {
     "gofumpt": true,
