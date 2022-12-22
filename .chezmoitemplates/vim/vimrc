@@ -166,6 +166,10 @@ Plug 'vifm/vifm.vim'
 Plug 'tpope/vim-cucumber', {'for':'cucumber'}
 " \}\}\}
 
+" primsa \{\{\{
+Plug 'pantharshit00/vim-prisma', {'for':'prisma'}
+" \}\}\}
+
 " elixir \{\{\{
 Plug 'elixir-lsp/elixir-ls', { 'do': { -> g:ElixirLS.compile() } }
 Plug 'elixir-editors/vim-elixir'
