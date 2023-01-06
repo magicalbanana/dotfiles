@@ -61,11 +61,6 @@ else
   imap <CR> <Plug>CustomCocCR<Plug>DiscretionaryEnd
 endif
 
-" Make <CR> auto-select the first completion item and notify coc.nvim to
-" format on enter, <cr> could be remapped by other vim plugin
-" inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-"                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-
 " Use `[g` and `]g` to navigate diagnostics
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
@@ -161,12 +156,15 @@ nnoremap <silent> <space>k :<C-u>CocPrev<CR>
 nnoremap <silent> <space>p :<C-u>CocListResume<CR>
 
 let g:coc_global_extensions = [
+\         'coc-cmake',
 \         'coc-css',
 \         'coc-db',
 \         'coc-diagnostic',
+\         'coc-docker',
 \         'coc-elixir',
 \         'coc-eslint',
 \         'coc-go',
+\         'coc-graphql',
 \         'coc-html',
 \         'coc-json',
 \         'coc-pairs',
@@ -176,13 +174,16 @@ let g:coc_global_extensions = [
 \         'coc-rust-analyzer',
 \         'coc-snippets',
 \         'coc-solargraph',
+\         'coc-spell-checker',
 \         'coc-sql',
+\         'coc-sqlfluff',
+\         'coc-styled-components',
 \         'coc-swagger',
 \         'coc-toml',
-\         'coc-tslint',
 \         'coc-tsserver',
 \         'coc-vimlsp',
 \         'coc-yaml',
+\         'coc-yank',
 \]
 
 " let g:coc_filetypes_disable = ['ruby']
