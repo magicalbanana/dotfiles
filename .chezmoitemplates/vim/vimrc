@@ -48,6 +48,7 @@ Plug 'Yggdroot/indentLine'
 " git \{\{\{
 Plug 'rhysd/committia.vim'
 Plug 'tpope/vim-fugitive'
+Plug 'rbong/vim-flog'
 Plug 'junegunn/gv.vim'
 Plug 'mhinz/vim-signify'
 Plug 'jreybert/vimagit'
