@@ -95,3 +95,9 @@ if asdf where golang >/dev/null 2>&1; then
     export GOBIN_PATH
   fi
 fi
+
+{{ if (hasKey .data "envvars") }}
+ {{ range .data.envvars }}
+export {{ . }}
+ {{ end }}
+{{ end }}
