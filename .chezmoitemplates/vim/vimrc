@@ -234,6 +234,10 @@ Plug 'stephpy/vim-yaml'
 Plug 'terrastruct/d2-vim'
 " \}\}\}
 
+" terraform \{\{\{
+Plug 'hashivim/vim-terraform'
+" \}\}\}
+
 " language-servers \{\{\{
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'dense-analysis/ale'
