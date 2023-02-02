@@ -62,7 +62,7 @@ function! s:find_files()
     "     execute 'Files'
     " endif
     let git_dir = trim(system('cd '.shellescape(expand('%:p:h')).' && git rev-parse --show-toplevel'))
-    if !isdirectory(path)
+    if !isdirectory(git_dir)
       let path = expand('%:p:h')
     endif
     execute 'Files' git_dir
