@@ -52,15 +52,20 @@ let g:fzf_commands_expect = 'alt-enter,ctrl-x'
 " FZF \{\{\{
 " https://github.com/junegunn/fzf.vim/issues/47#issuecomment-160237795
 function! s:find_files()
-    let git_dir = FindRootDirectory()
-    if git_dir == ''
-      let git_dir = system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
+    " let git_dir = FindRootDirectory()
+    " if git_dir == ''
+    "   let git_dir = system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
+    " endif
+    " if git_dir != ''
+    "     execute 'Files' git_dir
+    " else
+    "     execute 'Files'
+    " endif
+    let git_dir = trim(system('cd '.shellescape(expand('%:p:h')).' && git rev-parse --show-toplevel'))
+    if !isdirectory(path)
+      let path = expand('%:p:h')
     endif
-    if git_dir != ''
-        execute 'Files' git_dir
-    else
-        execute 'Files'
-    endif
+    execute 'Files' git_dir
 endfunction
 command! ProjectFiles execute s:find_files()
 
@@ -70,10 +75,10 @@ nnoremap <silent> <C-g> :GFiles?<CR>
 nnoremap <silent> <C-t> :Windows<CR>
 
 " <M-p> for open buffers
-nnoremap <silent> <M-p> :Buffers<cr>
+" nnoremap <silent> <M-p> :Buffers<cr>
 
 " <M-S-p> for MRU
-nnoremap <silent> <M-S-p> :History<cr>
+" nnoremap <silent> <M-S-p> :History<cr>
 
 " Use fuzzy completion relative filepaths across directory
 imap <expr> <c-x><c-f> fzf#vim#complete#path('git ls-files $(git rev-parse --show-toplevel)')
@@ -86,7 +91,7 @@ nnoremap q: :CmdHist<CR>
 command! QHist call fzf#vim#search_history({'right': '40'})
 nnoremap q/ :QHist<CR>
 
-command! -bang -nargs=* Ack call fzf#vim#ag(<q-args>, {'down': '40%', 'options': --no-color'})
+" command! -bang -nargs=* Ack call fzf#vim#ag(<q-args>, {'down': '40%', 'options': --no-color'})
 
 function! s:line_handler(l)
   let keys = split(a:l, ':\t')
