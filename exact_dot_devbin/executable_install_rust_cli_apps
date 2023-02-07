@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+set -e
+
+cli_apps=(
+  "bat;cargo install --locked bat"
+  "broot;cargo install --locked broot"
+  "delta;cargo install --locked git-delta"
+  "rg;cargo install --locked ripgrep"
+  "fd;cargo install --locked fd-find"
+  "as-tree;cargo install -f --git https://github.com/jez/as-tree"
+  "bottom;cargo install --locked bottom"
+  "exa;cargo install --locked exa"
+)
+
+for ((i = 0; i < ${#cli_apps[@]}; i++)); do
+  IFS=';' read -r cli_app exec_install <<<"${cli_apps[i]}"
+  if ! [ -x "$(command -v "${cli_app}")" ]; then
+    echo-run "${exec_install}"
+  else
+    echo-info "cli app: ${cli_app} is already installed"
+  fi
+  unset IFS
+done
