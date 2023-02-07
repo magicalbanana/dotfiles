@@ -3,19 +3,19 @@
 set -e
 
 cli_apps=(
-  "dyff;go install github.com/homeport/dyff/cmd/dyff@latest"
-  "jsonnet;go install github.com/google/go-jsonnet/cmd/jsonnet@latest"
-  "jsonnetfmt;go install github.com/google/go-jsonnet/cmd/jsonnetfmt@latest"
-  "jsonnet-deps;go install github.com/google/go-jsonnet/cmd/jsonnet-deps@latest"
-  "jsonnet-lint;go install github.com/google/go-jsonnet/cmd/jsonnet-lint@latest"
-  "kubectx;go install github.com/ahmetb/kubectx/cmd/kubectx@latest"
-  "kubens;go install github.com/ahmetb/kubectx/cmd/kubens@latest"
+  "dyff;github.com/homeport/dyff/cmd/dyff@latest"
+  "jsonnet;github.com/google/go-jsonnet/cmd/jsonnet@latest"
+  "jsonnetfmt;github.com/google/go-jsonnet/cmd/jsonnetfmt@latest"
+  "jsonnet-deps;github.com/google/go-jsonnet/cmd/jsonnet-deps@latest"
+  "jsonnet-lint;github.com/google/go-jsonnet/cmd/jsonnet-lint@latest"
+  "kubectx;github.com/ahmetb/kubectx/cmd/kubectx@latest"
+  "kubens;github.com/ahmetb/kubectx/cmd/kubens@latest"
 )
 
 for ((i = 0; i < ${#cli_apps[@]}; i++)); do
-  IFS=';' read -r cli_app exec_install <<<"${cli_apps[i]}"
+  IFS=';' read -r cli_app go_pkg <<<"${cli_apps[i]}"
   if ! [ -x "$(command -v "${cli_app}")" ]; then
-    echo-run "${exec_install}"
+    echo-run go install "${go_pkg}"
   else
     echo-info "cli app: ${cli_app} is already installed"
   fi
