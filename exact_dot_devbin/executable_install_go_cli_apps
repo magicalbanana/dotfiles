@@ -4,13 +4,15 @@ set -e
 
 cli_apps=(
   "dyff;github.com/homeport/dyff/cmd/dyff@latest"
-  "jsonnet;github.com/google/go-jsonnet/cmd/jsonnet@latest"
-  "jsonnetfmt;github.com/google/go-jsonnet/cmd/jsonnetfmt@latest"
+  "gmailctl;github.com/mbrt/gmailctl/cmd/gmailctl@latest"
   "jsonnet-deps;github.com/google/go-jsonnet/cmd/jsonnet-deps@latest"
   "jsonnet-lint;github.com/google/go-jsonnet/cmd/jsonnet-lint@latest"
+  "jsonnet;github.com/google/go-jsonnet/cmd/jsonnet@latest"
+  "jsonnetfmt;github.com/google/go-jsonnet/cmd/jsonnetfmt@latest"
+  "k9s;github.com/derailed/k9s@latest"
   "kubectx;github.com/ahmetb/kubectx/cmd/kubectx@latest"
   "kubens;github.com/ahmetb/kubectx/cmd/kubens@latest"
-  "gmailctl;github.com/mbrt/gmailctl/cmd/gmailctl@latest"
+  "yq;github.com/mikefarah/yq/v4@latest"
 )
 
 for ((i = 0; i < ${#cli_apps[@]}; i++)); do
