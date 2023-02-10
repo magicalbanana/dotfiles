@@ -10,6 +10,7 @@ cli_apps=(
   "jsonnet-lint;github.com/google/go-jsonnet/cmd/jsonnet-lint@latest"
   "kubectx;github.com/ahmetb/kubectx/cmd/kubectx@latest"
   "kubens;github.com/ahmetb/kubectx/cmd/kubens@latest"
+  "gmailctl;github.com/mbrt/gmailctl/cmd/gmailctl@latest"
 )
 
 for ((i = 0; i < ${#cli_apps[@]}; i++)); do
