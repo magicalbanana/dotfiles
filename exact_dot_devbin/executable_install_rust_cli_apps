@@ -3,20 +3,21 @@
 set -e
 
 cli_apps=(
+  "as-tree;-f --git https://github.com/jez/as-tree"
   "bat;bat"
   "broot;broot"
-  "delta;git-delta"
-  "rg;ripgrep"
-  "fd;fd-find"
-  "as-tree;-f --git https://github.com/jez/as-tree"
   "btm;bottom"
+  "delta;git-delta"
   "exa;exa"
+  "fd;fd-find"
+  "gitui;gitui"
+  "rg;ripgrep"
 )
 
 for ((i = 0; i < ${#cli_apps[@]}; i++)); do
-  IFS=';' read -r cli_app exec_install <<<"${cli_apps[i]}"
+  IFS=';' read -r cli_app cargo_package <<<"${cli_apps[i]}"
   if ! [ -x "$(command -v "${cli_app}")" ]; then
-    echo-run cargo install --locked "${exec_install}"
+    echo-run cargo install --locked ${cargo_package}
   else
     echo-info "cli app: ${cli_app} is already installed"
   fi
