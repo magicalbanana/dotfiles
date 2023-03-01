@@ -230,6 +230,10 @@ Plug 'leafOfTree/vim-vue-plugin'
 Plug 'stephpy/vim-yaml'
 " \}\}\}
 
+" terraform \{\{\{
+Plug 'hashivim/vim-terraform'
+" \}\}\}
+
 " d2 \{\{\{
 Plug 'terrastruct/d2-vim'
 " \}\}\}
