@@ -50,7 +50,7 @@ Plug 'rhysd/committia.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'rbong/vim-flog'
 Plug 'junegunn/gv.vim'
-Plug 'mhinz/vim-signify'
+Plug 'airblade/vim-gitgutter'
 Plug 'jreybert/vimagit'
 Plug 'chrisbra/vim-diff-enhanced'
 " \}\}\}

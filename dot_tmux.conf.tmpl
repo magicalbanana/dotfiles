@@ -1,4 +1,4 @@
-# vim: ft=tmux-config
+# vim: ft=tmux
 
 # list keybindings: tmux list-keys
 
@@ -130,17 +130,20 @@ if "test ! -d ~/.tmux/plugins/tpm" \
 # Supports `github_username/repo` or full git repo URLs
 set -g @tpm_plugins '       \
   tmux-plugins/tpm          \
-  tmux-plugins/tmux-yank    \
-  tmux-plugins/tmux-copycat \
+  arcticicestudio/nord-tmux \
   laktak/extrakto           \
   thewtex/tmux-mem-cpu-load \
-  arcticicestudio/nord-tmux \
+  tmux-plugins/tmux-copycat \
+  tmux-plugins/tmux-yank    \
 '
 
 # vi-copy keys
 # -----------------------------------------------
 set -g @yank_action 'copy-pipe-no-clear'
 set -g @copy_use_osc52_fallback on
+
+# vim tmux focus events
+set -g focus-events on
 
 # wrap default shell in reattach-to-user-namespace if available
 # there is some hack with `exec & reattach`, credits to "https://github.com/gpakosz/.tmux"
