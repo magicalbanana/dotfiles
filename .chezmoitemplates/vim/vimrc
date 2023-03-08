@@ -131,6 +131,9 @@ Plug 'whatyouhide/vim-textobj-erb', {'for':'eruby'}
 Plug 'elzr/vim-json', {'for':'json'}
 Plug 'kevinoid/vim-jsonc', {'for':'json'}
 
+" jsonnet
+Plug 'google/vim-jsonnet'
+
 " markdown
 Plug 'godlygeek/tabular', {'for':'markdown'} " must come before vim-markdown
 Plug 'plasticboy/vim-markdown', {'for':'markdown'}
