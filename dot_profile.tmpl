@@ -86,15 +86,16 @@ source "${HOME}/.asdf/asdf.sh"
 if asdf where golang >/dev/null 2>&1; then
   GOBIN_PATH="$(asdf where golang)/bin"
 
-  if [ -d "${GOBIN_PATH}" ]; then
-    if [ -z $(go env GOBIN) ]; then
-      go env -u $GOBIN_PATH
-    fi
-
-    go env -w GOBIN=$GOBIN_PATH
-    export GOBIN_PATH
-    PATH="${GOBIN_PATH}:${PATH}"
+  if [ ! -d "${GOBIN_PATH}" ]; then
+    mkdir -p "${GOBIN_PATH}"
   fi
+  if [ -z $(go env GOBIN) ]; then
+    go env -u $GOBIN_PATH
+  fi
+
+  go env -w GOBIN=$GOBIN_PATH
+  export GOBIN_PATH
+  PATH="${GOBIN_PATH}:${PATH}"
 fi
 
 {{- if (hasKey . "envvars") }}
