@@ -89,7 +89,7 @@ if asdf where golang >/dev/null 2>&1; then
     PATH="${GOBIN_PATH}:${PATH}"
 
     if [ -z $(go env GOBIN) ]; then
-      go env -u GOBIN
+      go env -u $GOBIN_PATH
     fi
     go env -w GOBIN=$GOBIN_PATH
     export GOBIN_PATH
