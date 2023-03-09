@@ -103,3 +103,8 @@ fi
 export {{ . }}
  {{ end }}
 {{ end -}}
+
+1PASSWORD_SSH_AGENT="${HOME}/.1password/agent.sock"
+if test -S "${1PASSWORD_SSH_AGENT}"; then
+  export SSH_AUTH_SOCK="${1PASSWORD_SSH_AGENT}"
+fi
