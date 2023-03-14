@@ -22,6 +22,7 @@ Plug 'junegunn/goyo.vim'
 Plug 'airblade/vim-rooter'
 Plug 'Konfekt/FastFold'
 Plug 'pbrisbin/vim-mkdir'
+Plug 'tpope/vim-obsession'
 " \}\}\}
 
 " syntax \{\{\{
