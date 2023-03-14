@@ -269,10 +269,6 @@ set noswapfile
 set undodir=~/.vim-undo
 set undofile
 
-filetype on
-filetype plugin on
-filetype indent on
-
 let $LANG = "en_US.UTF-8"
 let $LC_COLLATE = "en_US.UTF-8"
 let $LC_CTYPE = "en_US.UTF-8"
@@ -289,6 +285,5 @@ if !has('gui_running') && &term =~ '^\%(screen\|tmux\)'
   let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 endif
 
-syntax on
 set termguicolors
 colorscheme nord
