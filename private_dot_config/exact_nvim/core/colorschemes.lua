@@ -7,19 +7,19 @@ local M = {}
 -- Colorscheme to its directory name mapping, because colorscheme repo name is not necessarily
 -- the same as the colorscheme name itself.
 M.colorscheme2dir = {
-  onedark = "onedark.nvim",
-  edge = "edge",
-  sonokai = "sonokai",
-  gruvbox_material = "gruvbox-material",
-  nord = "nord.nvim",
-  everforest = "everforest",
-  nightfox = "nightfox.nvim",
-  kanagawa = "kanagawa.nvim",
   catppuccin = "catppuccin",
-  rose_pine = "rose-pine",
-  onedarkpro = "onedarkpro.nvim",
-  monokai = "monokai.nvim",
+  everforest = "everforest",
+  zephyr = "zephyr-nvim",
+  gruvbox_material = "gruvbox-material",
+  kanagawa = "kanagawa.nvim",
   material = "material.nvim",
+  monokai = "monokai.nvim",
+  nightfox = "nightfox.nvim",
+  nord = "nord.nvim",
+  onedark = "onedark.nvim",
+  onedarkpro = "onedarkpro.nvim",
+  rose_pine = "rose-pine",
+  sonokai = "sonokai",
 }
 
 M.gruvbox8 = function()
@@ -37,11 +37,8 @@ M.onedark = function()
   vim.cmd([[colorscheme onedark]])
 end
 
-M.edge = function()
-  vim.g.edge_enable_italic = 1
-  vim.g.edge_better_performance = 1
-
-  vim.cmd([[colorscheme edge]])
+M.zephyr = function()
+  vim.cmd([[colorscheme zephyr]])
 end
 
 M.sonokai = function()
@@ -151,4 +148,3 @@ end
 
 -- Load a random colorscheme
 M.rand_colorscheme()
-

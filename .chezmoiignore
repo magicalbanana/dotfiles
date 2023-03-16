@@ -5,8 +5,9 @@
 .asdf/plugins
 .asdf/shims
 .asdf/tmp
-.config/ranger/plugins
 .config/erlang_ls/snippets
+.config/nvim/plug.vim
+.config/ranger/plugins
 .config/vifm/scripts
 .config/vifm/vifm-help.txt
 .config/vifm/vifminfo.json

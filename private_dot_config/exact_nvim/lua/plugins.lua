@@ -111,23 +111,27 @@ packer.startup {
 
     -- search emoji and other symbols
     use { "nvim-telescope/telescope-symbols.nvim", after = "telescope.nvim" }
+    use { "kyazdani42/nvim-web-devicons", event = "VimEnter" }
 
     -- colorschemes
-    use { "navarasu/onedark.nvim", opt = true }
-    use { "sainnhe/edge", opt = true }
-    use { "sainnhe/sonokai", opt = true }
-    use { "sainnhe/gruvbox-material", opt = true }
-    use { "shaunsingh/nord.nvim", opt = true }
-    use { "sainnhe/everforest", opt = true }
+    use { "ChristianChiarulli/nvcode-color-schemes.vim", opt = true }
     use { "EdenEast/nightfox.nvim", opt = true }
-    use { "rebelot/kanagawa.nvim", opt = true }
     use { "catppuccin/nvim", as = "catppuccin", opt = true }
-    use({ "rose-pine/neovim", as = 'rose-pine', opt = true })
-    use { "olimorris/onedarkpro.nvim", opt = true }
-    use { "tanvirtin/monokai.nvim", opt = true }
+    use { "glepnir/zephyr-nvim", opt = true }
+    use { "rmehri01/onenord.nvim", opt = true }
     use { "marko-cerovac/material.nvim", opt = true }
-
-    use { "kyazdani42/nvim-web-devicons", event = "VimEnter" }
+    use { "navarasu/onedark.nvim", opt = true }
+    use { "nyoom-engineering/oxocarbon.nvim", opt = true }
+    use { "olimorris/onedarkpro.nvim", opt = true }
+    use { "rebelot/kanagawa.nvim", opt = true }
+    use { "sainnhe/gruvbox-material", opt = true }
+    use { "sainnhe/sonokai", opt = true }
+    use { "shaunsingh/moonlight.nvim", opt = true}
+    use { "shaunsingh/nord.nvim", opt = true }
+    use { "tanvirtin/monokai.nvim", opt = true }
+    use { "yashguptaz/calvera-dark.nvim", opt = true }
+    use { 'embark-theme/vim', as = 'embark' }
+    use { "rose-pine/neovim", as = 'rose-pine', opt = true }
 
     use {
       "nvim-lualine/lualine.nvim",
@@ -215,27 +219,26 @@ packer.startup {
     -- Auto format tools
     use { "sbdchd/neoformat", cmd = { "Neoformat" } }
 
+    -- Git Tools
     -- Git command inside vim
     use { "tpope/vim-fugitive", event = "User InGitRepo", config = [[require('config.fugitive')]] }
-
     -- Better git log display
     use { "rbong/vim-flog", requires = "tpope/vim-fugitive", cmd = { "Flog" } }
-
     use { "christoomey/vim-conflicted", requires = "tpope/vim-fugitive", cmd = { "Conflicted" } }
-
     use {
       "ruifm/gitlinker.nvim",
       requires = "nvim-lua/plenary.nvim",
       event = "User InGitRepo",
       config = [[require('config.git-linker')]],
     }
-
     -- Show git change (change, delete, add) signs in vim sign column
     use { "lewis6991/gitsigns.nvim", config = [[require('config.gitsigns')]] }
-
     -- Better git commit experience
     use { "rhysd/committia.vim", opt = true, setup = [[vim.cmd('packadd committia.vim')]] }
+    -- Git diff view
+    use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
 
+    -- Quickfix Window
     use { "kevinhwang91/nvim-bqf", ft = "qf", config = [[require('config.bqf')]] }
 
     -- Another markdown plugin
@@ -280,6 +283,9 @@ packer.startup {
         setup = [[vim.cmd('packadd firenvim')]],
       }
     end
+
+    -- Surround
+    use { "kylechui/nvim-surround", tag = "*" }
 
     -- Debugger plugin
     if vim.g.is_win or vim.g.is_linux then
