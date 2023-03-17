@@ -152,6 +152,11 @@ if command -v exa >/dev/null 2>&1; then
   alias ll='exa -l --color always --icons -a -s type'
 fi
 
+if command -v nvim >/dev/null 2>&1; then
+  unalias -m 'vim'
+  alias vim='nvim'
+fi
+
 if command -v bat >/dev/null 2>&1; then
   unalias -m 'cat'
   alias cat='bat -pp --theme="Nord"'
