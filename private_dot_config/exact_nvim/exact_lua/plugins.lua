@@ -323,6 +323,10 @@ packer.startup {
       requires = { "kyazdani42/nvim-web-devicons" },
       config = [[require('config.nvim-tree')]],
     }
+    use {
+      "luukvbaal/nnn.nvim",
+      config = function() require("nnn").setup() end
+    }
 
     use { "ii14/emmylua-nvim", ft = "lua" }
 
