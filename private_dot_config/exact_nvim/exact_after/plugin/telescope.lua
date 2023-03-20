@@ -70,13 +70,13 @@ telescope.setup({
   },
 })
 
-telescope.load_extension("fzf")
 telescope.load_extension("node_modules")
+telescope.load_extension("fzf")
 
 local builtin = require('telescope.builtin')
 local keymap = vim.keymap
 
-keymap.set('n', '<leader>ff', builtin.find_files, {})
-keymap.set('n', '<leader>fg', builtin.live_grep, {})
-keymap.set('n', '<leader>fh', builtin.help_tags, {})
-keymap.set('n', '<leader>fb', builtin.buffers, {})
+keymap.set('n', '<leader>tf', builtin.find_files, {})
+keymap.set('n', '<leader>tg', builtin.live_grep, {})
+keymap.set('n', '<leader>th', builtin.help_tags, {})
+keymap.set('n', '<leader>tb', builtin.buffers, {})
