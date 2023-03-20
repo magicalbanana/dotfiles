@@ -22,26 +22,26 @@ dashboard.custom_center = {
   {
     icon = "  ",
     desc = "Find  File                              ",
-    action = "Leaderf file --popup",
-    shortcut = "<Leader> f f",
+    action = "Telescope find_files",
+    shortcut = "<leader> t f",
   },
   {
     icon = "  ",
     desc = "Recently opened files                   ",
-    action = "Leaderf mru --popup",
-    shortcut = "<Leader> f r",
+    action = "Telescope bufers",
+    shortcut = "<leader> t b",
   },
   {
     icon = "  ",
     desc = "Project grep                            ",
-    action = "Leaderf rg --popup",
-    shortcut = "<Leader> f g",
+    action = "Telescope live_grep",
+    shortcut = "<leader> f g",
   },
   {
     icon = "  ",
     desc = "Open Nvim config                        ",
     action = "tabnew $MYVIMRC | tcd %:p:h",
-    shortcut = "<Leader> e v",
+    shortcut = "<leader> e v",
   },
   {
     icon = "  ",

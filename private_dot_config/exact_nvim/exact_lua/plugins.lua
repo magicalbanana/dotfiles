@@ -285,7 +285,12 @@ packer.startup {
     end
 
     -- Surround
-    use { "kylechui/nvim-surround", tag = "*" }
+    use { "kylechui/nvim-surround",
+      tag = "*",
+      config = function()
+          require("nvim-surround").setup()
+      end
+    }
 
     -- Debugger plugin
     if vim.g.is_win or vim.g.is_linux then
@@ -293,7 +298,10 @@ packer.startup {
     end
 
     -- Session management plugin
-    use { "tpope/vim-obsession", cmd = "Obsession" }
+    use { "glepnir/dbsession.nvim",
+        cmd = { "SessionSave", "SessionDelete", "SessionLoad" },
+        config = function() require('dbsession').setup({}) end
+    }
 
     -- Yank support
     if vim.g.is_linux then
@@ -331,6 +339,9 @@ packer.startup {
     use { "ii14/emmylua-nvim", ft = "lua" }
 
     use { "j-hui/fidget.nvim", after = "nvim-lspconfig", config = [[require('config.fidget-nvim')]] }
+
+    -- JSON schemas
+    use { "b0o/schemastore.nvim" }
 
     -- Terminal
     use {
