@@ -295,9 +295,18 @@ packer.startup {
     -- Session management plugin
     use { "tpope/vim-obsession", cmd = "Obsession" }
 
+    -- Yank support
     if vim.g.is_linux then
       use { "ojroques/vim-oscyank", cmd = { "OSCYank", "OSCYankReg" } }
     end
+
+    -- Terminal
+    use {
+      "akinsho/toggleterm.nvim",
+      tag = '*', config = function()
+        require("toggleterm").setup()
+      end
+    }
 
     -- The missing auto-completion for cmdline!
     use { "gelguy/wilder.nvim", opt = true, setup = [[vim.cmd('packadd wilder.nvim')]] }
