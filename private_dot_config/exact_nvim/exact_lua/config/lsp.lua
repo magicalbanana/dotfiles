@@ -215,8 +215,8 @@ local ensured_installed = {}
 for _, server in pairs(lsp_servers) do
   ensured_installed[#ensured_installed+1] = server[1]
 end
-require("mason").setup()
 
+require("mason").setup()
 require("mason-lspconfig").setup({
   ensured_installed = ensured_installed
 })
