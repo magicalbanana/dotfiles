@@ -1,0 +1,47 @@
+require("mason").setup()
+
+local mason_lspconfig = require("mason_lspconfig")
+
+mason_lspconfig.setup {
+  ensure_installed = {
+    "arduino_language_server",
+    "bashls",
+    "clangd",
+    "clojure_lsp",
+    "cmake",
+    "codeql",
+    "cssls",
+    "cssmodules_ls",
+    "docker_compose_language_service",
+    "dockerls",
+    "elixirls",
+    "erlangls",
+    "eslint",
+    "fennel_language_server",
+    "golangci_lint_ls",
+    "gopls",
+    "grammarly",
+    "graphql",
+    "hls",
+    "html",
+    "jsonls",
+    "jsonnet_ls",
+    "kotlin_language_server",
+    "ltex",
+    "marksman",
+    "perlnavigator",
+    "pylsp",
+    "quick_lint_js",
+    "r_language_server",
+    "rust_analyzer",
+    "sorbet",
+    "spectral",
+    "sqlls",
+    "taplo",
+    "terraformls",
+    "tflint",
+    "tsserver",
+    "yaml-language-server",
+    "yamllint",
+  }
+}
