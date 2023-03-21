@@ -95,7 +95,6 @@ local custom_attach = function(client, bufnr)
 end
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
 local lsp_servers = {
   { "arduino_language_server" },
   { "bashls" },
@@ -107,7 +106,7 @@ local lsp_servers = {
   },
   { "clojure_lsp" },
   { "cmake" },
-  { "codeql" },
+  { "codeqlls" },
   { "cssls" },
   { "cssmodules_ls" },
   { "docker_compose_language_service" },
@@ -215,14 +214,14 @@ local ensured_installed = {}
 
 for _, server in pairs(lsp_servers) do
   ensured_installed[#ensured_installed+1] = server[1]
-
 end
 require("mason").setup()
+
 require("mason-lspconfig").setup({
   ensured_installed = ensured_installed
 })
-local lspconfig = require('lspconfig')
 
+local lspconfig = require("lspconfig")
 for _, server in pairs(lsp_servers) do
   local config = lspconfig[server[1]]
   local server_executable = config.document_config.default_config.cmd
