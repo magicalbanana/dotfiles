@@ -98,6 +98,15 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 local lspconfig = require("lspconfig")
 
+lspconfig.jsonls.setup {
+  settings = {
+    json = {
+      schemas = require('schemastore').json.schemas(),
+      validate = { enable = true },
+    },
+  },
+}
+
 if utils.executable("pylsp") then
   lspconfig.pylsp.setup {
     on_attach = custom_attach,
