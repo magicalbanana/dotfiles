@@ -8,8 +8,6 @@ local M = {}
 -- the same as the colorscheme name itself.
 M.colorscheme2dir = {
   catppuccin = "catppuccin",
-  everforest = "everforest",
-  zephyr = "zephyr-nvim",
   gruvbox_material = "gruvbox-material",
   kanagawa = "kanagawa.nvim",
   material = "material.nvim",
@@ -20,6 +18,7 @@ M.colorscheme2dir = {
   onedarkpro = "onedarkpro.nvim",
   rose_pine = "rose-pine",
   sonokai = "sonokai",
+  zephyr = "zephyr-nvim",
 }
 
 M.gruvbox8 = function()
