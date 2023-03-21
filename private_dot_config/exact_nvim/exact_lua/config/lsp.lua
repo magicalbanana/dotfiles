@@ -5,6 +5,8 @@ local lsp = vim.lsp
 local diagnostic = vim.diagnostic
 
 local utils = require("utils")
+local mason = require("mason")
+local mason_lspconfig = require("mason-lspconfig")
 
 local custom_attach = function(client, bufnr)
   -- Mappings.
@@ -216,8 +218,8 @@ for _, server in pairs(lsp_servers) do
   ensured_installed[#ensured_installed+1] = server[1]
 end
 
-require("mason").setup()
-require("mason-lspconfig").setup({
+mason.setup()
+mason_lspconfig.setup({
   ensured_installed = ensured_installed
 })
 
