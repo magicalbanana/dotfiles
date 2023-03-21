@@ -96,7 +96,64 @@ end
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
+require("mason").setup()
+
+local mason_lspconfig = require("mason_lspconfig")
+mason_lspconfig.setup {
+  ensure_installed = {
+    "arduino_language_server",
+    "bashls",
+    "clangd",
+    "clojure_lsp",
+    "cmake",
+    "codeql",
+    "cssls",
+    "cssmodules_ls",
+    "docker_compose_language_service",
+    "dockerls",
+    "elixirls",
+    "erlangls",
+    "eslint",
+    "fennel_language_server",
+    "golangci_lint_ls",
+    "gopls",
+    "grammarly",
+    "graphql",
+    "hls",
+    "html",
+    "jsonls",
+    "jsonnet_ls",
+    "kotlin_language_server",
+    "ltex",
+    "marksman",
+    "perlnavigator",
+    "pylsp",
+    "quick_lint_js",
+    "r_language_server",
+    "rust_analyzer",
+    "sorbet",
+    "spectral",
+    "sqlls",
+    "taplo",
+    "terraformls",
+    "tflint",
+    "tsserver",
+    "yaml-language-server",
+    "yamllint",
+  }
+}
+
 local lspconfig = require("lspconfig")
+
+lspconfig.sorbet.setup {
+  filetypes = { "ruby", "rspec" },
+  settings = {
+    json = {
+      schemas = require('schemastore').json.schemas(),
+      validate = { enable = true },
+    },
+  },
+}
 
 lspconfig.jsonls.setup {
   settings = {
@@ -107,106 +164,96 @@ lspconfig.jsonls.setup {
   },
 }
 
-if utils.executable("pylsp") then
-  lspconfig.pylsp.setup {
-    on_attach = custom_attach,
-    settings = {
-      pylsp = {
-        plugins = {
-          pylint = { enabled = true, executable = "pylint" },
-          pyflakes = { enabled = false },
-          pycodestyle = { enabled = false },
-          jedi_completion = { fuzzy = true },
-          pyls_isort = { enabled = true },
-          pylsp_mypy = { enabled = true },
-        },
-      },
+lspconfig.yamlls.setup {
+  settings = {
+    yaml = {
+      schemas = require('schemastore').yaml.schemas(),
     },
-    flags = {
-      debounce_text_changes = 200,
-    },
-    capabilities = capabilities,
-  }
-else
-  vim.notify("pylsp not found!", vim.log.levels.WARN, { title = "Nvim-config" })
-end
-
-if utils.executable("ltex-ls") then
-  lspconfig.ltex.setup {
-    on_attach = custom_attach,
-    cmd = { "ltex-ls" },
-    filetypes = { "text", "plaintex", "tex", "markdown" },
-    settings = {
-      ltex = {
-        language = "en"
-      },
-    },
-    flags = { debounce_text_changes = 300 },
+  },
 }
-end
 
-if utils.executable("clangd") then
-  lspconfig.clangd.setup {
-    on_attach = custom_attach,
-    capabilities = capabilities,
-    filetypes = { "c", "cpp", "cc" },
-    flags = {
-      debounce_text_changes = 500,
-    },
-  }
-end
-
--- set up vim-language-server
-if utils.executable("vim-language-server") then
-  lspconfig.vimls.setup {
-    on_attach = custom_attach,
-    flags = {
-      debounce_text_changes = 500,
-    },
-    capabilities = capabilities,
-  }
-else
-  vim.notify("vim-language-server not found!", vim.log.levels.WARN, { title = "Nvim-config" })
-end
-
--- set up bash-language-server
-if utils.executable("bash-language-server") then
-  lspconfig.bashls.setup {
-    on_attach = custom_attach,
-    capabilities = capabilities,
-  }
-end
-
-if utils.executable("lua-language-server") then
-  -- settings for lua-language-server can be found on https://github.com/LuaLS/lua-language-server/wiki/Settings .
-  lspconfig.lua_ls.setup {
-    on_attach = custom_attach,
-    settings = {
-      Lua = {
-        runtime = {
-          -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-          version = "LuaJIT",
-        },
-        diagnostics = {
-          -- Get the language server to recognize the `vim` global
-          globals = { "vim" },
-        },
-        workspace = {
-          -- Make the server aware of Neovim runtime files,
-          -- see also https://github.com/LuaLS/lua-language-server/wiki/Libraries#link-to-workspace .
-          -- Lua-dev.nvim also has similar settings for lua ls, https://github.com/folke/neodev.nvim/blob/main/lua/neodev/luals.lua .
-          library = {
-            fn.stdpath("data") .. "/site/pack/packer/opt/emmylua-nvim",
-            fn.stdpath("config"),
-          },
-          maxPreload = 2000,
-          preloadFileSize = 50000,
-        },
+lspconfig.pylsp.setup {
+  on_attach = custom_attach,
+  settings = {
+    pylsp = {
+      plugins = {
+        pylint = { enabled = true, executable = "pylint" },
+        pyflakes = { enabled = false },
+        pycodestyle = { enabled = false },
+        jedi_completion = { fuzzy = true },
+        pyls_isort = { enabled = true },
+        pylsp_mypy = { enabled = true },
       },
     },
-    capabilities = capabilities,
-  }
-end
+  },
+  flags = {
+    debounce_text_changes = 200,
+  },
+  capabilities = capabilities,
+}
+
+lspconfig.ltex.setup {
+  on_attach = custom_attach,
+  cmd = { "ltex-ls" },
+  filetypes = { "text", "plaintex", "tex", "markdown" },
+  settings = {
+    ltex = {
+      language = "en"
+    },
+  },
+  flags = { debounce_text_changes = 300 },
+}
+
+lspconfig.clangd.setup {
+  on_attach = custom_attach,
+  capabilities = capabilities,
+  filetypes = { "c", "cpp", "cc" },
+  flags = {
+    debounce_text_changes = 500,
+  },
+}
+
+lspconfig.vimls.setup {
+  on_attach = custom_attach,
+  flags = {
+    debounce_text_changes = 500,
+  },
+  capabilities = capabilities,
+}
+
+lspconfig.bashls.setup {
+  on_attach = custom_attach,
+  capabilities = capabilities,
+}
+
+-- settings for lua-language-server can be found on https://github.com/LuaLS/lua-language-server/wiki/Settings .
+lspconfig.lua_ls.setup {
+  on_attach = custom_attach,
+  settings = {
+    Lua = {
+      runtime = {
+        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+        version = "LuaJIT",
+      },
+      diagnostics = {
+        -- Get the language server to recognize the `vim` global
+        globals = { "vim" },
+      },
+      workspace = {
+        -- Make the server aware of Neovim runtime files,
+        -- see also https://github.com/LuaLS/lua-language-server/wiki/Libraries#link-to-workspace .
+        -- Lua-dev.nvim also has similar settings for lua ls, https://github.com/folke/neodev.nvim/blob/main/lua/neodev/luals.lua .
+        library = {
+          fn.stdpath("data") .. "/site/pack/packer/opt/emmylua-nvim",
+          fn.stdpath("config"),
+        },
+        maxPreload = 2000,
+        preloadFileSize = 50000,
+      },
+    },
+  },
+  capabilities = capabilities,
+}
 
 -- Change diagnostic signs.
 fn.sign_define("DiagnosticSignError", { text = "✗", texthl = "DiagnosticSignError" })
