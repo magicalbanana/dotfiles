@@ -63,13 +63,12 @@ packer.startup {
     end
 
     -- nvim-lsp configuration (it relies on cmp-nvim-lsp, so it should be loaded after cmp-nvim-lsp).
-    use { "neovim/nvim-lspconfig",
-      requires = {
-        { "williamboman/mason.nvim" },
-        { "williamboman/mason-lspconfig.nvim" }
-      },
+    use {
+      "williamboman/mason.nvim",
+      "williamboman/mason-lspconfig.nvim",
+      "neovim/nvim-lspconfig",
+      config = [[require('config.lsp')]],
       after = "cmp-nvim-lsp",
-      config = [[require('config.lsp')]]
     }
 
     if vim.g.is_mac then
