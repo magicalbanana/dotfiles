@@ -226,8 +226,10 @@ local lspconfig = require('lspconfig')
 for _, server in pairs(lsp_servers) do
   local config = lspconfig[server[1]]
   local server_executable = config.document_config.default_config.cmd
-    break
+
   if(type(server_executable) ~= "table") then
+    break
+
   end
   server_executable = server_executable[1]
 
