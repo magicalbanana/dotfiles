@@ -218,7 +218,7 @@ for _, server in pairs(lsp_servers) do
 
 end
 require("mason").setup()
-require("mason_lspconfig").setup({
+require("mason-lspconfig").setup({
   ensured_installed = ensured_installed
 })
 local lspconfig = require('lspconfig')
