@@ -5,8 +5,6 @@ local lsp = vim.lsp
 local diagnostic = vim.diagnostic
 
 local utils = require("utils")
-local mason = require("mason")
-local mason_lspconfig = require("mason-lspconfig")
 
 local custom_attach = function(client, bufnr)
   -- Mappings.
@@ -97,6 +95,12 @@ local custom_attach = function(client, bufnr)
 end
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+local mason = require("mason")
+local mason_lspconfig = require("mason-lspconfig")
+mason.setup()
+mason_lspconfig.setup()
+
 local lsp_servers = {
   { "arduino_language_server" },
   { "bashls" },
@@ -211,18 +215,6 @@ local lsp_servers = {
     },
   },
 }
-
-local ensured_installed = {}
-
-for _, server in pairs(lsp_servers) do
-  ensured_installed[#ensured_installed+1] = server[1]
-end
-
-mason.setup()
-mason_lspconfig.setup({
-  ensured_installed = ensured_installed
-})
-
 local lspconfig = require("lspconfig")
 for _, server in pairs(lsp_servers) do
   local config = lspconfig[server[1]]
@@ -230,7 +222,6 @@ for _, server in pairs(lsp_servers) do
 
   if(type(server_executable) ~= "table") then
     break
-
   end
   server_executable = server_executable[1]
 

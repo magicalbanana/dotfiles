@@ -62,20 +62,17 @@ packer.startup {
       use { "hrsh7th/cmp-emoji", after = "nvim-cmp" }
     end
 
+    use { "williamboman/mason.nvim" }
+    use { "williamboman/mason-lspconfig.nvim" }
+
     -- nvim-lsp configuration (it relies on cmp-nvim-lsp, so it should be loaded after cmp-nvim-lsp).
     use {
       "neovim/nvim-lspconfig",
       config = [[require('config.lsp')]],
       after = "cmp-nvim-lsp",
-      requires = {
-        { 
-          "williamboman/mason-lspconfig.nvim",
-          requires = { "williamboman/mason.nvim" },
-          wants = "mason.nvim",
-        },
-      },
       wants = {
-        "mason-lspconfig.nvim"
+        "mason.nvim",
+        "mason-lspconfig.nvim",
       }
     }
 
