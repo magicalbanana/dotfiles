@@ -2,6 +2,7 @@ vim.cmd([[hi HopNextKey cterm=bold ctermfg=176 gui=bold guibg=#ff00ff guifg=#fff
 vim.cmd([[hi HopNextKey1 cterm=bold ctermfg=176 gui=bold guibg=#ff00ff guifg=#ffffff]])
 vim.cmd([[hi HopNextKey2 cterm=bold ctermfg=176 gui=bold guibg=#ff00ff guifg=#ffffff]])
 
+local keymap = vim.keymap
 local hop = require("hop")
 hop.setup {
   case_insensitive = true,
@@ -9,18 +10,11 @@ hop.setup {
   quit_key = "<Esc>",
 }
 
-local keymap = vim.keymap
-local directions = require("hop.hint").HintDirection
-
-keymap.set('', 'f', function()
-  hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true })
-end, {remap=true})
-keymap.set('', 'F', function()
-  hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true })
-end, {remap=true})
-keymap.set('', 't', function()
-  hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true, hint_offset = -1 })
-end, {remap=true})
-keymap.set('', 'T', function()
-  hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })
-end, {remap=true})
+keymap.set({ "n", "v", "o" }, "f", "", {
+  silent = true,
+  noremap = true,
+  callback = function()
+    hop.hint_char2()
+  end,
+  desc = "nvim-hop char2",
+})

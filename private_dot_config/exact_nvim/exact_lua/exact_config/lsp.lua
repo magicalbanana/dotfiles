@@ -97,7 +97,7 @@ end
 local lsp_servers = {
   arduino_language_server = {},
   bashls = {},
-  clangd = { 
+  clangd = {
     filetypes = { "c", "cpp", "cc" },
     flags = {
       debounce_text_changes = 500,
@@ -194,7 +194,7 @@ local lsp_servers = {
   terraformls = {},
   tflint = {},
   tsserver = {},
-  vimls = { 
+  vimls = {
     flags = {
       debounce_text_changes = 500,
     },
@@ -214,14 +214,93 @@ local mason_lspconfig = require("mason-lspconfig")
 mason.setup()
 mason_lspconfig.setup()
 
-local ensured_installed = {}
-for server, _ in pairs(lsp_servers) do
-  ensured_installed[#ensured_installed+1] = server
-end
-
 local mason_tool_installer = require("mason-tool-installer")
 mason_tool_installer.setup({
-  ensured_installed = ensured_installed,
+  ensured_installed = {
+    "actionlint",
+    "arduino-language-server",
+    "bash-language-server",
+    "buf",
+    "clojure-lsp",
+    "codeql",
+    "commitlint",
+    "css-lsp",
+    "cssmodules-language-server",
+    "delve",
+    "diagnostic-languageserver",
+    "docker-compose-language-service",
+    "dockerfile-language-server",
+    "elixir-ls",
+    "erlang-ls",
+    "eslint-lsp",
+    "fennel-language-server",
+    "fixjson",
+    "flake8",
+    "gitlint",
+    "go-debug-adapter",
+    "gofumpt",
+    "goimports",
+    "goimports-reviser",
+    "golangci-lint",
+    "golangci-lint-langserver",
+    "golines",
+    "gomodifytags",
+    "gopls",
+    "gospel",
+    "gotests",
+    "gotestsum",
+    "grammarly-languageserver",
+    "graphql-language-service-cli",
+    "hadolint",
+    "haskell-language-server",
+    "html-lsp",
+    "impl",
+    "json-lsp",
+    "json-to-struct",
+    "jsonlint",
+    "kotlin-debug-adapter",
+    "kotlin-language-server",
+    "lua-language-server",
+    "luacheck",
+    "luacheck",
+    "luaformatter",
+    "markdownlint",
+    "marksman",
+    "misspell",
+    "prettier",
+    "prettierd",
+    "r-languageserver",
+    "revive",
+    "revive",
+    "rubocop",
+    "ruby-lsp",
+    "rust-analyzer",
+    "rustfmt",
+    "salt-ls",
+    "semgrep",
+    "shellcheck",
+    "shellharden",
+    "shfmt",
+    "solargraph",
+    "sorbet",
+    "spectral-language-server",
+    "sql-formatter",
+    "sqlfluff",
+    "sqlls",
+    "sqlls",
+    "staticcheck",
+    "staticcheck",
+    "stylua",
+    "taplo",
+    "terraform-ls",
+    "tflint",
+    "typescript-language-server",
+    "vim-language-server",
+    "vint",
+    "yaml-language-server",
+    "yamlfmt",
+    "yamllint",
+  },
 })
 
 local lspconfig = require("lspconfig")
