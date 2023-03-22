@@ -19,7 +19,7 @@ M.colorscheme2dir = {
   oxocarbon = "oxocarbon.nvim",
   rose_pine = "rose-pine",
   sonokai = "sonokai",
-  tokyonight = "tokyonight",
+  tokyonight = "tokyonight.nvim",
   zephyr = "zephyr-nvim",
 }
 
