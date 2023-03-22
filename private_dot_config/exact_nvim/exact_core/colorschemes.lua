@@ -59,6 +59,13 @@ M.gruvbox_material = function()
 end
 
 M.nord = function()
+  vim.g.nord_contrast = true
+  vim.g.nord_borders = false
+  vim.g.nord_disable_background = false
+  vim.g.nord_italic = false
+  vim.g.nord_uniform_diff_background = true
+  vim.g.nord_bold = false
+
   vim.cmd([[colorscheme nord]])
 end
 
@@ -74,7 +81,17 @@ M.everforest = function()
 end
 
 M.nightfox = function()
-  vim.cmd([[colorscheme nordfox]])
+  local themes = {
+    nightfox,
+    dayfox,
+    dawnfox,
+    duskfox,
+    nordfox,
+    terafox,
+    carbonfox,
+  }
+
+  vim.cmd("colorscheme " .. themes[utils.rand_int(1, table.getn(themes))])
 end
 
 M.kanagawa = function()
