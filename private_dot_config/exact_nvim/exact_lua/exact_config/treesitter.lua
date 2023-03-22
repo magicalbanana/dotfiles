@@ -55,4 +55,9 @@ require("nvim-treesitter.configs").setup {
     enable = true, -- false will disable the whole extension
     disable = { 'help' }, -- list of language that will be disabled
   },
+  rainbow = {
+    enable = true,
+    extended_mode = true,
+    max_file_lines = nil,
+  },
 }

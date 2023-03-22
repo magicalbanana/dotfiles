@@ -76,12 +76,15 @@ packer.startup {
       }
     }
 
+    use { "mrjones2014/nvim-ts-rainbow" }
+
     if vim.g.is_mac then
       use {
         "nvim-treesitter/nvim-treesitter",
         event = "BufEnter",
         run = ":TSUpdate",
         config = [[require('config.treesitter')]],
+        wants = "nvim-ts-rainbow",
       }
     end
 
@@ -192,7 +195,10 @@ packer.startup {
     use { "honza/vim-snippets", after = "ultisnips" }
 
     -- Automatic insertion and deletion of a pair of characters
-    use { "Raimondi/delimitMate", event = "InsertEnter" }
+    use {
+      "windwp/nvim-autopairs",
+      config = function() require("nvim-autopairs").setup {} end,
+    }
 
     -- Comment plugin
     use { "tpope/vim-commentary", event = "VimEnter" }
@@ -289,12 +295,7 @@ packer.startup {
     end
 
     -- Surround
-    use { "kylechui/nvim-surround",
-      tag = "*",
-      config = function()
-          require("nvim-surround").setup()
-      end
-    }
+    use { "echasnovski/mini.nvim", branch = "stable" }
 
     -- Debugger plugin
     if vim.g.is_win or vim.g.is_linux then

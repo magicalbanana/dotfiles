@@ -9,6 +9,8 @@ require("indent_blankline").setup {
   disable_with_nolist = true,
   buftype_exclude = { "terminal" },
   filetype_exclude = exclude_ft,
+  show_current_context = true,
+  show_current_context_start = true,
 }
 
 local gid = api.nvim_create_augroup("indent_blankline", { clear = true })

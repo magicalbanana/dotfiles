@@ -50,7 +50,7 @@ set shiftwidth=2    " number of spaces to use for autoindent
 set expandtab       " expand tab to spaces so that tabs are spaces
 
 " Set matching pairs of characters and highlight matching brackets
-set matchpairs+=<:>,「:」,『:』,【:】,“:”,‘:’,《:》
+set matchpairs+=(:),{:},<:>,「:」,『:』,【:】,“:”,‘:’,《:》
 
 set number relativenumber  " Show line number and relative line number
 
