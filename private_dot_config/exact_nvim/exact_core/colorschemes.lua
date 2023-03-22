@@ -82,20 +82,29 @@ end
 
 M.nightfox = function()
   local themes = {
-    nightfox,
-    dayfox,
-    dawnfox,
-    duskfox,
-    nordfox,
-    terafox,
-    carbonfox,
+    "nightfox",
+    "dayfox",
+    "dawnfox",
+    "duskfox",
+    "nordfox",
+    "terafox",
+    "carbonfox",
   }
 
-  vim.cmd("colorscheme " .. themes[utils.rand_int(1, table.getn(themes))])
+  local theme = utils.rand_element(vim.tbl_keys(themes))
+  vim.cmd(string.format("colorscheme %s", themes[theme]))
 end
 
 M.kanagawa = function()
-  vim.cmd([[colorscheme kanagawa]])
+  local themes = {
+    "kanagawa",
+    "kanagawa-wave",
+    "kanagawa-dragon",
+    "kanagawa-lotus",
+  }
+
+  local theme = utils.rand_element(vim.tbl_keys(themes))
+  vim.cmd(string.format("colorscheme %s", themes[theme]))
 end
 
 M.catppuccin = function()
