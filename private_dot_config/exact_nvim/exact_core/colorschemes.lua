@@ -16,8 +16,10 @@ M.colorscheme2dir = {
   nord = "nord.nvim",
   onedark = "onedark.nvim",
   onedarkpro = "onedarkpro.nvim",
+  oxocarbon = "oxocarbon.nvim",
   rose_pine = "rose-pine",
   sonokai = "sonokai",
+  tokyonight = "tokyonight",
   zephyr = "zephyr-nvim",
 }
 
@@ -34,6 +36,11 @@ end
 
 M.onedark = function()
   vim.cmd([[colorscheme onedark]])
+end
+
+M.oxocarbon = function()
+  vim.opt.background = "dark"
+  vim.cmd([[colorscheme oxocarbon]])
 end
 
 M.zephyr = function()
@@ -97,10 +104,21 @@ end
 
 M.kanagawa = function()
   local themes = {
-    "kanagawa",
     "kanagawa-wave",
     "kanagawa-dragon",
     "kanagawa-lotus",
+  }
+
+  local theme = utils.rand_element(vim.tbl_keys(themes))
+  vim.cmd(string.format("colorscheme %s", themes[theme]))
+end
+
+M.tokyonight = function()
+  local themes = {
+    "tokyonight-night",
+    "tokyonight-storm",
+    "tokyonight-day",
+    "tokyonight-moon",
   }
 
   local theme = utils.rand_element(vim.tbl_keys(themes))
