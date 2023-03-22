@@ -226,12 +226,6 @@ mason_tool_installer.setup({
 
 local lspconfig = require("lspconfig")
 for server, options in pairs(lsp_servers) do
-  local server_executable = server.document_config.default_config.cmd
-
-  if(type(server_executable) ~= "table") then
-    break
-  end
-
   local opts = {
     on_attach = custom_attach,
     capabilities = capabilities,
