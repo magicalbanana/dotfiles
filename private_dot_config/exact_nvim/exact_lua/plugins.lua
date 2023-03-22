@@ -64,6 +64,7 @@ packer.startup {
 
     use { "williamboman/mason.nvim" }
     use { "williamboman/mason-lspconfig.nvim" }
+    use { "WhoIsSethDaniel/mason-tool-installer.nvim" }
 
     -- nvim-lsp configuration (it relies on cmp-nvim-lsp, so it should be loaded after cmp-nvim-lsp).
     use {
@@ -139,6 +140,7 @@ packer.startup {
     use { "sainnhe/sonokai", opt = true }
     use { "shaunsingh/nord.nvim", opt = true }
     use { "tanvirtin/monokai.nvim", opt = true }
+    use { 'rose-pine/neovim', as = 'rose-pine' }
 
     use {
       "nvim-lualine/lualine.nvim",
@@ -295,7 +297,11 @@ packer.startup {
     end
 
     -- Surround
-    use { "echasnovski/mini.nvim", branch = "stable" }
+    use { 
+      "echasnovski/mini.surround", 
+      branch = "stable",
+      config = function() require('mini.surround').setup({}) end,
+    }
 
     -- Debugger plugin
     if vim.g.is_win or vim.g.is_linux then

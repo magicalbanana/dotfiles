@@ -94,40 +94,33 @@ local custom_attach = function(client, bufnr)
   end
 end
 
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
-local mason = require("mason")
-local mason_lspconfig = require("mason-lspconfig")
-mason.setup()
-mason_lspconfig.setup()
-
 local lsp_servers = {
-  { "arduino_language_server" },
-  { "bashls" },
-  { "clangd",
+  arduino_language_server = {},
+  bashls = {},
+  clangd = { 
     filetypes = { "c", "cpp", "cc" },
     flags = {
       debounce_text_changes = 500,
     },
   },
-  { "clojure_lsp" },
-  { "cmake" },
-  { "codeqlls" },
-  { "cssls" },
-  { "cssmodules_ls" },
-  { "docker_compose_language_service" },
-  { "dockerls" },
-  { "elixirls" },
-  { "erlangls" },
-  { "eslint" },
-  { "fennel_language_server" },
-  { "golangci_lint_ls" },
-  { "gopls" },
-  { "grammarly" },
-  { "graphql" },
-  { "hls" },
-  { "html" },
-  { "jsonls",
+  clojure_lsp = {},
+  cmake = {},
+  codeqlls = {},
+  cssls = {},
+  cssmodules_ls = {},
+  docker_compose_language_service = {},
+  dockerls = {},
+  elixirls = {},
+  erlangls = {},
+  eslint = {},
+  fennel_language_server = {},
+  golangci_lint_ls = {},
+  gopls = {},
+  grammarly = {},
+  graphql = {},
+  hls = {},
+  html = {},
+  jsonls = {
     settings = {
       json = {
         schemas = require('schemastore').json.schemas(),
@@ -135,9 +128,9 @@ local lsp_servers = {
       },
     }
   },
-  { "jsonnet_ls" },
-  { "kotlin_language_server" },
-  { "ltex",
+  jsonnet_ls = {},
+  kotlin_language_server = {},
+  ltex = {
     cmd = { "ltex-ls" },
     filetypes = { "text", "plaintex", "tex", "markdown" },
     settings = {
@@ -147,7 +140,7 @@ local lsp_servers = {
     },
     flags = { debounce_text_changes = 300 },
   },
-  { "lua_ls",
+  lua_ls = {
     settings = {
       Lua = {
         runtime = {
@@ -172,9 +165,8 @@ local lsp_servers = {
       },
     },
   },
-  { "marksman" },
-  { "perlnavigator" },
-  { "pylsp",
+  marksman = {},
+  pylsp = {
     settings = {
       pylsp = {
         plugins = {
@@ -191,23 +183,23 @@ local lsp_servers = {
       debounce_text_changes = 200,
     },
   },
-  { "quick_lint_js" },
-  { "r_language_server" },
-  { "rust_analyzer" },
-  { "solargraph" },
-  { "sorbet" },
-  { "spectral" },
-  { "sqlls" },
-  { "taplo" },
-  { "terraformls" },
-  { "tflint" },
-  { "tsserver" },
-  { "vimls",
+  quick_lint_js = {},
+  r_language_server = {},
+  rust_analyzer = {},
+  solargraph = {},
+  sorbet = {},
+  spectral = {},
+  sqlls = {},
+  taplo = {},
+  terraformls = {},
+  tflint = {},
+  tsserver = {},
+  vimls = { 
     flags = {
       debounce_text_changes = 500,
     },
   },
-  { "yamlls",
+  yamlls = {
     settings = {
       yaml = {
         schemas = require('schemastore').yaml.schemas(),
@@ -215,35 +207,38 @@ local lsp_servers = {
     },
   },
 }
+
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+local mason = require("mason")
+local mason_lspconfig = require("mason-lspconfig")
+mason.setup()
+mason_lspconfig.setup()
+
+local ensured_installed = {}
+for server, _ in pairs(lsp_servers) do
+  ensured_installed[#ensured_installed+1] = server
+end
+
+local mason_tool_installer = require("mason-tool-installer")
+mason_tool_installer.setup({
+  ensured_installed = ensured_installed,
+})
+
 local lspconfig = require("lspconfig")
-for _, server in pairs(lsp_servers) do
-  local config = lspconfig[server[1]]
-  local server_executable = config.document_config.default_config.cmd
+for server, options in pairs(lsp_servers) do
+  local server_executable = server.document_config.default_config.cmd
 
   if(type(server_executable) ~= "table") then
     break
   end
-  server_executable = server_executable[1]
 
-  if(vim.fn.executable(server_executable) == 1) then
-    local opts = {
-      on_attach = custom_attach,
-      capabilities = capabilities,
-    }
-    for k, v in pairs(server) do
-        if type(k) ~= 'number' then
-            opts[k] = v
-        end
-    end
-
-    config.setup(opts)
-  end
+  local opts = {
+    on_attach = custom_attach,
+    capabilities = capabilities,
+  }
+  opts = vim.tbl_deep_extend('force', opts, options)
+  config.setup(opts)
 end
-
--- settings for lua-language-server can be found on https://github.com/LuaLS/lua-language-server/wiki/Settings .
-lspconfig.lua_ls.setup {
-  on_attach = custom_attach,
-}
 
 -- Change diagnostic signs.
 fn.sign_define("DiagnosticSignError", { text = "✗", texthl = "DiagnosticSignError" })
