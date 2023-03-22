@@ -234,9 +234,7 @@ packer.startup {
     use { "sbdchd/neoformat", cmd = { "Neoformat" } }
 
     -- Git Tools
-    -- Git command inside vim
     use { "tpope/vim-fugitive", event = "User InGitRepo", config = [[require('config.fugitive')]] }
-    -- Better git log display
     use { "rbong/vim-flog", requires = "tpope/vim-fugitive", cmd = { "Flog" } }
     use { "christoomey/vim-conflicted", requires = "tpope/vim-fugitive", cmd = { "Conflicted" } }
     use {
@@ -245,6 +243,12 @@ packer.startup {
       event = "User InGitRepo",
       config = [[require('config.git-linker')]],
     }
+    use { 
+      "TimUntersberger/neogit", 
+      requires = "nvim-lua/plenary.nvim",
+      config = function() require("neogit").setup {} end,
+    }
+
     -- Show git change (change, delete, add) signs in vim sign column
     use { "lewis6991/gitsigns.nvim", config = [[require('config.gitsigns')]] }
     -- Better git commit experience
