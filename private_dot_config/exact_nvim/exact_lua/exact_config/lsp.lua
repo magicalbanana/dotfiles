@@ -231,7 +231,7 @@ for server, options in pairs(lsp_servers) do
     capabilities = capabilities,
   }
   opts = vim.tbl_deep_extend('force', opts, options)
-  config.setup(opts)
+  lspconfig[server].setup(opts)
 end
 
 -- Change diagnostic signs.
