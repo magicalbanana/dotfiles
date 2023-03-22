@@ -243,8 +243,8 @@ packer.startup {
       event = "User InGitRepo",
       config = [[require('config.git-linker')]],
     }
-    use { 
-      "TimUntersberger/neogit", 
+    use {
+      "TimUntersberger/neogit",
       requires = "nvim-lua/plenary.nvim",
       config = function() require("neogit").setup {} end,
     }
@@ -303,8 +303,8 @@ packer.startup {
     end
 
     -- Surround
-    use { 
-      "echasnovski/mini.surround", 
+    use {
+      "echasnovski/mini.surround",
       branch = "stable",
       config = function() require('mini.surround').setup({}) end,
     }
@@ -363,9 +363,8 @@ packer.startup {
     -- Terminal
     use {
       "akinsho/toggleterm.nvim",
-      tag = '*', config = function()
-        require("toggleterm").setup()
-      end
+      tag = '*',
+      config = function() require("toggleterm").setup() end,
     }
 
   end,
