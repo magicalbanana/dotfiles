@@ -97,12 +97,9 @@ packer.startup {
 
     -- Super fast buffer jump
     use {
-      "phaazon/hop.nvim",
-      event = "VimEnter",
+      "ggandor/leap.nvim",
       config = function()
-        vim.defer_fn(function()
-          require("config.nvim_hop")
-        end, 2000)
+        require("leap").add_default_mappings()
       end,
     }
 
@@ -303,11 +300,13 @@ packer.startup {
     end
 
     -- Surround
-    use {
-      "echasnovski/mini.surround",
-      branch = "stable",
-      config = function() require('mini.surround').setup({}) end,
-    }
+    use({
+        "kylechui/nvim-surround",
+        tag = "*",
+        config = function()
+            require("nvim-surround").setup()
+        end
+    })
 
     -- Debugger plugin
     if vim.g.is_win or vim.g.is_linux then
