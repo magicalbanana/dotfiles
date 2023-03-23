@@ -112,11 +112,13 @@ packer.startup {
     use {
       "nvim-telescope/telescope.nvim",
       cmd = "Telescope",
+      module = "telescope",
       requires = {
         { "nvim-lua/plenary.nvim" },
         { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
         { 'nvim-telescope/telescope-node-modules.nvim' },
       },
+      config = [[require('config.telescope')]]
     }
 
     -- search emoji and other symbols
