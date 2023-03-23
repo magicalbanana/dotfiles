@@ -79,15 +79,13 @@ packer.startup {
 
     use { "mrjones2014/nvim-ts-rainbow" }
 
-    if vim.g.is_mac then
-      use {
-        "nvim-treesitter/nvim-treesitter",
-        event = "BufEnter",
-        run = ":TSUpdate",
-        config = [[require('config.treesitter')]],
-        wants = "nvim-ts-rainbow",
-      }
-    end
+    use {
+      "nvim-treesitter/nvim-treesitter",
+      event = "BufEnter",
+      run = ":TSUpdate",
+      config = [[require('config.treesitter')]],
+      wants = "nvim-ts-rainbow",
+    }
 
     -- IDE for Lisp
     if utils.executable("sbcl") then
