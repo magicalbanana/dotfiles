@@ -17,7 +17,7 @@ cli_apps=(
 for ((i = 0; i < ${#cli_apps[@]}; i++)); do
   IFS=';' read -r cli_app cargo_package <<<"${cli_apps[i]}"
   if ! [ -x "$(command -v "${cli_app}")" ]; then
-    echo-run cargo install --locked ${cargo_package}
+    echo-run cargo install ${cargo_package}
   else
     echo-info "cli app: ${cli_app} is already installed"
   fi
