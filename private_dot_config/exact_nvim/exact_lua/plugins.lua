@@ -354,7 +354,16 @@ packer.startup {
 
     use { "ii14/emmylua-nvim", ft = "lua" }
 
-    use { "j-hui/fidget.nvim", after = "nvim-lspconfig", config = [[require('config.fidget-nvim')]] }
+    use {
+      "kristijanhusak/vim-dadbod-completion",
+      requires = "tpope/vim-dadbod"
+    }
+
+    use {
+      "j-hui/fidget.nvim",
+      after = "nvim-lspconfig",
+      config = [[require('config.fidget-nvim')]],
+    }
 
     -- JSON schemas
     use { "b0o/schemastore.nvim" }

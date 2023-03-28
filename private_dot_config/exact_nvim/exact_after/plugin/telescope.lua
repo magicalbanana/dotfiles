@@ -8,5 +8,6 @@ local keymap = vim.keymap
 
 keymap.set('n', '<leader>tf', builtin.find_files, {})
 keymap.set('n', '<leader>tg', builtin.live_grep, {})
-keymap.set('n', '<leader>th', builtin.help_tags, {})
-keymap.set('n', '<leader>tb', builtin.buffers, {})
+keymap.set('n', '<leader>tt', builtin.help_tags, {})
+keymap.set('n', '<leader>tu', builtin.buffers, {})
+keymap.set('n', '<leader>ts', builtin.git_status, {})
