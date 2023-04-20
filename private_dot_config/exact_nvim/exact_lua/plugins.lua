@@ -79,14 +79,6 @@ packer.startup {
 
     use { "mrjones2014/nvim-ts-rainbow" }
 
-    use {
-      "nvim-treesitter/nvim-treesitter",
-      event = "BufEnter",
-      run = ":TSUpdate",
-      config = [[require('config.treesitter')]],
-      wants = "nvim-ts-rainbow",
-    }
-
     -- IDE for Lisp
     if utils.executable("sbcl") then
       -- use 'kovisoft/slimv'
@@ -349,7 +341,15 @@ packer.startup {
     }
     use {
       "luukvbaal/nnn.nvim",
-      config = function() require("nnn").setup() end
+      config = function() require("nnn").setup({
+        picker = {
+          cmd = "tmux new-session nnn -Pp",
+          style = { border = "rounded" },
+          session = "shared",
+        },
+        replace_netrw = "picker",
+        windownav = "<C-l>"
+      }) end
     }
 
     use { "ii14/emmylua-nvim", ft = "lua" }

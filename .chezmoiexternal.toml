@@ -22,3 +22,25 @@
   exact = true
   url = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
   refreshPeriod = "24h"
+[".config/nnn/plugins"]
+  type = "archive"
+  exact = true
+  stripComponents = 1
+  include = [
+   "*/plugins/bulknew",
+   "*/plugins/cdpath",
+   "*/plugins/diffs",
+   "*/plugins/gitroot",
+   "*/plugins/finder",
+   "*/plugins/fzcd",
+   "*/plugins/fzhist",
+   "*/plugins/fzopen",
+   "*/plugins/organizer",
+   "*/plugins/preview-tui",
+   "*/plugins/pskill",
+   "*/plugins/renamer",
+   "*/plugins/suedit",
+   "*/plugins/togglex"
+  ]
+  url = "https://github.com/jarun/nnn/archive/refs/tags/v4.8.tar.gz"
+  refreshPeriod = "24h"
