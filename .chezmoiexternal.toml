@@ -57,7 +57,12 @@
   exact = true
   url = "https://raw.githubusercontent.com/jarun/nnn/master/plugins/fzopen"
   refreshPeriod = "168h"
-[".config/nnn/plugins/organizer"]
+[".config/nnn/plugins/nuke"]
+  type = "file"
+  exact = true
+  url = "https://raw.githubusercontent.com/jarun/nnn/master/plugins/nuke"
+  refreshPeriod = "168h"
+[".config/nnn/plugins/organize"]
   type = "file"
   exact = true
   url = "https://raw.githubusercontent.com/jarun/nnn/master/plugins/organizer"

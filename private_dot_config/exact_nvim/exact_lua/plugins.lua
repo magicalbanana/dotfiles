@@ -344,10 +344,10 @@ packer.startup {
     -- file explorer
     use {
       "luukvbaal/nnn.nvim",
-      config = function() 
+      config = function()
         require("nnn").setup({
           picker = {
-            cmd = "tmux new-session nnn -Pp",
+            cmd = "tmux new-session nnn -P preview-tui",
             style = { border = "rounded" },
             session = "shared",
           },
