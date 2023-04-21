@@ -345,16 +345,8 @@ packer.startup {
     use {
       "luukvbaal/nnn.nvim",
       config = function()
-        require("nnn").setup({
-          picker = {
-            cmd = "tmux new-session nnn -P preview-tui",
-            style = { border = "rounded" },
-            session = "shared",
-          },
-          replace_netrw = "picker",
-          windownav = "<C-l>"
-        })
-      end
+        require("config.nnn")
+      end,
     }
 
     use { "ii14/emmylua-nvim", ft = "lua" }

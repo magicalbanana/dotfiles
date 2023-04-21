@@ -12,6 +12,7 @@ cli_apps=(
   "k9s;github.com/derailed/k9s@latest"
   "kubectx;github.com/ahmetb/kubectx/cmd/kubectx@latest"
   "kubens;github.com/ahmetb/kubectx/cmd/kubens@latest"
+  "pistol;github.com/doronbehar/pistol/cmd/pistol@latest"
   "yq;github.com/mikefarah/yq/v4@latest"
 )
 

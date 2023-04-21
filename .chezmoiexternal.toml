@@ -17,6 +17,31 @@
   type = "git-repo"
   refreshPeriod = "168h"
   url = "https://github.com/unixorn/fzf-zsh-plugin.git"
+[".config/nnn/plugins/.cbcp"]
+  type = "file"
+  exact = true
+  url = "https://raw.githubusercontent.com/jarun/nnn/master/plugins/.cbcp"
+  refreshPeriod = "168h"
+[".config/nnn/plugins/.iconlookup"]
+  type = "file"
+  exact = true
+  url = "https://raw.githubusercontent.com/jarun/nnn/master/plugins/.iconlookup"
+  refreshPeriod = "168h"
+[".config/nnn/plugins/.nmv"]
+  type = "file"
+  exact = true
+  url = "https://raw.githubusercontent.com/jarun/nnn/master/plugins/.nmv"
+  refreshPeriod = "168h"
+[".config/nnn/plugins/.nnn-plugin-helper"]
+  type = "file"
+  exact = true
+  url = "https://raw.githubusercontent.com/jarun/nnn/master/plugins/.nnn-plugin-helper"
+  refreshPeriod = "168h"
+[".config/nnn/plugins/.ntfy"]
+  type = "file"
+  exact = true
+  url = "https://raw.githubusercontent.com/jarun/nnn/master/plugins/.ntfy"
+  refreshPeriod = "168h"
 [".config/nnn/plugins/bulknew"]
   type = "file"
   exact = true
@@ -65,7 +90,7 @@
 [".config/nnn/plugins/organize"]
   type = "file"
   exact = true
-  url = "https://raw.githubusercontent.com/jarun/nnn/master/plugins/organizer"
+  url = "https://raw.githubusercontent.com/jarun/nnn/master/plugins/organize"
   refreshPeriod = "168h"
 [".config/nnn/plugins/preview-tui"]
   type = "file"
