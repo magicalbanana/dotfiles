@@ -2,6 +2,7 @@ local telescope = require("telescope")
 
 telescope.load_extension("node_modules")
 telescope.load_extension("fzf")
+telescope.load_extension("file_browser")
 
 local builtin = require('telescope.builtin')
 local keymap = vim.keymap

@@ -117,9 +117,16 @@ packer.startup {
         { "nvim-lua/plenary.nvim" },
         { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
         { 'nvim-telescope/telescope-node-modules.nvim' },
+        {
+          "nvim-telescope/telescope-file-browser.nvim",
+          requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
+        },
       },
       config = [[require('config.telescope')]]
     }
+
+
+    -- directory explorer
 
     -- search emoji and other symbols
     use { "nvim-telescope/telescope-symbols.nvim", after = "telescope.nvim" }
@@ -315,8 +322,8 @@ packer.startup {
 
     -- Session management plugin
     use { "glepnir/dbsession.nvim",
-        cmd = { "SessionSave", "SessionDelete", "SessionLoad" },
-        config = function() require('dbsession').setup({}) end
+      cmd = { "SessionSave", "SessionDelete", "SessionLoad" },
+      config = function() require('dbsession').setup({}) end
     }
 
     -- Yank support
@@ -340,14 +347,6 @@ packer.startup {
 
     -- show and trim trailing whitespaces
     use { "jdhao/whitespace.nvim", event = "VimEnter" }
-
-    -- file explorer
-    use {
-      "luukvbaal/nnn.nvim",
-      config = function()
-        require("config.nnn")
-      end,
-    }
 
     use { "ii14/emmylua-nvim", ft = "lua" }
 
