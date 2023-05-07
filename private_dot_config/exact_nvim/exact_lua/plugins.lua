@@ -125,9 +125,6 @@ packer.startup {
       config = [[require('config.telescope')]]
     }
 
-
-    -- directory explorer
-
     -- search emoji and other symbols
     use { "nvim-telescope/telescope-symbols.nvim", after = "telescope.nvim" }
     use { "kyazdani42/nvim-web-devicons", event = "VimEnter" }
