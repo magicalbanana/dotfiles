@@ -5,6 +5,7 @@ set -e
 cli_apps=(
   "dyff;github.com/homeport/dyff/cmd/dyff@latest"
   "gmailctl;github.com/mbrt/gmailctl/cmd/gmailctl@latest"
+  "gopls;golang.org/x/tools/gopls@latest"
   "jsonnet-deps;github.com/google/go-jsonnet/cmd/jsonnet-deps@latest"
   "jsonnet-lint;github.com/google/go-jsonnet/cmd/jsonnet-lint@latest"
   "jsonnet;github.com/google/go-jsonnet/cmd/jsonnet@latest"
