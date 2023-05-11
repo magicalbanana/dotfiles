@@ -19,10 +19,6 @@ cli_apps=(
 
 for ((i = 0; i < ${#cli_apps[@]}; i++)); do
   IFS=';' read -r cli_app go_pkg <<<"${cli_apps[i]}"
-  if ! [ -x "$(command -v "${cli_app}")" ]; then
-    echo-run go install "${go_pkg}"
-  else
-    echo-info "cli app: ${cli_app} is already installed"
-  fi
+  echo-run go install "${go_pkg}"
   unset IFS
 done

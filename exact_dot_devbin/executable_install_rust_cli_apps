@@ -3,7 +3,7 @@
 set -e
 
 cli_apps=(
-  "as-tree;-f --git https://github.com/jez/as-tree"
+  "as-tree;--git https://github.com/jez/as-tree"
   "bat;bat"
   "broot;broot"
   "btm;bottom"
@@ -16,10 +16,7 @@ cli_apps=(
 
 for ((i = 0; i < ${#cli_apps[@]}; i++)); do
   IFS=';' read -r cli_app cargo_package <<<"${cli_apps[i]}"
-  if ! [ -x "$(command -v "${cli_app}")" ]; then
-    echo-run cargo install ${cargo_package}
-  else
-    echo-info "cli app: ${cli_app} is already installed"
-  fi
+  echo-info "cli app: installing ${cli_app}"
+  echo-run cargo install -f ${cargo_package}
   unset IFS
 done
