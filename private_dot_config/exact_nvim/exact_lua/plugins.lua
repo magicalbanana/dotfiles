@@ -154,6 +154,7 @@ packer.startup {
 
     use { "akinsho/bufferline.nvim", event = "VimEnter",
       cond = firenvim_not_active,
+      requires = "nvim-tree/nvim-web-devicons",
       config = [[require('config.bufferline')]] }
 
     -- fancy start screen
@@ -239,6 +240,8 @@ packer.startup {
         require("wrapping").setup()
       end,
     }
+
+    use { "echasnovski/mini.nvim", branch = "stable" }
 
     -- Git Tools
     use { "tpope/vim-fugitive", event = "User InGitRepo", config = [[require('config.fugitive')]] }
@@ -366,6 +369,9 @@ packer.startup {
 
     -- JSON schemas
     use { "b0o/schemastore.nvim" }
+
+    -- Kitty Terminal
+    use { "fladson/vim-kitty" }
 
     -- Terminal
     use {
