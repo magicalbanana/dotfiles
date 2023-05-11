@@ -233,6 +233,12 @@ packer.startup {
 
     -- Auto format tools
     use { "sbdchd/neoformat", cmd = { "Neoformat" } }
+    use {
+      "andrewferrier/wrapping.nvim",
+      config = function()
+        require("wrapping").setup()
+      end,
+    }
 
     -- Git Tools
     use { "tpope/vim-fugitive", event = "User InGitRepo", config = [[require('config.fugitive')]] }
