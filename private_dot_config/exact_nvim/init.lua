@@ -2,7 +2,7 @@ local api = vim.api
 local utils = require("utils")
 
 -- check if we have the latest stable version of nvim
-local expected_ver = "0.8.3"
+local expected_ver = "0.9.0"
 local nvim_ver = utils.get_nvim_version()
 
 if nvim_ver ~= expected_ver then
