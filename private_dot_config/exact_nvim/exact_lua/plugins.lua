@@ -383,9 +383,7 @@ packer.startup {
     use{
       "jackMort/ChatGPT.nvim",
       config = function()
-        require("chatgpt").setup({
-          api_key_cmd = "op item get \"OpenAI\" --fields=neovim"
-        })
+        require("chatgpt").setup()
       end,
       requires = {
         "MunifTanjim/nui.nvim",
