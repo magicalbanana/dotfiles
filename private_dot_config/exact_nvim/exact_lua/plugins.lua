@@ -380,6 +380,20 @@ packer.startup {
       config = function() require("toggleterm").setup() end,
     }
 
+    use{
+      "jackMort/ChatGPT.nvim",
+      config = function()
+        require("chatgpt").setup({
+          api_key_cmd = "op item get \"OpenAI\" --fields=neovim"
+        })
+      end,
+      requires = {
+        "MunifTanjim/nui.nvim",
+        "nvim-lua/plenary.nvim",
+        "nvim-telescope/telescope.nvim"
+      }
+    }
+
   end,
   config = {
     max_jobs = 16,
