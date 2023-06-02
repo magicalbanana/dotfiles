@@ -146,7 +146,6 @@ packer.startup {
     use { "olimorris/onedarkpro.nvim", opt = true }
     use { "rebelot/kanagawa.nvim", opt = true }
     use { "rose-pine/neovim", as = "rose-pine", opt = true }
-    use { "sainnhe/gruvbox-material", opt = true }
     use { "sainnhe/sonokai", opt = true }
     use { "shaunsingh/nord.nvim", opt = true }
     use { "tanvirtin/monokai.nvim", opt = true }

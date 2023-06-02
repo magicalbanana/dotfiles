@@ -8,7 +8,6 @@ local M = {}
 -- the same as the colorscheme name itself.
 M.colorscheme2dir = {
   catppuccin = "catppuccin",
-  gruvbox_material = "gruvbox-material",
   kanagawa = "kanagawa.nvim",
   material = "material.nvim",
   monokai = "monokai.nvim",
@@ -22,17 +21,6 @@ M.colorscheme2dir = {
   tokyonight = "tokyonight.nvim",
   zephyr = "zephyr-nvim",
 }
-
-M.gruvbox8 = function()
-  -- Italic options should be put before colorscheme setting,
-  -- see https://github.com/morhetz/gruvbox/wiki/Terminal-specific#1-italics-is-disabled
-  vim.g.gruvbox_italics = 1
-  vim.g.gruvbox_italicize_strings = 1
-  vim.g.gruvbox_filetype_hi_groups = 1
-  vim.g.gruvbox_plugin_hi_groups = 1
-
-  vim.cmd([[colorscheme gruvbox8_hard]])
-end
 
 M.onedark = function()
   vim.cmd([[colorscheme onedark]])
@@ -90,8 +78,6 @@ end
 M.nightfox = function()
   local themes = {
     "nightfox",
-    "dayfox",
-    "dawnfox",
     "duskfox",
     "nordfox",
     "terafox",
@@ -106,7 +92,6 @@ M.kanagawa = function()
   local themes = {
     "kanagawa-wave",
     "kanagawa-dragon",
-    "kanagawa-lotus",
   }
 
   local theme = utils.rand_element(vim.tbl_keys(themes))
@@ -117,7 +102,6 @@ M.tokyonight = function()
   local themes = {
     "tokyonight-night",
     "tokyonight-storm",
-    "tokyonight-day",
     "tokyonight-moon",
   }
 
@@ -140,8 +124,14 @@ M.rose_pine = function()
     dark_variant = 'moon',
   })
 
-  -- set colorscheme after options
-  vim.cmd('colorscheme rose-pine')
+  local themes = {
+    "rose-pine-main",
+    "rose-pine-dawn",
+    "rose-pine-moon",
+  }
+
+  local theme = utils.rand_element(vim.tbl_keys(themes))
+  vim.cmd(string.format("colorscheme %s", themes[theme]))
 end
 
 M.onedarkpro = function()
