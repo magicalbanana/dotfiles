@@ -15,8 +15,6 @@ M.colorscheme2dir = {
   nord = "nord.nvim",
   onedark = "onedark.nvim",
   onedarkpro = "onedarkpro.nvim",
-  oxocarbon = "oxocarbon.nvim",
-  rose_pine = "rose-pine",
   sonokai = "sonokai",
   tokyonight = "tokyonight.nvim",
   zephyr = "zephyr-nvim",
@@ -24,11 +22,6 @@ M.colorscheme2dir = {
 
 M.onedark = function()
   vim.cmd([[colorscheme onedark]])
-end
-
-M.oxocarbon = function()
-  vim.opt.background = "dark"
-  vim.cmd([[colorscheme oxocarbon]])
 end
 
 M.zephyr = function()
@@ -116,22 +109,6 @@ M.catppuccin = function()
   require("catppuccin").setup()
 
   vim.cmd([[colorscheme catppuccin]])
-end
-
-M.rose_pine = function()
-  require('rose-pine').setup({
-    --- @usage 'main' | 'moon'
-    dark_variant = 'moon',
-  })
-
-  local themes = {
-    "rose-pine-main",
-    "rose-pine-dawn",
-    "rose-pine-moon",
-  }
-
-  local theme = utils.rand_element(vim.tbl_keys(themes))
-  vim.cmd(string.format("colorscheme %s", themes[theme]))
 end
 
 M.onedarkpro = function()
