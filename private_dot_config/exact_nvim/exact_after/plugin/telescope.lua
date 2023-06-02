@@ -12,19 +12,3 @@ keymap.set('n', '<space>lg', builtin.live_grep, {})
 keymap.set('n', '<space>ht', builtin.help_tags, {})
 keymap.set('n', '<space>bs', builtin.buffers, {})
 keymap.set('n', '<space>gs', builtin.git_status, {})
-
--- Open from the project directory
-vim.api.nvim_set_keymap(
-  "n",
-  "<space>pd",
-  ":Telescope file_browser<CR>",
-  { noremap = true }
-)
-
--- open file_browser with the path of the current buffer
-vim.api.nvim_set_keymap(
-  "n",
-  "<space>fd",
-  ":Telescope file_browser path=%:p:h select_buffer=true<CR>",
-  { noremap = true }
-)

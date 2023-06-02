@@ -12,11 +12,11 @@ if nvim_ver ~= expected_ver then
 end
 
 local core_conf_files = {
-  "globals.lua", -- some global settings
-  "options.vim", -- setting options in nvim
+  "globals.lua",      -- some global settings
+  "options.vim",      -- setting options in nvim
   "autocommands.vim", -- various autocommands
-  "mappings.lua", -- all the user-defined mappings
-  "plugins.vim", -- all the plugins installed and their configurations
+  "mappings.lua",     -- all the user-defined mappings
+  "plugins.vim",      -- all the plugins installed and their configurations
   "colorschemes.lua", -- colorscheme settings
 }
 

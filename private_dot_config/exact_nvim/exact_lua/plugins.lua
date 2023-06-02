@@ -87,6 +87,16 @@ packer.startup {
       wants = "nvim-ts-rainbow",
     }
 
+    use {
+      "nvim-tree/nvim-tree.lua",
+      requires = {
+        "nvim-tree/nvim-web-devicons", -- optional
+      },
+      config = function()
+        require("nvim-tree").setup {}
+      end
+    }
+
     -- IDE for Lisp
     if utils.executable("sbcl") then
       -- use 'kovisoft/slimv'
@@ -117,10 +127,6 @@ packer.startup {
         { "nvim-lua/plenary.nvim" },
         { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
         { 'nvim-telescope/telescope-node-modules.nvim' },
-        {
-          "nvim-telescope/telescope-file-browser.nvim",
-          requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
-        },
       },
       config = [[require('config.telescope')]]
     }
