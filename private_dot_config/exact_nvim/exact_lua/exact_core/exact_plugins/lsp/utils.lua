@@ -49,4 +49,3 @@ M.get_python_path = function(workspace)
 end
 
 return M
-
