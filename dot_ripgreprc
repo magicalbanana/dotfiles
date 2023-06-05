@@ -5,7 +5,7 @@
 --hidden
 
 # include .env files
---glob=*.env.*
+--glob=*.env*
 --glob=*
 
 # Ignore npm/Yarn lock files, etc.
