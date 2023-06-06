@@ -3,20 +3,21 @@
 set -e
 
 cli_apps=(
-  "as-tree;--git https://github.com/jez/as-tree"
-  "bat;bat"
-  "broot;broot"
-  "btm;bottom"
-  "delta;git-delta"
-  "exa;exa"
-  "fd;fd-find"
-  "gitui;gitui"
-  "rg;ripgrep"
+	"as-tree;--git https://github.com/jez/as-tree"
+	"bat;bat"
+	"broot;broot"
+	"btm;bottom"
+	"delta;git-delta"
+	"exa;exa"
+	"fd;fd-find"
+	"gitui;gitui"
+	"rg;ripgrep"
+	"zoxide;zoxide"
 )
 
 for ((i = 0; i < ${#cli_apps[@]}; i++)); do
-  IFS=';' read -r cli_app cargo_package <<<"${cli_apps[i]}"
-  echo-info "cli app: installing ${cli_app}"
-  echo-run cargo install -f ${cargo_package}
-  unset IFS
+	IFS=';' read -r cli_app cargo_package <<<"${cli_apps[i]}"
+	echo-info "cli app: installing ${cli_app}"
+	echo-run cargo install -f ${cargo_package}
+	unset IFS
 done
