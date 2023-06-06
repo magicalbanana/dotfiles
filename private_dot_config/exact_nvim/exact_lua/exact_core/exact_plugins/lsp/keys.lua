@@ -19,6 +19,7 @@ M._keys = {
   { "<leader>lr", "<cmd>Telescope lsp_references<cr>", desc = "References" },
   { "<leader>lI", "<cmd>Telescope lsp_implementations<cr>", desc = "Goto Implementation" },
   { "<leader>lt", "<cmd>Telescope lsp_type_definitions<cr>", desc = "Goto Type Definition" },
+  { "<leader>lT", vim.lsp.buf.type_definition, desc = "Type Definition" },
   { "<leader>lk", vim.lsp.buf.hover, desc = "Hover" },
   { "<leader>lS", vim.lsp.buf.signature_help, desc = "Signature Help", has = "signatureHelp" },
   { "<c-k>", vim.lsp.buf.signature_help, mode = "i", desc = "Signature Help", has = "signatureHelp" },
