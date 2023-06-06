@@ -11,6 +11,7 @@ M.random = function()
     kanagawa = "kanagawa",
     nightfox = "nightfox",
     nord = "nord",
+    onenord = "onenord",
     tokyonight = "tokyonight",
     tundra = "tundra",
   }
@@ -42,6 +43,10 @@ M.nord = function()
   vim.g.nord_bold = false
 
   vim.cmd([[colorscheme nord]])
+end
+
+M.onenord = function()
+  vim.cmd([[colorscheme onenord]])
 end
 
 M.nightfox = function()

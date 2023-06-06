@@ -33,4 +33,10 @@ return {
   {
     "shaunsingh/nord.nvim",
   },
+  {
+    "rmehri01/onenord.nvim",
+    config = function()
+      require("core.plugins.themes.onenord")
+    end,
+  },
 }
