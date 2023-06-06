@@ -43,14 +43,14 @@ local M = {
           behavior = cmp.ConfirmBehavior.Replace,
           select = false,
         }),
-        ["<Tab>"] = cmp.mapping(function(fallback)
+        ["<C-n>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
             cmp.select_next_item()
           else
             fallback()
           end
         end, { "i", "s" }),
-        ["<S-Tab>"] = cmp.mapping(function()
+        ["<C-p>"] = cmp.mapping(function()
           if cmp.visible() then
             cmp.select_prev_item()
           end
