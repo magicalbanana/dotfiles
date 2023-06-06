@@ -3,7 +3,7 @@ return {
   event = "BufReadPre",
   opts = {
     indentLine_enabled = 1,
-    char = "?",
+    char = "▏",
     filetype_exclude = {
       "startify",
       "dashboard",
@@ -32,7 +32,7 @@ return {
     show_trailing_blankline_indent = false,
     show_first_indent_level = true,
     show_current_context = true,
-    char_list = { "|", "?", "?", "?" },
+    char_list = { "|", "¦", "┆", "┊" },
     space_char = " ",
     context_patterns = {
       "class",
