@@ -50,6 +50,8 @@ zinit ice as"completion"
 zinit snippet OMZ::plugins/docker-compose/_docker-compose
 zinit ice as "completion"
 zinit snippet https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
+zinit ice as "completion"
+zinit snippet https://raw.githubusercontent.com/asdf-vm/asdf/master/completions/_asdf
 
 zinit ice has'zoxide'
 zinit light z-shell/zsh-zoxide
