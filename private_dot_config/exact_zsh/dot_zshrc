@@ -51,6 +51,9 @@ zinit snippet OMZ::plugins/docker-compose/_docker-compose
 zinit ice as "completion"
 zinit snippet https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
 
+zinit ice has'zoxide'
+zinit light z-shell/zsh-zoxide
+
 zinit ice wait lucid
 zinit load wfxr/forgit
 
@@ -140,7 +143,7 @@ unsetopt BEEP
 setopt vi
 
 alias gohome='cd $HOME'
-alias dcomp="docker-compose"
+alias dcomp="docker compose"
 alias ktl="kubectl"
 
 if command -v exa >/dev/null 2>&1; then
