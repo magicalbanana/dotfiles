@@ -39,4 +39,10 @@ return {
       require("core.plugins.themes.onenord")
     end,
   },
+  {
+    "AlexvZyl/nordic.nvim",
+    config = function()
+      require("nordic").load()
+    end,
+  },
 }
