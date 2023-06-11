@@ -1,0 +1,58 @@
+{
+  "codeLens.enable": true,
+  "coc.preferences.extensionUpdateCheck": "daily",
+  "suggest.noselect": false,
+  "diagnostic.errorSign": "✘",
+  "diagnostic.warningSign": "!",
+  "diagnostic.infoSign": "?",
+  "diagnostic.checkCurrentLine": true,
+  "coc.preferences.formatOnSaveFiletypes": [
+    "css",
+    "go",
+    "graphql",
+    "html",
+    "javascript",
+    "javascriptreact",
+    "json",
+    "scss",
+    "typescript",
+    "typescript.tsx",
+    "typescriptreact"
+  ],
+  "javascript.suggestionActions.enabled": false,
+  "eslint.packageManager": "yarn",
+  "workspace.workspaceFolderCheckCwd": false,
+  "hover.target": "float",
+  "go.goplsOptions": {
+    "gofumpt": true,
+    "completeUnimported": true,
+    "staticcheck": true
+  },
+  "go.goplsUseDaemon": true,
+  "go.goplsArgs": ["-remote=auto"],
+  "tsserver.watchOptions": {
+    "watchFile": "useFsEvents"
+  },
+  "list.source.symbols.excludes": [
+    "**/node_modules/**",
+    "**/node_modules/**/.*",
+    "**/node_modules/**/.*/**"
+  ],
+  "diagnostic-languageserver.filetypes": {
+    "elixir": ["mix_credo", "mix_credo_compile"],
+    "eelixir": ["mix_credo", "mix_credo_compile"]
+  },
+  "languageserver": {
+    "erlang": {
+      "command": "erlang_ls",
+      "filetypes": ["erlang"]
+    },
+    "golangci-lint-languageserver": {
+      "command": "golangci-lint-langserver",
+      "filetypes": ["go"],
+      "initializationOptions": {
+        "command": ["golangci-lint", "run", "--enable-all", "--disable", "lll", "--out-format", "json"]
+      }
+    }
+  }
+}
