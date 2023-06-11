@@ -148,6 +148,11 @@ alias gohome='cd $HOME'
 alias dcomp="docker compose"
 alias ktl="kubectl"
 
+if command -v nnn >/dev/null 2>&1; then
+  unalias -m 'vim'
+  alias n3='nnn'
+fi
+
 if command -v exa >/dev/null 2>&1; then
   unalias -m 'll'
   unalias -m 'l'

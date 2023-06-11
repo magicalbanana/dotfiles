@@ -7,6 +7,7 @@ cli_apps=(
 	"glow;github.com/charmbracelet/glow@latest"
 	"gmailctl;github.com/mbrt/gmailctl/cmd/gmailctl@latest"
 	"gopls;golang.org/x/tools/gopls@latest"
+	"jqp;github.com/noahgorstein/jqp@latest"
 	"jsonnet-deps;github.com/google/go-jsonnet/cmd/jsonnet-deps@latest"
 	"jsonnet-lint;github.com/google/go-jsonnet/cmd/jsonnet-lint@latest"
 	"jsonnet;github.com/google/go-jsonnet/cmd/jsonnet@latest"
@@ -15,6 +16,7 @@ cli_apps=(
 	"kubectx;github.com/ahmetb/kubectx/cmd/kubectx@latest"
 	"kubens;github.com/ahmetb/kubectx/cmd/kubens@latest"
 	"pistol;github.com/doronbehar/pistol/cmd/pistol@latest"
+	"yamlfmt;github.com/google/yamlfmt/cmd/yamlfmt@latest"
 	"yq;github.com/mikefarah/yq/v4@latest"
 )
 

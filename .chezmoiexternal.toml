@@ -3,7 +3,7 @@
   refreshPeriod = "168h"
   exact = true
   stripComponents = 1
-  url = "https://github.com/asdf-vm/asdf/archive/refs/tags/v0.9.0.tar.gz"
+  url = "https://github.com/asdf-vm/asdf/archive/refs/tags/v0.11.3.tar.gz"
 [".vim/autoload/plug.vim"]
   type = "file"
   exact = true
