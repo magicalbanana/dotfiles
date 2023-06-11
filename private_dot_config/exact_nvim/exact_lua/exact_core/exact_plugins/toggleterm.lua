@@ -1,5 +1,5 @@
 local M = {
-  "akinsho/nvim-toggleterm.lua",
+  "akinsho/toggleterm.nvim",
   config = function()
     local map = vim.api.nvim_set_keymap
     local buf_map = vim.api.nvim_buf_set_keymap
@@ -22,7 +22,7 @@ local M = {
       insert_mappings = true, -- whether or not the open mapping applies in insert mode
       persist_size = true,
       persist_mode = false,
-      direction = "vertical" | "horizontal" | "tab" | "float",
+      direction = "horizontal",
       close_on_exit = true, -- close the terminal window when the process exits
       shell = vim.o.shell, -- change the default shell
       -- This field is only relevant if direction is set to 'float'
@@ -41,14 +41,14 @@ local M = {
         },
       },
     })
-    map("\\", "<ESC>", "<C-\\><C-n>", { noremap = true, silent = true }) -- back to normal mode in Terminal
+    map("t", "<ESC>", "<C-\\><C-n>", { noremap = true, silent = true }) -- back to normal mode in Terminal
 
     -- Better navigation to and from terminal
     local set_terminal_keymaps = function()
       local opts = { noremap = true }
       buf_map(0, "t", "<esc>", [[<C-\><C-n>]], opts)
       buf_map(0, "t", "<C-h>", [[<C-\><C-n><C-W>h]], opts)
-      buf_map(0, "t", "<C-j>", [[<C-\><C-n><C-W>j]], opts)
+      buf_map(1, "t", "<C-j>", [[<C-\><C-n><C-W>j]], opts)
       buf_map(0, "t", "<C-k>", [[<C-\><C-n><C-W>k]], opts)
       buf_map(0, "t", "<C-l>", [[<C-\><C-n><C-W>l]], opts)
     end

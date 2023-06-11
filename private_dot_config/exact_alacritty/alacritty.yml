@@ -2,7 +2,7 @@
 
 # Import additional configuration files
 import:
-  - ~/.config/alacritty/nord.yml
+  - ~/.config/alacritty/tokyonight_storm.yml
 #
 # Imports are loaded in order, skipping all missing files, with the importing
 # file being loaded last. If a field is already present in a previous import, it
@@ -176,6 +176,7 @@ font:
 
   # If `true`, bold text is drawn using the bright color variants.
 draw_bold_text_with_bright_colors: false
+
 # Colors (Tomorrow Night)
 #colors:
 # Default colors
