@@ -13,7 +13,7 @@ local M = {
           return vim.o.columns * 0.4
         end
       end,
-      open_mapping = "<C-t>",
+      open_mapping = [[<c-\>]],
       hide_numbers = true, -- hide the number column in toggleterm buffers
       shade_filetypes = {},
       shade_terminals = true,
@@ -22,7 +22,7 @@ local M = {
       insert_mappings = true, -- whether or not the open mapping applies in insert mode
       persist_size = true,
       persist_mode = false,
-      direction = "vertical", -- 'vertical' | 'horizontal' | 'window' | 'float',
+      direction = "vertical" | "horizontal" | "tab" | "float",
       close_on_exit = true, -- close the terminal window when the process exits
       shell = vim.o.shell, -- change the default shell
       -- This field is only relevant if direction is set to 'float'
@@ -41,7 +41,7 @@ local M = {
         },
       },
     })
-    map("t", "<ESC>", "<C-\\><C-n>", { noremap = true, silent = true }) -- back to normal mode in Terminal
+    map("\\", "<ESC>", "<C-\\><C-n>", { noremap = true, silent = true }) -- back to normal mode in Terminal
 
     -- Better navigation to and from terminal
     local set_terminal_keymaps = function()

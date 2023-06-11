@@ -1,4 +1,4 @@
-local M = {
+return {
   "anuvyklack/windows.nvim",
   event = "VimEnter",
   dependencies = {
@@ -25,6 +25,3 @@ local M = {
     },
   },
 }
-
-return M
-
