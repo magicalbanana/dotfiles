@@ -3,22 +3,23 @@
 set -e
 
 cli_apps=(
-  "dyff;github.com/homeport/dyff/cmd/dyff@latest"
-  "gmailctl;github.com/mbrt/gmailctl/cmd/gmailctl@latest"
-  "gopls;golang.org/x/tools/gopls@latest"
-  "jsonnet-deps;github.com/google/go-jsonnet/cmd/jsonnet-deps@latest"
-  "jsonnet-lint;github.com/google/go-jsonnet/cmd/jsonnet-lint@latest"
-  "jsonnet;github.com/google/go-jsonnet/cmd/jsonnet@latest"
-  "jsonnetfmt;github.com/google/go-jsonnet/cmd/jsonnetfmt@latest"
-  "k9s;github.com/derailed/k9s@latest"
-  "kubectx;github.com/ahmetb/kubectx/cmd/kubectx@latest"
-  "kubens;github.com/ahmetb/kubectx/cmd/kubens@latest"
-  "pistol;github.com/doronbehar/pistol/cmd/pistol@latest"
-  "yq;github.com/mikefarah/yq/v4@latest"
+	"dyff;github.com/homeport/dyff/cmd/dyff@latest"
+	"glow;github.com/charmbracelet/glow@latest"
+	"gmailctl;github.com/mbrt/gmailctl/cmd/gmailctl@latest"
+	"gopls;golang.org/x/tools/gopls@latest"
+	"jsonnet-deps;github.com/google/go-jsonnet/cmd/jsonnet-deps@latest"
+	"jsonnet-lint;github.com/google/go-jsonnet/cmd/jsonnet-lint@latest"
+	"jsonnet;github.com/google/go-jsonnet/cmd/jsonnet@latest"
+	"jsonnetfmt;github.com/google/go-jsonnet/cmd/jsonnetfmt@latest"
+	"k9s;github.com/derailed/k9s@latest"
+	"kubectx;github.com/ahmetb/kubectx/cmd/kubectx@latest"
+	"kubens;github.com/ahmetb/kubectx/cmd/kubens@latest"
+	"pistol;github.com/doronbehar/pistol/cmd/pistol@latest"
+	"yq;github.com/mikefarah/yq/v4@latest"
 )
 
 for ((i = 0; i < ${#cli_apps[@]}; i++)); do
-  IFS=';' read -r cli_app go_pkg <<<"${cli_apps[i]}"
-  echo-run go install "${go_pkg}"
-  unset IFS
+	IFS=';' read -r cli_app go_pkg <<<"${cli_apps[i]}"
+	echo-run go install "${go_pkg}"
+	unset IFS
 done

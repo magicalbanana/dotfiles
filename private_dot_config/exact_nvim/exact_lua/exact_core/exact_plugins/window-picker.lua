@@ -1,12 +1,14 @@
-local M = {
+return {
   "s1n7ax/nvim-window-picker",
+  name = "window-picker",
+  event = "VeryLazy",
   opts = {
     autoselect_one = true,
     include_current = false,
+    hint = "statusline-winbar",
+    selection_chars = "FJDKSLA;CMRUEIWOQP",
     filter_rules = {
-      -- filter using buffer options
       bo = {
-        -- if the file type is one of following, the window will be ignored
         filetype = {
           "neo-tree",
           "neo-tree-popup",
@@ -18,13 +20,8 @@ local M = {
           "fugitiveblame",
         },
 
-        -- if the buffer type is one of following, the window will be ignored
         buftype = { "nofile", "help", "terminal" },
       },
     },
-    other_win_hl_color = "#f05a40",
   },
 }
-
-return M
-
