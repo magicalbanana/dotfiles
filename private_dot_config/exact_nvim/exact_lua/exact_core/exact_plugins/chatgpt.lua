@@ -1,3 +1,5 @@
+local utils = require("core.utils.functions")
+
 return {
   "jackMort/ChatGPT.nvim",
   event = "VeryLazy",
@@ -9,4 +11,5 @@ return {
     "nvim-lua/plenary.nvim",
     "nvim-telescope/telescope.nvim",
   },
+  cond = utils.firenvim_not_active(),
 }

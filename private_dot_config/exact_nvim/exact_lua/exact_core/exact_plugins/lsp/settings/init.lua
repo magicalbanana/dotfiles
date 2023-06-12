@@ -5,4 +5,3 @@ M.json = require("core.plugins.lsp.settings.json")
 M.yaml = require("core.plugins.lsp.settings.yaml")
 
 return M
-

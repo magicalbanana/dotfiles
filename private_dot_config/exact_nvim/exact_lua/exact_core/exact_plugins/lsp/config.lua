@@ -1,5 +1,5 @@
 local settings = require("core.settings")
-local nvim_lsp = require("lspconfig")
+local lspconfig = require("lspconfig")
 local utils = require("core.plugins.lsp.utils")
 local lsp_settings = require("core.plugins.lsp.settings")
 
@@ -20,7 +20,7 @@ for _, lsp in ipairs(settings.lsp_servers) do
     vim.notify("rust_analyzer is managed by rust-tools", vim.log.levels.INFO, { title = "LSP config" })
     break
   end
-  nvim_lsp[lsp].setup({
+  lspconfig[lsp].setup({
     before_init = function(_, config)
       if lsp == "pyright" then
         config.settings.python.pythonPath = utils.get_python_path(config.root_dir)

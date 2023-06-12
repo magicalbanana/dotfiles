@@ -1,3 +1,5 @@
+local utils = require("core.utils.functions")
+
 return {
   "akinsho/bufferline.nvim",
   config = function()
@@ -48,4 +50,5 @@ return {
       },
     })
   end,
+  cond = utils.firenvim_not_active(),
 }

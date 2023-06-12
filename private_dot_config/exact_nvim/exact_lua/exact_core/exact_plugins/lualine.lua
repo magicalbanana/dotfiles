@@ -1,4 +1,5 @@
 local utils = require("core.utils.functions")
+
 return {
   "nvim-lualine/lualine.nvim",
   dependencies = {
@@ -26,5 +27,5 @@ return {
     },
   },
   config = true,
-  -- cond = utils.firenvim_not_active(),
+  cond = utils.firenvim_not_active(),
 }

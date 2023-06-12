@@ -1,5 +1,5 @@
 -- https://github.com/sumneko/lua-language-server/blob/master/locale/en-us/setting.lua
-local opts = {
+return {
   cmd = { "lua-language-server" },
   format = {
     enable = false, -- let null-ls handle the formatting
@@ -35,6 +35,3 @@ local opts = {
   },
   telemetry = { enable = false },
 }
-
-return opts
-

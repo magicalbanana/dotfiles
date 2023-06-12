@@ -71,6 +71,7 @@ M.treesitter_ensure_installed = {
   "ruby",
   "rust",
   "scss",
+  "tailwindcss",
   "terraform",
   "toml",
   "tsx",
@@ -81,24 +82,30 @@ M.treesitter_ensure_installed = {
 
 -- LSPs that should be installed by Mason-lspconfig
 M.lsp_servers = {
+  "awk_ls",
   "bashls",
   "docker_compose_language_service",
   "dockerls",
   "elixirls",
   "erlangls",
   "eslint",
+  "graphql",
   "jsonls",
   "jsonnet_ls",
+  "kotlin_language_server",
   "ltex",
   "lua_ls",
   "marksman",
   "pyright",
+  "r_language_server",
   "rust_analyzer",
   "tailwindcss",
+  "taplo",
   "terraformls",
   "texlab",
   "tsserver",
   "typst_lsp",
+  "vimls",
   "yamlls",
 }
 
@@ -119,7 +126,6 @@ M.tools = {
   "debugpy",
   "codelldb",
 }
-
 
 -- enable greping in hidden files
 M.telescope_grep_hidden = true
@@ -162,10 +168,10 @@ M.telescope_file_ignore_patterns = {
   "%.ttf",
   "%.webp",
   "%.zip",
+  "^.settings/",
   ".git/",
   ".gradle/",
   ".idea/",
-  ".settings/",
   ".vale/",
   ".vscode/",
   "__pycache__/*",
