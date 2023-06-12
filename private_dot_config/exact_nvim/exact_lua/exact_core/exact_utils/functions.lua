@@ -181,4 +181,8 @@ function M.on_attach(on_attach)
   })
 end
 
+function M.firenvim_not_active()
+  return not vim.g.started_by_firenvim
+end
+
 return M
