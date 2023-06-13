@@ -1,7 +1,7 @@
 local settings = require("core.settings")
 local lspconfig = require("lspconfig")
 local utils = require("core.plugins.lsp.utils")
-local lsp_settings = require("core.plugins.lsp.settings")
+local servers = require("core.plugins.lsp.servers")
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 -- enable autoclompletion via nvim-cmp
@@ -15,26 +15,26 @@ require("core.utils.functions").on_attach(function(client, buffer)
   require("core.plugins.lsp.keys").on_attach(client, buffer)
 end)
 
+local common_config = {
+  capabilities = capabilities,
+  flags = { debounce_text_changes = 150 },
+}
+
 for _, lsp in ipairs(settings.lsp_servers) do
   if lsp == "rust_analyzer" then
     vim.notify("rust_analyzer is managed by rust-tools", vim.log.levels.INFO, { title = "LSP config" })
-    break
+    goto continue
   end
+
+  if lsp == "gopls" then
+    vim.notify("gopls is managed by go-nvim", vim.log.levels.INFO, { title = "LSP config" })
+    goto continue
+  end
+
+  local server_config = servers[lsp] or {}
+
   lspconfig[lsp].setup({
-    before_init = function(_, config)
-      if lsp == "pyright" then
-        config.settings.python.pythonPath = utils.get_python_path(config.root_dir)
-      end
-    end,
-    capabilities = capabilities,
-    flags = { debounce_text_changes = 150 },
-    settings = {
-      json = lsp_settings.json,
-      Lua = lsp_settings.lua,
-      ltex = lsp_settings.ltex,
-      redhat = { telemetry = { enabled = false } },
-      texlab = lsp_settings.tex,
-      yaml = lsp_settings.yaml,
-    },
+    vim.tbl_deep_extend("keep", common_config, server_config),
   })
+  ::continue::
 end

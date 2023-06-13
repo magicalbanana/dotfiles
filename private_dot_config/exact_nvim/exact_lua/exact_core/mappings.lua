@@ -78,6 +78,23 @@ map(
 )
 map("n", "<leader>ts", "<cmd>SymbolsOutline<cr>", { desc = "Toggle SymbolsOutline" })
 
+-- Edit and reload nvim config file quickly
+map("n", "<leader>ev", "<cmd>tabnew $MYVIMRC <bar> tcd %:h<cr>", {
+  silent = true,
+  desc = "open init.lua",
+})
+
+map("n", "<leader>sv", function()
+  vim.cmd([[
+      update $MYVIMRC
+      source $MYVIMRC
+    ]])
+  vim.notify("Nvim config successfully reloaded!", vim.log.levels.INFO, { title = "nvim-config" })
+end, {
+  silent = true,
+  desc = "reload init.lua",
+})
+
 local wk = require("which-key")
 
 -- register non leader based mappings
