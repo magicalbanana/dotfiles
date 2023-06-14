@@ -95,6 +95,16 @@ end, {
   desc = "reload init.lua",
 })
 
+map("n", "gb", "<cmd>BufferLinePick<cr>", {
+  silent = true,
+  desc = "Pick buffer",
+})
+
+map("n", "gD", "<cmd>BufferLinePickClose<cr>", {
+  silent = true,
+  desc = "Close buffer",
+})
+
 local wk = require("which-key")
 
 -- register non leader based mappings
@@ -108,6 +118,8 @@ wk.register({
   sf = "Replace right surrounding",
   ss = { "<cmd>lua MiniJump2d.start(MiniJump2d.builtin_opts.single_character)<cr>", "Jump to character" },
   st = { "<cmd>lua require('tsht').nodes()<cr>", "TS hint textobject" },
+  gb = "Pick buffer",
+  gD = "Close buffer",
 })
 
 -- Register leader based mappings

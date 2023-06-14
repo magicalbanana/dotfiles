@@ -1,4 +1,4 @@
-local M = {
+return {
   "echasnovski/mini.nvim",
   branch = "main",
   config = function()
@@ -77,5 +77,3 @@ local M = {
     require("mini.test").setup()
   end,
 }
-
-return M

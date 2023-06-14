@@ -43,12 +43,11 @@
   ca = commit -am                   # commit all with message
   ci = commit                       # commit
   amend = commit --amend            # ammend your last commit
-  ammend = commit --amend           # ammend your last commit
-  amne = commit --amend --no-edit
+  nemend = commit --amend --no-edit
 
   # checkout
-  co = checkout                     # checkout
-  nb = checkout -t -b               # create and switch to a new branch (mnemonic: "git new branch branchname...")
+  cco = checkout                     # checkout
+  nb = checkout -t -b                # create and switch to a new branch (mnemonic: "git new branch branchname...")
 
   # cherry-pick
   cp = cherry-pick -x               # grab a change from a branch
@@ -122,7 +121,7 @@
 [merge]
   summary = true
   verbosity = 1
-  tool = mvimdiff
+  tool = vimdiff
 [apply]
   whitespace = nowarn
 [branch]

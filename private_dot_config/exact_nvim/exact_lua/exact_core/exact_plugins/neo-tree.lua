@@ -1,4 +1,4 @@
-local M = {
+return {
   "nvim-neo-tree/neo-tree.nvim",
   branch = "v2.x",
   cmd = "Neotree",
@@ -6,7 +6,27 @@ local M = {
     "nvim-lua/plenary.nvim",
     { "kyazdani42/nvim-web-devicons", lazy = true },
     { "MunifTanjim/nui.nvim", lazy = true },
-    { "s1n7ax/nvim-window-picker", lazy = true },
+    {
+      -- only needed if you want to use the commands with "_with_window_picker" suffix
+      "s1n7ax/nvim-window-picker",
+      config = function()
+        require("window-picker").setup({
+          autoselect_one = true,
+          include_current = false,
+          filter_rules = {
+            -- filter using buffer options
+            bo = {
+              -- if the file type is one of following, the window will be ignored
+              filetype = { "neo-tree", "neo-tree-popup", "notify" },
+
+              -- if the buffer type is one of following, the window will be ignored
+              buftype = { "terminal", "quickfix" },
+            },
+          },
+          other_win_hl_color = "#e35e4f",
+        })
+      end,
+    },
   },
   keys = {
     { "<leader>fp", "<cmd>Neotree reveal toggle<cr>", desc = "Toggle Filetree" },
@@ -60,7 +80,8 @@ local M = {
       statusline = false, -- toggle to show selector on statusline
       show_scrolled_off_parent_node = false, -- this will replace the tabs with the parent path
       -- of the top visible node when scrolled down.
-      sources = { -- falls back to source_name if nil
+      sources = {
+        -- falls back to source_name if nil
         filesystem = "  Files ",
         buffers = "  Buffers ",
         git_status = "  Git ",
@@ -207,12 +228,14 @@ local M = {
       },
     },
     nesting_rules = {},
-    window = { -- see https://github.com/MunifTanjim/nui.nvim/tree/main/lua/nui/popup for
+    window = {
+      -- see https://github.com/MunifTanjim/nui.nvim/tree/main/lua/nui/popup for
       -- possible options. These can also be functions that return these options.
       position = "left", -- left, right, top, bottom, float, current
       width = 40, -- applies to left and right positions
       height = 15, -- applies to top and bottom positions
-      popup = { -- settings that apply to float position only
+      popup = {
+        -- settings that apply to float position only
         size = {
           height = "80%",
           width = "50%",
@@ -269,11 +292,11 @@ local M = {
           ["<2-LeftMouse>"] = "open_with_window_picker",
           ["<cr>"] = "open",
           -- ["S"] = "open_split",
-          ["S"] = "split_with_window_picker",
+          ["-"] = "split_with_window_picker",
           -- ["s"] = "open_vsplit",
-          ["s"] = "vsplit_with_window_picker",
+          ["|"] = "vsplit_with_window_picker",
           ["t"] = "open_tabnew",
-          --["P"] = "toggle_preview",
+          ["P"] = "toggle_preview",
           ["C"] = "close_node",
           ["z"] = "close_all_nodes",
           --["Z"] = "expand_all_nodes",
@@ -437,5 +460,3 @@ local M = {
     })
   end,
 }
-
-return M
