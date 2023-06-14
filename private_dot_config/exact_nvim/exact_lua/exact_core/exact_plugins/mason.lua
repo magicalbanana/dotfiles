@@ -1,4 +1,5 @@
 local settings = require("core.settings")
+local utils = require("core.plugins.lsp.utils")
 
 local M = {
   "williamboman/mason.nvim",
@@ -6,8 +7,10 @@ local M = {
     { "williamboman/mason-lspconfig.nvim", module = "mason" },
   },
   config = function()
-    -- install_root_dir = path.concat({ vim.fn.stdpath("data"), "mason" }),
-    require("mason").setup()
+    require("mason").setup({
+      install_root_dir = utils.get_asdf_shims_path(),
+      PATH = "skip",
+    })
 
     -- ensure tools (except LSPs) are installed
     local mr = require("mason-registry")

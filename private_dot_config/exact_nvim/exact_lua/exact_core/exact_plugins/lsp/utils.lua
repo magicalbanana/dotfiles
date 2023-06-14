@@ -48,4 +48,11 @@ M.get_python_path = function(workspace)
   return vim.fn.exepath("python3") or vim.fn.exepath("python") or "python"
 end
 
+M.get_asdf_shims_path = function()
+  local lsp_util = require("lspconfig/util")
+  local path = lsp_util.path
+
+  return path.join(vim.env.ASDF_DIR, "shims")
+end
+
 return M
