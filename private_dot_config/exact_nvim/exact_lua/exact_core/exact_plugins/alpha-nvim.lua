@@ -4,7 +4,7 @@ return {
   "goolord/alpha-nvim",
   event = "VimEnter",
   dependencies = {
-    "kyazdani42/nvim-web-devicons",
+    "nvim-tree/nvim-web-devicons",
   },
   config = function()
     require("core.plugins.alpha.alpha")
