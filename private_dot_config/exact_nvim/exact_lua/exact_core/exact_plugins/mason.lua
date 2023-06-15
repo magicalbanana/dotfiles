@@ -1,5 +1,5 @@
 local settings = require("core.settings")
-local utils = require("core.plugins.lsp.utils")
+-- local utils = require("core.plugins.lsp.utils")
 
 return {
   "williamboman/mason.nvim",
@@ -8,7 +8,7 @@ return {
   },
   config = function()
     require("mason").setup({
-      PATH = "skip",
+      PATH = "prepend",
     })
 
     -- install LSPs
