@@ -8,3 +8,6 @@ require("core.mappings")
 require("core.options")
 -- Vim autocommands/autogroups
 require("core.autocommands")
+
+local colorschemes = require("core.utils.colorschemes")
+colorschemes.random()

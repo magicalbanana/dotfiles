@@ -1,4 +1,4 @@
-local M = {
+return {
   "nvim-treesitter/nvim-treesitter",
   build = ":TSUpdate",
   event = "BufReadPost",
@@ -58,5 +58,3 @@ local M = {
     require("nvim-ts-autotag").setup()
   end,
 }
-
-return M

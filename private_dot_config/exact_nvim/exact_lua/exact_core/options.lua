@@ -3,9 +3,6 @@ local utils = require("core.utils.functions")
 local o = vim.opt
 local fn = vim.fn
 
-local colorschemes = require("core.utils.colorschemes")
-colorschemes.random()
-
 if not settings.disable_winbar then
   o.winbar = "%{%v:lua.require'core.utils.winbar'.get_winbar()%}"
 end

@@ -1,4 +1,4 @@
-local M = {
+return {
   "folke/which-key.nvim",
   config = function()
     -- disable v
@@ -80,5 +80,3 @@ local M = {
     })
   end,
 }
-
-return M
