@@ -1,4 +1,4 @@
-local M = {
+return {
   "ahmedkhalf/project.nvim",
   -- can't use 'opts' because module has non standard name 'project_nvim'
   config = function()
@@ -17,5 +17,3 @@ local M = {
     })
   end,
 }
-
-return M

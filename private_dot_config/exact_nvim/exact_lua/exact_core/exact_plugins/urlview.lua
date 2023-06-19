@@ -1,6 +1,6 @@
 return {
   "axieax/urlview.nvim",
-  cmd = "Urlview",
+  cmd = "UrlView",
   config = function()
     local wk = require("which-key")
     local default_options = { silent = true }

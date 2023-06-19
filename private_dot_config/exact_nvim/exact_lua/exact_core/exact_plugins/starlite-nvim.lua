@@ -1,4 +1,4 @@
-local M = {
+return {
   "ironhouzi/starlite-nvim",
   config = function()
     local map = vim.keymap.set
@@ -9,5 +9,3 @@ local M = {
     map("n", "g#", ":lua require'starlite'.g_hash()<cr>", default_options)
   end,
 }
-
-return M

@@ -1,4 +1,4 @@
-local M = {
+return {
   "hrsh7th/nvim-cmp",
   dependencies = {
     "hrsh7th/cmp-nvim-lsp",
@@ -59,11 +59,11 @@ local M = {
       sources = {
         { name = "nvim_lsp" },
         { name = "nvim_lsp_signature_help" },
-        { name = "buffer", keyword_length = 5 },
+        { name = "buffer",                 keyword_length = 5 },
         { name = "luasnip" },
         { name = "calc" },
         { name = "path" },
-        { name = "rg", keyword_length = 5 },
+        { name = "rg",                     keyword_length = 5 },
         -- { omni = true }, -- completion for vimtex - is this necessary?
       },
     })
@@ -87,5 +87,3 @@ local M = {
     })
   end,
 }
-
-return M

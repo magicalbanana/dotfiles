@@ -1,4 +1,4 @@
-local M = {
+return {
   "simrat39/symbols-outline.nvim",
   cmd = "SymbolsOutline",
   opts = {
@@ -62,5 +62,3 @@ local M = {
     },
   },
 }
-
-return M

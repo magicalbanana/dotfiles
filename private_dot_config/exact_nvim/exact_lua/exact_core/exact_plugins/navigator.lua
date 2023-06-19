@@ -1,4 +1,4 @@
-local M = {
+return {
   "numToStr/Navigator.nvim",
   config = function()
     require("Navigator").setup({})
@@ -11,5 +11,3 @@ local M = {
     map("n", "<C-j>", "<cmd>lua require('Navigator').down()<CR>", default_options)
   end,
 }
-
-return M

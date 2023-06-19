@@ -1,16 +1,16 @@
-local M = {
+return {
   "folke/todo-comments.nvim",
   dependencies = {
     "nvim-lua/plenary.nvim",
   },
   opts = {
-    signs = true, -- show icons in the signs column
+    signs = true,      -- show icons in the signs column
     sign_priority = 8, -- sign priority
     -- keywords recognized as todo comments
     keywords = {
       FIX = {
-        icon = " ", -- icon used for the sign, and in search results
-        color = "error", -- can be a hex color, or a named color (see below)
+        icon = " ",                              -- icon used for the sign, and in search results
+        color = "error",                            -- can be a hex color, or a named color (see below)
         alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
         -- signs = false, -- configure signs for some keywords individually
       },
@@ -26,13 +26,13 @@ local M = {
     -- * keyword: highlights of the keyword
     -- * after: highlights after the keyword (todo text)
     highlight = {
-      before = "", -- "fg" or "bg" or empty
-      keyword = "wide", -- "fg", "bg", "wide" or empty. (wide is the same as bg, but will also highlight surrounding characters)
-      after = "fg", -- "fg" or "bg" or empty
+      before = "",                     -- "fg" or "bg" or empty
+      keyword = "wide",                -- "fg", "bg", "wide" or empty. (wide is the same as bg, but will also highlight surrounding characters)
+      after = "fg",                    -- "fg" or "bg" or empty
       pattern = [[.*<(KEYWORDS)\s*:]], -- pattern or table of patterns, used for highlightng (vim regex)
-      comments_only = true, -- uses treesitter to match keywords in comments only
-      max_line_len = 1000, -- ignore lines longer than this
-      exclude = {}, -- list of file types to exclude highlighting
+      comments_only = true,            -- uses treesitter to match keywords in comments only
+      max_line_len = 1000,             -- ignore lines longer than this
+      exclude = {},                    -- list of file types to exclude highlighting
     },
     -- list of named colors where we try to extract the guifg from the
     -- list of highlight groups or use the hex color if hl not found as a fallback
@@ -59,5 +59,3 @@ local M = {
     },
   },
 }
-
-return M

@@ -1,4 +1,4 @@
-local M = {
+return {
   "SmiteshP/nvim-navic",
   lazy = true,
   init = require("core.utils.functions").on_attach(function(client, buffer)
@@ -7,6 +7,3 @@ local M = {
     end
   end),
 }
-
-return M
-

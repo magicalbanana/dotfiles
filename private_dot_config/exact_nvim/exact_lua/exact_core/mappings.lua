@@ -32,9 +32,6 @@ map("i", "<C-l>", function()
   return require("core.utils.functions").escapePair()
 end)
 
--- save like your are used to
-map({ "i", "v", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save file" })
-
 -- Paste non-linewise text above or below current line, see https://stackoverflow.com/a/1346777/6064933
 map("n", "<leader>p", "m`o<ESC>p``", { desc = "paste below current line" })
 map("n", "<leader>P", "m`O<ESC>p``", { desc = "paste above current line" })

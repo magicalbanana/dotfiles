@@ -1,4 +1,4 @@
-local M = {
+return {
   "L3MON4D3/LuaSnip",
   dependencies = {
     "saadparwaiz1/cmp_luasnip",
@@ -66,5 +66,3 @@ local M = {
     end)
   end,
 }
-
-return M

@@ -1,4 +1,4 @@
-local M = {
+return {
   "TimUntersberger/neogit",
   cmd = "Neogit",
   dependencies = {
@@ -32,5 +32,3 @@ local M = {
     },
   },
 }
-
-return M
