@@ -13,7 +13,7 @@ api.nvim_create_autocmd("BufWritePre", {
 local LargeFile = api.nvim_create_augroup("LargeFile", { clear = true })
 api.nvim_create_autocmd("BufWritePre", {
   group = LargeFile,
-  callback = function ()
+  callback = function()
     local large_file = 10485760 -- 10MB
     local f = vim.fn.expand("<afile>")
 
@@ -144,7 +144,7 @@ api.nvim_create_autocmd(
     pattern = { "*.txt", "*.md", "*.tex" },
     callback = function()
       vim.opt.spell = true
-      vim.opt.spelllang = "en,de"
+      vim.opt.spelllang = "en"
     end,
   }
 )
@@ -171,5 +171,3 @@ api.nvim_create_autocmd({ "FocusGained", "CursorHold" }, {
     end
   end,
 })
-
-
