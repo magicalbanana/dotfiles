@@ -45,4 +45,13 @@ return {
       require("nordic").load()
     end,
   },
+  {
+    "rafamadriz/neon",
+  },
+  {
+    "NTBBloodbath/doom-one.nvim",
+    init = function()
+      require("core.plugins.themes.doomone").setup()
+    end,
+  },
 }

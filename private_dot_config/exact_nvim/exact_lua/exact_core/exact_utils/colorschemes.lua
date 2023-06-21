@@ -8,7 +8,9 @@ local M = {}
 M.random = function()
   local colorschemes = {
     catppuccin = "catppuccin",
+    doomone = "doom-one",
     kanagawa = "kanagawa",
+    neon = "neon",
     nightfox = "nightfox",
     nord = "nord",
     nordic = "nordic",
@@ -92,6 +94,19 @@ M.tundra = function()
   vim.opt.background = "dark"
 
   vim.cmd(string.format("colorscheme %s", "tundra"))
+end
+
+M.neon = function()
+  vim.g.neon_style = "doom"
+  vim.g.neon_italic_keyword = true
+  vim.g.neon_italic_function = true
+  vim.g.neon_transparent = true
+
+  vim.cmd(string.format("colorscheme %s", "neon"))
+end
+
+M.doomone = function()
+  vim.cmd(string.format("colorscheme %s", "doom-one"))
 end
 
 return M
