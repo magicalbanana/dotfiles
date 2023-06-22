@@ -81,3 +81,29 @@ endfunction
 " Start the find and replace command across the entire file
 vmap <leader>z <Esc>:%s/<c-r>=GetVisualToReplace()<cr>/
 vmap <leader>Z <Esc>:%s/\<<c-r>=GetVisualToReplace()<cr>\>/
+
+function! s:ShowMaps()
+  " save the current content of register a
+  let old_reg = getreg("a")
+  " save the type of the register as well
+  let old_reg_type = getregtype("a")
+try
+  " redirect output to register a
+  redir @a
+  " Get the list of all key mappings silently, satisfy "Press ENTER to continue"
+  silent map | call feedkeys("\<CR>")
+  " end output redirection
+  redir END
+  " new buffer in vertical window
+  vnew
+  " put content of register
+  put a
+  " Sort on 4th character column which is the key(s)
+  %!sort -k1.4,1.4
+finally                              " Execute even if exception is raised
+  call setreg("a", old_reg, old_reg_type) " restore register a
+endtry
+endfunction
+
+" Enable :ShowMaps to call the function
+command! ShowMaps call s:ShowMaps()

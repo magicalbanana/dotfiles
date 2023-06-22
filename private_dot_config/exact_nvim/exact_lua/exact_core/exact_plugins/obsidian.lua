@@ -46,7 +46,7 @@ return {
     end,
 
     -- Optional, set to true if you dont want Obsidian to manage frontmatter.
-    disable_frontmatter = false,
+    disable_frontmatter = true,
 
     -- Optional, alternatively you can customize the frontmatter data.
     note_frontmatter_func = function(note)
