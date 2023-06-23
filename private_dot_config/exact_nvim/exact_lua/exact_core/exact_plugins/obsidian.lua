@@ -19,7 +19,7 @@ return {
       -- Optional, if you keep daily notes in a separate directory.
       folder = "notes/dailies",
       -- Optional, if you want to change the date format for daily notes.
-      date_format = "%Y-%m-%d",
+      date_format = "%Y-%m-%d.%H-%M-%S",
     },
 
     -- Optional, completion.
@@ -46,7 +46,7 @@ return {
     end,
 
     -- Optional, set to true if you dont want Obsidian to manage frontmatter.
-    disable_frontmatter = true,
+    disable_frontmatter = false,
 
     -- Optional, alternatively you can customize the frontmatter data.
     note_frontmatter_func = function(note)
@@ -66,7 +66,7 @@ return {
     templates = {
       subdir = "templates",
       date_format = "%Y-%m-%d-%a",
-      time_format = "%H:%M",
+      time_format = "%H:%M:%S",
     },
 
     -- Optional, by default when you use `:ObsidianFollowLink` on a link to an external

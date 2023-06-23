@@ -15,8 +15,8 @@ return {
       ensure_installed = settings.treesitter_ensure_installed,
       ignore_install = {}, -- List of parsers to ignore installing
       highlight = {
-        enable = true, -- false will disable the whole extension
-        disable = {}, -- list of language that will be disabled
+        enable = true,     -- false will disable the whole extension
+        disable = {},      -- list of language that will be disabled
         additional_vim_regex_highlighting = false,
       },
       incremental_selection = {
@@ -40,16 +40,16 @@ return {
           lookahead = true,
           keymaps = {
             -- You can use the capture groups defined in textobjects.scm
-            ["af"] = "@function.outer",
+            ["of"] = "@function.outer",
             ["if"] = "@function.inner",
-            ["ac"] = "@class.outer",
+            ["oc"] = "@class.outer",
             ["ic"] = "@class.inner",
-            ["al"] = "@loop.outer",
+            ["ol"] = "@loop.outer",
             ["il"] = "@loop.inner",
             ["ib"] = "@block.inner",
-            ["ab"] = "@block.outer",
-            ["ir"] = "@parameter.inner",
-            ["ar"] = "@parameter.outer",
+            ["ob"] = "@block.outer",
+            ["ip"] = "@parameter.inner",
+            ["op"] = "@parameter.outer",
           },
         },
       },
