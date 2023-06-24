@@ -1,5 +1,5 @@
 local fn = require("core.utils.functions")
-local obsidian_path = os.getenv("OBSIDIAN_VAULT_PATH")
+local obsidian_path = os.getenv("MEIN_WISSEN_PATH")
 
 return {
   "epwalsh/obsidian.nvim",

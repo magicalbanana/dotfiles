@@ -8,10 +8,18 @@ cli_apps=(
 	"broot;broot"
 	"btm;bottom"
 	"delta;git-delta"
+	"difft;difftastic"
+	"dust;du-dust"
 	"exa;exa"
 	"fd;fd-find"
 	"gitui;gitui"
+	"macchina;macchina"
+	"monolith;monolith"
+	"ouch;ouch"
+	"procs;procs"
 	"rg;ripgrep"
+	"sd;sd"
+	"tokei;tokei"
 	"zoxide;zoxide"
 )
 
