@@ -1,8 +1,0 @@
-#!/bin/sh
-
-if [ -n "$VIRTUAL_ENV" ]; then
-  echo-err 'Please exit any virtual environments before running.' >&2
-  exit 0
-fi
-
-exit 1
