@@ -179,7 +179,7 @@ fi
 
 if command_exists bat; then
   unalias -m 'cat'
-  alias cat='bat -pp --theme="Nord"'
+  alias cat='bat -pp'
 fi
 
 if command_exists zoxide; then
