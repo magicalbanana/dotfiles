@@ -1,4 +1,0 @@
-#!/bin/sh
-
-echo-run cd "$(npm prefix)"
-echo-run rm -rf ./node_modules

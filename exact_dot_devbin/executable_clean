@@ -1,9 +1,0 @@
-#!/bin/sh
-
-paths="node_modules .venv"
-
-if confirm "Are you sure you want to remove '${paths}' (y/N)?"; then
-  for path in $paths; do
-    echo-run rm -rf "$path"
-  done
-fi
