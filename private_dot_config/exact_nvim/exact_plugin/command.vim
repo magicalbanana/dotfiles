@@ -1,9 +1,6 @@
 " Capture output from a command to register @m, to paste, press "mp
 command! -nargs=1 -complete=command Redir call utils#CaptureCommandOutput(<q-args>)
 
-" show current date and time in human readable format
-command! -nargs=? Datetime echo utils#iso_time(<q-args>)
-
 " Convert Markdown file to PDF
 command! ToPDF call s:md_to_pdf()
 
