@@ -32,7 +32,7 @@ linuxify_check_dirs() {
     result=0
     for dir in ${BREW_PREFIX}/bin ${BREW_PREFIX}/sbin; do
         if [[ ! -d $dir || ! -w $dir ]]; then
-            echo-error "$dir must exist and be writeable"
+            echo-err "$dir must exist and be writeable"
             result=1
         fi
     done
