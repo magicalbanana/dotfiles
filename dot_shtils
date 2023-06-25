@@ -300,19 +300,6 @@ venv() {
 	echo_run . "${2}/${1}/bin/activate"
 }
 
-dotfiles() {
-	case "$1" in
-	'cd')
-		shift
-		echo_run cd "$(chezmoi source-path "$@")"
-		;;
-	*)
-		op_signin || return "$?"
-		command dotfiles "$@"
-		;;
-	esac
-}
-
 presentation_setup() {
 	new_home="$(mktemp -d)"
 	echo "Copying .terminfo to new HOME"
