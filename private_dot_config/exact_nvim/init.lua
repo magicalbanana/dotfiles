@@ -7,6 +7,7 @@ require("core.mappings")
 -- All non plugin related (vim) options
 require("core.options")
 -- Vim autocommands/autogroups
+require("core.commands")
 require("core.autocommands")
 
 local colorschemes = require("core.utils.colorschemes")
