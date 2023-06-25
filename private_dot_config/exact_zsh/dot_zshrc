@@ -169,11 +169,13 @@ if command_exists exa; then
   alias ll='exa -l --color always --icons -a -s type'
 fi
 
-# NOTE: moved this to zshenv
-# if command_exists nvim; then
-#   unalias -m 'vim'
-#   alias vim='nvim'
-# fi
+if command_exists nvim; then
+  unalias -m 'vim'
+  alias vim='nvim'
+
+  export VISUAL='nvim'
+  export EDITOR='nvim'
+fi
 
 if command_exists bat; then
   unalias -m 'cat'

@@ -12,7 +12,9 @@ golines;github.com/segmentio/golines@latest
 gopls;golang.org/x/tools/gopls@latest
 gorename;golang.org/x/tools/cmd/gorename@latest
 gotestsum;gotest.tools/gotestsum@latest
-guru;golang.org/x/tools/guru@latest
+guru;golang.org/x/tools/cmd/guru@latest
+godoc;golang.org/x/tools/cmd/godoc@latest
+goimports;golang.org/x/tools/cmd/goimports@latest
 jqp;github.com/noahgorstein/jqp@latest
 jsonnet-deps;github.com/google/go-jsonnet/cmd/jsonnet-deps@latest
 jsonnet-lint;github.com/google/go-jsonnet/cmd/jsonnet-lint@latest
