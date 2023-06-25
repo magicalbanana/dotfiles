@@ -1,32 +1,32 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 set -e
 
-cli_apps=(
-	"as-tree;--git https://github.com/jez/as-tree"
-	"bat;bat"
-	"broot;broot"
-	"btm;bottom"
-	"delta;git-delta"
-	"difft;difftastic"
-	"dust;du-dust"
-	"exa;exa"
-	"fd;fd-find"
-	"gitui;gitui"
-	"just;just"
-	"macchina;macchina"
-	"monolith;monolith"
-	"ouch;ouch"
-	"procs;procs"
-	"rg;ripgrep"
-	"sd;sd"
-	"tokei;tokei"
-	"zoxide;zoxide"
-)
+cli_apps="
+as-tree;--git 'https://github.com/jez/as-tree'
+bat;bat
+broot;broot
+btm;bottom
+delta;git-delta
+difft;difftastic
+dust;du-dust
+exa;exa
+fd;fd-find
+gitui;gitui
+just;just
+macchina;macchina
+monolith;monolith
+ouch;ouch
+procs;procs
+rg;ripgrep
+sd;sd
+tokei;tokei
+zoxide;zoxide
+"
 
-for ((i = 0; i < ${#cli_apps[@]}; i++)); do
-	IFS=';' read -r cli_app cargo_package <<<"${cli_apps[i]}"
-	echo-info "cli app: installing ${cli_app}"
-	echo-run cargo install --locked --force "${cargo_package}"
-	unset IFS
+for cli_app in $cli_apps; do
+	cli_app_name=$(echo "$cli_app" | cut -d ';' -f 1)
+	cargo_package=$(echo "$cli_app" | cut -d ';' -f 2-)
+	echo-info "cli app: installing $cli_app_name"
+	echo-run cargo install --locked --force "$cargo_package"
 done

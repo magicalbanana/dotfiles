@@ -1,34 +1,34 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 set -e
 
-cli_apps=(
-	"dlv;github.com/go-delve/delve/cmd/dlv@latest"
-	"dyff;github.com/homeport/dyff/cmd/dyff@latest"
-	"glow;github.com/charmbracelet/glow@latest"
-	"gmailctl;github.com/mbrt/gmailctl/cmd/gmailctl@latest"
-	"gofumpt;mvdan.cc/gofumpt@latest"
-	"golines;github.com/segmentio/golines@latest"
-	"gopls;golang.org/x/tools/gopls@latest"
-	"gorename;golang.org/x/tools/cmd/gorename@latest"
-	"gotestsum;gotest.tools/gotestsum@latest"
-	"guru;golang.org/x/tools/guru@latest"
-	"jqp;github.com/noahgorstein/jqp@latest"
-	"jsonnet-deps;github.com/google/go-jsonnet/cmd/jsonnet-deps@latest"
-	"jsonnet-lint;github.com/google/go-jsonnet/cmd/jsonnet-lint@latest"
-	"jsonnet;github.com/google/go-jsonnet/cmd/jsonnet@latest"
-	"jsonnetfmt;github.com/google/go-jsonnet/cmd/jsonnetfmt@latest"
-	"k9s;github.com/derailed/k9s@latest"
-	"kubectx;github.com/ahmetb/kubectx/cmd/kubectx@latest"
-	"kubens;github.com/ahmetb/kubectx/cmd/kubens@latest"
-	"pistol;github.com/doronbehar/pistol/cmd/pistol@latest"
-	"yamlfmt;github.com/google/yamlfmt/cmd/yamlfmt@latest"
-	"yq;github.com/mikefarah/yq/v4@latest"
-)
+cli_apps="
+dlv;github.com/go-delve/delve/cmd/dlv@latest
+dyff;github.com/homeport/dyff/cmd/dyff@latest
+glow;github.com/charmbracelet/glow@latest
+gmailctl;github.com/mbrt/gmailctl/cmd/gmailctl@latest
+gofumpt;mvdan.cc/gofumpt@latest
+golines;github.com/segmentio/golines@latest
+gopls;golang.org/x/tools/gopls@latest
+gorename;golang.org/x/tools/cmd/gorename@latest
+gotestsum;gotest.tools/gotestsum@latest
+guru;golang.org/x/tools/guru@latest
+jqp;github.com/noahgorstein/jqp@latest
+jsonnet-deps;github.com/google/go-jsonnet/cmd/jsonnet-deps@latest
+jsonnet-lint;github.com/google/go-jsonnet/cmd/jsonnet-lint@latest
+jsonnet;github.com/google/go-jsonnet/cmd/jsonnet@latest
+jsonnetfmt;github.com/google/go-jsonnet/cmd/jsonnetfmt@latest
+k9s;github.com/derailed/k9s@latest
+kubectx;github.com/ahmetb/kubectx/cmd/kubectx@latest
+kubens;github.com/ahmetb/kubectx/cmd/kubens@latest
+pistol;github.com/doronbehar/pistol/cmd/pistol@latest
+yamlfmt;github.com/google/yamlfmt/cmd/yamlfmt@latest
+yq;github.com/mikefarah/yq/v4@latest
+"
 
-for ((i = 0; i < ${#cli_apps[@]}; i++)); do
-	IFS=';' read -r cli_app go_pkg <<<"${cli_apps[i]}"
-	echo-info "cli app: installing ${cli_app}"
-	echo-run go install "${go_pkg}"
-	unset IFS
+for cli_app in $cli_apps; do
+	cli_app_name=$(echo "$cli_app" | cut -d ';' -f 1)
+	go_pkg=$(echo "$cli_app" | cut -d ';' -f 2-)
+	echo-info "cli app: installing $cli_app_name"
+	echo-run go install "$go_pkg"
 done
