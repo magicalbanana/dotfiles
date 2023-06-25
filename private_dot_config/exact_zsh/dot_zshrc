@@ -44,14 +44,16 @@ zinit snippet OMZL::completion.zsh
 zinit snippet OMZL::directories.zsh
 zinit snippet OMZL::key-bindings.zsh
 
-zinit ice as"completion"
+zinit ice as "completion"
 zinit snippet OMZ::plugins/docker/_docker
-zinit ice as"completion"
+zinit ice as "completion"
 zinit snippet OMZ::plugins/docker-compose/_docker-compose
 zinit ice as "completion"
 zinit snippet https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
 zinit ice as "completion"
 zinit snippet https://raw.githubusercontent.com/asdf-vm/asdf/master/completions/_asdf
+zinit ice as "completion"
+zinit snippet https://raw.githubusercontent.com/casey/just/master/completions/just.zsh
 
 zinit ice has'zoxide'
 zinit light z-shell/zsh-zoxide

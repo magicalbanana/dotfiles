@@ -13,6 +13,7 @@ cli_apps=(
 	"exa;exa"
 	"fd;fd-find"
 	"gitui;gitui"
+	"just;just"
 	"macchina;macchina"
 	"monolith;monolith"
 	"ouch;ouch"
