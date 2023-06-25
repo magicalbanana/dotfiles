@@ -20,7 +20,9 @@ ouch;ouch
 procs;procs
 rg;ripgrep
 sd;sd
+tldr;tealdeer
 tokei;tokei
+zellij;zellij
 zoxide;zoxide
 "
 
@@ -28,5 +30,5 @@ for cli_app in $cli_apps; do
 	cli_app_name=$(echo "$cli_app" | cut -d ';' -f 1)
 	cargo_package=$(echo "$cli_app" | cut -d ';' -f 2-)
 	echo-info "cli app: installing $cli_app_name"
-	echo-run cargo install --locked --force "$cargo_package"
+	echo-run cargo install --locked --force $cargo_package
 done
