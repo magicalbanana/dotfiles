@@ -44,18 +44,18 @@ zinit snippet OMZL::completion.zsh
 zinit snippet OMZL::directories.zsh
 zinit snippet OMZL::key-bindings.zsh
 
-zinit ice as "completion"
+zinit ice has"docker" as"completion"
 zinit snippet OMZ::plugins/docker/_docker
-zinit ice as "completion"
+zinit ice has"docker-compose" as"completion"
 zinit snippet OMZ::plugins/docker-compose/_docker-compose
-zinit ice as "completion"
+zinit ice has"git" as"completion"
 zinit snippet https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
-zinit ice as "completion"
+zinit ice has"asdf" as"completion"
 zinit snippet https://raw.githubusercontent.com/asdf-vm/asdf/master/completions/_asdf
-zinit ice as "completion"
+zinit ice has"just" as"completion"
 zinit snippet https://raw.githubusercontent.com/casey/just/master/completions/just.zsh
 
-zinit ice has'zoxide'
+zinit ice has"zoxide"
 zinit light z-shell/zsh-zoxide
 
 zinit ice wait lucid
@@ -146,16 +146,21 @@ setopt autocd                 # no need ot put CD when traversing directories
 unsetopt BEEP
 setopt vi
 
-alias gohome='cd $HOME'
-alias dcomp="docker compose"
-alias ktl="kubectl"
-
-if command -v nnn >/dev/null 2>&1; then
-  unalias -m 'vim'
-  alias n3='nnn'
+if command_exists docker; then
+  if docker compose >/dev/null 2>&1; then
+    alias dcomp="docker compose"
+  else
+    if command_exists docker-compose >/dev/null 2>&1; then
+      alias dcomp="docker compose"
+    fi
+  fi
 fi
 
-if command -v exa >/dev/null 2>&1; then
+if command_exists kubectl; then
+  alias ktl="kubectl"
+fi
+
+if command_exists exa; then
   unalias -m 'll'
   unalias -m 'l'
   unalias -m 'la'
@@ -164,21 +169,22 @@ if command -v exa >/dev/null 2>&1; then
   alias ll='exa -l --color always --icons -a -s type'
 fi
 
-if command -v nvim >/dev/null 2>&1; then
-  unalias -m 'vim'
-  alias vim='nvim'
-fi
+# NOTE: moved this to zshenv
+# if command_exists nvim; then
+#   unalias -m 'vim'
+#   alias vim='nvim'
+# fi
 
-if command -v bat >/dev/null 2>&1; then
+if command_exists bat; then
   unalias -m 'cat'
   alias cat='bat -pp --theme="Nord"'
 fi
 
-if command -v zoxide >/dev/null 2>&1; then
+if command_exists zoxide; then
   eval "$(zoxide init zsh --cmd z)"
 fi
 
-if command -v broot >/dev/null 2>&1; then
+if command_exists broot; then
   br_path="${HOME}/.config/broot/launcher/bash/br"
   if [ -f "${br_path}" ]; then
     source "${br_path}"

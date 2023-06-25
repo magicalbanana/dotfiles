@@ -28,6 +28,7 @@ cli_apps=(
 
 for ((i = 0; i < ${#cli_apps[@]}; i++)); do
 	IFS=';' read -r cli_app go_pkg <<<"${cli_apps[i]}"
+	echo-info "cli app: installing ${cli_app}"
 	echo-run go install "${go_pkg}"
 	unset IFS
 done

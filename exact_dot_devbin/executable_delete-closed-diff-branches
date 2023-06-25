@@ -5,52 +5,51 @@ USAGE="usage: $(basename "$0") [--yes]"
 run_cmd="safe-run"
 
 while [ "$#" -gt 0 ]; do
-  case "$1" in
-    -h | --help)
-      echo "$USAGE"
-      exit
-      ;;
-    --yes) run_cmd="echo-run" ;;
-    --)
-      shift
-      break
-      ;;
-    -?*) die 1 "unknown option: ${1}" ;;
-    *) break ;;
-  esac
-  shift
+	case "$1" in
+	-h | --help)
+		echo "$USAGE"
+		exit
+		;;
+	--yes) run_cmd="echo-run" ;;
+	--)
+		shift
+		break
+		;;
+	-?*) die 1 "unknown option: ${1}" ;;
+	*) break ;;
+	esac
+	shift
 done
 
 current_branch="$(git rev-parse --abbrev-ref HEAD)"
 for branch in $(git for-each-ref --sort=committerdate refs/heads --format='%(refname:short)'); do
-  if [ "${branch}" = "develop" ] || \
-    [ "${branch}" = "master" ] || \
-    [ "${branch}" = "main" ] || \
-    [ "${branch}" = "${current_branch}" ]; then
-      continue
-  fi
+	if [ "${branch}" = "develop" ] ||
+		[ "${branch}" = "master" ] ||
+		[ "${branch}" = "main" ] ||
+		[ "${branch}" = "${current_branch}" ]; then
+		continue
+	fi
 
-  diff_url="$(git show --quiet --format="%b" "$branch" | grep "^Differential Revision: " | cut -d' ' -f 3)"
-  if [ -z "$diff_url" ]; then
-    echo "Skipping ${branch} since there was no diff URL for it"
-    continue
-  fi
-  diff_id="${diff_url##*/D}"
-  diff_status="$(echo '{"constraints":{"ids": ['"$diff_id"']}}' \
-    | arc call-conduit -- differential.revision.search \
-    | jq --raw-output '.response.data[0].fields.status.name')"
+	diff_url="$(git show --quiet --format="%b" "$branch" | grep "^Differential Revision: " | cut -d' ' -f 3)"
+	if [ -z "$diff_url" ]; then
+		echo "Skipping ${branch} since there was no diff URL for it"
+		continue
+	fi
+	diff_id="${diff_url##*/D}"
+	diff_status="$(echo '{"constraints":{"ids": ['"$diff_id"']}}' |
+		arc call-conduit -- differential.revision.search |
+		jq --raw-output '.response.data[0].fields.status.name')"
 
-  case "$diff_status" in
-    "Closed" | "Abandoned" )
-      ;;
-    * )
-      echo "Skipping ${branch} since it's not closed or abandoned"
-      continue
-      ;;
-  esac
+	case "$diff_status" in
+	"Closed" | "Abandoned") ;;
+	*)
+		echo "Skipping ${branch} since it's not closed or abandoned"
+		continue
+		;;
+	esac
 
-  git-show --quiet "$branch"
-  "$run_cmd" git branch -D "$branch" || echo "Not deleting..."
+	git-show --quiet "$branch"
+	"$run_cmd" git branch -D "$branch" || echo "Not deleting..."
 
-  echo
+	echo
 done

@@ -27,6 +27,6 @@ cli_apps=(
 for ((i = 0; i < ${#cli_apps[@]}; i++)); do
 	IFS=';' read -r cli_app cargo_package <<<"${cli_apps[i]}"
 	echo-info "cli app: installing ${cli_app}"
-	echo-run cargo install -f ${cargo_package}
+	echo-run cargo install --locked --force "${cargo_package}"
 	unset IFS
 done

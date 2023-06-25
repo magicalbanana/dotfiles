@@ -18,6 +18,12 @@ export LC_MONETARY=en_FI.UTF-8
 export LC_TIME=en_FI.UTF-8
 
 export LESSOPEN="|/usr/local/bin/lesspipe.sh %s"
+
+if command -v nvim >/dev/null 2>&1; then
+  unalias -m 'vim'
+  alias vim='nvim'
+fi
+
 export VISUAL="vim"
 export EDITOR="${VISUAL}"
 export PAGER=less
