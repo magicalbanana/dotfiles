@@ -1,13 +1,10 @@
-# vim: ft=zsh
+# vim:ft=zsh
 
 source "${HOME}/.shtils"
 
 echo-eval() { echo_eval "$@" }
 echo-run() { echo_run "$@" }
 safe-run() { safe_run "$@" }
-
-alias echo-path="echo-array path"
-alias echo-fpath="echo-array fpath"
 
 echo-array() {
   local variable_name="${1:-path}"
@@ -26,54 +23,57 @@ echo-assoc-array() {
   done
 }
 
-zinitScript="${HOME}/.zinit/bin/zinit.zsh"
-zinitBin=$(dirname "${zinitScript}")
-zinitDir=$(dirname "${zinitBin}")
+alias echo-path="echo-array path"
+alias echo-fpath="echo-array fpath"
 
-source "${zinitScript}"
+typeset -A ZI
+ZI[BIN_DIR]="${ZDOTDIR}/.zi/bin"
+source "${ZI[BIN_DIR]}/zi.zsh"
+
+(( ${+_comps} )) && _comps[zi]=_zi
 
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
-zinit ice wait"0a" lucid atload"_zsh_autosuggest_start"
-zinit light zsh-users/zsh-autosuggestions
+zi ice wait"0a" lucid atload"_zsh_autosuggest_start"
+zi light zsh-users/zsh-autosuggestions
 
-zinit ice wait"0b" lucid
-zinit light b4b4r07/enhancd
+zi ice wait"0b" lucid
+zi light b4b4r07/enhancd
 
-zinit snippet OMZL::clipboard.zsh
-zinit snippet OMZL::completion.zsh
-zinit snippet OMZL::directories.zsh
-zinit snippet OMZL::key-bindings.zsh
+zi snippet OMZL::clipboard.zsh
+zi snippet OMZL::completion.zsh
+zi snippet OMZL::directories.zsh
+zi snippet OMZL::key-bindings.zsh
 
-zinit ice has"docker" as"completion"
-zinit snippet OMZ::plugins/docker/_docker
-zinit ice has"docker-compose" as"completion"
-zinit snippet OMZ::plugins/docker-compose/_docker-compose
-zinit ice has"git" as"completion"
-zinit snippet https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
-zinit ice has"asdf" as"completion"
-zinit snippet https://raw.githubusercontent.com/asdf-vm/asdf/master/completions/_asdf
-zinit ice has"just" as"completion"
-zinit snippet https://raw.githubusercontent.com/casey/just/master/completions/just.zsh
+zi ice has"docker" as"completion"
+zi snippet OMZ::plugins/docker/docker.plugin.zsh
+zi ice has"docker-compose" as"completion"
+zi snippet OMZ::plugins/docker-compose/_docker-compose
+zi ice has"git" as"completion"
+zi snippet https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
+zi ice has"asdf" as"completion"
+zi snippet https://raw.githubusercontent.com/asdf-vm/asdf/master/completions/_asdf
+zi ice has"just" as"completion"
+zi snippet https://raw.githubusercontent.com/casey/just/master/completions/just.zsh
 
-zinit ice has"zoxide"
-zinit light z-shell/zsh-zoxide
+zi ice has"zoxide"
+zi light z-shell/zsh-zoxide
 
-zinit ice wait lucid
-zinit load wfxr/forgit
+zi ice wait lucid
+zi load wfxr/forgit
 
-zinit ice wait'0' blockf lucid
-zinit light zsh-users/zsh-completions
+zi ice wait'0' blockf lucid
+zi light zsh-users/zsh-completions
 
-zinit ice wait"0" lucid;
-zinit load zdharma-continuum/history-search-multi-word
+zi ice wait"0" lucid;
+zi load zdharma-continuum/history-search-multi-word
 
-zinit ice lucid wait"0" atclone"sed -ie 's/fc -rl 1/fc -rli 1/' shell/key-bindings.zsh" \
+zi ice lucid wait"0" atclone"sed -ie 's/fc -rl 1/fc -rli 1/' shell/key-bindings.zsh" \
   atpull"%atclone" multisrc"shell/{completion,key-bindings}.zsh" id-as"junegunn/fzf_completions" \
   pick"/dev/null"
-zinit light junegunn/fzf
+zi light junegunn/fzf
 
-zinit ice wait"1" lucid
-zinit light Aloxaf/fzf-tab
+zi ice wait"1" lucid
+zi light Aloxaf/fzf-tab
 
 # Load theme file
 export IGLOO_ZSH_PROMPT_THEME_ALWAYS_SHOW_USER=true
@@ -82,14 +82,14 @@ export IGLOO_ZSH_PROMPT_THEME_ALWAYS_SHOW_HOST=true
 export GIT_PS1_SHOWDIRTYSTATE=true
 export GIT_PS1_SHOWSTASHSTATE=true
 export GIT_PS1_SHOWUNTRACKEDFILES=true
-zinit ice pick"snowblocks/zsh/lib/themes/igloo.zsh"
-zinit load arcticicestudio/igloo
+zi ice pick"snowblocks/zsh/lib/themes/igloo.zsh"
+zi load arcticicestudio/igloo
 
-zinit ice lucid wait"1" lucid atload"!_zsh_autosuggest_start"
-zinit load "zsh-users/zsh-autosuggestions"
-zinit ice wait"1" atinit"zpcompinit; zpcdreplay" lucid
-zinit light zdharma-continuum/fast-syntax-highlighting
-zinit light zsh-users/zsh-history-substring-search
+zi ice lucid wait"1" lucid atload"!_zsh_autosuggest_start"
+zi load "zsh-users/zsh-autosuggestions"
+zi ice wait"1" atinit"zpcompinit; zpcdreplay" lucid
+zi light zdharma-continuum/fast-syntax-highlighting
+zi light zsh-users/zsh-history-substring-search
   zmodload zsh/terminfo
   [ -n "${terminfo[kcuu1]}" ] && bindkey "${terminfo[kcuu1]}" history-substring-search-up
   [ -n "${terminfo[kcud1]}" ] && bindkey "${terminfo[kcud1]}" history-substring-search-down
@@ -182,10 +182,6 @@ if command_exists bat; then
   alias cat='bat -pp'
 fi
 
-if command_exists zoxide; then
-  eval "$(zoxide init zsh --cmd z)"
-fi
-
 if command_exists broot; then
   br_path="${HOME}/.config/broot/launcher/bash/br"
   if [ -f "${br_path}" ]; then
@@ -211,5 +207,5 @@ source-env() {
 }
 
 reload-shell() {
-  exec zsh -l
+  exec zsh -il
 }

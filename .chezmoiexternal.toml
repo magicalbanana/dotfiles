@@ -9,10 +9,10 @@
   exact = true
   url = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
   refreshPeriod = "168h"
-[".zinit/bin"]
+[".config/zsh/.zi/bin"]
   type = "git-repo"
   refreshPeriod = "168h"
-  url = "https://github.com/zdharma-continuum/zinit.git"
+  url = "https://github.com/z-shell/zi"
 [".config/fzf/fzf-zsh-plugin"]
   type = "git-repo"
   refreshPeriod = "168h"

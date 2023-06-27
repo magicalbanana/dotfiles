@@ -12,6 +12,7 @@
 .config/vifm/vifm-help.txt
 .config/vifm/vifminfo.json
 .config/zsh/.zcompdump
+.config/zsh/.zi
 .ctags.tag_file
 .netrwhist
 .tmux/plugins
