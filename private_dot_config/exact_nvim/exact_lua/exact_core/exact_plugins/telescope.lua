@@ -1,3 +1,5 @@
+table.unpack = table.unpack or unpack
+
 return {
   "nvim-telescope/telescope.nvim",
   cmd = "Telescope",
@@ -12,17 +14,17 @@ return {
   },
   keys = {
     -- Search stuff
-    { "<Space>sc", "<cmd>Telescope commands<cr>",        desc = "Commands" },
-    { "<Space>lg", "<cmd>Telescope live_grep<cr>",       desc = "Strings" },
-    { "<Space>t?", "<cmd>Telescope help_tags<cr>",       desc = "Help" },
-    { "<Space>sh", "<cmd>Telescope heading<cr>",         desc = "Headings" },
-    { "<Space>sk", "<cmd>Telescope keymaps<cr>",         desc = "Keymaps" },
-    { "<Space>sO", "<cmd>Telescope vim_options<cr>",     desc = "Vim Options" },
-    { "<Space>sp", "<cmd>Telescope projects<cr>",        desc = "Projects" },
-    { "<Space>sR", "<cmd>Telescope registers<cr>",       desc = "Registers" },
-    { "<Space>gs", "<cmd>Telescope grep_string<cr>",     desc = "Text under cursor" },
-    { "<Space>sS", "<cmd>Telescope symbols<cr>",         desc = "Emoji" },
-    { "<Space>s:", "<cmd>Telescope search_history<cr>",  desc = "Search History" },
+    { "<Space>sc", "<cmd>Telescope commands<cr>", desc = "Commands" },
+    { "<Space>lg", "<cmd>Telescope live_grep<cr>", desc = "Strings" },
+    { "<Space>t?", "<cmd>Telescope help_tags<cr>", desc = "Help" },
+    { "<Space>sh", "<cmd>Telescope heading<cr>", desc = "Headings" },
+    { "<Space>sk", "<cmd>Telescope keymaps<cr>", desc = "Keymaps" },
+    { "<Space>sO", "<cmd>Telescope vim_options<cr>", desc = "Vim Options" },
+    { "<Space>sp", "<cmd>Telescope projects<cr>", desc = "Projects" },
+    { "<Space>sR", "<cmd>Telescope registers<cr>", desc = "Registers" },
+    { "<Space>gs", "<cmd>Telescope grep_string<cr>", desc = "Text under cursor" },
+    { "<Space>sS", "<cmd>Telescope symbols<cr>", desc = "Emoji" },
+    { "<Space>s:", "<cmd>Telescope search_history<cr>", desc = "Search History" },
     { "<Space>s;", "<cmd>Telescope command_history<cr>", desc = "Command history" },
     {
       "<Space>sf",
@@ -30,20 +32,20 @@ return {
       desc = "Fuzzy search",
     },
     -- Git
-    { "<Space>gh", "<cmd>Telescope git_branches<cr>",                                    desc = "Branches" },
-    { "<Space>gg", "<cmd>Telescope git_status<cr>",                                      desc = "Status" },
-    { "<Space>gm", "<cmd>Telescope git_commits<cr>",                                     desc = "Commits" },
+    { "<Space>gh", "<cmd>Telescope git_branches<cr>", desc = "Branches" },
+    { "<Space>gg", "<cmd>Telescope git_status<cr>", desc = "Status" },
+    { "<Space>gm", "<cmd>Telescope git_commits<cr>", desc = "Commits" },
     -- files
-    { "<Space>fb", "<cmd>Telescope file_browser grouped=true<cr>",                       desc = "Filebrowser" },
-    { "<Space>fz", "<cmd>Telescope zoxide list<cr>",                                     desc = "Zoxide" },
+    { "<Space>fb", "<cmd>Telescope file_browser grouped=true<cr>", desc = "Filebrowser" },
+    { "<Space>fz", "<cmd>Telescope zoxide list<cr>", desc = "Zoxide" },
     { "<Space>ff", "<cmd>" .. require("core.utils.functions").project_files() .. "<cr>", desc = "Open file" },
-    { "<Space>fr", "<cmd>Telescope oldfiles<cr>",                                        desc = "Recent files" },
+    { "<Space>fr", "<cmd>Telescope oldfiles<cr>", desc = "Recent files" },
     -- misc
-    { "<Space>mm", "<cmd>Telescope make<cr>",                                            desc = "Run make" },
-    { "<Space>mt", "<cmd>Telescope<cr>",                                                 desc = "Telescope" },
+    { "<Space>mm", "<cmd>Telescope make<cr>", desc = "Run make" },
+    { "<Space>mt", "<cmd>Telescope<cr>", desc = "Telescope" },
     -- Other
-    { "<Space>bb", "<cmd>Telescope buffers<cr>",                                         desc = "Bufferlist" },
-    { "<C-f>",     "<cmd>Telescope current_buffer_fuzzy_find<cr>",                       desc = "Search in buffer" },
+    { "<Space>bb", "<cmd>Telescope buffers<cr>", desc = "Bufferlist" },
+    { "<C-f>", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = "Search in buffer" },
   },
   config = function()
     local settings = require("core.settings")
@@ -54,7 +56,7 @@ return {
     local fb_actions = require("telescope").extensions.file_browser.actions
     local icons = require("core.utils.icons")
 
-    local vimgrep_arguments = { unpack(telescopeConfig.values.vimgrep_arguments) }
+    local vimgrep_arguments = { table.unpack(telescopeConfig.values.vimgrep_arguments) }
     if settings.telescope_grep_hidden then
       table.insert(vimgrep_arguments, "--hidden")
     end
