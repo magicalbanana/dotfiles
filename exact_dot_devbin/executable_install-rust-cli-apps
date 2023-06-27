@@ -3,7 +3,7 @@
 set -e
 
 cli_apps="
-as-tree;--git 'https://github.com/jez/as-tree'
+as-tree;--git=https://github.com/jez/as-tree
 bat;bat
 broot;broot
 btm;bottom

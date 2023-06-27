@@ -2,6 +2,7 @@ return {
   "axieax/urlview.nvim",
   cmd = "UrlView",
   config = function()
+    require("urlview").setup()
     local wk = require("which-key")
     local default_options = { silent = true }
     wk.register({

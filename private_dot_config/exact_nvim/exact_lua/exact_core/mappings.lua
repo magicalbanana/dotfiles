@@ -106,6 +106,8 @@ local wk = require("which-key")
 
 -- register non leader based mappings
 wk.register({
+  s = "Initiate Leap (search) forward",
+  S = "Initiate Leap (search) backwards",
   sa = "Add surrounding",
   sd = "Delete surrounding",
   sh = "Highlight surrounding",
@@ -129,7 +131,7 @@ wk.register({
     },
     d = { "<cmd>Bdelete<cr>", "Close buffer" },
   },
-  l = { "LSP" },         -- core.plugins.lsp.keys
+  l = { "LSP" }, -- core.plugins.lsp.keys
   lw = { "Workspaces" }, -- core.plugins.lsp.keys
   f = {
     name = "Files",
@@ -149,8 +151,4 @@ wk.register({
     t = { "<cmd>TodoQuickFix<cr>", "Show TODOs" },
   },
   t = { name = "Toggles" },
-  -- hydra heads
-  s = { "Search" },
-  w = { "Windows" },
-  z = { "Spelling" },
 }, { prefix = "<leader>", mode = "n", {} })
