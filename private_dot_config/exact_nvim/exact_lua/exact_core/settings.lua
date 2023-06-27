@@ -119,15 +119,21 @@ M.tools = {
   "prettier",
   "stylua",
   "shfmt",
+  "yamlfmt",
+  "yamlfix",
   -- Linter
+  "actionlint",
   "eslint_d",
   "shellcheck",
+  "sqlfluff",
   "tflint",
   "yamllint",
   "ruff",
   -- DAP
   "debugpy",
   "codelldb",
+  -- Security
+  "tfsec",
 }
 
 -- enable greping in hidden files

@@ -8,6 +8,7 @@ nls.setup({
     nls.builtins.formatting.prettier.with({
       extra_args = { "--single-quote", "false" },
     }),
+    nls.builtins.formatting.taplo,
     nls.builtins.formatting.terraform_fmt,
     nls.builtins.formatting.black,
     nls.builtins.formatting.goimports,
