@@ -105,6 +105,13 @@ api.nvim_create_autocmd("FileType", { pattern = "man", command = [[nnoremap <buf
 -- disable list option in certain filetypes
 api.nvim_create_autocmd("FileType", { pattern = { "NeoGitStatus" }, command = [[setlocal list!]] })
 
+-- disable nvim-ufo on certain filetypes
+api.nvim_create_autocmd("FileType", {
+  pattern = { "neo-tree", "alpha", "telekasten", "help" },
+  callback = function (event)
+    require("ufo").detach(event.buf)
+  end
+})
 -- show cursor line only in active window
 local cursorGrp = api.nvim_create_augroup("CursorLine", { clear = true })
 api.nvim_create_autocmd({ "InsertLeave", "WinEnter" }, {
@@ -139,7 +146,6 @@ api.nvim_create_autocmd("User", {
 -- Enable spell checking for certain file types
 api.nvim_create_autocmd(
   { "BufRead", "BufNewFile" },
-  -- { pattern = { "*.txt", "*.md", "*.tex" }, command = [[setlocal spell<cr> setlocal spelllang=en,de<cr>]] }
   {
     pattern = { "*.txt", "*.md", "*.tex" },
     callback = function()
@@ -171,22 +177,3 @@ api.nvim_create_autocmd({ "FocusGained", "CursorHold" }, {
     end
   end,
 })
-
--- -- Better navigation to and from terminal
--- local set_terminal_keymaps = function()
---   local opts = { buffer = 0 }
---   vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], opts)
---   vim.keymap.set("t", "jk", [[<C-\><C-n>]], opts)
---   vim.keymap.set("t", "<C-h>", [[<Cmd>wincmd h<CR>]], opts)
---   vim.keymap.set("t", "<C-j>", [[<Cmd>wincmd j<CR>]], opts)
---   vim.keymap.set("t", "<C-k>", [[<Cmd>wincmd k<CR>]], opts)
---   vim.keymap.set("t", "<C-l>", [[<Cmd>wincmd l<CR>]], opts)
---   vim.keymap.set("t", "<C-w>", [[<C-\><C-n><C-w>]], opts)
--- end
---
--- api.nvim_create_autocmd({ "TermOpen" }, {
---   pattern = "term://*",
---   callback = function()
---     set_terminal_keymaps()
---   end,
--- })
