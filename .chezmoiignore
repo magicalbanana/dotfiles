@@ -1,5 +1,7 @@
 *.tar.gz
 *.zcompdump
+*.zsh_history
+.asdf/repository
 .asdf/downloads
 .asdf/installs
 .asdf/plugins
