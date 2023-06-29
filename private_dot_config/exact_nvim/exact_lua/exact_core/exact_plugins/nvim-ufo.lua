@@ -55,6 +55,12 @@ return {
   },
   opts = function()
     local ft_map = { rust = "lsp" }
+
+    vim.o.foldcolumn = '1'
+    vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+    vim.o.foldlevelstart = 99
+    vim.o.foldenable = true
+
     require("ufo").setup({
       open_fold_hl_timeout = 0,
       preview = { win_config = { winhighlight = "Normal:Normal,FloatBorder:Normal" } },

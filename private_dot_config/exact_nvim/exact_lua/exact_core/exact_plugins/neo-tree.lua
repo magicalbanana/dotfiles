@@ -290,7 +290,7 @@ return {
             nowait = false, -- disable `nowait` if you have existing combos starting with this char that you want to use
           },
           ["<2-LeftMouse>"] = "open_with_window_picker",
-          ["<cr>"] = "open_with_window_picker",
+          ["<CR>"] = "open_with_window_picker",
           -- ["S"] = "open_split",
           ["-"] = "split_with_window_picker",
           -- ["s"] = "open_vsplit",

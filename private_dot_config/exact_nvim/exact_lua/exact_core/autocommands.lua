@@ -105,13 +105,6 @@ api.nvim_create_autocmd("FileType", { pattern = "man", command = [[nnoremap <buf
 -- disable list option in certain filetypes
 api.nvim_create_autocmd("FileType", { pattern = { "NeoGitStatus" }, command = [[setlocal list!]] })
 
--- disable nvim-ufo on certain filetypes
-api.nvim_create_autocmd("FileType", {
-  pattern = { "neo-tree", "alpha", "telekasten", "help" },
-  callback = function (event)
-    require("ufo").detach(event.buf)
-  end
-})
 -- show cursor line only in active window
 local cursorGrp = api.nvim_create_augroup("CursorLine", { clear = true })
 api.nvim_create_autocmd({ "InsertLeave", "WinEnter" }, {
