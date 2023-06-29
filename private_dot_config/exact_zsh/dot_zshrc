@@ -44,16 +44,31 @@ zi snippet OMZL::completion.zsh
 zi snippet OMZL::directories.zsh
 zi snippet OMZL::key-bindings.zsh
 
-zi ice has"docker" as"completion"
+zi ice lucid wait as"completion" blockf has"docker"
 zi snippet OMZ::plugins/docker/docker.plugin.zsh
-zi ice has"docker-compose" as"completion"
+zi ice lucid wait as"completion" blockf has"docker-compose"
 zi snippet OMZ::plugins/docker-compose/_docker-compose
-zi ice has"git" as"completion"
+zi ice lucid wait as"completion" blockf has"git"
 zi snippet https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
-zi ice has"asdf" as"completion"
+zi ice lucid wait as"completion" blockf has"asdf"
 zi snippet https://raw.githubusercontent.com/asdf-vm/asdf/master/completions/_asdf
-zi ice has"just" as"completion"
+zi ice lucid wait as"completion" blockf has"just"
 zi snippet https://raw.githubusercontent.com/casey/just/master/completions/just.zsh
+zi ice lucid wait as"completion" blockf has"fd"
+zi snippet https://raw.githubusercontent.com/sharkdp/fd/master/contrib/completion/_fd
+zi ice lucid wait as"completion" blockf has"rg"
+zi snippet https://raw.githubusercontent.com/BurntSushi/ripgrep/master/complete/_rg
+zi ice lucid wait as'completion' blockf has'rustc'
+zi snippet https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/rust/_rustc
+zi ice lucid wait as'completion' blockf has'cargo'
+zi snippet https://github.com/rust-lang/cargo/blob/master/src/etc/_cargo
+zi ice lucid wait as'completion' blockf has'ghq'
+zi snippet https://github.com/x-motemen/ghq/blob/master/misc/zsh/_ghq
+zi ice lucid wait as'completion' blockf has'mpv'
+zi snippet https://github.com/mpv-player/mpv/blob/master/etc/_mpv.zsh
+
+zi ice lucid wait as'completion' blockf has'zellij'
+zi snippet "$ZDOTDIR/completions/_zellij"
 
 zi ice has"zoxide"
 zi light z-shell/zsh-zoxide
