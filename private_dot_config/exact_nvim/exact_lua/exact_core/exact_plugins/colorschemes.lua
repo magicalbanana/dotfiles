@@ -47,11 +47,23 @@ return {
   },
   {
     "rafamadriz/neon",
+    init = function()
+      require("core.plugins.themes.neon").setup()
+    end,
+  },
+  {
+    "ray-x/aurora",
+    init = function()
+      require("core.plugins.themes.aurora").setup()
+    end,
   },
   {
     "NTBBloodbath/doom-one.nvim",
     init = function()
       require("core.plugins.themes.doomone").setup()
     end,
+  },
+  {
+    "ray-x/starry.nvim",
   },
 }
