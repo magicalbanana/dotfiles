@@ -1,6 +1,5 @@
 local settings = require("core.settings")
 local lspconfig = require("lspconfig")
-local utils = require("core.plugins.lsp.utils")
 local servers = require("core.plugins.lsp.servers")
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -9,8 +8,9 @@ capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
 require("core.utils.functions").on_attach(function(client, buffer)
   -- NOTE:disable formatting for LSP clients as this is handled by null-ls
-  client.server_capabilities.documentFormattingProvider = false
-  client.server_capabilities.documentRangeFormattingProvider = false
+  -- NOTE: is this still needed?
+  -- client.server_capabilities.documentFormattingProvider = false
+  -- client.server_capabilities.documentRangeFormattingProvider = false
   require("core.plugins.lsp.keys").on_attach(client, buffer)
 end)
 

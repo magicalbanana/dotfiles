@@ -1,45 +1,39 @@
-local api = vim.api
-local fn = vim.fn
-
-local runtime = os.getenv("VIMRUNTIME")
-
 return {
   Lua = {
-    telemetry = {
-      enable = false,
+    cmd = { "lua-language-server" },
+    format = {
+      enable = false, -- let null-ls handle the formatting
     },
+    filetypes = { "lua" },
     runtime = {
-        version = "LuaJIT",
+      version = "LuaJIT",
+      path = vim.split(package.path, ";"),
+    },
+    completion = {
+      enable = true,
+      callSnippet = "Replace",
+    },
+    diagnostics = {
+      globals = {
+        "vim",
+        "nnoremap",
+        "vnoremap",
+        "inoremap",
+        "tnoremap",
+        "use",
+      },
     },
     workspace = {
       library = {
-        fn.stdpath("config"),
-        runtime .. '/lua',
-        runtime,
+        vim.api.nvim_get_runtime_file("", true),
+        [vim.fn.expand("$VIMRUNTIME/lua")] = true,
+        [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+        "${3rd}/luv/library",
       },
-      checkThirdParty = false,
-          maxPreload = 2000,
-          preloadFileSize = 50000,
+      -- adjust these two values if your performance is not optimal
+      maxPreload = 2000,
+      preloadFileSize = 1000,
     },
-    diagnostics = {
-      globals = { "vim" },
-    },
-    codeLens = {
-      enable = true,
-    },
-    hint = {
-      enable = true,
-      arrayIndex = "Disable",
-      setType = false,
-      paramName = "Disable",
-      paramType = true,
-    },
-    format = {
-      enable = false,
-    },
-    completion = {
-      keywordSnippet = "Replace",
-      callSnippet = "Replace",
-    },
+    telemetry = { enable = false },
   },
 }

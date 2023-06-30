@@ -5,8 +5,12 @@ return {
     "<space><space>j",
     "<space><space>s",
   },
-  dependencies = { "nvim-treesitter/nvim-treesitter" },
+  dependencies = {
+    "nvim-treesitter/nvim-treesitter",
+  },
   config = function()
-    require("treesj").setup()
+    require("treesj").setup({
+      use_default_keymaps = false,
+    })
   end,
 }
