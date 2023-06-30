@@ -32,6 +32,9 @@ return {
   },
   {
     "shaunsingh/nord.nvim",
+    config = function()
+      require("core.plugins.themes.nord").setup()
+    end,
   },
   {
     "rmehri01/onenord.nvim",
@@ -64,6 +67,9 @@ return {
     end,
   },
   {
-    "ray-x/starry.nvim",
+    "marko-cerovac/material.nvim",
+    init = function()
+      require("core.plugins.themes.material")
+    end,
   },
 }

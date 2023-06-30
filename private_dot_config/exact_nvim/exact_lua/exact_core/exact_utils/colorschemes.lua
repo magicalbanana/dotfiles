@@ -38,13 +38,6 @@ M.catppuccin = function()
 end
 
 M.nord = function()
-  vim.g.nord_contrast = true
-  vim.g.nord_borders = false
-  vim.g.nord_disable_background = false
-  vim.g.nord_italic = false
-  vim.g.nord_uniform_diff_background = true
-  vim.g.nord_bold = false
-
   vim.cmd([[colorscheme nord]])
 end
 
@@ -97,11 +90,6 @@ M.tundra = function()
 end
 
 M.neon = function()
-  vim.g.neon_style = "doom"
-  vim.g.neon_italic_keyword = true
-  vim.g.neon_italic_function = true
-  vim.g.neon_transparent = true
-
   vim.cmd(string.format("colorscheme %s", "neon"))
 end
 
