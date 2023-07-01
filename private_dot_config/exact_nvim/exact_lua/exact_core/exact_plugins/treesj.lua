@@ -1,9 +1,9 @@
 return {
   "Wansmer/treesj",
   keys = {
-    "<space><space>m",
-    "<space><space>j",
-    "<space><space>s",
+    "<space>m",
+    "<space>j",
+    "<space>s",
   },
   dependencies = {
     "nvim-treesitter/nvim-treesitter",

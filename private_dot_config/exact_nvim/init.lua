@@ -6,8 +6,9 @@ require("core.lazy")
 require("core.mappings")
 -- All non plugin related (vim) options
 require("core.options")
--- Vim autocommands/autogroups
+-- Load custom commands
 require("core.commands")
+-- Vim autocommands/autogroups
 require("core.autocommands")
 
 local colorschemes = require("core.utils.colorschemes")

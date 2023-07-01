@@ -39,7 +39,14 @@ nls.setup({
     nls.builtins.formatting.sqlfluff.with({
       extra_args = { "--dialect", "postgres" },
     }),
-    nls.builtins.formatting.stylua.with({ extra_args = { "--indent-type", "Spaces", "--indent-width", "2" } }),
+    nls.builtins.formatting.stylua.with({
+      extra_args = {
+        "--indent-type",
+        "Spaces",
+        "--indent-width",
+        "2",
+      },
+    }),
     nls.builtins.formatting.swiftformat,
     nls.builtins.formatting.swiftlint,
     nls.builtins.formatting.taplo,
@@ -57,13 +64,19 @@ nls.setup({
       { desc = "Toggle format on save" }
     )
     if client.supports_method("textDocument/formatting") then
-      vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+      vim.api.nvim_clear_autocmds({
+        group = augroup,
+        buffer = bufnr,
+      })
       vim.api.nvim_create_autocmd("BufWritePre", {
         group = augroup,
         buffer = bufnr,
         callback = function()
           if AUTOFORMAT_ACTIVE then -- global var defined in functions.lua
-            vim.lsp.buf.format({ bufnr = bufnr })
+            vim.lsp.buf.format({
+              async = false,
+              bufnr = bufnr,
+            })
           end
         end,
       })
