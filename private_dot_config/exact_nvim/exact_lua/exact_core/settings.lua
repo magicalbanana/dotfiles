@@ -102,6 +102,7 @@ M.lsp_servers = {
   "marksman",
   "pyright",
   "rust_analyzer",
+  "sqlls",
   "tailwindcss",
   "taplo",
   "terraformls",

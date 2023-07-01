@@ -3,23 +3,6 @@ local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
 nls.setup({
   sources = {
-    nls.builtins.diagnostics.actionlint,
-    nls.builtins.diagnostics.buf,
-    nls.builtins.diagnostics.checkmake,
-    nls.builtins.diagnostics.commitlint,
-    nls.builtins.diagnostics.dotenv_linter,
-    nls.builtins.diagnostics.eslint_d,
-    nls.builtins.diagnostics.hadolint,
-    nls.builtins.diagnostics.luacheck,
-    nls.builtins.diagnostics.markdownlint,
-    nls.builtins.diagnostics.protolint,
-    nls.builtins.diagnostics.ruff,
-    nls.builtins.diagnostics.sqlfluff.with({
-      extra_args = { "--dialect", "postgres" },
-    }),
-    nls.builtins.diagnostics.tfsec,
-    nls.builtins.diagnostics.yamllint,
-
     nls.builtins.formatting.black,
     nls.builtins.formatting.gofumpt,
     nls.builtins.formatting.goimports,
@@ -53,6 +36,23 @@ nls.setup({
     nls.builtins.formatting.terraform_fmt,
     nls.builtins.formatting.yamlfmt,
 
+    nls.builtins.diagnostics.actionlint,
+    nls.builtins.diagnostics.buf,
+    nls.builtins.diagnostics.checkmake,
+    nls.builtins.diagnostics.commitlint,
+    nls.builtins.diagnostics.dotenv_linter,
+    nls.builtins.diagnostics.eslint_d,
+    nls.builtins.diagnostics.hadolint,
+    nls.builtins.diagnostics.luacheck,
+    nls.builtins.diagnostics.markdownlint,
+    nls.builtins.diagnostics.protolint,
+    nls.builtins.diagnostics.ruff,
+    nls.builtins.diagnostics.sqlfluff.with({
+      extra_args = { "--dialect", "postgres" },
+    }),
+    nls.builtins.diagnostics.tfsec,
+    nls.builtins.diagnostics.yamllint,
+
     nls.builtins.code_actions.shellcheck,
     nls.builtins.code_actions.gitsigns,
   },
@@ -74,7 +74,6 @@ nls.setup({
         callback = function()
           if AUTOFORMAT_ACTIVE then -- global var defined in functions.lua
             vim.lsp.buf.format({
-              async = false,
               bufnr = bufnr,
             })
           end
