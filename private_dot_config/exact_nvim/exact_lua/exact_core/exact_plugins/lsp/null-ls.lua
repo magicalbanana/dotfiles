@@ -12,9 +12,6 @@ nls.setup({
     }),
     nls.builtins.formatting.markdownlint,
     nls.builtins.formatting.prettierd,
-    nls.builtins.formatting.prettier.with({
-      extra_args = { "--single-quote", "false" },
-    }),
     nls.builtins.formatting.protolint,
     nls.builtins.formatting.rustfmt,
     nls.builtins.formatting.shfmt,
