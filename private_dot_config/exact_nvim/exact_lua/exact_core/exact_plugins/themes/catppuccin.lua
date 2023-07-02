@@ -1,4 +1,5 @@
 require("catppuccin").setup({
+  flavour = "frappe",
   dim_inactive = {
     enabled = true,
     shade = "dark",
@@ -78,11 +79,18 @@ require("catppuccin").setup({
     markdown = true,
     lightspeed = false,
     ts_rainbow = false,
+    ts_rainbow2 = true,
     hop = false,
     notify = true,
-    telekasten = false,
+    telekasten = true,
     symbols_outline = true,
     mini = true,
     fidget = false,
   },
 })
+
+local settings = require("core.settings")
+
+if settings.theme == "catppuccin" then
+  vim.cmd("colorscheme catppuccin")
+end

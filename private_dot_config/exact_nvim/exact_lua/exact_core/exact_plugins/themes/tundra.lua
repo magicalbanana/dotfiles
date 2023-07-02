@@ -38,3 +38,10 @@ require("nvim-tundra").setup({
     highlights = {},
   },
 })
+
+local settings = require("core.settings")
+
+if settings.theme == "tundra" then
+  vim.opt.background = "dark"
+  vim.cmd("colorscheme tundra")
+end

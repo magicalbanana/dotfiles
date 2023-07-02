@@ -8,15 +8,23 @@ return {
     "mfussenegger/nvim-ts-hint-textobject",
     "windwp/nvim-ts-autotag",
     "nvim-treesitter/playground",
+    "HiPhish/nvim-ts-rainbow2",
   },
   config = function()
     local settings = require("core.settings")
+    local rainbow = require("ts-rainbow")
+
     require("nvim-treesitter.configs").setup({
       ensure_installed = settings.treesitter_ensure_installed,
       ignore_install = {}, -- List of parsers to ignore installing
+      rainbow = {
+        enable = true,
+        query = "rainbow-parens",
+        strategy = rainbow.strategy.global,
+      },
       highlight = {
         enable = true, -- false will disable the whole extension
-        disable = {}, -- list of language that will be disabled
+        disable = {},  -- list of language that will be disabled
         additional_vim_regex_highlighting = false,
       },
       incremental_selection = {

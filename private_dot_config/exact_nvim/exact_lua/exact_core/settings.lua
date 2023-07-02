@@ -1,5 +1,6 @@
 local M = {}
 
+M.theme = "catppuccin"
 -- Toggle global status line
 M.global_statusline = true
 -- use rg instead of grep

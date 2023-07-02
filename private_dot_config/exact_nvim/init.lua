@@ -10,6 +10,3 @@ require("core.options")
 require("core.commands")
 -- Vim autocommands/autogroups
 require("core.autocommands")
-
-local colorschemes = require("core.utils.colorschemes")
-colorschemes.random()

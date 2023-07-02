@@ -29,6 +29,12 @@ function M.setup()
   vim.g.doom_one_plugin_indent_blankline = true
   vim.g.doom_one_plugin_vim_illuminate = false
   vim.g.doom_one_plugin_lspsaga = false
+
+  local settings = require("core.settings")
+
+  if settings.theme == "doom-one" then
+    vim.cmd("colorscheme doom-one")
+  end
 end
 
 return M
