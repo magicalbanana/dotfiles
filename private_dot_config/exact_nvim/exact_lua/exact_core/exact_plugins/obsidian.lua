@@ -2,7 +2,7 @@ local fn = require("core.utils.functions")
 local obsidian_path = os.getenv("MEIN_WISSEN_PATH")
 
 if obsidian_path == nil or obsidian_path == "" then
-  return
+  return {}
 end
 
 return {

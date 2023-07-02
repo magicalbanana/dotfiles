@@ -1,6 +1,6 @@
 local mein_wissen_path = os.getenv("MEIN_WISSEN_PATH")
 if mein_wissen_path == nil or mein_wissen_path == "" then
-  return
+  return {}
 end
 
 return {
