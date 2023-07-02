@@ -22,6 +22,7 @@ procs;procs
 rg;ripgrep
 sd;sd
 stylua;stylua
+taplo;taplo-cli
 tldr;tealdeer
 tokei;tokei
 xplr;xplr
