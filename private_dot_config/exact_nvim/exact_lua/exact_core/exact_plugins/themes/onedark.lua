@@ -7,7 +7,7 @@ require("onedark").setup({
   cmp_itemkind_reverse = false, -- reverse item kind highlights in cmp menu
 
   -- toggle theme style ---
-  toggle_style_key = nil,
+  toggle_style_key = "<leader><leader>ts",
   toggle_style_list = {
     "dark",
     "darker",
@@ -23,10 +23,10 @@ require("onedark").setup({
   -- You can configure multiple style with comma separated, For e.g., keywords = 'italic,bold'
   code_style = {
     comments = "italic",
-    keywords = "bold",
+    keywords = "none",
     functions = "bold",
     strings = "none",
-    variables = "bold,underline",
+    variables = "underline",
   },
 
   -- Lualine options --
@@ -49,5 +49,5 @@ require("onedark").setup({
 local settings = require("core.settings")
 
 if settings.theme == "onedark" then
-  vim.cmd("colorscheme onedark")
+  require("onedark").load()
 end
