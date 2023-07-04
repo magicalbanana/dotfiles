@@ -10,7 +10,7 @@ return {
   },
   config = function()
     require("treesj").setup({
-      use_default_keymaps = false,
+      use_default_keymaps = true,
     })
   end,
 }
