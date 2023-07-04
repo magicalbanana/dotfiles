@@ -52,7 +52,6 @@ o.splitright = true                          -- force all vertical splits to go 
 o.swapfile = true                            -- enable/disable swap file creation
 o.tabstop = 2                                -- how many columns a tab counts for
 o.termguicolors = true                       -- set term gui true colors (most terminals support this)
-o.timeout = true                             -- enabled timeout
 o.timeoutlen = 300                           -- time to wait for a mapped sequence to complete (in milliseconds)
 o.ttimeoutlen = 0                            -- Time in milliseconds to wait for a key code sequence to complete
 o.undodir = fn.stdpath("data") .. "/undodir" -- set undo directory
