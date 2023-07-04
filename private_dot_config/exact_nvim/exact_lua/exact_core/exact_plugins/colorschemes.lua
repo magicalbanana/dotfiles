@@ -72,4 +72,10 @@ return {
       require("core.plugins.themes.material")
     end,
   },
+  {
+    "navarasu/onedark.nvim",
+    init = function()
+      require("core.plugins.themes.onedark")
+    end,
+  },
 }
