@@ -50,31 +50,31 @@ return {
   },
   {
     "rafamadriz/neon",
-    init = function()
+    config = function()
       require("core.plugins.themes.neon").setup()
     end,
   },
   {
     "ray-x/aurora",
-    init = function()
+    config = function()
       require("core.plugins.themes.aurora").setup()
     end,
   },
   {
     "NTBBloodbath/doom-one.nvim",
-    init = function()
+    config = function()
       require("core.plugins.themes.doomone").setup()
     end,
   },
   {
     "marko-cerovac/material.nvim",
-    init = function()
+    config = function()
       require("core.plugins.themes.material")
     end,
   },
   {
     "navarasu/onedark.nvim",
-    init = function()
+    config = function()
       require("core.plugins.themes.onedark")
     end,
   },

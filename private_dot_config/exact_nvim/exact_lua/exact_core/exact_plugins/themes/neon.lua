@@ -1,4 +1,4 @@
-M = {}
+local M = {}
 
 function M.setup()
   vim.g.neon_style = "doom"

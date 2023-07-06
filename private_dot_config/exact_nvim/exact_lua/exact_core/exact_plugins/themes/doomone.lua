@@ -1,4 +1,4 @@
-M = {}
+local M = {}
 
 function M.setup()
   vim.g.doom_one_cursor_coloring = false
