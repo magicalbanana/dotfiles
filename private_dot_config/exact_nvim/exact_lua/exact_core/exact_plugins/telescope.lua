@@ -9,6 +9,7 @@ return {
     "nvim-telescope/telescope-symbols.nvim",
     "nvim-telescope/telescope-file-browser.nvim",
     "nvim-telescope/telescope-ui-select.nvim",
+    "cljoly/telescope-repo.nvim",
     "ptethng/telescope-makefile",
     { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
   },
@@ -38,7 +39,8 @@ return {
     -- files
     { "<Space>fb", "<cmd>Telescope file_browser grouped=true<cr>", desc = "Filebrowser" },
     { "<Space>fz", "<cmd>Telescope zoxide list<cr>", desc = "Zoxide" },
-    { "<Space>ff", "<cmd>" .. require("core.utils.functions").project_files() .. "<cr>", desc = "Open file" },
+    { "<Space>ff", "<cmd>Telescope find_files<cr>", desc = "Open file" },
+    { "<Space>pf", "<cmd>" .. require("core.utils.functions").project_files() .. "<cr>", desc = "Open project file" },
     { "<Space>fr", "<cmd>Telescope oldfiles<cr>", desc = "Recent files" },
     -- misc
     { "<Space>mm", "<cmd>Telescope make<cr>", desc = "Run make" },
@@ -90,6 +92,16 @@ return {
               ["<c-p>"] = fb_actions.move,
               ["<c-y>"] = fb_actions.copy,
               ["<c-a>"] = fb_actions.select_all,
+            },
+          },
+        },
+        repo = {
+          list = {
+            fd_opts = {
+              "--no-ignore-vcs",
+            },
+            search_dirs = {
+              os.getenv("VCS_REPOSITORIES_DIR"),
             },
           },
         },
@@ -178,9 +190,10 @@ return {
     telescope.load_extension("heading")
     telescope.load_extension("ui-select")
     telescope.load_extension("make")
+    telescope.load_extension("fzf")
+    telescope.load_extension("repo")
     if settings.enable_noice then
       telescope.load_extension("noice")
     end
-    telescope.load_extension("fzf")
   end,
 }

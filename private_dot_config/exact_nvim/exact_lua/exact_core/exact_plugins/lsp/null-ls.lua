@@ -4,8 +4,8 @@ local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 nls.setup({
   sources = {
     nls.builtins.formatting.black,
-    nls.builtins.formatting.gofumpt,
-    nls.builtins.formatting.goimports,
+    -- nls.builtins.formatting.gofumpt,
+    -- nls.builtins.formatting.goimports,
     nls.builtins.formatting.just,
     nls.builtins.formatting.latexindent.with({
       extra_args = { "-g", "/dev/null" }, -- https://github.com/cmhughes/latexindent.pl/releases/tag/V3.9.3
@@ -15,10 +15,9 @@ nls.setup({
     nls.builtins.formatting.protolint,
     nls.builtins.formatting.rustfmt,
     nls.builtins.formatting.shfmt,
-    nls.builtins.formatting.shfmt,
-    nls.builtins.formatting.sqlfluff.with({
-      extra_args = { "--dialect", "postgres" },
-    }),
+    -- nls.builtins.formatting.sqlfluff.with({
+    --   extra_args = { "--dialect", "postgres" },
+    -- }),
     nls.builtins.formatting.stylua.with({
       extra_args = {
         "--indent-type",
@@ -44,14 +43,14 @@ nls.setup({
     nls.builtins.diagnostics.markdownlint,
     nls.builtins.diagnostics.protolint,
     nls.builtins.diagnostics.ruff,
-    nls.builtins.diagnostics.sqlfluff.with({
-      extra_args = { "--dialect", "postgres" },
-    }),
+    -- nls.builtins.diagnostics.sqlfluff.with({
+    --   extra_args = { "--dialect", "postgres" },
+    -- }),
     nls.builtins.diagnostics.tfsec,
     nls.builtins.diagnostics.yamllint,
 
     nls.builtins.code_actions.shellcheck,
-    nls.builtins.code_actions.gitsigns,
+    -- nls.builtins.code_actions.gitsigns,
   },
   on_attach = function(client, bufnr)
     vim.keymap.set(

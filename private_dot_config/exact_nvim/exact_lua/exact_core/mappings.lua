@@ -116,8 +116,6 @@ wk.register({
   sF = "Find left surrounding",
   sf = "Replace right surrounding",
   st = { "<cmd>lua require('tsht').nodes()<cr>", "TS hint textobject" },
-  gb = "Pick buffer",
-  gD = "Close buffer",
   ["<space>m"] = "Tree Sitter Toggle",
   ["<space>j"] = "Tree Sitter Join",
   ["<space>s"] = "Tree Sitter Split",
@@ -134,7 +132,7 @@ wk.register({
     },
     d = { "<cmd>Bdelete<cr>", "Close buffer" },
   },
-  l = { "LSP" },         -- core.plugins.lsp.keys
+  l = { "LSP" }, -- core.plugins.lsp.keys
   lw = { "Workspaces" }, -- core.plugins.lsp.keys
   f = {
     name = "Files",

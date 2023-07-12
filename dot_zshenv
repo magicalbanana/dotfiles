@@ -26,3 +26,4 @@ export MANPAGER='less -is'
 export CLICOLOR=1
 
 export DEV_WORKSPACE_ROOT="${HOME}/dev-workspace"
+export VCS_REPOSITORIES_DIR="${DEV_WORKSPACE_ROOT}/repos"
