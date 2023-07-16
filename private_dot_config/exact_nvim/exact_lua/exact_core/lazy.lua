@@ -20,7 +20,7 @@ require("lazy").setup("core.plugins", {
   -- defaults = { lazy = true },
   install = {
     -- install missing plugins on startup. This doesn't increase startup time.
-    missing = false,
+    missing = true,
   },
   change_detection = {
     -- automatically check for config file changes and reload the ui
