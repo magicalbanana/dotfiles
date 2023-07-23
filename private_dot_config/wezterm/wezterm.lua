@@ -78,7 +78,7 @@ local local_config = load_local_config("local")
 ---------------------------------------------------------------
 local config = {
   font = wezterm.font("Fira Code"),
-  font_size = 14.5,
+  font_size = 11.75,
   -- cell_width = 1.1,
   -- line_height = 1.1,
   -- font_rules = {
