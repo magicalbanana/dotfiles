@@ -9,6 +9,7 @@
 .asdf/shims
 .asdf/tmp
 .config/erlang_ls/snippets
+.config/git/profiles
 .config/nvim/plug.vim
 .config/ranger/plugins
 .config/vifm/scripts
