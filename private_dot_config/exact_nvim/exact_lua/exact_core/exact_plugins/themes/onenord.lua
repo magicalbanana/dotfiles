@@ -13,18 +13,12 @@ require("onenord").setup({
   disable = {
     background = false, -- Disable setting the background color
     cursorline = false, -- Disable the cursorline
-    eob_lines = true,   -- Hide the end-of-buffer lines
+    eob_lines = true, -- Hide the end-of-buffer lines
   },
   -- Inverse highlight for different groups
   inverse = {
     match_paren = false,
   },
   custom_highlights = {}, -- Overwrite default highlight groups
-  custom_colors = {},     -- Overwrite default colors
+  custom_colors = {}, -- Overwrite default colors
 })
-
-local settings = require("core.settings")
-
-if settings.theme == "onenord" then
-  vim.cmd("colorscheme onenord")
-end

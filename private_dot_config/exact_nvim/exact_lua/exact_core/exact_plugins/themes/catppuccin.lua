@@ -88,9 +88,3 @@ require("catppuccin").setup({
     fidget = false,
   },
 })
-
-local settings = require("core.settings")
-
-if settings.theme == "catppuccin" then
-  vim.cmd("colorscheme catppuccin")
-end

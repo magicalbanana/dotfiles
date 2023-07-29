@@ -31,9 +31,3 @@ require("tokyonight").setup({
     }
   end,
 })
-
-local settings = require("core.settings")
-
-if settings.theme == "tokyonight" then
-  vim.cmd("colorscheme tokyonight")
-end

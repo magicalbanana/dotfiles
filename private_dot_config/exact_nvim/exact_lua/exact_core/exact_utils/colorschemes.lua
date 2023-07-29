@@ -8,15 +8,11 @@ local M = {}
 M.random = function()
   local colorschemes = {
     catppuccin = "catppuccin",
-    doomone = "doom-one",
     kanagawa = "kanagawa",
-    neon = "neon",
     nightfox = "nightfox",
     nord = "nord",
-    nordic = "nordic",
     onenord = "onenord",
     tokyonight = "tokyonight",
-    tundra = "tundra",
   }
   local colorscheme = utils.rand_element(vim.tbl_keys(colorschemes))
 
@@ -41,10 +37,6 @@ M.nord = function()
   vim.cmd([[colorscheme nord]])
 end
 
-M.nordic = function()
-  vim.cmd([[colorscheme nordic]])
-end
-
 M.onenord = function()
   vim.cmd([[colorscheme onenord]])
 end
@@ -67,7 +59,7 @@ M.kanagawa = function()
     "kanagawa-wave",
     "kanagawa-dragon",
   }
-
+  colorscheme
   local theme = utils.rand_element(vim.tbl_keys(themes))
   vim.cmd(string.format("colorscheme %s", themes[theme]))
 end
@@ -81,20 +73,6 @@ M.tokyonight = function()
 
   local theme = utils.rand_element(vim.tbl_keys(themes))
   vim.cmd(string.format("colorscheme %s", themes[theme]))
-end
-
-M.tundra = function()
-  vim.opt.background = "dark"
-
-  vim.cmd(string.format("colorscheme %s", "tundra"))
-end
-
-M.neon = function()
-  vim.cmd(string.format("colorscheme %s", "neon"))
-end
-
-M.doomone = function()
-  vim.cmd(string.format("colorscheme %s", "doom-one"))
 end
 
 return M

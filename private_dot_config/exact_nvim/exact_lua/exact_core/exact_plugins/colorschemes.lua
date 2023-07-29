@@ -1,8 +1,12 @@
 return {
   {
-    "EdenEast/nightfox.nvim",
+    "folke/tokyonight.nvim",
+    lazy = false,
+    priority = 1000,
     config = function()
-      require("core.plugins.themes.nightfox")
+      require("core.plugins.themes.tokyonight")
+
+      vim.cmd([[colorscheme tokyonight-storm]])
     end,
   },
   {
@@ -13,9 +17,15 @@ return {
     end,
   },
   {
-    "folke/tokyonight.nvim",
+    "marko-cerovac/material.nvim",
     config = function()
-      require("core.plugins.themes.tokyonight")
+      require("core.plugins.themes.material")
+    end,
+  },
+  {
+    "EdenEast/nightfox.nvim",
+    config = function()
+      require("core.plugins.themes.nightfox")
     end,
   },
   {
@@ -25,57 +35,15 @@ return {
     end,
   },
   {
-    "sam4llis/nvim-tundra",
+    "rmehri01/onenord.nvim",
     config = function()
-      require("core.plugins.themes.tundra")
+      require("core.plugins.themes.tokyonight")
     end,
   },
   {
     "shaunsingh/nord.nvim",
     config = function()
       require("core.plugins.themes.nord").setup()
-    end,
-  },
-  {
-    "rmehri01/onenord.nvim",
-    config = function()
-      require("core.plugins.themes.onenord")
-    end,
-  },
-  {
-    "AlexvZyl/nordic.nvim",
-    config = function()
-      require("nordic").load()
-    end,
-  },
-  {
-    "rafamadriz/neon",
-    config = function()
-      require("core.plugins.themes.neon").setup()
-    end,
-  },
-  {
-    "ray-x/aurora",
-    config = function()
-      require("core.plugins.themes.aurora").setup()
-    end,
-  },
-  {
-    "NTBBloodbath/doom-one.nvim",
-    config = function()
-      require("core.plugins.themes.doomone").setup()
-    end,
-  },
-  {
-    "marko-cerovac/material.nvim",
-    config = function()
-      require("core.plugins.themes.material")
-    end,
-  },
-  {
-    "navarasu/onedark.nvim",
-    config = function()
-      require("core.plugins.themes.onedark")
     end,
   },
 }
