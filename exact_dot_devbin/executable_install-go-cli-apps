@@ -18,6 +18,7 @@ gorename;golang.org/x/tools/cmd/gorename@latest
 gotestsum;gotest.tools/gotestsum@latest
 guru;golang.org/x/tools/cmd/guru@latest
 jqp;github.com/noahgorstein/jqp@latest
+jira;github.com/ankitpokhrel/jira-cli/cmd/jira@latest
 jsonnet-deps;github.com/google/go-jsonnet/cmd/jsonnet-deps@latest
 jsonnet-lint;github.com/google/go-jsonnet/cmd/jsonnet-lint@latest
 jsonnet;github.com/google/go-jsonnet/cmd/jsonnet@latest
@@ -39,5 +40,5 @@ for cli_app in $cli_apps; do
 	cli_app_name=$(echo "$cli_app" | cut -d ';' -f 1)
 	go_pkg=$(echo "$cli_app" | cut -d ';' -f 2-)
 	echo-info "cli app: installing $cli_app_name"
-	echo-run go install "$go_pkg"
+	echo-run go install "$go_pkg" || true
 done
