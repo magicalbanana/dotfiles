@@ -274,7 +274,7 @@ return {
       },
       window = {
         mappings = {
-          ["o"] = "system_open",
+          ["O"] = "system_open",
           ["H"] = "toggle_hidden",
           ["/"] = "fuzzy_finder",
           ["D"] = "fuzzy_finder_directory",
@@ -290,16 +290,16 @@ return {
             nowait = false, -- disable `nowait` if you have existing combos starting with this char that you want to use
           },
           ["<2-LeftMouse>"] = "open_with_window_picker",
-          ["<CR>"] = "open_with_window_picker",
-          -- ["S"] = "open_split",
+          ["<CR>"] = "open",
+          ["S"] = "open_split",
+          ["s"] = "open_vsplit",
           ["-"] = "split_with_window_picker",
-          -- ["s"] = "open_vsplit",
           ["|"] = "vsplit_with_window_picker",
           ["t"] = "open_tabnew",
           ["P"] = "toggle_preview",
           ["C"] = "close_node",
           ["z"] = "close_all_nodes",
-          --["Z"] = "expand_all_nodes",
+          ["Z"] = "expand_all_nodes",
           ["R"] = "refresh",
           ["a"] = {
             "add",
