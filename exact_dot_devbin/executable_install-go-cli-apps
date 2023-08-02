@@ -3,6 +3,7 @@
 set -e
 
 cli_apps="
+checkmake;github.com/mrtazz/checkmake/cmd/checkmake@latest
 dlv;github.com/go-delve/delve/cmd/dlv@latest
 dyff;github.com/homeport/dyff/cmd/dyff@latest
 ghq;github.com/x-motemen/ghq@latest
