@@ -92,15 +92,10 @@ zi light junegunn/fzf
 zi ice wait"1" lucid
 zi light Aloxaf/fzf-tab
 
-# Load theme file
-export IGLOO_ZSH_PROMPT_THEME_ALWAYS_SHOW_USER=true
-export IGLOO_ZSH_PROMPT_THEME_ALWAYS_SHOW_HOST=true
-# https://github.com/arcticicestudio/igloo/tree/master/snowblocks/zsh#line-c
-export GIT_PS1_SHOWDIRTYSTATE=true
-export GIT_PS1_SHOWSTASHSTATE=true
-export GIT_PS1_SHOWUNTRACKEDFILES=true
-zi ice pick"snowblocks/zsh/lib/themes/igloo.zsh"
-zi load arcticicestudio/igloo
+zi ice as"command" from"gh-r" \
+  atclone"./starship init zsh > init.zsh; ./starship completions zsh > _starship" \
+  atpull"%atclone" src"init.zsh"
+zi light starship/starship
 
 zi ice lucid wait"1" lucid atload"!_zsh_autosuggest_start"
 zi load "zsh-users/zsh-autosuggestions"
