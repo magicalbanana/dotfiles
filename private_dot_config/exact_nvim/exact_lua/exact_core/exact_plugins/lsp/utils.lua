@@ -1,4 +1,5 @@
 local utils = require("core.utils.functions")
+
 M = {}
 
 -- TODO: refactor
@@ -53,6 +54,15 @@ M.get_asdf_shims_path = function()
   local path = lsp_util.path
 
   return path.join(vim.env.ASDF_DIR, "shims")
+end
+
+JDLS_PATH = utils.capture_cmd([[brew info jdtls | grep "/opt/homebrew/Cellar/" | awk '{print $1}']])
+
+M.get_jdtls_path = function()
+  if utils.is_empty(JDLS_PATH) then
+    JDLS_PATH = utils.capture_cmd([[brew info jdtls | grep "/opt/homebrew/Cellar/" | awk '{print $1}']])
+  end
+  return JDLS_PATH
 end
 
 return M

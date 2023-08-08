@@ -7,6 +7,7 @@ nls.setup({
     -- nls.builtins.formatting.gofumpt,
     -- nls.builtins.formatting.goimports,
     nls.builtins.formatting.just,
+    nls.builtins.formatting.google_java_format,
     nls.builtins.formatting.latexindent.with({
       extra_args = { "-g", "/dev/null" }, -- https://github.com/cmhughes/latexindent.pl/releases/tag/V3.9.3
     }),

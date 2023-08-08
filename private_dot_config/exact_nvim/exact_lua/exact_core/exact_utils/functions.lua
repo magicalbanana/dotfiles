@@ -324,4 +324,8 @@ M.capture_cmd = function(cmd, raw)
   return output
 end
 
+M.is_empty = function(s)
+  return s == nil or s == ""
+end
+
 return M

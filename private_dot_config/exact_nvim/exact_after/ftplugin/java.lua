@@ -1,5 +1,6 @@
 local home = os.getenv("HOME")
 local jdtls = require("jdtls")
+local lsp_utils = require("core.plugins.lsp.utils")
 local utils = require("core.utils.functions")
 
 -- File types that signify a Java project's root directory. This will be
@@ -22,6 +23,7 @@ end
 -- The on_attach function is used to set key maps after the language server
 -- attaches to the current buffer
 local on_attach = function(client, bufnr)
+  require("jdtls.setup").add_commands()
   -- Regular Neovim LSP client keymappings
   local bufopts = { noremap = true, silent = true, buffer = bufnr }
   -- Java extensions provided by jdtls
@@ -36,7 +38,7 @@ local on_attach = function(client, bufnr)
   )
 end
 
-local jdtls_path = utils.capture_cmd([[brew info jdtls | grep "/opt/homebrew/Cellar/" | awk '{print $1}']])
+local jdtls_path = lsp_utils.get_jdtls_path()
 
 local config = {
   flags = {
@@ -59,7 +61,9 @@ local config = {
     "-Declipse.product=org.eclipse.jdt.ls.core.product",
     "-Dlog.protocol=true",
     "-Dlog.level=ALL",
-    "-Xmx4g",
+    "-noverify",
+    "-Xms1g",
+    "-Xmx8g",
     "--add-modules=ALL-SYSTEM",
     "--add-opens",
     "java.base/java.util=ALL-UNNAMED",
