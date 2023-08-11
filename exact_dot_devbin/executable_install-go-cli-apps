@@ -32,6 +32,7 @@ lazydocker;github.com/jesseduffield/lazydocker@latest
 lazygit;github.com/jesseduffield/lazygit@latest
 pistol;github.com/doronbehar/pistol/cmd/pistol@latest
 shfmt;mvdan.cc/sh/v3/cmd/shfmt@latest
+swag;github.com/swaggo/swag/cmd/swag@latest
 trdsql;github.com/noborus/trdsql/cmd/trdsql@latest
 usql;github.com/xo/usql@latest
 yamlfmt;github.com/google/yamlfmt/cmd/yamlfmt@latest
