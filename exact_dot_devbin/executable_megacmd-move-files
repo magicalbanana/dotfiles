@@ -1,0 +1,66 @@
+#!/bin/sh
+
+# 1. list item
+# 2. if item is a directory, go back to step 1
+# 3. if item is a file, download
+# 4. if download is successful
+# 5. if download is successful, delete file
+# 6. go back to step 1
+
+# Function to list items using mega-ls command
+list_items() {
+	echo-run mega-ls "$1"
+}
+
+# Function to recursively move files and directories
+move_files() {
+	item="$1"
+	count=$(echo "$item" | wc -l)
+
+	if [ $count -gt 1 ]; then
+		echo "$item" | {
+			read -r _
+
+			directory=$(echo "$item" | head -n 1 | sed 's/: *$//')
+			while IFS= read -r line; do
+				move_files "$(list_items "$directory/$line")"
+			done
+			if [ $? -ne 0 ]; then
+				echo-err "an operation to download the file failed, skipping deleting directory: $directory"
+			else
+				echo-info "files downloaded, deleting directory"
+				echo-run mega-rm -rf "$directory"
+			fi
+		}
+	else
+		lpath=$(echo "$item" | sed 's/\/[^/]*$/\//')
+		if [ ! -d "$lpath" ]; then
+			mkdir -p "$lpath"
+		fi
+		echo-info "downloading file: $item to $lpath"
+		echo-run mega-get "$item" "$lpath"
+		if [ $? -ne 0 ]; then
+			echo-err "failed to download: $item"
+		else
+			echo-info "download completed, deleting file"
+			echo-run mega-rm "$item"
+			if [ $? -ne 0 ]; then
+				echo-err "failed to delete: $item"
+			fi
+		fi
+	fi
+}
+
+# Check for parameter and call move_files function
+if [ $# -eq 0 ]; then
+	echo-err "Usage: $0 <item>"
+	exit 1
+fi
+
+move_files "$(list_items "$1")"
+if [ $? -ne 0]; then
+	echo-err "moving files encountered an error, skipping deleting $1"
+else
+	echo-info "moving files successful"
+	echo-run mega-rm -rf "$1"
+fi
