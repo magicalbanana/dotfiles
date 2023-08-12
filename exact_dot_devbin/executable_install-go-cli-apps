@@ -25,6 +25,7 @@ jsonnet-language-server;github.com/grafana/jsonnet-language-server@latest
 jsonnet-lint;github.com/google/go-jsonnet/cmd/jsonnet-lint@latest
 jsonnet;github.com/google/go-jsonnet/cmd/jsonnet@latest
 jsonnetfmt;github.com/google/go-jsonnet/cmd/jsonnetfmt@latest
+kind;sigs.k8s.io/kind@latest
 k9s;github.com/derailed/k9s@latest
 kubectx;github.com/ahmetb/kubectx/cmd/kubectx@latest
 kubens;github.com/ahmetb/kubectx/cmd/kubens@latest
