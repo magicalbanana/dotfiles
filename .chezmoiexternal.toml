@@ -9,7 +9,7 @@ type = "file"
 exact = true
 refreshPeriod = "168h"
 [".config/zsh/.zi/bin"]
-url = "https://github.com/z-shell/zi"
+url = "https://github.com/z-shell/zi.git"
 type = "git-repo"
 refreshPeriod = "168h"
 [".config/fzf/fzf-zsh-plugin"]
