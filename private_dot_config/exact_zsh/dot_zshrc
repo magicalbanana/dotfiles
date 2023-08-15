@@ -40,10 +40,10 @@ zi ice wait"0b" lucid
 zi light b4b4r07/enhancd
 
 zi snippet OMZL::clipboard.zsh
-zi snippet OMZL::completion.zsh
 zi snippet OMZL::directories.zsh
-zi snippet OMZL::key-bindings.zsh
 
+zi wait lucid for \
+  z-shell/zsh-fancy-completions
 zi ice lucid wait as"completion" blockf has"docker"
 zi snippet OMZ::plugins/docker/docker.plugin.zsh
 zi ice lucid wait as"completion" blockf has"docker-compose"
