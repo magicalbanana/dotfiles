@@ -7,24 +7,19 @@ return {
     { "nvim-tree/nvim-web-devicons", lazy = true },
     { "MunifTanjim/nui.nvim", lazy = true },
     {
-      -- only needed if you want to use the commands with "_with_window_picker" suffix
-      "s1n7ax/nvim-window-picker",
+      "ten3roberts/window-picker.nvim",
       config = function()
-        require("window-picker").setup({
-          autoselect_one = true,
-          include_current = false,
-          filter_rules = {
-            -- filter using buffer options
-            bo = {
-              -- if the file type is one of following, the window will be ignored
-              filetype = { "neo-tree", "neo-tree-popup", "notify" },
-
-              -- if the buffer type is one of following, the window will be ignored
-              buftype = { "terminal", "quickfix" },
-            },
-          },
-          other_win_hl_color = "#e35e4f",
-        })
+        local picker = require("window-picker")
+        picker.setup()
+        picker.pick_window = function()
+          return picker.select({ hl = "WindowPicker", prompt = "Pick window: " }, function(winid)
+            if not winid then
+              return nil
+            else
+              return winid
+            end
+          end)
+        end
       end,
     },
   },
@@ -291,6 +286,7 @@ return {
           },
           ["<2-LeftMouse>"] = "open_with_window_picker",
           ["<CR>"] = "open",
+          ["<C-CR>"] = "open_with_window_picker",
           ["S"] = "open_split",
           ["s"] = "open_vsplit",
           ["-"] = "split_with_window_picker",

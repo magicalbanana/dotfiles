@@ -1,5 +1,6 @@
 return {
   "rest-nvim/rest.nvim",
+  ft = "http",
   requires = { "nvim-lua/plenary.nvim" },
   config = function()
     require("rest-nvim").setup({
@@ -40,4 +41,9 @@ return {
       yank_dry_run = true,
     })
   end,
+  keys = {
+    { "<leader><leader>r", "<Plug>RestNvim<cr>", desc = "Run HTTP Request" },
+    { "<leader><leader>rP", "<Plug>RestNvimPreview<cr>", desc = "Preview HTTP Request as curl" },
+    { "<leader><leader>rr", "<Plug>RestNvimPreview<cr>", desc = "Rerun last HTTP request" },
+  },
 }
