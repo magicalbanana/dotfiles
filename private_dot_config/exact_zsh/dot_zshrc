@@ -65,11 +65,19 @@ zi ice lucid wait as'completion' blockf has'ghq'
 zi snippet https://github.com/x-motemen/ghq/blob/master/misc/zsh/_ghq
 zi ice lucid wait as'completion' blockf has'mpv'
 zi snippet https://github.com/mpv-player/mpv/blob/master/etc/_mpv.zsh
+zi ice lucid wait as'completion' blockf has'kubectx'
+zi snippet https://raw.githubusercontent.com/ahmetb/kubectx/master/completion/_kubectx.zsh
+zi ice lucid wait as'completion' blockf has'kubens'
+zi snippet https://raw.githubusercontent.com/ahmetb/kubectx/master/completion/_kubens.zsh
 
 zi wait has'brew' pack atload=+"zicompinit_fast; zicdreplay" for brew-completions
 
 zi ice lucid wait as'completion' blockf has'zellij'
 zi snippet "$ZDOTDIR/completions/_zellij"
+zi ice lucid wait as'completion' blockf has'kind'
+zi snippet "$ZDOTDIR/completions/_kind"
+zi ice lucid wait as'completion' blockf has'kubectl'
+zi snippet "$ZDOTDIR/completions/_kubectl"
 
 zi has'zoxide' wait lucid for \
   z-shell/zsh-zoxide
