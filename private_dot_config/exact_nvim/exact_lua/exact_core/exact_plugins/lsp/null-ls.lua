@@ -40,7 +40,7 @@ nls.setup({
     nls.builtins.diagnostics.dotenv_linter,
     nls.builtins.diagnostics.eslint_d,
     nls.builtins.diagnostics.hadolint,
-    nls.builtins.diagnostics.luacheck,
+    nls.builtins.diagnostics.selene,
     nls.builtins.diagnostics.markdownlint,
     nls.builtins.diagnostics.protolint,
     nls.builtins.diagnostics.ruff,
