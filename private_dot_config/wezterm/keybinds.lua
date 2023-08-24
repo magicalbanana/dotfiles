@@ -44,6 +44,7 @@ M.tmux_keybinds = {
 }
 
 M.default_keybinds = {
+  { key = "n", mods = "CTRL|SHIFT", action = wezterm.action.SpawnWindow },
   { key = "c", mods = "CTRL|SHIFT", action = act({ CopyTo = "Clipboard" }) },
   { key = "v", mods = "CTRL|SHIFT", action = act({ PasteFrom = "Clipboard" }) },
   { key = "Insert", mods = "SHIFT", action = act({ PasteFrom = "PrimarySelection" }) },
