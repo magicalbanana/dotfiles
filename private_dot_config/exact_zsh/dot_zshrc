@@ -46,9 +46,8 @@ zi light-mode for \
   z-shell/z-a-meta-plugins @annexes @zsh-users+fast
 zi ice lucid wait as"completion" blockf has"docker"
 zi snippet https://raw.githubusercontent.com/docker/cli/master/contrib/completion/zsh/_docker
-zi ice lucid wait as"completion" blockf has"git" for \
-  https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.zsh \
-  https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
+zi ice lucid wait as'completion' blockf mv'git-completion.zsh -> _git'
+zi snippet https://github.com/git/git/blob/master/contrib/completion/git-completion.zsh
 zi ice lucid wait as"completion" blockf has"asdf"
 zi snippet https://raw.githubusercontent.com/asdf-vm/asdf/master/completions/_asdf
 zi ice lucid wait as"completion" blockf has"just"
@@ -69,8 +68,17 @@ zi ice lucid wait as'completion' blockf has'kubectx'
 zi snippet https://raw.githubusercontent.com/ahmetb/kubectx/master/completion/_kubectx.zsh
 zi ice lucid wait as'completion' blockf has'kubens'
 zi snippet https://raw.githubusercontent.com/ahmetb/kubectx/master/completion/_kubens.zsh
+zi ice lucid wait as'completion' blockf has'pandoc'
+zi light srijanshetty/zsh-pandoc-completion
+
+zi ice lucid wait as'completion'
+zi light zsh-users/zsh-completions
+
+zi ice lucid wait as'completion' blockf
+zi light zchee/zsh-completions
 
 zi wait has'brew' pack atload=+"zicompinit_fast; zicdreplay" for brew-completions
+zi wait pack atload=+"zicompinit_fast; zicdreplay" for system-completions
 
 zi ice lucid wait as'completion' blockf has'zellij'
 zi snippet "$ZDOTDIR/completions/_zellij"
