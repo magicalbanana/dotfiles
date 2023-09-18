@@ -1,0 +1,149 @@
+set number
+set relativenumber
+set visualbell
+set clipboard+=unnamed
+set scrolloff=10
+set ignorecase
+set smartcase
+set incsearch
+set hlsearch
+set wrapscan
+set notimeout
+" set timeoutlen=5000
+
+" Leader key
+let mapleader = ","
+let maplocalleader = " "
+
+" Plugins
+set surround
+set multiple-cursors
+set which-key
+set highlightedyank
+set easymotion
+set nerdtree
+set commentary
+set argtextobj
+set exchange
+
+" TODO: which-key plugins does not recognise , as leader !?
+let g:WhichKey_ShowVimActions = "false"
+let g:WhichKey_SortOrder = "by_key_prefix_first"
+let g:WhichKeyDesc_redraw = "<Space>l Redraw screen"
+let g:WhickKeyDesc_test = ",A Go to Test File"
+
+let g:WhichKeyDesc_git = '<Space>g Git'
+let g:WhichKeyDesc_git_commit = "<Space>gc Git commit"
+let g:WhichKeyDesc_git_status = "<Space>gs Git status"
+let g:WhichKeyDesc_git_branches = "<Space>gb Git branches"
+
+let g:WhichKeyDesc_refactors = ",r Refactors"
+let g:WhichKeyDesc_refactors_rename = ",rn Rename element"
+let g:WhichKeyDesc_refactors_reformat_code = ",rf Reformat code"
+
+let g:WhichKeyDesc_actions = ",c Actions"
+let g:WhichKeyDesc_actions_code_actions = ",ca Code actions"
+
+let g:WhichKeyDesc_tools = "<Space>t Tools"
+let g:WhichKeyDesc_tools_emulator_open = "<Space>te Emulator"
+
+let g:WhichKeyDesc_go = 'g Go to'
+let g:WhichKeyDesc_go_find_usages = "gr Find usages"
+
+let g:WhickKeyDesc_move = ",m Move"
+let g:WhichKeyDesc_move = ",mv Move"
+
+let g:WhichKeyDesc_find = ",f Goto"
+let g:WhichKeyDesc_find_go_to_file = ",ff Go to file"
+let g:WhichKeyDesc_find_in_path = ",fs Find in path"
+
+let g:WhichKeyDesc_alternate_file = ",, Alternate file"
+
+let g:WhichKeyDesc_source_vimrc = ",sv Source vimrc"
+let g:WhichKeyDesc_edit_vimrc = ",ev Edit vimrc"
+
+nmap <S-C-n> <Plug>NextWholeOccurrence
+xmap <S-C-n> <Plug>NextWholeOccurrence
+nmap g<C-n> <Plug>NextOccurrence
+xmap g<C-n> <Plug>NextOccurrence
+nmap <C-q> <Plug>SkipOccurrence
+xmap <C-q> <plug>SkipOccurrence
+nmap <C-x> <Plug>RemoveOccurrence
+xmap <C-x> <Plug>RemoveOccurrence
+" IDEAVIM config options
+set ideajoin
+
+" Mappings
+inoremap jk <Esc>
+nnoremap <Leader><Tab> :tabnext<CR>
+nnoremap <S-Tab> :tabprev<CR>\
+
+sethandler <c-j> a:vim
+sethandler <c-k> a:vim
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+nnoremap <C-k> <C-w>k
+nnoremap <C-j> <C-w>j
+
+" Switch between alternate buffers
+nnoremap <leader><leader> :b#<CR>
+
+nmap <leader>sv :source ~/.config/ideavim/ideavimrc<CR>
+nnoremap <leader>ev :e ~/.config/ideavim/ideavimrc<CR>
+nnoremap <space>l    :nohlsearch<CR>
+
+nmap <Leader>q <Action>(CloseContent)
+nmap <Leader>qa <Action>(CloseAllEditors)
+
+" Distraction Free Mode
+nmap <c-z> <Action>(ToggleDistractionFreeMode)
+
+" Terminal
+nmap <c-\> <Action>(ActivateTerminalToolWindow)
+nmap <leader>t :action Terminal.OpenInTerminal<CR>
+
+" Jump around with easymotion
+nmap s <Plug>(easymotion-s)
+
+nmap <CR> <Action>(Tree-selectNextExtendSelection)
+nmap <S-CR> <Action>(Tree-selectPrevExtendSelection)
+
+" Folding
+nmap <leader>zc <Action>(CollapseAllRegions)
+nmap <leader>zo <Action>(ExpandAllRegions)
+
+" Actions
+nmap [c <Action>(GotoNextError)
+nmap ]c <Action>(GotoPreviousError)
+
+nmap <leader>ff <Action>(GotoFile)
+nmap <leader>fo <Action>(RecentFiles)
+nmap <leader>fs <Action>(FindInPath)
+nmap <leader>A <Action>(GotoTest)
+nmap <leader>mv <Action>(Move)
+xmap <leader>mv <Action>(Move)
+
+nmap gr <Action>(FindUsages)
+
+" Tool windows
+nmap <space>te <Action>(ActivateAndroidEmulatorToolWindow)
+
+nmap <M-p> <Action>(JumpToLastWindow)
+nmap <M-x> <Action>(HideAllWindows)
+
+nmap <leader>rn <Action>(RenameElement)
+nmap <leader>rf <Action>(ReformatCode)
+nmap <leader>ca <Action>(Refactorings.QuickListPopupAction)
+" Alternatively: (ForceRefresh)
+nmap <leader>rr <Action>(Android.Designer.ForceRefreshPreview)
+
+" File Explorer
+nmap <C-N> :NERDTreeToggle<CR>
+
+" Git
+nmap <space>gc <Action>(ActivateCommitToolWindow)
+nmap <space>gs <Action>(ActivateVersionControlToolWindow)
+nmap <space>gb <Action>(Git.Branches)
+nmap [h <Action>(VcsShowNextChangeMarker)
+nmap ]h <Action>(VcsShowPrevChangeMarker)
+
