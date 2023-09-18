@@ -1,157 +1,151 @@
 # vim:ft=gitconfig
-
-[init]
-  defaultBranch = main
-[advice]
-  statusHints = false
-[core]
-  autocrlf = input
-  page = delta
-  editor = nvim
-  excludesfile = {{ expandenv "${HOME}/.config/git/ignore"}}
-  hooksPath = {{ expandenv "${HOME}/.config/git/hooks"}}
-[color]
-  ui = true
-[color "branch"]
-  current = yellow reverse
-  local = yellow
-  remote = green
-[color "diff"]
-  meta = yellow bold
-  frag = magenta bold
-  old = red
-  new = green
-[alias]
-  # add
-  a = add                           # add
-  ap = add -p                       # add -p (interactive patching)
-  ai = add -i                       # add -p (interactive adding/staging)
-  chunkyadd = add --patch           # stage commits chunk by chunk
-
-  # via http://blog.apiaxle.com/post/handy-git-tips-to-stop-you-getting-fired/
-  snapshot = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
-  snapshots = !git stash list --grep snapshot
-
-  # via http://stackoverflow.com/questions/5188320/how-can-i-get-a-list-of-git-branches-ordered-by-most-recent-commit
-  recent-branches = !git for-each-ref --count=5 --sort=-committerdate refs/heads/ --format='%(refname:short)'
-
-  # branch
-  b = branch -v                     # branch (verbose)
-
-  # commit
-  c = commit                        # commit using editor
-  ca = commit -am                   # commit all with message
-  ci = commit                       # commit
-  amend = commit --amend            # ammend your last commit
-  nemend = commit --amend --no-edit
-
-  # checkout
-  cco = checkout                     # checkout
-  nb = checkout -t -b                # create and switch to a new branch (mnemonic: "git new branch branchname...")
-
-  # cherry-pick
-  cp = cherry-pick -x               # grab a change from a branch
-
-  # diff
-  d = diff                          # diff unstaged changes
-  dc = diff --cached                # diff staged changes
-  last = diff HEAD^                 # diff last committed change
-
-  # list untracked files
-  lsu = ls-files --others --exclude-standard
-
-  # log
-  l = log --graph --date=iso
-  changes = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\" --name-status
-  short = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\"
-  changelog = log --pretty=format:\" * %s\"
-  shortnocolor = log --pretty=format:\"%h %cr %cn %s\"
-
-  # pull
-  pl = pull                         # pull
-
-  # push
-  ps = push                         # push
-
-  # rebase
-  rc = rebase --continue            # continue rebase
-  rs = rebase --skip                # skip rebase
-
-  # remote
-  r = remote -v                     # show remotes (verbose)
-
-  # reset
-  unstage = reset HEAD              # remove files from index (tracking)
-  uncommit = reset --soft HEAD^     # go back before last commit, with files in uncommitted state
-  filelog = log -u                  # show changes to a file
-  mt = mergetool                    # fire up the merge tool
-
-  # stash
-  ss = stash                        # stash changes
-  sl = stash list                   # list stashes
-  sd = stash drop                   # drop stashes (destory changes)
-  spp = stash pop                   # stas pop
-
-  # status
-  s = status --ignore-submodules    # status
-[format]
-  pretty = format:%C(blue)%ad%Creset %C(yellow)%h%C(green)%d%Creset %C(blue)%s %C(magenta) [%an]%Creset
-[interactive]
-  diffFilter = delta --color-only
-[delta]
-  side-by-side = true
-  line-numbers-left-format = ""
-  line-numbers-right-format = "? "
-  minus-style = syntax "#3f2d3d"
-  minus-non-emph-style = syntax "#3f2d3d"
-  minus-emph-style = syntax "#763842"
-  minus-empty-line-marker-style = syntax "#3f2d3d"
-  line-numbers-minus-style = "#b2555b"
-  plus-style = syntax "#283b4d"
-  plus-non-emph-style = syntax "#283b4d"
-  plus-emph-style = syntax "#316172"
-  plus-empty-line-marker-style = syntax "#283b4d"
-  line-numbers-plus-style = "#266d6a"
-  line-numbers-zero-style = "#3b4261"
-[mergetool]
-  prompt = false
-[mergetool "vimdiff"]
-  cmd="vim -c 'Gdiff' $MERGED"     # use fugitive.vim for 3-way merge
-  keepbackup=false
-[merge]
-  summary = true
-  verbosity = 1
-  tool = vimdiff
-[apply]
-  whitespace = nowarn
-[branch]
-  autosetupmerge = true
-[push]
-  # 'git push' will push the current branch to its tracking branch
-  # the usual default is to push all branches
-  default = current
-[pull]
-  default = current
-  rebase = true
-[diff]
-  # Git diff will use (i)ndex, (w)ork tree, (c)ommit and (o)bject
-  # instead of a/b/c/d as prefixes for patches
-  mnemonicprefix = true
-  algorithm = patience
-[rerere]
-  # Remember my merges
-  # http://gitfu.wordpress.com/2008/04/20/git-rerere-rereremember-what-you-did-last-time/
-  enabled = true
-[filter "lfs"]
-  clean = git-lfs clean %f
-  smudge = git-lfs smudge %f
-  required = true
-[url "git@github.com:"]
-  insteadOf = https://github.com/
-[diff "sopsdiffer"]
-	textconv = sops -d
 [ghq]
   root = {{ expandenv "${DEV_WORKSPACE_ROOT}/repos" }}
   vcs = git
 [include]
   path = {{ expandenv "${HOME}/.config/git/default_profile" }}
+
+[status]
+  submoduleSummary = true
+
+[commit]
+  template = {{ expandenv "${HOME}/.config/git/templates/message"}}
+
+[color]
+  ui = auto
+  status = auto
+  diff = auto
+  branch = auto
+  showBranch = auto
+  interactive = auto
+
+[core]
+  editor = "nvim"
+  excludesfile = {{ expandenv "${HOME}/.config/git/ignore"}}
+  pager = delta
+  autocrlf = input
+
+  # Make `git rebase` safer on macOS.
+  # More info: <http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/>
+  trustctime = false
+
+  # Speed up commands involving untracked files such as `git status`.
+  # https://git-scm.com/docs/git-update-index#_untracked_cache
+  untrackedCache = true
+
+[format]
+  pretty = format:%C(yellow)%h %Cblue%>(15)%ad %Cgreen%<(15)%aN%Cred%d %Creset%s
+
+[alias]
+  # View abbreviated SHA, description, and history graph of the latest 20 commits.
+  l = log --pretty=oneline -n 20 --graph --abbrev-commit
+
+  # View the current working tree status using the short format.
+  s = status -s
+
+  # Show the diff between the latest commit and the current state.
+  d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
+
+  # `git di $number` shows the diff between the state `$number` revisions ago and the current state.
+  di = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
+
+  # Pull in remote changes for the current repository and all its submodules.
+  pl = pull --recurse-submodules
+
+  # Commit all changes.
+  ca = !git add -A && git commit -av
+
+  # Switch to a branch, creating it if necessary.
+  br = "!f() { git checkout -b \"$1\" 2> /dev/null || git checkout \"$1\"; }; f"
+
+  # Show verbose output about tags, branches or remotes
+  tags = tag -l
+  branches = branch --all
+  remotes = remote --verbose
+
+  fix='$EDITOR `git diff --name-only | uniq`'
+
+  # List all aliases.  Stolen from here: https://twitter.com/TrevorBramble/status/774292970681937920
+  aliases = "!git config -l | grep ^alias | cut -c 7- | sort"
+
+  fall = fetch --all
+
+  # Destroy all local changes and reset to HEAD.
+  hreset = reset --hard HEAD
+
+  # Reset previous commit, but keep all the associated changes. Useful for avoiding nasty git merge commits.
+  uncommit = reset --soft HEAD^
+
+  reset-up = reset --hard $(git upstream)
+
+  # Remove branches that have already been merged with main.
+  # a.k.a. ‘delete merged’
+  dm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
+
+  # Show the user email for the current repository.
+  whoami = config user.email
+[branch]
+  # Show most recently changed branches first.
+  sort = -committerdate
+
+[diff]
+  colorMoved = default
+  navigate = true  # use n and N to move between diff sections
+  renames = copies # Detect copies as well as renames.
+
+[merge]
+  # Include summaries of merged commits in newly created merge commit messages
+  log = true
+
+[delta]
+  features = line-numbers decorations
+
+[delta "decorations"]
+  commit-decoration-style = bold yellow box ul
+  file-style = bold yellow ul
+
+[interactive]
+  diffFilter = delta --color-only
+
+[push]
+  default = current
+  followTags = true
+
+[pull]
+  rebase = true
+
+[rebase]
+  autoStash = true
+
+[fetch]
+  prune = true
+
+[gitsh]
+  prompt = "\n%D %c(%b%#)%w ➜"
+
+[rerere]
+  enabled = false
+
+[help]
+  # Automatically correct and execute mistyped commands.
+  autocorrect = 1
+
+# URL shorthands
+[url "git@github.com:"]
+  insteadOf = "gh:"
+  pushInsteadOf = "github:"
+  pushInsteadOf = "git://github.com/"
+
+[url "git://github.com/"]
+  insteadOf = "github:"
+
+[url "git@gist.github.com:"]
+  insteadOf = "gst:"
+  pushInsteadOf = "gist:"
+  pushInsteadOf = "git://gist.github.com/"
+
+[url "git://gist.github.com/"]
+  insteadOf = "gist:"
+
+[init]
+  defaultBranch = main
