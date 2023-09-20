@@ -160,5 +160,5 @@ settings({
       { 'n', 'gd', '<Cmd>TypescriptGoToSourceDefinition<CR>', desc = 'typescript: go to source definition' },
     },
   },
-  [{ 'lua', 'python', 'rust' }] = { opt = { spell = true } },
+  [{ 'lua', 'python', 'rust' }] = { opt = { spell = true } }
 })
