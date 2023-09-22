@@ -7,8 +7,6 @@ opt.spell = true
 
 map('n', '<localleader>p', '<Plug>MarkdownPreviewToggle', { desc = 'markdown preview', buffer = 0 })
 
-b.formatting_disabled = not vim.startswith(fn.expand('%'), vim.env.PROJECTS_DIR .. '/personal')
-
 as.ftplugin_conf({
   cmp = function(cmp)
     cmp.setup.filetype('markdown', {
