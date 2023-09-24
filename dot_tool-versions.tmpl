@@ -10,6 +10,9 @@ ruby 3.2.2
 rust 1.71.1
 
 awscli 2.13.11
+{{ if ne .chezmoi.os "linux" }}
+chezmoi 2.40.0
+{{ end }}
 concourse 7.10.0
 fzf 0.42.0
 gcloud 443.0.0
