@@ -37,8 +37,21 @@
   pretty = format:%C(yellow)%h %Cblue%>(15)%ad %Cgreen%<(15)%aN%Cred%d %Creset%s
 
 [alias]
+  # via http://blog.apiaxle.com/post/handy-git-tips-to-stop-you-getting-fired/
+  snapshot = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
+  snapshots = !git stash list --grep snapshot
+
+  # via http://stackoverflow.com/questions/5188320/how-can-i-get-a-list-of-git-branches-ordered-by-most-recent-commit
+  recent-branches = !git for-each-ref --count=5 --sort=-committerdate refs/heads/ --format='%(refname:short)'
+  
+  # log
+  l = log --graph --date=iso
   # View abbreviated SHA, description, and history graph of the latest 20 commits.
-  l = log --pretty=oneline -n 20 --graph --abbrev-commit
+  lp = log --pretty=oneline -n 20 --graph --abbrev-commit
+  changes = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\" --name-status
+  short = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\"
+  changelog = log --pretty=format:\" * %s\"
+  shortnocolor = log --pretty=format:\"%h %cr %cn %s\"
 
   # View the current working tree status using the short format.
   s = status -s
@@ -52,11 +65,26 @@
   # Pull in remote changes for the current repository and all its submodules.
   pl = pull --recurse-submodules
 
+  # push
+  ps = push
+
+  # rebase
+  rc = rebase --continue
+  rs = rebase --skip
+
+  # remote
+  r = remote -v
+
+
   # Commit all changes.
   ca = !git add -A && git commit -av
 
+  # checkout
+  cco = checkout                     # checkout
   # Switch to a branch, creating it if necessary.
-  br = "!f() { git checkout -b \"$1\" 2> /dev/null || git checkout \"$1\"; }; f"
+  br = "!f() { git checkout -b \"$1\" 2> /dev/null || git checkout -t -b \"$1\"; }; f"
+  # create and switch to a new branch (mnemonic: "git new branch branchname...")
+  nb = checkout -t -b
 
   # Show verbose output about tags, branches or remotes
   tags = tag -l
@@ -77,6 +105,9 @@
   uncommit = reset --soft HEAD^
 
   reset-up = reset --hard $(git upstream)
+
+  # list untracked files
+  lsu = ls-files --others --exclude-standard
 
   # Remove branches that have already been merged with main.
   # a.k.a. ‘delete merged’
