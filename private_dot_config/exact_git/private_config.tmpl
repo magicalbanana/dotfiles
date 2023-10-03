@@ -75,10 +75,12 @@
   # remote
   r = remote -v
 
-
-  # Commit all changes.
-  ca = !git add -A && git commit -av
-
+  c = commit                        # commit using editor
+  cam = commit -am                  # commit all with message
+  call = !git add -A && git commit -av
+  ci = commit                       # commit
+  amend = commit --amend            # ammend your last commit
+  nemend = commit --amend --no-edit
   # checkout
   cco = checkout                     # checkout
   # Switch to a branch, creating it if necessary.

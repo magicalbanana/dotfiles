@@ -69,23 +69,22 @@ return {
   },
   {
     'lukas-reineke/indent-blankline.nvim',
+    main = "ibl",
     event = 'UIEnter',
     opts = {
-      char = '│', -- ┆ ┊ 
-      show_foldtext = false,
-      context_char = '▎',
-      char_priority = 12,
-      show_current_context = true,
-      show_current_context_start = true,
-      show_current_context_start_on_current_line = false,
-      show_first_indent_level = true,
-      -- stylua: ignore
-      filetype_exclude = {
-        'dbout', 'neo-tree-popup', 'log', 'gitcommit',
-        'txt', 'help', 'NvimTree', 'git', 'flutterToolsOutline',
-        'undotree', 'markdown', 'norg', 'org', 'orgagenda',
-        '', -- for all buffers without a file type
+      scope = {
+        enabled = true,
+        char = '▎',
       },
+      -- stylua: ignore
+      exclude = {
+        filetypes = {
+          'dbout', 'neo-tree-popup', 'log', 'gitcommit',
+          'txt', 'help', 'NvimTree', 'git', 'flutterToolsOutline',
+          'undotree', 'markdown', 'norg', 'org', 'orgagenda',
+          '', -- for all buffers without a file type
+        }
+      }
     },
   },
   {
