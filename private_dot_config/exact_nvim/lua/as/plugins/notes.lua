@@ -1,15 +1,13 @@
 local mein_wissen_path = os.getenv('MEIN_WISSEN_PATH')
-if mein_wissen_path == nil or mein_wissen_path == '' then
-  return {}
-end
+if mein_wissen_path == nil or mein_wissen_path == '' then return {} end
 
-local fmt, fn, ui = string.format, vim.fn, vim.ui
+local fmt, ui = string.format, vim.ui
 local highlight, border = as.highlight, as.ui.current.border
 local function sync(path) return fmt('%s/notes/%s', mein_wissen_path, path) end
 
 return {
   {
-    'vhyrro/neorg',
+    'nvim-neorg/neorg',
     ft = 'norg',
     version = '*',
     build = ':Neorg sync-parsers',
@@ -23,7 +21,6 @@ return {
           config = {
             workspaces = {
               notes = sync('neorg/notes/'),
-              dotfiles = fn.expand('$DOTFILES/neorg/'),
             },
           },
         },
@@ -44,7 +41,10 @@ return {
       ui = {
         menu = {
           handler = function(data)
-            local items = vim.tbl_filter(function(i) return i.key and i.label:lower() ~= 'quit' end, data.items)
+            local items = vim.tbl_filter(
+              function(i) return i.key and i.label:lower() ~= 'quit' end,
+              data.items
+            )
             ui.select(items, {
               prompt = fmt(' %s ', data.prompt),
               kind = 'orgmode',
@@ -98,6 +98,7 @@ return {
   },
   {
     'renerocksai/telekasten.nvim',
+    cmd = 'Telekasten',
     dependencies = {
       'nvim-telescope/telescope.nvim',
       'nvim-telescope/telescope-symbols.nvim',

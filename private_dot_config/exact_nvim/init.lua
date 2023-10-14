@@ -15,10 +15,10 @@ if vim.loader then vim.loader.enable() end
 g.os = loop.os_uname().sysname
 g.open_command = g.os == 'Darwin' and 'open' or 'xdg-open'
 
-g.dotfiles = env.DOTFILES or fn.expand('~/.dotfiles')
-g.vim_dir = g.dotfiles .. '/.config/nvim'
-g.projects_dir = env.PROJECTS_DIR or fn.expand('~/projects')
-g.work_dir = g.projects_dir .. '/work'
+g.dotfiles = env.DOTFILES_DIR
+g.vim_dir = fn.expand('~/.config/nvim')
+g.projects_dir = env.DEV_WORKSPACE_ROOT
+g.mein_wissen_path = env.MEIN_WISSEN_PATH
 ----------------------------------------------------------------------------------------------------
 -- Leader bindings
 ----------------------------------------------------------------------------------------------------

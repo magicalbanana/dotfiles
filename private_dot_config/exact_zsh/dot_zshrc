@@ -228,6 +228,11 @@ else
   source "/${HOME}/.config/fzf/fzf-zsh-plugin/fzf-zsh-plugin.plugin.zsh"
 fi
 
+if command_exists chezmoi; then
+  chemzoi_source_path=$(chezmoi source-path)
+  export DOTFILES_DIR="$chemzoi_source_path"
+fi
+
 source-env() {
   if [ $# -eq 0 ]; then
     echo "${usage}"

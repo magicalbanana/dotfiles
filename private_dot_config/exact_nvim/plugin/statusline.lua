@@ -285,8 +285,9 @@ end
 ---Only append the path separator if the path is not empty
 ---@param path string
 ---@return string
-local function with_sep(path) return (not falsy(path) and path:sub(-1) ~= sep) and path .. sep or path end
-local SYNC_DIR = fn.resolve(vim.env.SYNC_DIR)
+local function with_sep(path)
+  return (not falsy(path) and path:sub(-1) ~= sep) and path .. sep or path
+end
 
 --- Replace the directory path with an identifier if it matches a commonly visited
 --- directory of mine such as my projects directory or my work directory
@@ -299,12 +300,10 @@ local SYNC_DIR = fn.resolve(vim.env.SYNC_DIR)
 local function dir_env(directory)
   if not directory then return '', '' end
   local paths = {
-    [vim.g.dotfiles] = '$DOTFILES',
+    [vim.g.dotfiles] = '$DOTFILES_DIR',
     [vim.env.HOME] = '~',
-    [vim.g.work_dir] = '$WORK',
-    [vim.g.projects_dir] = '$PROJECTS',
+    [vim.g.projects_dir] = '$DEV_WORKSPACE_ROOT',
     [vim.env.VIMRUNTIME] = '$VIMRUNTIME',
-    [SYNC_DIR] = '$SYNC',
   }
   local result, env, prev_match = directory, '', ''
   for dir, alias in pairs(paths) do
@@ -356,7 +355,8 @@ local function stl_file(ctx, minimal)
   local directory_hl = ctx.winhl and stl_winhl.directory.hl(ctx.win)
     or (minimal and hls.directory_inactive or hls.directory)
 
-  local parent_hl = ctx.winhl and stl_winhl.parent.hl(ctx.win) or (minimal and directory_hl or hls.parent_directory)
+  local parent_hl = ctx.winhl and stl_winhl.parent.hl(ctx.win)
+    or (minimal and directory_hl or hls.parent_directory)
 
   local env_hl = ctx.winhl and stl_winhl.env.hl(ctx.win) or (minimal and directory_hl or hls.env)
 
@@ -515,7 +515,9 @@ end
 ---@return table[]
 local function stl_lsp_clients(ctx)
   local clients = vim.lsp.get_active_clients({ bufnr = ctx.bufnum })
-  if not state.lsp_clients_visible then return { { name = fmt('%d attached', #clients), priority = 7 } } end
+  if not state.lsp_clients_visible then
+    return { { name = fmt('%d attached', #clients), priority = 7 } }
+  end
   if falsy(clients) then return { { name = 'No LSP clients available', priority = 7 } } end
   table.sort(clients, function(a, b)
     if a.name == 'null-ls' then return false end
@@ -548,7 +550,9 @@ local function run_task_on_interval(interval, task)
     pending_job = task()
   end
   local fail = timer:start(0, interval, vim.schedule_wrap(callback))
-  if fail ~= 0 then vim.schedule(function() vim.notify('Failed to start git update job: ' .. fail) end) end
+  if fail ~= 0 then
+    vim.schedule(function() vim.notify('Failed to start git update job: ' .. fail) end)
+  end
 end
 
 --- Check if in a git repository
@@ -602,7 +606,9 @@ end
 
 --- @param ctx StatuslineContext
 --- @param icon string | nil
-local function is_modified(ctx, icon) return ctx.filetype == 'help' and '' or ctx.modified and (icon or '✎') or '' end
+local function is_modified(ctx, icon)
+  return ctx.filetype == 'help' and '' or ctx.modified and (icon or '✎') or ''
+end
 
 --- @param ctx StatuslineContext
 --- @param icon string | nil
@@ -697,16 +703,19 @@ function as.ui.statusline.render()
   -----------------------------------------------------------------------------//
   local flutter = vim.g.flutter_tools_decorations or {}
   local diagnostics = diagnostic_info(ctx)
-  local lsp_clients = as.map(function(client)
-    return {
-      {
-        { client.name, hls.client },
-        { space },
-        { '', hls.metadata_prefix },
-      },
-      priority = client.priority,
-    }
-  end, stl_lsp_clients(ctx))
+  local lsp_clients = as.map(
+    function(client)
+      return {
+        {
+          { client.name, hls.client },
+          { space },
+          { '', hls.metadata_prefix },
+        },
+        priority = client.priority,
+      }
+    end,
+    stl_lsp_clients(ctx)
+  )
   table.insert(lsp_clients[1][1], 1, { ' LSP(s): ', hls.metadata })
   lsp_clients[1].id = LSP_COMPONENT_ID -- the unique id of the component
   lsp_clients[1].click = 'v:lua.as.ui.statusline.lsp_client_click'
@@ -878,7 +887,9 @@ as.augroup('CustomStatusline', {
   event = 'LspAttach',
   command = function(args)
     local clients = vim.lsp.get_active_clients({ bufnr = args.buf })
-    if vim.o.columns < 200 and #clients > MAX_LSP_SERVER_COUNT then state.lsp_clients_visible = false end
+    if vim.o.columns < 200 and #clients > MAX_LSP_SERVER_COUNT then
+      state.lsp_clients_visible = false
+    end
   end,
 }, {
   event = 'User',
