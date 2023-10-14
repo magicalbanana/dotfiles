@@ -43,13 +43,13 @@ zi snippet OMZL::clipboard.zsh
 zi snippet OMZL::directories.zsh
 
 zi ice as"null"
-zi snippet PZTM::ssh
+zi snippet PZT::modules/ssh
 
 zi ice as"null"
-zi snippet PZTM::docker
+zi snippet PZT::modules/docker
 
 zi ice as"null"
-zi snippet PZTM::git
+zi snippet PZT::modules/git
 
 zi light-mode for \
   z-shell/z-a-meta-plugins @annexes @zsh-users+fast
