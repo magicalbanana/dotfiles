@@ -56,8 +56,8 @@ return {
           end,
         },
       },
-      org_agenda_files = { sync('org/**/*') },
-      org_default_notes_file = sync('org/refile.org'),
+      org_agenda_files = { sync('orgfiles/**/*') },
+      org_default_notes_file = sync('orgfiles/refile.org'),
       org_todo_keywords = { 'TODO(t)', 'WAITING', 'IN-PROGRESS', '|', 'DONE(d)', 'CANCELLED' },
       org_todo_keyword_faces = {
         ['IN-PROGRESS'] = ':foreground royalblue :weight bold',
@@ -70,11 +70,11 @@ return {
       org_agenda_templates = {
         t = { description = 'Task', template = '* TODO %?\n %u' },
         l = { description = 'Link', template = '* %?\n%a' },
-        n = { description = 'Note', template = '* %?\n', target = sync('org/notes.org') },
+        n = { description = 'Note', template = '* %?\n', target = sync('orgfiles/notes.org') },
         p = {
           description = 'Project Todo',
           template = '* TODO %? \nSCHEDULED: %t',
-          target = sync('org/projects.org'),
+          target = sync('orgfiles/projects.org'),
         },
       },
       win_border = border,
