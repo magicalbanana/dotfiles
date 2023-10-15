@@ -1,10 +1,14 @@
 ----------------------------------------------------------------------------------------------------
---       _/_/    _/    _/
---    _/    _/  _/  _/      Akin Sowemimo's dotfiles
---   _/_/_/_/  _/_/         https://github.com/akinsho
---  _/    _/  _/  _/
--- _/    _/  _/    _/
+--  _____  ___    ___      ___
+-- (\"   \|"  \  |"  \    /"  |
+-- |.\\   \    |  \   \  //   |
+-- |: \.   \\  |  /\\  \/.    |  neumachen's dotfiles
+-- |.  \    \. | |: \.        |  https://gihtub.com/neumachen/dotfiles
+-- |    \    \ | |.  \    /:  |
+--  \___|\____\) |___|\__/|___|
+--
 ----------------------------------------------------------------------------------------------------
+
 if vim.g.vscode then return end -- if someone has forced me to use vscode don't load my config
 
 local g, fn, opt, loop, env, cmd = vim.g, vim.fn, vim.opt, vim.loop, vim.env, vim.cmd

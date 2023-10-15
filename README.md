@@ -1,14 +1,10 @@
 # dotfiles
 
-This repo contains my personal configuration for my dev machines.
+This repository contains my dotfiles I use for my dev machines (personal or
+work).
 
+## NVIM config
 
-## Note
-
-- When installing python through `asdf` it oftens fails to install older
-version. Use the patch provided in asdf-python
-
-```
-# https://github.com/danhper/asdf-python#install-with---patch
-export ASDF_PYTHON_PATCH_URL="https://github.com/python/cpython/commit/8ea6353.patch?full_index=1"
-```
+It is worth noting that the my NVIM configuration is heavily inspired [akinsho's
+config](https://github.com/akinsho/dotfiles/tree/main/.config/nvim) which after
+many iterations, proved to be better than what I had before.

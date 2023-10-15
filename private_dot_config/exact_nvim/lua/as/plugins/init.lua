@@ -191,7 +191,14 @@ return {
   --------------------------------------------------------------------------------
   -- Utilities {{{1
   --------------------------------------------------------------------------------
-  { 'famiu/bufdelete.nvim', keys = { { '<leader>qq', '<Cmd>Bdelete<CR>', desc = 'buffer delete' } } },
+  {
+    'famiu/bufdelete.nvim',
+    keys = { {
+      '<leader>qq',
+      '<Cmd>Bdelete<CR>',
+      desc = 'buffer delete',
+    } },
+  },
   {
     'smoka7/multicursors.nvim',
     event = 'VeryLazy',
