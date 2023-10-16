@@ -139,11 +139,11 @@ else
   compinit -C;
 fi
 
-if command -v kubectl >/dev/null 2>&1; then
+if command_exists kubectl; then
   source <(kubectl completion zsh)
 fi
 
-if command -v helm >/dev/null 2>&1; then
+if command_exists helm; then
   source <(helm completion zsh)
 fi
 

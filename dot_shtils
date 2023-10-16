@@ -5,7 +5,7 @@ command_exists() {
 }
 
 pathmunge() {
-	if ! echo "${PATH}" | grep -Eq "(^|:)$1($|:)"; then
+	if ! echo "$PATH" | grep -Eq "(^|:)$1($|:)"; then
 		if [ "${2}" = "after" ]; then
 			PATH="${PATH}:${1}"
 		else
@@ -14,7 +14,7 @@ pathmunge() {
 	fi
 }
 
-if [ -z "${DEVBIN}" ]; then
+if [ "$DEVBIN" = "" ]; then
 	echo "DEVBIN not set, checking if DEVBIN dir exists"
 	if [ ! -d "${HOME}/.devbin" ]; then
 		echo "DEVBIN dir does not exist, custom functions will fail"
@@ -32,16 +32,16 @@ alias la='ls -la --color=auto'
 
 alias vim.='vim .'
 
-if ! command -v sudoedit >/dev/null 2>&1; then
+if ! command_exists sudoedit; then
 	alias sudoedit='sudo --edit'
 fi
 
-if command -v shfmt >/dev/null 2>&1; then
+if command_exists shfmt; then
 	alias my-shfmt="shfmt -i 2 -w -ci"
 fi
 
 # 1Password
-if command -v op >/dev/null 2>&1; then
+if command_exists op; then
 	op_signin() {
 		if ! op get account >/dev/null 2>&1; then
 			# shellcheck disable=SC2016
@@ -53,7 +53,7 @@ if command -v op >/dev/null 2>&1; then
 fi
 
 bootstrap() {
-	if ! command -v op >/dev/null 2>&1; then
+	if ! command_exists op >/dev/null 2>&1; then
 		echo-err "1Password CLI needs to be installed to run bootstrap scripts."
 		return 1
 	fi
@@ -63,10 +63,10 @@ bootstrap() {
 
 alias c='clear'
 
-if command -v brew >/dev/null 2>&1; then
-	if [ -d "${PYENV_ROOT}" ]; then
+if command_exists brew; then
+	if [ -d "$PYENV_ROOT" ]; then
 		brew() {
-			if [ -n "$VIRTUAL_ENV" ]; then
+			if [ "$VIRTUAL_ENV" != "" ]; then
 				echo-warn "Don't run brew from inside a venv. https://docs.brew.sh/Homebrew-and-Python"
 				return 1
 			fi
@@ -124,7 +124,7 @@ restart_sh() {
 		echo_run zplug reinit
 	fi
 
-	if [ -n "$(jobs)" ]; then
+	if [ "$(jobs)" != "" ]; then
 		echo-warn "Current shell has backgrounded jobs. Not restarting ${1}"
 		return 1
 	fi
@@ -135,7 +135,7 @@ restart_sh() {
 
 	echo_eval 'PATH="/usr/bin:/bin:/usr/sbin:/sbin"'
 	# shellcheck disable=SC2153
-	if [ -n "$FPATH" ]; then
+	if [ "$FPATH" != "" ]; then
 		echo_eval 'FPATH=""'
 	fi
 
@@ -156,7 +156,7 @@ new_or_switch_tmux() {
 		fi
 	fi
 
-	if [ -z "$TMUX" ]; then
+	if [ "$TMUX" = "" ]; then
 		echo_run tmux attach-session -t "$1"
 	elif [ "$(tmux display-message -p '#S')" != "$1" ]; then
 		echo_run tmux switch-client -t "$1"
@@ -170,7 +170,7 @@ alias exit='_exit'
 _exit() {
 	# NOTE: The exit calls are prefixed with a \ so that they ignore alias
 	# expansion and prevent infinite loops
-	if [ -z "$TMUX" ]; then
+	if [ "$TMUX" = "" ]; then
 		# echo 'Exit if we are not in a tmux session'
 		\exit
 	fi
@@ -199,7 +199,7 @@ novenv() {
 }
 
 save_venv() {
-	if [ -z "$VIRTUAL_ENV" ]; then
+	if [ "$VIRTUAL_ENV" = "" ]; then
 		return
 	fi
 
@@ -215,7 +215,7 @@ restore_venv() {
 		echo_run deactivate
 	fi
 
-	if [ -n "${SAVED_VENVS:-}" ]; then
+	if [ "${SAVED_VENVS:-}" != "" ]; then
 		if [ "${1:-}" != "--quiet" ]; then
 			echo "Restoring '${SAVED_VENVS%%:*}'."
 		fi
@@ -240,7 +240,7 @@ venv() {
 			;;
 		--create2)
 			shift
-			if [ -n "$VIRTUAL_ENV" ]; then
+			if [ "$VIRTUAL_ENV" != "" ]; then
 				echo_run deactivate
 			fi
 			if [ -d "${1:-.venv}" ]; then
@@ -256,7 +256,7 @@ venv() {
 			;;
 		--create | --create3)
 			shift
-			if [ -n "$VIRTUAL_ENV" ]; then
+			if [ "$VIRTUAL_ENV" != "" ]; then
 				echo_run deactivate
 			fi
 			if [ -d "${1:-.venv}" ]; then
@@ -286,7 +286,7 @@ venv() {
 
 	# If you're in a venv and you didn't specify a different one explicitly then
 	# you probably want to deactivate the current one
-	if [ -n "$VIRTUAL_ENV" ] && [ -z "$3" ]; then
+	if [ "$VIRTUAL_ENV" != "" ] && [ "$3" = "" ]; then
 		echo_run deactivate
 		return
 	fi
@@ -326,7 +326,7 @@ remove_from_front_of_path() {
 	done
 }
 
-if [ -n "$VIRTUAL_ENV" ]; then
+if [ "$VIRTUAL_ENV" != "" ]; then
 	# Allows you to `rc` (reload config, see aliases below) from inside a virtual
 	# environment without losing the virtual environment. Normally `exec` keeps
 	# all environment variables, but certain ones get overwritten during zsh
