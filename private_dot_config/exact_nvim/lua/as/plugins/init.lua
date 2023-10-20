@@ -39,10 +39,26 @@ return {
       { '<C-k>', function() require('smart-splits').move_cursor_up() end },
       { '<C-l>', function() require('smart-splits').move_cursor_right() end },
       -- swapping buffers between windows
-      { '<leader><leader>h', function() require('smart-splits').swap_buf_left() end, desc = 'swap left' },
-      { '<leader><leader>j', function() require('smart-splits').swap_buf_down() end, desc = 'swap down' },
-      { '<leader><leader>k', function() require('smart-splits').swap_buf_up() end, desc = 'swap up' },
-      { '<leader><leader>l', function() require('smart-splits').swap_buf_right() end, desc = 'swap right' },
+      {
+        '<leader><leader>h',
+        function() require('smart-splits').swap_buf_left() end,
+        desc = 'swap left',
+      },
+      {
+        '<leader><leader>j',
+        function() require('smart-splits').swap_buf_down() end,
+        desc = 'swap down',
+      },
+      {
+        '<leader><leader>k',
+        function() require('smart-splits').swap_buf_up() end,
+        desc = 'swap up',
+      },
+      {
+        '<leader><leader>l',
+        function() require('smart-splits').swap_buf_right() end,
+        desc = 'swap right',
+      },
     },
   },
   -- }}}
@@ -170,7 +186,16 @@ return {
       }
       ccc.setup({
         win_opts = { border = border },
-        pickers = { p.hex, p.css_rgb, p.css_hsl, p.css_hwb, p.css_lab, p.css_lch, p.css_oklab, p.css_oklch },
+        pickers = {
+          p.hex,
+          p.css_rgb,
+          p.css_hsl,
+          p.css_hwb,
+          p.css_lab,
+          p.css_lch,
+          p.css_oklab,
+          p.css_oklch,
+        },
         highlighter = {
           auto_enable = true,
           excludes = { 'dart', 'lazy', 'orgagenda', 'org', 'NeogitStatus', 'toggleterm' },
@@ -229,7 +254,12 @@ return {
       { 's', function() require('flash').jump() end, mode = { 'n', 'x', 'o' } },
       { 'S', function() require('flash').treesitter() end, mode = { 'o', 'x' } },
       { 'r', function() require('flash').remote() end, mode = 'o', desc = 'Remote Flash' },
-      { '<c-s>', function() require('flash').toggle() end, mode = { 'c' }, desc = 'Toggle Flash Search' },
+      {
+        '<c-s>',
+        function() require('flash').toggle() end,
+        mode = { 'c' },
+        desc = 'Toggle Flash Search',
+      },
       {
         'R',
         function() require('flash').treesitter_search() end,
@@ -370,7 +400,9 @@ return {
   {
     'kevinhwang91/nvim-bqf',
     ft = 'qf',
-    config = function() highlight.plugin('bqf', { { BqfPreviewBorder = { fg = { from = 'Comment' } } } }) end,
+    config = function()
+      highlight.plugin('bqf', { { BqfPreviewBorder = { fg = { from = 'Comment' } } } })
+    end,
   },
   -- }}}
   --------------------------------------------------------------------------------
@@ -559,7 +591,9 @@ return {
   {
     'echasnovski/mini.ai',
     event = 'VeryLazy',
-    config = function() require('mini.ai').setup({ mappings = { around_last = '', inside_last = '' } }) end,
+    config = function()
+      require('mini.ai').setup({ mappings = { around_last = '', inside_last = '' } })
+    end,
   },
   {
     'glts/vim-textobj-comment',
@@ -571,7 +605,7 @@ return {
     },
   },
   {
-    'linty-org/readline.nvim',
+    'neumachen/readline.nvim',
     keys = {
       { '<M-f>', function() require('readline').forward_word() end, mode = '!' },
       { '<M-b>', function() require('readline').backward_word() end, mode = '!' },
