@@ -41,7 +41,9 @@ return {
       },
       icons = {
         ui = { bar = { separator = ' ' .. ui.icons.misc.arrow_right .. ' ' } },
-        kinds = { symbols = vim.tbl_map(function(value) return value .. ' ' end, lspkind.symbol_map) },
+        kinds = {
+          symbols = vim.tbl_map(function(value) return value .. ' ' end, lspkind.symbol_map),
+        },
       },
       menu = {
         win_configs = {
@@ -72,20 +74,37 @@ return {
     main = "ibl",
     event = 'UIEnter',
     opts = {
-      scope = {
-        enabled = true,
-        char = '▎',
-      },
-      -- stylua: ignore
       exclude = {
+        -- stylua: ignore
         filetypes = {
           'dbout', 'neo-tree-popup', 'log', 'gitcommit',
           'txt', 'help', 'NvimTree', 'git', 'flutterToolsOutline',
           'undotree', 'markdown', 'norg', 'org', 'orgagenda',
-          '', -- for all buffers without a file type
-        }
-      }
+        },
+      },
+      indent = {
+        char = '│', -- ▏┆ ┊ 
+        tab_char = '│',
+      },
+      scope = {
+        char = '▎',
+        highlight = {
+          'RainbowDelimiterRed',
+          'RainbowDelimiterYellow',
+          'RainbowDelimiterBlue',
+          'RainbowDelimiterOrange',
+          'RainbowDelimiterGreen',
+          'RainbowDelimiterViolet',
+          'RainbowDelimiterCyan',
+        },
+      },
     },
+    config = function(_, opts)
+      require('ibl').setup(opts)
+      local hooks = require('ibl.hooks')
+      hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
+      hooks.register(hooks.type.WHITESPACE, hooks.builtin.hide_first_space_indent_level)
+    end,
   },
   {
     'stevearc/dressing.nvim',
@@ -282,7 +301,9 @@ return {
               },
               {
                 name = 'Kubernetes',
-                matcher = function(buf) return buf.name:match('kubernetes') and buf.name:match('%.yaml') end,
+                matcher = function(buf)
+                  return buf.name:match('kubernetes') and buf.name:match('%.yaml')
+                end,
               },
               {
                 name = 'SQL',
@@ -300,7 +321,9 @@ return {
                 name = 'docs',
                 icon = '',
                 matcher = function(buf)
-                  if vim.bo[buf.id].filetype == 'man' or buf.path:match('man://') then return true end
+                  if vim.bo[buf.id].filetype == 'man' or buf.path:match('man://') then
+                    return true
+                  end
                   for _, ext in ipairs({ 'md', 'txt', 'org', 'norg', 'wiki' }) do
                     if ext == fn.fnamemodify(buf.path, ':e') then return true end
                   end
