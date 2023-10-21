@@ -42,15 +42,6 @@ zi light b4b4r07/enhancd
 zi snippet OMZL::clipboard.zsh
 zi snippet OMZL::directories.zsh
 
-zi ice as"null"
-zi snippet PZT::modules/ssh
-
-zi ice as"null"
-zi snippet PZT::modules/docker
-
-zi ice as"null"
-zi snippet PZT::modules/git
-
 zi light-mode for \
   z-shell/z-a-meta-plugins @annexes @zsh-users+fast
 zi ice lucid wait as'completion' blockf has'git'
