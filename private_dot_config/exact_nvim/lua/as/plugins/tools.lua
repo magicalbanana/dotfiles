@@ -4,11 +4,12 @@ return {
     event = 'BufReadPre',
     opts = {
       formatters_by_ft = {
-        lua = { 'stylua' },
-        javascript = { 'prettier' },
-        markdown = { 'prettier' },
         go = { 'goimports', 'gofumpt' },
+        javascript = { 'prettier' },
+        lua = { 'stylua' },
+        markdown = { 'prettier' },
         pgsql = { 'sql_formatter' },
+        sh = { 'shfmt' },
         sql = { 'sql_formatter' },
       },
       format_on_save = function(buf)
@@ -35,9 +36,11 @@ return {
     end,
     config = function()
       require('lint').linters_by_ft = {
+        go = { 'golangcilint' },
         javascript = { 'eslint' },
         markdown = { 'markdownlint' },
-        go = { 'golangcilint' },
+        sh = { 'shellharden' },
+        yaml = { 'yamllint' },
       }
     end,
   },
