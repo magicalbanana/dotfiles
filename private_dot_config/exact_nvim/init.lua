@@ -21,7 +21,7 @@ g.open_command = g.os == 'Darwin' and 'open' or 'xdg-open'
 
 g.dotfiles = env.DOTFILES_DIR
 g.vim_dir = fn.expand('~/.config/nvim')
-g.projects_dir = env.DEV_WORKSPACE_ROOT
+g.dev_workspace_root = env.DEV_WORKSPACE_ROOT
 g.mein_wissen_path = env.MEIN_WISSEN_PATH
 ----------------------------------------------------------------------------------------------------
 -- Leader bindings
@@ -98,8 +98,8 @@ require('lazy').setup('as.plugins', {
     },
   },
   dev = {
-    path = g.projects_dir .. '/personal/',
-    patterns = { 'akinsho' },
+    path = g.dev_workspace_dir,
+    patterns = { 'neumachen' },
     fallback = true,
   },
 })

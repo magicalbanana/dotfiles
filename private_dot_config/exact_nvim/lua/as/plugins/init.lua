@@ -22,7 +22,7 @@ return {
     opts = {
       autoload = true,
       use_git_branch = true,
-      allowed_dirs = { vim.g.dotfiles, vim.g.projects_dir },
+      allowed_dirs = { vim.g.dotfiles, vim.g.dev_workspace_root },
       ignored_dirs = { fn.stdpath('data') },
     },
   },

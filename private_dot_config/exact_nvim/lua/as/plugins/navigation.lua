@@ -30,8 +30,15 @@ return {
             { NeoTreeRootName = { underline = true } },
             { NeoTreeStatusLine = { link = 'PanelSt' } },
             { NeoTreeTabActive = { bg = { from = 'PanelBackground' }, bold = true } },
-            { NeoTreeTabInactive = { bg = { from = 'PanelDarkBackground', alter = 0.15 }, fg = { from = 'Comment' } } },
-            { NeoTreeTabSeparatorActive = { inherit = 'PanelBackground', fg = { from = 'Comment' } } },
+            {
+              NeoTreeTabInactive = {
+                bg = { from = 'PanelDarkBackground', alter = 0.15 },
+                fg = { from = 'Comment' },
+              },
+            },
+            {
+              NeoTreeTabSeparatorActive = { inherit = 'PanelBackground', fg = { from = 'Comment' } },
+            },
             -- stylua: ignore
             { NeoTreeTabSeparatorInactive = { inherit = 'NeoTreeTabInactive', fg = { from = 'PanelDarkBackground', attr = 'bg' } } },
           },

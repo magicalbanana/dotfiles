@@ -303,10 +303,8 @@ local function dir_env(directory)
   local paths = {
     [vim.g.dotfiles] = '$DOTFILES_DIR',
     [vim.env.HOME] = '~',
-    [vim.g.work_dir] = '$WORK',
-    [vim.g.projects_dir] = '$PROJECTS',
+    [vim.g.dev_workspace_root] = '$DEV_WORKSPACE_ROOT',
     [vim.env.VIMRUNTIME] = '$VIMRUNTIME',
-    [SYNC_DIR] = '$SYNC',
   }
   local result, env, prev_match = directory, '', ''
   for dir, alias in pairs(paths) do
