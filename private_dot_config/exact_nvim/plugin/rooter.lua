@@ -41,7 +41,7 @@ local function set_root(args)
       upward = true,
     })[1]
 
-    root = fs.dirname(root_file) or get_lsp_root(args.buf, ignored)
+    root = fs.dirname(root_file) or get_lsp_root(args.buf, ignored) or {}
   end
   if not root or not path then return end
   root_cache[path] = root
