@@ -134,6 +134,13 @@ M.default_keybinds = {
       end),
     }),
   },
+  {
+    key = '9',
+    mods = 'CTRL|ALT',
+    action = act.ShowLauncherArgs({
+      flags = 'FUZZY|WORKSPACES',
+    }),
+  },
 }
 
 function M.create_keybinds() return utils.merge_lists(M.default_keybinds, M.tmux_keybinds) end
