@@ -87,8 +87,11 @@ zi snippet "$ZDOTDIR/completions/_kind"
 zi ice lucid wait as'completion' blockf has'kubectl'
 zi snippet "$ZDOTDIR/completions/_kubectl"
 
-zi has'zoxide' wait lucid for \
-  z-shell/zsh-zoxide
+if command_exists zoxide; then
+  typeset -A ZEC
+  zi wait lucid for \
+    z-shell/zsh-zoxide
+fi
 
 zi ice wait lucid
 zi load wfxr/forgit
