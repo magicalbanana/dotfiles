@@ -1,5 +1,8 @@
 return {
   {
+    "terrastruct/d2-vim",
+  },
+  {
     "jackMort/ChatGPT.nvim",
     cmd = { "ChatGPT", "ChatGPTActAs", "ChatGPTEditWithInstructions" },
     config = function()
