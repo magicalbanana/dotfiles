@@ -65,18 +65,23 @@ return {
     end,
     config = function()
       require("lint").linters_by_ft = {
+        gitcommit = { "commitlint" },
         dockerfile = { "hadolint" },
         fennel = { "fennel" },
         go = { "golangcilint" },
         javascript = { "eslint" },
         json = { "jsonlint" },
-        markdown = { "markdownlint" },
+        markdown = { "vale" },
         python = { "pylint" },
         ruby = { "rubocop" },
         sh = { "shellharden", "shellcheck" },
         sql = { "sqlformatter" },
         yaml = { "yamllint" },
       }
+      require("mason-nvim-lint").setup()
     end,
+    dependencies = {
+      "rshkarin/mason-nvim-lint",
+    },
   },
 }
