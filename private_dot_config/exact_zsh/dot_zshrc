@@ -42,8 +42,8 @@ zi light b4b4r07/enhancd
 zi snippet OMZL::clipboard.zsh
 zi snippet OMZL::directories.zsh
 
-zi light-mode for \
-  z-shell/z-a-meta-plugins @annexes @zsh-users+fast
+# zi light-mode for \
+#   z-shell/z-a-meta-plugins @annexes @zsh-users+fast
 zi ice lucid wait as'completion' blockf has'git'
 zi snippet https://github.com/git/git/blob/master/contrib/completion/git-completion.zsh
 zi ice lucid wait as"completion" blockf has"docker"
@@ -71,11 +71,11 @@ zi snippet https://raw.githubusercontent.com/ahmetb/kubectx/master/completion/_k
 zi ice lucid wait as'completion' blockf has'pandoc'
 zi light srijanshetty/zsh-pandoc-completion
 
-zi ice lucid wait as'completion'
-zi light zsh-users/zsh-completions
+# zi ice lucid wait as'completion'
+# zi light zsh-users/zsh-completions
 
-zi ice lucid wait as'completion' blockf
-zi light zchee/zsh-completions
+# zi ice lucid wait as'completion' blockf
+# zi light zchee/zsh-completions
 
 zi wait has'brew' pack atload=+"zicompinit_fast; zicdreplay" for brew-completions
 zi wait pack atload=+"zicompinit_fast; zicdreplay" for system-completions
