@@ -69,7 +69,7 @@ M.default_keybinds = {
   { key = 'q', mods = 'ALT', action = act({ CloseCurrentPane = { confirm = true } }) },
   { key = 'x', mods = 'ALT', action = act({ CloseCurrentPane = { confirm = true } }) },
   { key = 'a', mods = 'ALT', action = wezterm.action.ShowLauncher },
-  { key = ' ', mods = 'ALT|SHIFT', action = wezterm.action.TabNavigator },
+  { key = ' ', mods = 'ALT|SHIFT', action = wezterm.action.ShowTabNavigator },
   {
     key = 'r',
     mods = 'ALT',
