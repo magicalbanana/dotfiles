@@ -1,70 +1,40 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 set -e
 
 . "${HOME}/.shtils"
 
 if [ -n "$GITHUB_WORKFLOW" ]; then
-  echo-info "::group::Adding asdf plugins"
+	echo-info "::group::Adding asdf plugins"
 else
-  echo-info "adding asdf plugins"
+	echo-info "adding asdf plugins"
+fi
+
+asdf_tool_versions="${HOME}/.tool-versions"
+
+# Check if the file exists. Exit immediately if it does not.
+if [ ! -f "$asdf_tool_versions" ]; then
+	echo-err "$asdf_tool_versions not found."
+	exit 1
 fi
 
 if [ ! -d "${HOME}/.asdf" ]; then
-  git clone -b v0.11.3 --single-branch https://github.com/asdf-vm/asdf.git "${HOME}/.asdf"
+	git clone -b v0.11.3 --single-branch https://github.com/asdf-vm/asdf.git "${HOME}/.asdf"
 fi
 
 . "${HOME}/.asdf/asdf.sh"
 
-plugins_required=(
-  "elixir;https://github.com/asdf-vm/asdf-elixir.git"
-  "erlang;https://github.com/asdf-vm/asdf-erlang.git"
-  "golang;https://github.com/kennyp/asdf-golang.git"
-  "java;https://github.com/halcyon/asdf-java.git"
-  "kotlin;https://github.com/asdf-community/asdf-kotlin.git"
-  "lua;https://github.com/Stratus3D/asdf-lua.git"
-  "nodejs;https://github.com/asdf-vm/asdf-nodejs.git"
-  "python;https://github.com/danhper/asdf-python.git"
-  "ruby;https://github.com/asdf-vm/asdf-ruby.git"
-  "rust;https://github.com/code-lever/asdf-rust.git"
-)
+# File exists, proceed with reading and processing each line
+while IFS= read -r line; do
+	# Extract the first word (plugin name) from each line
+	plugin=$(echo "$line" | awk '{print $1}')
 
-plugins=(
-  "awscli;https://github.com:MetricMike/asdf-awscli.git",
-  "concourse;https://github.com/mattysweeps/asdf-concourse.git"
-  "fzf;https://github.com/kompiro/asdf-fzf.git"
-  "gcloud;https://github.com/jthegedus/asdf-gcloud"
-  "helm;https://github.com/Antiarchitect/asdf-helm.git"
-  "jq;https://github.com/lsanwick/asdf-jq.git"
-  "k3d;https://github.com/spencergilbert/asdf-k3d.git"
-  "kubectl;https://github.com/asdf-community/asdf-kubectl.git"
-  "kubespy;https://github.com/jfreeland/asdf-kubespy.git"
-  "lua-language-server;https://github.com/bellini666/asdf-lua-language-server.git"
-  "neovim;https://github.com/richin13/asdf-neovim.git"
-  "rebar;https://github.com/Stratus3D/asdf-rebar"
-  "sqlite;https://github.com/cLupus/asdf-sqlite.git"
-  "tmux;https://github.com/aphecetche/asdf-tmux.git"
-  "vim;https://github.com/tsuyoshicho/asdf-vim.git"
-)
-
-if command -v asdf >/dev/null 2>&1; then
-  for ((i = 0; i < ${#plugins_required[@]}; i++)); do
-    IFS=';' read -r plugin_name plugin_repo <<<"${plugins_required[i]}"
-    echo-run asdf plugin add ${plugin_name} ${plugin_repo} || true
-    echo-run asdf install ${plugin_name} || true
-    unset IFS
-  done
-
-  for ((i = 0; i < ${#plugins[@]}; i++)); do
-    IFS=';' read -r plugin_name plugin_repo <<<"${plugins[i]}"
-    echo-run asdf plugin add ${plugin_name} ${plugin_repo} || true
-    echo-run asdf install ${plugin_name} || true
-    unset IFS
-  done
-fi
+	# Execute the command for the extracted plugin name
+	asdf plugin add "$plugin" || true
+done <"$asdf_tool_versions"
 
 if [ -n "$GITHUB_WORKFLOW" ]; then
-  echo-info "::endgroup::"
+	echo-info "::endgroup::"
 else
-  echo-info "asdf plugins added/updated"
+	echo-info "asdf plugins added/updated"
 fi
