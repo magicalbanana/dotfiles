@@ -35,6 +35,7 @@ source "${ZI[BIN_DIR]}/zi.zsh"
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 zi ice wait"0a" lucid atload"_zsh_autosuggest_start"
 zi light zsh-users/zsh-autosuggestions
+  bindkey '^ ' autosuggest-accept
 
 zi ice wait"0b" lucid
 zi light b4b4r07/enhancd
