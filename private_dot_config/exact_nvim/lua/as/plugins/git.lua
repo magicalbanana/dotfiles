@@ -6,7 +6,9 @@ local icons = as.ui.icons.separators
 local neogit = as.reqidx('neogit')
 local gitlinker = as.reqidx('gitlinker')
 
-local function browser_open() return { action_callback = require('gitlinker.actions').open_in_browser } end
+local function browser_open()
+  return { action_callback = require('gitlinker.actions').open_in_browser }
+end
 
 return {
   {
@@ -67,7 +69,9 @@ return {
     config = function(_, opts)
       highlight.plugin('diffview', {
         { DiffAddedChar = { bg = 'NONE', fg = { from = 'diffAdded', attr = 'bg', alter = 0.3 } } },
-        { DiffChangedChar = { bg = 'NONE', fg = { from = 'diffChanged', attr = 'bg', alter = 0.3 } } },
+        {
+          DiffChangedChar = { bg = 'NONE', fg = { from = 'diffChanged', attr = 'bg', alter = 0.3 } },
+        },
         { DiffviewStatusAdded = { link = 'DiffAddedChar' } },
         { DiffviewStatusModified = { link = 'DiffChangedChar' } },
         { DiffviewStatusRenamed = { link = 'DiffChangedChar' } },
@@ -157,7 +161,12 @@ return {
         map('n', '<localleader>gw', gs.stage_buffer, { desc = 'stage entire buffer' })
         map('n', '<localleader>gre', gs.reset_buffer, { desc = 'reset entire buffer' })
         map('n', '<localleader>gbl', gs.blame_line, { desc = 'blame current line' })
-        map('n', '<leader>lm', function() gs.setqflist('all') end, { desc = 'list modified in quickfix' })
+        map(
+          'n',
+          '<leader>lm',
+          function() gs.setqflist('all') end,
+          { desc = 'list modified in quickfix' }
+        )
         bmap({ 'n', 'v' }, '<leader>hs', '<Cmd>Gitsigns stage_hunk<CR>', { desc = 'stage hunk' })
         bmap({ 'n', 'v' }, '<leader>hr', '<Cmd>Gitsigns reset_hunk<CR>', { desc = 'reset hunk' })
         bmap({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>', { desc = 'select hunk' })
