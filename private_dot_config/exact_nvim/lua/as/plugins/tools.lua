@@ -75,17 +75,7 @@ return {
         sql = { 'sqlformatter' },
         yaml = { 'yamllint' },
       }
-      require('mason-nvim-lint').setup({
-        ensure_installed = {
-          'actionlint',
-          'commitlint',
-          'eslint_d',
-          'fennel',
-          'golangci-lint',
-          'hadolint',
-          'sql-formatter',
-        },
-      })
+      require('mason-nvim-lint').setup()
     end,
     dependencies = {
       'rshkarin/mason-nvim-lint',
