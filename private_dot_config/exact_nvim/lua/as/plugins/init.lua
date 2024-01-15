@@ -77,46 +77,44 @@ return {
     },
   },
   {
-    {
-      'williamboman/mason.nvim',
-      cmd = 'Mason',
-      build = ':MasonUpdate',
-      opts = { ui = { border = border, height = 0.8 } },
-    },
-    {
-      'williamboman/mason-lspconfig.nvim',
-      event = { 'BufReadPre', 'BufNewFile' },
-      dependencies = {
-        'mason.nvim',
-        {
-          'neovim/nvim-lspconfig',
-          dependencies = {
-            {
-              'folke/neodev.nvim',
-              ft = 'lua',
-              opts = { library = { plugins = { 'nvim-dap-ui' } } },
-            },
-            {
-              'folke/neoconf.nvim',
-              cmd = { 'Neoconf' },
-              opts = { local_settings = '.nvim.json', global_settings = 'nvim.json' },
-            },
+    'williamboman/mason.nvim',
+    cmd = 'Mason',
+    build = ':MasonUpdate',
+    opts = { ui = { border = border, height = 0.8 } },
+  },
+  {
+    'williamboman/mason-lspconfig.nvim',
+    event = { 'BufReadPre', 'BufNewFile' },
+    dependencies = {
+      'mason.nvim',
+      {
+        'neovim/nvim-lspconfig',
+        dependencies = {
+          {
+            'folke/neodev.nvim',
+            ft = 'lua',
+            opts = { library = { plugins = { 'nvim-dap-ui' } } },
           },
-          config = function()
-            highlight.plugin('lspconfig', { { LspInfoBorder = { link = 'FloatBorder' } } })
-            require('lspconfig.ui.windows').default_options.border = border
-            require('lspconfig').ccls.setup(require('as.servers')('ccls'))
-          end,
+          {
+            'folke/neoconf.nvim',
+            cmd = { 'Neoconf' },
+            opts = { local_settings = '.nvim.json', global_settings = 'nvim.json' },
+          },
         },
+        config = function()
+          highlight.plugin('lspconfig', { { LspInfoBorder = { link = 'FloatBorder' } } })
+          require('lspconfig.ui.windows').default_options.border = border
+          require('lspconfig').ccls.setup(require('as.servers')('ccls'))
+        end,
       },
-      opts = {
-        automatic_installation = true,
-        handlers = {
-          function(name)
-            local config = require('as.servers')(name)
-            if config then require('lspconfig')[name].setup(config) end
-          end,
-        },
+    },
+    opts = {
+      automatic_installation = true,
+      handlers = {
+        function(name)
+          local config = require('as.servers')(name)
+          if config then require('lspconfig')[name].setup(config) end
+        end,
       },
     },
   },
