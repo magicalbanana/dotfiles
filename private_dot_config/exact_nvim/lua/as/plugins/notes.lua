@@ -135,7 +135,7 @@ return {
         filename_space_subst = '_',
         new_note_location = 'smart',
         -- file uuid type ("rand" or input for os.date such as "%Y%m%d%H%M")
-        uuid_type = '%Y%m%d%H%M%s%z',
+        uuid_type = os.time(os.date('!*t')),
         -- UUID separator
         uuid_sep = '_',
 
