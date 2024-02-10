@@ -1,4 +1,4 @@
-# [Created by task 2.6.2 3/22/2023 18:09:08]
+f [Created by task 2.6.2 3/22/2023 18:09:08]
 # Taskwarrior program configuration file.
 # For more documentation, see https://taskwarrior.org or try 'man task', 'man task-color',
 # 'man task-sync' or 'man taskrc'
@@ -15,13 +15,15 @@
 # Use the command 'task show' to see all defaults and overrides
 
 # Files
-data.location=/Users/kareem/Documents/taskwarrior
 
 # To use the default location of the XDG directories,
 # move this configuration file from ~/.taskrc to ~/.config/task/taskrc and uncomment below
 
-#data.location=~/.local/share/task
-#hooks.location=~/.config/task/hooks
+# default
+# data.location=~/.local/share/task
+
+data.location=$TASKWARRIOR_DATA
+hooks.location=~/.config/task/hooks
 
 # Color theme (uncomment one to use)
 #include light-16.theme
@@ -39,3 +41,18 @@ data.location=/Users/kareem/Documents/taskwarrior
 #include solarized-light-256.theme
 #include no-color.theme
 news.version=2.6.0
+
+color.uda.priority.H=color255
+color.uda.priority.L=color245
+color.uda.priority.M=color250
+
+uda.priority.label=Priority
+uda.priority.type=string
+uda.priority.values=0,1,2,3
+
+urgency.uda.priority.0.coefficient=6.0
+urgency.uda.priority.1.coefficient=3.9
+urgency.uda.priority.2.coefficient=1.8
+urgency.uda.priority.3.coefficient=1.0
+
+regex=on
