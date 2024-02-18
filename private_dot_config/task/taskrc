@@ -16,15 +16,15 @@ hooks.location=~/.config/task/hooks
 #include dark-yellow-green.theme
 #include dark-gray-256.theme
 #include dark-gray-blue-256.theme
-#include solarized-dark-256.theme
+include solarized-dark-256.theme
 #include solarized-light-256.theme
 #include no-color.theme
 
 news.version=2.6.0
 
-color.uda.priority.H=color255
-color.uda.priority.L=color245
-color.uda.priority.M=color250
+# color.uda.priority.0=color255
+# color.uda.priority.1=color245
+# color.uda.priority.2=color250
 
 uda.priority.label=Priority
 uda.priority.type=string
