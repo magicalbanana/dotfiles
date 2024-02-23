@@ -15,6 +15,8 @@ vim.filetype.add({
     ['.*%.conf'] = 'conf',
     ['.*%.theme'] = 'conf',
     ['.*%.gradle'] = 'groovy',
-    ['^.env%..*'] = 'bash',
+    ['^.env%..*'] = 'env',
+    ['.*%.env'] = 'env',
+    ['^env'] = 'env',
   },
 })
