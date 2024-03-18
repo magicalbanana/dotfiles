@@ -33,6 +33,7 @@ return {
         go = { 'goimports', 'gofumpt' },
         javascript = { { 'prettierd', 'prettier' } },
         lua = { 'stylua' },
+        python = { 'isort', 'black' },
         markdown = { 'prettier' },
         pgsql = { 'sql_formatter' },
         sh = { 'shfmt' },
