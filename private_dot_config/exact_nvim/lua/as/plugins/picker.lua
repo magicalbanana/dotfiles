@@ -26,8 +26,8 @@ local function git_files_cwd_aware(opts)
   -- local git_root = fzf_lua.path.git_root(opts, true)
   local git_root = fzf.path.git_root(opts)
   if not git_root then return fzf.files(opts) end
-  local relative = fzf.path.relative(vim.loop.cwd(), git_root)
-  opts.fzf_opts = { ['--query'] = git_root ~= relative and relative or nil }
+  -- local relative = fzf.path.relative(vim.loop.cwd(), git_root)
+  -- opts.fzf_opts = { ['--query'] = git_root ~= relative and relative or nil }
   return fzf.git_files(opts)
 end
 
