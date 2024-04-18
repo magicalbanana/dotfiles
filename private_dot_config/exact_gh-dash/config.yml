@@ -2,9 +2,12 @@ prSections:
   - title: My Pull Requests
     filters: is:open author:@me
   - title: Needs My Review
-    filters: is:pr is:open archived:false sort:updated-desc user:akinsho
-  - title: Neovim Issues
-    filters: is:open repo:neovim/neovim
+    filters: is:pr is:open archived:false sort:updated-desc user:neumachen
+  - title: Needs My Review
+    filters: is:open review-requested:@me
+  - title: Subscribed
+    filters: is:open -author:@me
+    limit: 10
 issuesSections:
   - title: My Open Source Projects
     filters: is:issue is:open archived:false sort:updated-desc user:akinsho
@@ -13,6 +16,12 @@ issuesSections:
   - title: Neovim Issues
     filters: is:open repo:neovim/neovim
 defaults:
+  layout:
+    pars:
+      repo:
+        grow: true
+        width: 10
+        hidden: false
   preview:
     open: true
     width: 50
@@ -20,9 +29,8 @@ defaults:
   issuesLimit: 20
   view: issues
 repoPaths:
-  neovim/neovim: $PROJECTS_DIR/contributing/neovim
-  akinsho/bufferline.nvim: $PROJECTS_DIR/personal/bufferline.nvim
-  akinsho/toggleterm.nvim: $PROJECTS_DIR/personal/bufferline.nvim
+  :owner/:repo: $DEV_WORKSPACE_ROOT/repos/github.com/:owner/:repo
+  dlvhdr/*: $DEV_WORKSPACE_ROOT/repos/github.com/neumachen/*
 keybindings:
   prs:
     - key: c
