@@ -11,7 +11,7 @@ return {
     'nvim-neorg/neorg',
     ft = 'norg',
     version = '*',
-    build = ':Neorg mein_wissen_dir-parsers',
+    dependencies = { 'luarocks.nvim' },
     opts = {
       configure_parsers = true,
       load = {
