@@ -101,13 +101,32 @@ local function setup_mappings(client, bufnr)
   local mappings = {
     { 'n', ']c', prev_diagnostic(), desc = 'go to prev diagnostic' },
     { 'n', '[c', next_diagnostic(), desc = 'go to next diagnostic' },
-    { { 'n', 'x' }, '<leader>ca', lsp.buf.code_action, desc = 'code action', capability = provider.CODEACTIONS },
-    { 'n', 'gd', lsp.buf.definition, desc = 'definition', capability = provider.DEFINITION, exclude = ts },
+    {
+      { 'n', 'x' },
+      '<leader>ca',
+      lsp.buf.code_action,
+      desc = 'code action',
+      capability = provider.CODEACTIONS,
+    },
+    {
+      'n',
+      'gd',
+      lsp.buf.definition,
+      desc = 'definition',
+      capability = provider.DEFINITION,
+      exclude = ts,
+    },
     { 'n', 'gr', lsp.buf.references, desc = 'references', capability = provider.REFERENCES },
     { 'n', 'K', lsp.buf.hover, desc = 'hover', capability = provider.HOVER },
     { 'n', 'gI', lsp.buf.incoming_calls, desc = 'incoming calls' }, -- TODO: what provider is this?
     { 'n', 'gi', lsp.buf.implementation, desc = 'implementation' }, -- TODO: what provider is this?
-    { 'n', '<leader>gd', lsp.buf.type_definition, desc = 'go to type definition', capability = provider.DEFINITION },
+    {
+      'n',
+      '<leader>gd',
+      lsp.buf.type_definition,
+      desc = 'go to type definition',
+      capability = provider.DEFINITION,
+    },
     { 'n', '<leader>cl', lsp.codelens.run, desc = 'run code lens', capability = provider.CODELENS },
     { 'n', '<leader>ri', lsp.buf.rename, desc = 'rename', capability = provider.RENAME },
     { 'n', '<leader>rm', rename_file, desc = 'rename file', capability = provider.RENAME },
