@@ -471,6 +471,11 @@ return {
     dependencies = { 'nvim-lua/plenary.nvim', 'nvim-treesitter/nvim-treesitter' },
   },
   {
+    'tadmccorkle/markdown.nvim',
+    event = 'VeryLazy',
+    ft = 'markdown',
+  },
+  {
     'iamcco/markdown-preview.nvim',
     build = function() fn['mkdp#util#install']() end,
     ft = { 'markdown' },
