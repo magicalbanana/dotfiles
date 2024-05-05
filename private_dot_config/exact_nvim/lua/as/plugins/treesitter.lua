@@ -7,8 +7,8 @@ return {
     build = ':TSUpdate',
     config = function()
       -- @see: https://github.com/nvim-orgmode/orgmode/issues/481
-      local ok, orgmode = pcall(require, 'orgmode')
-      if ok then orgmode.setup_ts_grammar() end
+      -- local ok, orgmode = pcall(require, 'orgmode')
+      -- if ok then orgmode.setup_ts_grammar() end
 
       require('nvim-treesitter.configs').setup({
         -- stylua: ignore
