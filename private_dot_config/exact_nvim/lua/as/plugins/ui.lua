@@ -221,7 +221,7 @@ return {
         open_fold_hl_timeout = 0,
         preview = { win_config = { winhighlight = 'Normal:Normal,FloatBorder:Normal' } },
         enable_get_fold_virt_text = true,
-        close_fold_kinds = { 'imports', 'comment' },
+        close_fold_kinds_for_ft = { 'imports', 'comment' },
         provider_selector = function(_, ft) return ft_map[ft] or { 'treesitter', 'indent' } end,
       })
     end,
