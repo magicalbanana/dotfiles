@@ -1,6 +1,6 @@
 local opt = vim.opt_local
 
-opt.wrap = false
+opt.wrap = true
 opt.number = false
 opt.signcolumn = 'yes'
 opt.buflisted = false
