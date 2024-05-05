@@ -15,6 +15,7 @@ local root_cache = {}
 ---@return string?
 ---@return string?
 local function get_lsp_root(buf, ignore)
+  ignore = ignore or {}
   local clients = vim.lsp.get_active_clients({ bufnr = buf })
   if not next(clients) then return end
 
@@ -24,6 +25,7 @@ local function get_lsp_root(buf, ignore)
       if not vim.tbl_contains(ignore, client.name) then
         return client.config.root_dir, client.name
       end
+      if not vim.tbl_contains(ignore, client.name) then return client.config.root_dir, client.name end
     end
   end
 end
