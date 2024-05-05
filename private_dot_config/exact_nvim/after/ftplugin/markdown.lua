@@ -1,11 +1,14 @@
 if not as then return end
 
-local opt, b, fn = vim.opt_local, vim.b, vim.fn
+-- local opt, b, fn = vim.opt_local, vim.b, vim.fn
+local opt, fn = vim.opt_local, vim.fn
 local map = map or vim.keymap.set
 
 opt.spell = true
 
 map('n', '<localleader>p', '<Plug>MarkdownPreviewToggle', { desc = 'markdown preview', buffer = 0 })
+
+-- b.formatting_disabled = not vim.startswith(fn.expand('%'), vim.env.PROJECTS_DIR .. '/personal')
 
 as.ftplugin_conf({
   cmp = function(cmp)
