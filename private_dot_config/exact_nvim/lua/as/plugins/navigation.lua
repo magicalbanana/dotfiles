@@ -4,10 +4,9 @@ local icons = as.ui.icons
 local autocmd = api.nvim_create_autocmd
 
 return {
-  { 'stevearc/oil.nvim'
-    init = function ()
-      require("oil").setup()
-    end,
+  {
+    'stevearc/oil.nvim',
+    init = function() require('oil').setup() end,
   },
   {
     'nvim-neo-tree/neo-tree.nvim',
