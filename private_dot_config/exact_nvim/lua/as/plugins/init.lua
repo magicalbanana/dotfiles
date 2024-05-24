@@ -178,7 +178,8 @@ return {
   -----------------------------------------------------------------------------//
   {
     'uga-rosa/ccc.nvim',
-    branch = 'fix/117',
+    branch = 'main',
+    lazy = true,
     ft = { 'lua', 'vim', 'typescript', 'typescriptreact', 'javascriptreact', 'svelte' },
     cmd = { 'CccHighlighterToggle' },
     opts = function()
