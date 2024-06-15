@@ -14,7 +14,7 @@ fi
 
 {{ template "script_caffeinate" . }}
 
-echo-run brew update --quiet
+echo-run brew update
 echo-run brew bundle --file "${HOME}/.Brewfile" {{ if (env "CI") }}--verbose {{ end }}--global --no-lock
 
 echo-run linuxify install
