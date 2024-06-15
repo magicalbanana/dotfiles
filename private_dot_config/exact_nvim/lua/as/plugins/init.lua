@@ -12,6 +12,7 @@ return {
     priority = 1000, -- We'd like this plugin to load first out of the rest
     config = true, -- This automatically runs `require("luarocks-nvim").setup()`
   },
+  { '3rd/image.nvim', enabled = false, ft = { 'markdown', 'neorg' }, opts = {} }, -- BUG: Cannot find the imagemagick rock
   {
     'olimorris/persisted.nvim',
     lazy = false,
@@ -44,26 +45,10 @@ return {
       { '<C-k>', function() require('smart-splits').move_cursor_up() end },
       { '<C-l>', function() require('smart-splits').move_cursor_right() end },
       -- swapping buffers between windows
-      {
-        '<leader><leader>h',
-        function() require('smart-splits').swap_buf_left() end,
-        desc = 'swap left',
-      },
-      {
-        '<leader><leader>j',
-        function() require('smart-splits').swap_buf_down() end,
-        desc = 'swap down',
-      },
-      {
-        '<leader><leader>k',
-        function() require('smart-splits').swap_buf_up() end,
-        desc = 'swap up',
-      },
-      {
-        '<leader><leader>l',
-        function() require('smart-splits').swap_buf_right() end,
-        desc = 'swap right',
-      },
+      { '<leader><leader>h', function() require('smart-splits').swap_buf_left() end, desc = 'swap left' },
+      { '<leader><leader>j', function() require('smart-splits').swap_buf_down() end, desc = 'swap down' },
+      { '<leader><leader>k', function() require('smart-splits').swap_buf_up() end, desc = 'swap up' },
+      { '<leader><leader>l', function() require('smart-splits').swap_buf_right() end, desc = 'swap right' },
     },
   },
   -- }}}
@@ -82,44 +67,46 @@ return {
     },
   },
   {
-    'williamboman/mason.nvim',
-    cmd = 'Mason',
-    build = ':MasonUpdate',
-    opts = { ui = { border = border, height = 0.8 } },
-  },
-  {
-    'williamboman/mason-lspconfig.nvim',
-    event = { 'BufReadPre', 'BufNewFile' },
-    dependencies = {
-      'mason.nvim',
-      {
-        'neovim/nvim-lspconfig',
-        dependencies = {
-          {
-            'folke/neodev.nvim',
-            ft = 'lua',
-            opts = { library = { plugins = { 'nvim-dap-ui' } } },
-          },
-          {
-            'folke/neoconf.nvim',
-            cmd = { 'Neoconf' },
-            opts = { local_settings = '.nvim.json', global_settings = 'nvim.json' },
-          },
-        },
-        config = function()
-          highlight.plugin('lspconfig', { { LspInfoBorder = { link = 'FloatBorder' } } })
-          require('lspconfig.ui.windows').default_options.border = border
-          require('lspconfig').ccls.setup(require('as.servers')('ccls'))
-        end,
-      },
+    {
+      'williamboman/mason.nvim',
+      cmd = 'Mason',
+      build = ':MasonUpdate',
+      opts = { ui = { border = border, height = 0.8 } },
     },
-    opts = {
-      automatic_installation = true,
-      handlers = {
-        function(name)
-          local config = require('as.servers')(name)
-          if config then require('lspconfig')[name].setup(config) end
-        end,
+    {
+      'williamboman/mason-lspconfig.nvim',
+      event = { 'BufReadPre', 'BufNewFile' },
+      dependencies = {
+        'mason.nvim',
+        {
+          'neovim/nvim-lspconfig',
+          dependencies = {
+            {
+              'folke/neodev.nvim',
+              ft = 'lua',
+              opts = { library = { plugins = { 'nvim-dap-ui' } } },
+            },
+            {
+              'folke/neoconf.nvim',
+              cmd = { 'Neoconf' },
+              opts = { local_settings = '.nvim.json', global_settings = 'nvim.json' },
+            },
+          },
+          config = function()
+            highlight.plugin('lspconfig', { { LspInfoBorder = { link = 'FloatBorder' } } })
+            require('lspconfig.ui.windows').default_options.border = border
+            require('lspconfig').ccls.setup(require('as.servers')('ccls'))
+          end,
+        },
+      },
+      opts = {
+        automatic_installation = true,
+        handlers = {
+          function(name)
+            local config = require('as.servers')(name)
+            if config then require('lspconfig')[name].setup(config) end
+          end,
+        },
       },
     },
   },
@@ -149,28 +136,6 @@ return {
       },
     },
   },
-  {
-    'lvimuser/lsp-inlayhints.nvim',
-    init = function()
-      as.augroup('InlayHintsSetup', {
-        event = 'LspAttach',
-        command = function(args)
-          local id = vim.tbl_get(args, 'data', 'client_id') --[[@as lsp.Client]]
-          if not id then return end
-          local client = vim.lsp.get_client_by_id(id)
-          require('lsp-inlayhints').on_attach(client, args.buf)
-        end,
-      })
-    end,
-    opts = {
-      inlay_hints = {
-        highlight = 'Comment',
-        labels_separator = ' ⏐ ',
-        parameter_hints = { prefix = '󰊕' },
-        type_hints = { prefix = '=> ', remove_colon_start = true },
-      },
-    },
-  },
   { 'simrat39/rust-tools.nvim', dependencies = { 'nvim-lspconfig' } },
   -- }}}
   -----------------------------------------------------------------------------//
@@ -178,10 +143,7 @@ return {
   -----------------------------------------------------------------------------//
   {
     'uga-rosa/ccc.nvim',
-    disable = true,
-    branch = 'main',
-    lazy = true,
-    ft = { 'lua', 'vim', 'typescript', 'typescriptreact', 'javascriptreact', 'svelte' },
+    ft = { 'vim', 'typescript', 'typescriptreact', 'javascriptreact', 'svelte' },
     cmd = { 'CccHighlighterToggle' },
     opts = function()
       local ccc = require('ccc')
@@ -209,18 +171,60 @@ return {
       as.command('TodoDots', ('TodoQuickFix cwd=%s keywords=TODO,FIXME'):format(vim.g.vim_dir))
     end,
   },
+  {
+    'Wansmer/symbol-usage.nvim',
+    event = 'LspAttach',
+    init = function()
+      highlight.plugin('SymbolUsage', {
+        { SymbolUsageRounding = { fg = { from = 'CursorLine', attr = 'bg' }, italic = true } },
+        { SymbolUsageContent = { bg = { from = 'CursorLine' }, fg = { from = 'Comment' } } },
+        { SymbolUsageRef = { fg = { from = 'Function' }, bg = { from = 'CursorLine' }, italic = true } },
+        { SymbolUsageDef = { fg = { from = 'Type' }, bg = { from = 'CursorLine' }, italic = true } },
+        { SymbolUsageImpl = { fg = { from = 'Keyword' }, bg = { from = 'CursorLine' }, italic = true } },
+      })
+    end,
+    config = {
+      text_format = function(symbol)
+        local res = {}
+        local ins = table.insert
+
+        local round_start = { '', 'SymbolUsageRounding' }
+        local round_end = { '', 'SymbolUsageRounding' }
+
+        if symbol.references then
+          local usage = symbol.references <= 1 and 'usage' or 'usages'
+          local num = symbol.references == 0 and 'no' or symbol.references
+          ins(res, round_start)
+          ins(res, { '󰌹 ', 'SymbolUsageRef' })
+          ins(res, { ('%s %s'):format(num, usage), 'SymbolUsageContent' })
+          ins(res, round_end)
+        end
+
+        if symbol.definition then
+          if #res > 0 then table.insert(res, { ' ', 'NonText' }) end
+          ins(res, round_start)
+          ins(res, { '󰳽 ', 'SymbolUsageDef' })
+          ins(res, { symbol.definition .. ' defs', 'SymbolUsageContent' })
+          ins(res, round_end)
+        end
+
+        if symbol.implementation then
+          if #res > 0 then table.insert(res, { ' ', 'NonText' }) end
+          ins(res, round_start)
+          ins(res, { '󰡱 ', 'SymbolUsageImpl' })
+          ins(res, { symbol.implementation .. ' impls', 'SymbolUsageContent' })
+          ins(res, round_end)
+        end
+
+        return res
+      end,
+    },
+  },
   -- }}}
   --------------------------------------------------------------------------------
   -- Utilities {{{1
   --------------------------------------------------------------------------------
-  {
-    'famiu/bufdelete.nvim',
-    keys = { {
-      '<leader>qq',
-      '<Cmd>Bdelete<CR>',
-      desc = 'buffer delete',
-    } },
-  },
+  { 'famiu/bufdelete.nvim', keys = { { '<leader>qq', '<Cmd>Bdelete<CR>', desc = 'buffer delete' } } },
   {
     'smoka7/multicursors.nvim',
     event = 'VeryLazy',
@@ -245,18 +249,19 @@ return {
         char = {
           keys = { 'f', 'F', 't', 'T', ';' }, -- remove "," from keys
         },
+        search = {
+          enabled = false,
+        },
+      },
+      jump = {
+        nohlsearch = true,
       },
     },
     keys = {
       { 's', function() require('flash').jump() end, mode = { 'n', 'x', 'o' } },
       { 'S', function() require('flash').treesitter() end, mode = { 'o', 'x' } },
       { 'r', function() require('flash').remote() end, mode = 'o', desc = 'Remote Flash' },
-      {
-        '<c-s>',
-        function() require('flash').toggle() end,
-        mode = { 'c' },
-        desc = 'Toggle Flash Search',
-      },
+      { '<c-s>', function() require('flash').toggle() end, mode = { 'c' }, desc = 'Toggle Flash Search' },
       {
         'R',
         function() require('flash').treesitter_search() end,
@@ -296,10 +301,11 @@ return {
     },
   },
   {
-    'chrisgrieser/nvim-origami',
-    event = 'BufReadPost',
-    keys = { { '<BS>', function() require('origami').h() end, desc = 'toggle fold' } },
+    'jghauser/fold-cycle.nvim',
     opts = {},
+    keys = {
+      { '<BS>', function() require('fold-cycle').open() end, desc = 'fold-cycle: toggle' },
+    },
   },
   { 'AndrewRadev/linediff.vim', cmd = 'Linediff' },
   {
@@ -397,9 +403,12 @@ return {
   {
     'kevinhwang91/nvim-bqf',
     ft = 'qf',
-    config = function()
-      highlight.plugin('bqf', { { BqfPreviewBorder = { fg = { from = 'Comment' } } } })
-    end,
+    config = function() highlight.plugin('bqf', { { BqfPreviewBorder = { fg = { from = 'Comment' } } } }) end,
+  },
+  {
+    'kevinhwang91/nvim-fundo',
+    requires = 'kevinhwang91/promise-async',
+    run = function() require('fundo').install() end,
   },
   -- }}}
   --------------------------------------------------------------------------------
@@ -463,11 +472,6 @@ return {
     'olexsmir/gopher.nvim',
     ft = 'go',
     dependencies = { 'nvim-lua/plenary.nvim', 'nvim-treesitter/nvim-treesitter' },
-  },
-  {
-    'tadmccorkle/markdown.nvim',
-    event = 'VeryLazy',
-    ft = 'markdown',
   },
   {
     'iamcco/markdown-preview.nvim',
@@ -583,19 +587,9 @@ return {
     end,
   },
   {
-    'numToStr/Comment.nvim',
-    keys = { 'gcc', { 'gc', mode = { 'x', 'n', 'o' } } },
-    opts = function(_, opts)
-      local ok, integration = pcall(require, 'ts_context_commentstring.integrations.comment_nvim')
-      if ok then opts.pre_hook = integration.create_pre_hook() end
-    end,
-  },
-  {
     'echasnovski/mini.ai',
     event = 'VeryLazy',
-    config = function()
-      require('mini.ai').setup({ mappings = { around_last = '', inside_last = '' } })
-    end,
+    config = function() require('mini.ai').setup({ mappings = { around_last = '', inside_last = '' } }) end,
   },
   {
     'glts/vim-textobj-comment',
@@ -607,7 +601,8 @@ return {
     },
   },
   {
-    'neumachen/readline.nvim',
+    'linty-org/readline.nvim',
+    enabled = false,
     keys = {
       { '<M-f>', function() require('readline').forward_word() end, mode = '!' },
       { '<M-b>', function() require('readline').backward_word() end, mode = '!' },

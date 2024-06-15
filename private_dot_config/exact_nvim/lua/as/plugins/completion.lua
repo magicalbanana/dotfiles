@@ -1,4 +1,4 @@
-local highlight, ui, k = as.highlight, as.ui, as.replace_termcodes
+local highlight, ui, k = as.highlight, as.ui, vim.keycode
 local api, fn = vim.api, vim.fn
 local border = ui.current.border
 
@@ -39,9 +39,7 @@ return {
 
       local function tab(fallback) -- make TAB behave like Android Studio
         if not cmp.visible() then return fallback() end
-        if not cmp.get_selected_entry() then
-          return cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
-        end
+        if not cmp.get_selected_entry() then return cmp.select_next_item({ behavior = cmp.SelectBehavior.Select }) end
         if luasnip.expand_or_jumpable() then return luasnip.expand_or_jump() end
         cmp.confirm()
       end
@@ -82,9 +80,7 @@ return {
             ellipsis_char = ellipsis,
             before = function(_, vim_item)
               local label, length = vim_item.abbr, api.nvim_strwidth(vim_item.abbr)
-              if length < MIN_MENU_WIDTH then
-                vim_item.abbr = label .. string.rep(' ', MIN_MENU_WIDTH - length)
-              end
+              if length < MIN_MENU_WIDTH then vim_item.abbr = label .. string.rep(' ', MIN_MENU_WIDTH - length) end
               return vim_item
             end,
             menu = {

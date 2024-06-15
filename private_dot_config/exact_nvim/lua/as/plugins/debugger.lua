@@ -67,27 +67,28 @@ return {
     end,
     dependencies = {
       {
-        'rcarriga/nvim-dap-ui',
-        opts = {
-          windows = { indent = 2 },
-          floating = { border = border },
-          layouts = {
-            {
-              elements = {
-                { id = 'scopes', size = 0.25 },
-                { id = 'breakpoints', size = 0.25 },
-                { id = 'stacks', size = 0.25 },
-                { id = 'watches', size = 0.25 },
+        {
+          'rcarriga/nvim-dap-ui',
+          opts = {
+            windows = { indent = 2 },
+            floating = { border = border },
+            layouts = {
+              {
+                elements = {
+                  { id = 'scopes', size = 0.25 },
+                  { id = 'breakpoints', size = 0.25 },
+                  { id = 'stacks', size = 0.25 },
+                  { id = 'watches', size = 0.25 },
+                },
+                position = 'left',
+                size = 20,
               },
-              position = 'left',
-              size = 20,
+              { elements = { { id = 'repl', size = 0.9 } }, position = 'bottom', size = 10 },
             },
-            { elements = { { id = 'repl', size = 0.9 } }, position = 'bottom', size = 10 },
           },
         },
-        dependencies = { "nvim-neotest/nvim-nio" },
+        { 'theHamsta/nvim-dap-virtual-text', opts = { all_frames = true } },
       },
-      { 'theHamsta/nvim-dap-virtual-text', opts = { all_frames = true } },
     },
   },
   {

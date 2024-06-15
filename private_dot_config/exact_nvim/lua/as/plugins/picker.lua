@@ -1,4 +1,4 @@
-local fn, env, ui, reqcall = vim.fn, vim.env, as.ui, as.reqcall
+local fn, ui, reqcall = vim.fn, as.ui, as.reqcall
 local icons, lsp_hls = ui.icons, ui.lsp.highlights
 local prompt = icons.misc.telescope .. '  '
 
@@ -16,20 +16,6 @@ local function format_title(str, icon, icon_hl)
 end
 
 local file_picker = function(cwd) fzf_lua.files({ cwd = cwd }) end
-
-local function git_files_cwd_aware(opts)
-  opts = opts or {}
-  local fzf = require('fzf-lua')
-  -- git_root() will warn us if we're not inside a git repo
-  -- so we don't have to add another warning here, if
-  -- you want to avoid the error message change it to:
-  -- local git_root = fzf_lua.path.git_root(opts, true)
-  local git_root = fzf.path.git_root(opts)
-  if not git_root then return fzf.files(opts) end
-  -- local relative = fzf.path.relative(vim.loop.cwd(), git_root)
-  -- opts.fzf_opts = { ['--query'] = git_root ~= relative and relative or nil }
-  return fzf.git_files(opts)
-end
 
 local function dropdown(opts)
   opts = opts or { winopts = {} }
@@ -72,6 +58,7 @@ local function list_sessions()
       actions = {
         ['default'] = function(selected)
           local session = vim.tbl_filter(function(s) return s.name == selected[1] end, sessions)[1]
+          local session = vim.iter(sessions):find(function(s) return s.name == selected[1] end)
           if not session then return end
           persisted.load({ session = session.file_path })
         end,
@@ -97,7 +84,7 @@ return {
     cmd = 'FzfLua',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     keys = {
-      { '<c-p>', git_files_cwd_aware, desc = 'find files' },
+      { '<c-p>', fzf_lua.git_files, desc = 'find files' },
       { '<leader>fa', '<Cmd>FzfLua<CR>', desc = 'builtins' },
       { '<leader>ff', file_picker, desc = 'find files' },
       { '<leader>fb', fzf_lua.grep_curbuf, desc = 'current buffer fuzzy find' },
@@ -118,16 +105,6 @@ return {
       { '<localleader>p', fzf_lua.registers, desc = 'Registers' },
       { '<leader>fd', function() file_picker(vim.env.DOTFILES) end, desc = 'dotfiles' },
       { '<leader>fc', function() file_picker(vim.g.vim_dir) end, desc = 'nvim config' },
-      {
-        '<leader>fO',
-        function() file_picker(env.MEIN_WISSEN_PATH .. '/notes/org') end,
-        desc = 'org files',
-      },
-      {
-        '<leader>fN',
-        function() file_picker(env.MEIN_WISSEN_PATH .. '/notes/neorg') end,
-        desc = 'norg files',
-      },
     },
     config = function()
       local lsp_kind = require('lspkind')
@@ -193,7 +170,7 @@ return {
           winopts = { title = format_title('Files', '') },
         }),
         buffers = dropdown({
-          fzf_opts = { ['--delimiter'] = "' '", ['--with-nth'] = '-1..' },
+          fzf_opts = { ['--delimiter'] = ' ', ['--with-nth'] = '-1..' },
           winopts = { title = format_title('Buffers', '󰈙') },
         }),
         keymaps = dropdown({

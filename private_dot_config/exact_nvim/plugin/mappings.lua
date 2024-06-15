@@ -1,6 +1,6 @@
 if not as or not as.mappings.enable then return end
 
-local fn, api, uv, cmd, command, fmt = vim.fn, vim.api, vim.loop, vim.cmd, as.command, string.format
+local fn, api, uv, cmd, command, fmt = vim.fn, vim.api, vim.uv, vim.cmd, as.command, string.format
 
 local recursive_map = function(mode, lhs, rhs, opts)
   opts = opts or {}
@@ -17,9 +17,6 @@ local inoremap = function(...) map('i', ...) end
 local onoremap = function(...) map('o', ...) end
 local cnoremap = function(...) map('c', ...) end
 local tnoremap = function(...) map('t', ...) end
-
--- Save key strokes (now we do not need to press shift to enter command mode).
-map({ 'n', 'x' }, ';', ':')
 
 -----------------------------------------------------------------------------//
 -- Terminal {{{
@@ -50,15 +47,9 @@ as.augroup('AddTerminalMappings', {
 -- Absolutely fantastic function from stoeffel/.dotfiles which allows you to
 -- repeat macros across a visual range
 ------------------------------------------------------------------------------
--- TODO: converting this to lua does not work for some obscure reason.
-vim.cmd([[
-  function! ExecuteMacroOverVisualRange()
-    echo "@".getcmdline()
-    execute ":'<,'>normal @".nr2char(getchar())
-  endfunction
-]])
-
-xnoremap('@', ':<C-u>call ExecuteMacroOverVisualRange()<CR>', { silent = false })
+xnoremap('@', function()
+  vim.ui.input({ prompt = 'Macro Register: ' }, function(reg) vim.cmd([['<,'>normal @]] .. reg) end)
+end, { silent = false })
 --}}}
 ------------------------------------------------------------------------------
 -- Credit: JGunn Choi ?il | inner line
@@ -100,7 +91,6 @@ nnoremap('<localleader>z', [[zMzvzz]], { desc = 'center viewport' })
 nnoremap('zO', [[zCzO]])
 
 -- TLDR: Conditionally modify character at end of line
-
 -- Description:
 -- This function takes a delimiter character and:
 --   * removes that character from the end of the line if the character at the end
@@ -305,11 +295,7 @@ vnoremap('$', 'g_')
 -- NOTE: this is a recursive mapping so anything bound (by a plugin) to <esc> still works
 imap('jk', [[col('.') == 1 ? '<esc>' : '<esc>l']], { expr = true })
 -- Toggle top/center/bottom
-nmap(
-  'zz',
-  [[(winline() == (winheight (0) + 1)/ 2) ?  'zt' : (winline() == 1)? 'zb' : 'zz']],
-  { expr = true }
-)
+nmap('zz', [[(winline() == (winheight (0) + 1)/ 2) ?  'zt' : (winline() == 1)? 'zb' : 'zz']], { expr = true })
 
 -----------------------------------------------------------------------------//
 -- Open Common files
@@ -346,20 +332,14 @@ nnoremap('cN', '*``cgN')
 -- 2. Hit cq to start recording the macro.
 -- 3. Once you are done with the macro, go back to normal mode.
 -- 4. Hit Enter to repeat the macro over search matches.
-function as.mappings.setup_map()
-  nnoremap('M', [[:nnoremap M n@z<CR>q:<C-u>let @z=strpart(@z,0,strlen(@z)-1)<CR>n@z]])
-end
+function as.mappings.setup_map() nnoremap('M', [[:nnoremap M n@z<CR>q:<C-u>let @z=strpart(@z,0,strlen(@z)-1)<CR>n@z]]) end
 
-vim.g.mc = as.replace_termcodes([[y/\V<C-r>=escape(@", '/')<CR><CR>]])
+vim.g.mc = vim.keycode([[y/\V<C-r>=escape(@", '/')<CR><CR>]])
 xnoremap('cn', [[g:mc . "``cgn"]], { expr = true, silent = true })
 xnoremap('cN', [[g:mc . "``cgN"]], { expr = true, silent = true })
 nnoremap('cq', [[:\<C-u>call v:lua.as.mappings.setup_map()<CR>*``qz]])
 nnoremap('cQ', [[:\<C-u>call v:lua.as.mappings.setup_map()<CR>#``qz]])
-xnoremap(
-  'cq',
-  [[":\<C-u>call v:lua.as.mappings.setup_map()<CR>gv" . g:mc . "``qz"]],
-  { expr = true }
-)
+xnoremap('cq', [[":\<C-u>call v:lua.as.mappings.setup_map()<CR>gv" . g:mc . "``qz"]], { expr = true })
 xnoremap(
   'cQ',
   [[":\<C-u>call v:lua.as.mappings.setup_map()<CR>gv" . substitute(g:mc, '/', '?', 'g') . "``qz"]],
@@ -395,25 +375,6 @@ end, { expr = true, desc = 'grep operator' })
 xnoremap('<leader>g', ':call v:lua.as.mappings.grep_operator(visualmode())<CR>')
 -----------------------------------------------------------------------------//
 
-local function open(path)
-  fn.jobstart({ vim.g.open_command, path }, { detach = true })
-  vim.notify(fmt('Opening %s', path))
-end
------------------------------------------------------------------------------//
--- GX - replicate netrw functionality
------------------------------------------------------------------------------//
-nnoremap('gx', function()
-  local file = fn.expand('<cfile>')
-  if not file or fn.isdirectory(file) > 0 then return vim.cmd.edit(file) end
-
-  if file:match('http[s]?://') then return open(file) end
-
-  -- consider anything that looks like string/string a github link
-  local link = file:match('[%a%d%-%.%_]*%/[%a%d%-%.%_]*')
-  if link then return open(fmt('https://www.github.com/%s', link)) end
-end)
------------------------------------------------------------------------------//
-
 nnoremap('gf', '<Cmd>e <cfile><CR>')
 
 -----------------------------------------------------------------------------//
@@ -428,10 +389,7 @@ inoremap('<s-tab>', [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]], { expr = true })
 -----------------------------------------------------------------------------//
 -- Commands
 -----------------------------------------------------------------------------//
-command(
-  'ToggleBackground',
-  function() vim.o.background = vim.o.background == 'dark' and 'light' or 'dark' end
-)
+command('ToggleBackground', function() vim.o.background = vim.o.background == 'dark' and 'light' or 'dark' end)
 nnoremap('<leader>Ow', function()
   vim.wo.wrap = not vim.wo.wrap
   vim.notify('wrap ' .. (vim.o.wrap and 'on' or 'off'))
@@ -482,29 +440,6 @@ command('ClearRegisters', function()
     fn.setreg(r, {})
   end
 end)
-
-local function listKeyMaps()
-  local old_reg = vim.fn.getreg('a') -- save the current content of register a
-  local old_reg_type = vim.fn.getregtype('a') -- save the type of the register as well
-
-  -- Execute vim commands
-  vim.cmd([[
-    redir @a                           " redirect output to register a
-    silent map | call feedkeys("\<CR>") " Get the list of all mappings
-    redir END                          " end output redirection
-    vnew                               " new buffer in vertical window
-  ]])
-
-  vim.api.nvim_put({ old_reg }, 'b', true, false) -- put content of register
-
-  -- Execute vim commands
-  vim.cmd('%!sort -k1.4,1.4') -- Sort the list
-
-  -- Execute vim function: restoring register 'a'
-  vim.api.nvim_call_function('setreg', { 'a', old_reg, old_reg_type })
-end
-
-command('ListKeyMaps', function() listKeyMaps() end)
 
 -----------------------------------------------------------------------------//
 -- References

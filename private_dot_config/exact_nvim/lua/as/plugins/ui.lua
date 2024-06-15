@@ -15,44 +15,42 @@ return {
       },
     },
   },
-  -- {
-  --   'Bekaboo/dropbar.nvim',
-  --   event = 'VeryLazy',
-  --   keys = { { '<leader>wp', function() require('dropbar.api').pick() end, desc = 'winbar: pick' } },
-  --   init = function()
-  --     highlight.plugin('DropBar', {
-  --       { DropBarIconUISeparator = { link = 'Delimiter' } },
-  --       { DropBarMenuNormalFloat = { inherit = 'Pmenu' } },
-  --     })
-  --   end,
-  --   config = {
-  --     general = {
-  --       update_interval = 100,
-  --       enable = function(buf, win)
-  --         local b, w = vim.bo[buf], vim.wo[win]
-  --         local decor = ui.decorations.get({ ft = b.ft, bt = b.bt, setting = 'winbar' })
-  --         return decor.ft ~= false
-  --           and decor.bt ~= false
-  --           and b.bt == ''
-  --           and not w.diff
-  --           and not api.nvim_win_get_config(win).zindex
-  --           and api.nvim_buf_get_name(buf) ~= ''
-  --       end,
-  --     },
-  --     icons = {
-  --       ui = { bar = { separator = ' ' .. ui.icons.misc.arrow_right .. ' ' } },
-  --       kinds = {
-  --         symbols = vim.tbl_map(function(value) return value .. ' ' end, lspkind.symbol_map),
-  --       },
-  --     },
-  --     menu = {
-  --       win_configs = {
-  --         border = 'shadow',
-  --         col = function(menu) return menu.prev_menu and menu.prev_menu._win_configs.width + 1 or 0 end,
-  --       },
-  --     },
-  --   },
-  -- },
+  {
+    'Bekaboo/dropbar.nvim',
+    event = 'VeryLazy',
+    keys = { { '<leader>wp', function() require('dropbar.api').pick() end, desc = 'winbar: pick' } },
+    init = function()
+      highlight.plugin('DropBar', {
+        { DropBarIconUISeparator = { link = 'Delimiter' } },
+        { DropBarMenuNormalFloat = { inherit = 'Pmenu' } },
+      })
+    end,
+    config = {
+      general = {
+        update_interval = 100,
+        enable = function(buf, win)
+          local b, w = vim.bo[buf], vim.wo[win]
+          local decor = ui.decorations.get({ ft = b.ft, bt = b.bt, setting = 'winbar' })
+          return decor.ft ~= false
+            and decor.bt ~= false
+            and b.bt == ''
+            and not w.diff
+            and not api.nvim_win_get_config(win).zindex
+            and api.nvim_buf_get_name(buf) ~= ''
+        end,
+      },
+      icons = {
+        ui = { bar = { separator = ' ' .. ui.icons.misc.arrow_right .. ' ' } },
+        kinds = { symbols = vim.tbl_map(function(value) return value .. ' ' end, lspkind.symbol_map) },
+      },
+      menu = {
+        win_configs = {
+          border = 'shadow',
+          col = function(menu) return menu.prev_menu and menu.prev_menu._win_configs.width + 1 or 0 end,
+        },
+      },
+    },
+  },
   {
     'lukas-reineke/virt-column.nvim',
     event = 'VimEnter',
@@ -71,7 +69,7 @@ return {
   },
   {
     'lukas-reineke/indent-blankline.nvim',
-    main = "ibl",
+    main = 'ibl',
     event = 'UIEnter',
     opts = {
       exclude = {
@@ -207,26 +205,6 @@ return {
     end,
   },
   {
-    'kevinhwang91/nvim-ufo',
-    event = 'VeryLazy',
-    dependencies = { 'kevinhwang91/promise-async' },
-    keys = {
-      { 'zR', function() require('ufo').openAllFolds() end, 'open all folds' },
-      { 'zM', function() require('ufo').closeAllFolds() end, 'close all folds' },
-      { 'zP', function() require('ufo').peekFoldedLinesUnderCursor() end, 'preview fold' },
-    },
-    opts = function()
-      local ft_map = { rust = 'lsp' }
-      require('ufo').setup({
-        open_fold_hl_timeout = 0,
-        preview = { win_config = { winhighlight = 'Normal:Normal,FloatBorder:Normal' } },
-        enable_get_fold_virt_text = true,
-        close_fold_kinds_for_ft = { 'imports', 'comment' },
-        provider_selector = function(_, ft) return ft_map[ft] or { 'treesitter', 'indent' } end,
-      })
-    end,
-  },
-  {
     'akinsho/bufferline.nvim',
     dev = true,
     event = 'UIEnter',
@@ -301,9 +279,7 @@ return {
               },
               {
                 name = 'Kubernetes',
-                matcher = function(buf)
-                  return buf.name:match('kubernetes') and buf.name:match('%.yaml')
-                end,
+                matcher = function(buf) return buf.name:match('kubernetes') and buf.name:match('%.yaml') end,
               },
               {
                 name = 'SQL',
@@ -321,9 +297,7 @@ return {
                 name = 'docs',
                 icon = '',
                 matcher = function(buf)
-                  if vim.bo[buf.id].filetype == 'man' or buf.path:match('man://') then
-                    return true
-                  end
+                  if vim.bo[buf.id].filetype == 'man' or buf.path:match('man://') then return true end
                   for _, ext in ipairs({ 'md', 'txt', 'org', 'norg', 'wiki' }) do
                     if ext == fn.fnamemodify(buf.path, ':e') then return true end
                   end

@@ -3,31 +3,11 @@ return {
     'gbprod/substitute.nvim',
     config = true,
     keys = {
-      {
-        'S',
-        function() require('substitute').visual() end,
-        mode = 'x',
-      },
-      {
-        'S',
-        function() require('substitute').operator() end,
-        mode = 'n',
-      },
-      {
-        'X',
-        function() require('substitute.exchange').operator() end,
-        mode = 'n',
-      },
-      {
-        'X',
-        function() require('substitute.exchange').visual() end,
-        mode = 'x',
-      },
-      {
-        'Xc',
-        function() require('substitute.exchange').cancel() end,
-        mode = { 'n', 'x' },
-      },
+      { 'S', function() require('substitute').visual() end, mode = 'x' },
+      { 'S', function() require('substitute').operator() end, mode = 'n' },
+      { 'X', function() require('substitute.exchange').operator() end, mode = 'n' },
+      { 'X', function() require('substitute.exchange').visual() end, mode = 'x' },
+      { 'Xc', function() require('substitute.exchange').cancel() end, mode = { 'n', 'x' } },
     },
   },
   {
@@ -93,5 +73,28 @@ return {
         },
       })
     end,
+  },
+  {
+    'jackMort/ChatGPT.nvim',
+    cmd = { 'ChatGPT', 'ChatGPTActAs', 'ChatGPTEditWithInstructions' },
+    config = function()
+      local border = { style = as.ui.border.rectangle, highlight = 'PickerBorder' }
+      require('chatgpt').setup({
+        popup_window = { border = border },
+        popup_input = { border = border, submit = '<C-s>' },
+        settings_window = { border = border },
+        chat = {
+          keymaps = {
+            close = {
+              '<C-c>',--[[ , '<Esc>' ]]
+            },
+          },
+        },
+      })
+    end,
+    dependencies = {
+      'MunifTanjim/nui.nvim',
+      'nvim-lua/plenary.nvim',
+    },
   },
 }

@@ -27,7 +27,7 @@ return {
   },
   {
     'stevearc/conform.nvim',
-    event = 'BufWritePre',
+    event = 'BufReadPre',
     opts = {
       formatters_by_ft = {
         go = { 'goimports', 'gofumpt' },
@@ -54,48 +54,19 @@ return {
     end,
   },
   {
-    'rshkarin/mason-nvim-lint',
-    dependencies = {
-      'mason.nvim',
-      'mason-lspconfig.nvim',
-      dependencies = {
-        'mfussenegger/nvim-lint',
-        event = 'BufWritePre',
-        init = function()
-          vim.api.nvim_create_autocmd({ 'TextChanged' }, {
-            callback = function() require('lint').try_lint() end,
-          })
-        end,
-        config = function()
-          require('lint').linters_by_ft = {
-            gitcommit = { 'commitlint' },
-            dockerfile = { 'hadolint' },
-            fennel = { 'fennel' },
-            go = { 'golangcilint' },
-            javascript = { 'eslint' },
-            json = { 'jsonlint' },
-            markdown = { 'vale' },
-            python = { 'pylint' },
-            ruby = { 'rubocop' },
-            sh = { 'shellharden', 'shellcheck' },
-            sql = { 'sqlformatter' },
-            yaml = { 'yamllint' },
-          }
-          require('mason-nvim-lint').setup({
-            ensure_installed = {
-              'actionlint',
-              'commitlint',
-              'eslint_d',
-              'fennel',
-              'golangci-lint',
-              'hadolint',
-              'shellcheck',
-              'shellharden',
-              'sql-formatter',
-            },
-          })
-        end,
-      },
-    },
+    'mfussenegger/nvim-lint',
+    event = 'BufReadPre',
+    init = function()
+      vim.api.nvim_create_autocmd({ 'TextChanged' }, {
+        callback = function() require('lint').try_lint() end,
+      })
+    end,
+    config = function()
+      require('lint').linters_by_ft = {
+        javascript = { 'eslint' },
+        markdown = { 'markdownlint' },
+        go = { 'golangcilint' },
+      }
+    end,
   },
 }

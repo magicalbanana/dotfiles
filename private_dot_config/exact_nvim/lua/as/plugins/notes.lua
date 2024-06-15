@@ -1,8 +1,7 @@
-if not as then return end
 local mein_wissen_path = vim.g.mein_wissen_path
 if as.falsy(mein_wissen_path) then return {} end
 
-local fmt, ui = string.format, vim.ui
+local fmt, fn, ui = string.format, vim.fn, vim.ui
 local highlight, border = as.highlight, as.ui.current.border
 local function mein_wissen_dir(path) return fmt('%s/%s', mein_wissen_path, path) end
 
@@ -12,12 +11,14 @@ return {
     ft = 'norg',
     version = '*',
     dependencies = { 'luarocks.nvim' },
+    build = ':Neorg sync-parsers',
     opts = {
       configure_parsers = true,
       load = {
         ['core.defaults'] = {},
         ['core.completion'] = { config = { engine = 'nvim-cmp' } },
         ['core.concealer'] = {},
+        ['core.export'] = {},
         ['core.dirman'] = {
           config = {
             workspaces = {

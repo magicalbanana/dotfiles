@@ -171,7 +171,7 @@ end
 ---@param hls {[string]: HLArgs}[]
 ---@param namespace integer?
 local function all(hls, namespace)
-  as.foreach(function(hl) set(namespace or 0, next(hl)) end, hls)
+  vim.iter(hls):each(function(hl) set(namespace or 0, next(hl)) end)
 end
 
 --- Set window local highlights
@@ -211,13 +211,11 @@ local function plugin(name, opts)
     opts = add_theme_overrides(opts.theme)
     if not next(opts) then return end
   end
-  all(opts)
-  -- capitalise the name for autocommand convention sake
+  vim.schedule(function() all(opts) end)
   augroup(fmt('%sHighlightOverrides', name:gsub('^%l', string.upper)), {
     event = 'ColorScheme',
     command = function()
-      -- Defer resetting these highlights to ensure they apply after other overrides
-      vim.defer_fn(function() all(opts) end, 1)
+      vim.schedule(function() all(opts) end)
     end,
   })
 end
