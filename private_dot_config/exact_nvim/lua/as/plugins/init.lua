@@ -178,6 +178,7 @@ return {
   -----------------------------------------------------------------------------//
   {
     'uga-rosa/ccc.nvim',
+    disable = true,
     branch = 'main',
     lazy = true,
     ft = { 'lua', 'vim', 'typescript', 'typescriptreact', 'javascriptreact', 'svelte' },
