@@ -3,27 +3,35 @@ return {
     'terrastruct/d2-vim',
   },
   {
-    'jackMort/ChatGPT.nvim',
-    cmd = { 'ChatGPT', 'ChatGPTActAs', 'ChatGPTEditWithInstructions' },
-    config = function()
-      local border = { style = as.ui.border.rectangle, highlight = 'PickerBorder' }
-      require('chatgpt').setup({
-        popup_window = { border = border },
-        popup_input = { border = border, submit = '<C-s>' },
-        settings_window = { border = border },
-        chat = {
-          keymaps = {
-            close = {
-              '<C-c>',--[[ , '<Esc>' ]]
-            },
-          },
-        },
-      })
-    end,
+    'frankroeder/parrot.nvim',
+    tag = "v0.3.1",
     dependencies = {
-      'MunifTanjim/nui.nvim',
-      'nvim-lua/plenary.nvim',
+      'ibhagwan/fzf-lua',
+      'nvim-lua/plenary.nvim'
     },
+    config = function()
+      require("parrot").setup {
+        providers = {
+          openai = {
+            api_key = os.getenv 'PARROT_NVIM_OPENAI_API_KEY',
+          },
+          anthropic = {
+            api_key = os.getenv 'PARROT_NVIM_ANTHROPIC_API_KEY',
+          },
+          -- pplx = {
+          --   api_key = os.getenv "PERPLEXITY_API_KEY",
+          --   -- OPTIONAL
+          --   -- gpg command
+          --   -- api_key = { "gpg", "--decrypt", vim.fn.expand("$HOME") .. "/pplx_api_key.txt.gpg"  },
+          --   -- macOS security tool
+          --   -- api_key = { "/usr/bin/security", "find-generic-password", "-s pplx-api-key", "-w" },
+          -- },
+          -- mistral = {
+          --   api_key = os.getenv "MISTRAL_API_KEY",
+          -- },
+        },
+      }
+    end,
   },
   {
     'stevearc/conform.nvim',
