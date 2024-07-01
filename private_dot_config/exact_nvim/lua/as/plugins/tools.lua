@@ -1,14 +1,16 @@
+local parrot_cmd_prefix = "Prt"
 return {
   {
     'terrastruct/d2-vim',
   },
   {
     'frankroeder/parrot.nvim',
-    tag = "v0.3.1",
+    event = "VeryLazy",
     dependencies = {
       'ibhagwan/fzf-lua',
       'nvim-lua/plenary.nvim'
     },
+    cond = os.getenv "PARROT_NVIM_OPENAI_API_KEY" ~= nil or os.getenv "PARROT_NVIM_ANTHROPIC_API_KEY" ~= nil,
     config = function()
       require("parrot").setup {
         providers = {
@@ -18,18 +20,8 @@ return {
           anthropic = {
             api_key = os.getenv 'PARROT_NVIM_ANTHROPIC_API_KEY',
           },
-          -- pplx = {
-          --   api_key = os.getenv "PERPLEXITY_API_KEY",
-          --   -- OPTIONAL
-          --   -- gpg command
-          --   -- api_key = { "gpg", "--decrypt", vim.fn.expand("$HOME") .. "/pplx_api_key.txt.gpg"  },
-          --   -- macOS security tool
-          --   -- api_key = { "/usr/bin/security", "find-generic-password", "-s pplx-api-key", "-w" },
-          -- },
-          -- mistral = {
-          --   api_key = os.getenv "MISTRAL_API_KEY",
-          -- },
         },
+        cmd_prefx = parrot_cmd_prefix,
       }
     end,
   },
