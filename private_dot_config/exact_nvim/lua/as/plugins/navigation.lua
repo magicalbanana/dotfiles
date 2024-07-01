@@ -6,7 +6,20 @@ local autocmd = api.nvim_create_autocmd
 return {
   {
     'stevearc/oil.nvim',
-    init = function() require('oil').setup() end,
+    init = function()
+      require('oil').setup({
+        columns = {
+          'icon',
+          'permissions',
+          'size',
+          'mtime',
+        },
+      })
+    end,
+    delete_to_trash = true,
+    keys = {
+      { '-', '<Cmd>Oil<CR>', mode = 'n', desc = 'Open Oil parent directory' },
+    },
   },
   {
     'nvim-neo-tree/neo-tree.nvim',
@@ -34,8 +47,15 @@ return {
             { NeoTreeRootName = { underline = true } },
             { NeoTreeStatusLine = { link = 'PanelSt' } },
             { NeoTreeTabActive = { bg = { from = 'PanelBackground' }, bold = true } },
-            { NeoTreeTabInactive = { bg = { from = 'PanelDarkBackground', alter = 0.15 }, fg = { from = 'Comment' } } },
-            { NeoTreeTabSeparatorActive = { inherit = 'PanelBackground', fg = { from = 'Comment' } } },
+            {
+              NeoTreeTabInactive = {
+                bg = { from = 'PanelDarkBackground', alter = 0.15 },
+                fg = { from = 'Comment' },
+              },
+            },
+            {
+              NeoTreeTabSeparatorActive = { inherit = 'PanelBackground', fg = { from = 'Comment' } },
+            },
             -- stylua: ignore
             { NeoTreeTabSeparatorInactive = { inherit = 'NeoTreeTabInactive', fg = { from = 'PanelDarkBackground', attr = 'bg' } } },
           },
