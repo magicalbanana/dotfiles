@@ -51,8 +51,6 @@ zi ice lucid wait as"completion" blockf has"docker"
 zi snippet https://raw.githubusercontent.com/docker/cli/master/contrib/completion/zsh/_docker
 zi ice lucid wait as"completion" blockf has"asdf"
 zi snippet https://raw.githubusercontent.com/asdf-vm/asdf/master/completions/_asdf
-zi ice lucid wait as"completion" blockf has"just"
-zi snippet https://raw.githubusercontent.com/casey/just/master/completions/just.zsh
 zi ice lucid wait as"completion" blockf has"fd"
 zi snippet https://raw.githubusercontent.com/sharkdp/fd/master/contrib/completion/_fd
 zi ice lucid wait as'completion' blockf has'rustc'
