@@ -72,7 +72,7 @@ local local_config = load_local_config('local')
 ---------------------------------------------------------------
 local config = {
   font = wezterm.font('Fira Code'),
-  font_size = 13.5,
+  font_size = 15.5,
   -- cell_width = 1.1,
   -- line_height = 1.1,
   -- font_rules = {
@@ -86,7 +86,7 @@ local config = {
   -- 		font = wezterm.font("Cica", { weight = "Bold", italic = true }),
   -- 	},
   -- },
-  check_for_updates = false,
+  check_for_updates = true,
   use_ime = true,
   -- ime_preedit_rendering = "System",
   use_dead_keys = false,
