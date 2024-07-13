@@ -7,12 +7,17 @@ return {
   -----------------------------------------------------------------------------//
   'nvim-lua/plenary.nvim', -- THE LIBRARY
   'nvim-tree/nvim-web-devicons',
+  'echasnovski/mini.icons',
+  -- {
+  --   'vhyrro/luarocks.nvim', -- https://vhyrro.github.io/posts/neorg-and-luarocks/#changing-the-configuration
+  --   priority = 1000, -- We'd like this plugin to load first out of the rest
+  --   config = true, -- This automatically runs `require("luarocks-nvim").setup()`
+  -- },
   {
-    'vhyrro/luarocks.nvim', -- https://vhyrro.github.io/posts/neorg-and-luarocks/#changing-the-configuration
-    priority = 1000, -- We'd like this plugin to load first out of the rest
-    config = true, -- This automatically runs `require("luarocks-nvim").setup()`
+    '3rd/image.nvim',
+    ft = { 'markdown', 'neorg' },
+    opts = {},
   },
-  { '3rd/image.nvim', enabled = false, ft = { 'markdown', 'neorg' }, opts = {} }, -- BUG: Cannot find the imagemagick rock
   {
     'olimorris/persisted.nvim',
     lazy = false,
@@ -26,7 +31,6 @@ return {
       })
     end,
     opts = {
-      autoload = true,
       use_git_branch = true,
       allowed_dirs = { vim.g.dotfiles, vim.g.dev_workspace_root },
       ignored_dirs = { fn.stdpath('data') },
@@ -45,10 +49,26 @@ return {
       { '<C-k>', function() require('smart-splits').move_cursor_up() end },
       { '<C-l>', function() require('smart-splits').move_cursor_right() end },
       -- swapping buffers between windows
-      { '<leader><leader>h', function() require('smart-splits').swap_buf_left() end, desc = 'swap left' },
-      { '<leader><leader>j', function() require('smart-splits').swap_buf_down() end, desc = 'swap down' },
-      { '<leader><leader>k', function() require('smart-splits').swap_buf_up() end, desc = 'swap up' },
-      { '<leader><leader>l', function() require('smart-splits').swap_buf_right() end, desc = 'swap right' },
+      {
+        '<leader><leader>h',
+        function() require('smart-splits').swap_buf_left() end,
+        desc = 'swap left',
+      },
+      {
+        '<leader><leader>j',
+        function() require('smart-splits').swap_buf_down() end,
+        desc = 'swap down',
+      },
+      {
+        '<leader><leader>k',
+        function() require('smart-splits').swap_buf_up() end,
+        desc = 'swap up',
+      },
+      {
+        '<leader><leader>l',
+        function() require('smart-splits').swap_buf_right() end,
+        desc = 'swap right',
+      },
     },
   },
   -- }}}
@@ -82,10 +102,17 @@ return {
           'neovim/nvim-lspconfig',
           dependencies = {
             {
-              'folke/neodev.nvim',
-              ft = 'lua',
-              opts = { library = { plugins = { 'nvim-dap-ui' } } },
+              'folke/lazydev.nvim',
+              ft = 'lua', -- only load on lua files
+              opts = {
+                library = {
+                  -- See the configuration section for more details
+                  -- Load luvit types when the `vim.uv` word is found
+                  { path = 'luvit-meta/library', words = { 'vim%.uv' } },
+                },
+              },
             },
+            { 'Bilal2453/luvit-meta', lazy = true }, -- optional `vim.uv` typings
             {
               'folke/neoconf.nvim',
               cmd = { 'Neoconf' },
@@ -109,6 +136,12 @@ return {
         },
       },
     },
+  },
+  {
+    'MysticalDevil/inlay-hints.nvim',
+    event = 'LspAttach',
+    dependencies = { 'neovim/nvim-lspconfig' },
+    config = function() require('inlay-hints').setup() end,
   },
   {
     'DNLHC/glance.nvim',
@@ -148,13 +181,18 @@ return {
     opts = function()
       local ccc = require('ccc')
       local p = ccc.picker
-      p.hex.pattern = {
-        [=[\v%(^|[^[:keyword:]])\zs#(\x\x)(\x\x)(\x\x)>]=],
-        [=[\v%(^|[^[:keyword:]])\zs#(\x\x)(\x\x)(\x\x)(\x\x)>]=],
-      }
       ccc.setup({
         win_opts = { border = border },
-        pickers = { p.hex, p.css_rgb, p.css_hsl, p.css_hwb, p.css_lab, p.css_lch, p.css_oklab, p.css_oklch },
+        pickers = {
+          p.hex_long,
+          p.css_rgb,
+          p.css_hsl,
+          p.css_hwb,
+          p.css_lab,
+          p.css_lch,
+          p.css_oklab,
+          p.css_oklch,
+        },
         highlighter = {
           auto_enable = true,
           excludes = { 'dart', 'lazy', 'orgagenda', 'org', 'NeogitStatus', 'toggleterm' },
@@ -178,12 +216,26 @@ return {
       highlight.plugin('SymbolUsage', {
         { SymbolUsageRounding = { fg = { from = 'CursorLine', attr = 'bg' }, italic = true } },
         { SymbolUsageContent = { bg = { from = 'CursorLine' }, fg = { from = 'Comment' } } },
-        { SymbolUsageRef = { fg = { from = 'Function' }, bg = { from = 'CursorLine' }, italic = true } },
-        { SymbolUsageDef = { fg = { from = 'Type' }, bg = { from = 'CursorLine' }, italic = true } },
-        { SymbolUsageImpl = { fg = { from = 'Keyword' }, bg = { from = 'CursorLine' }, italic = true } },
+        {
+          SymbolUsageRef = {
+            fg = { from = 'Function' },
+            bg = { from = 'CursorLine' },
+            italic = true,
+          },
+        },
+        {
+          SymbolUsageDef = { fg = { from = 'Type' }, bg = { from = 'CursorLine' }, italic = true },
+        },
+        {
+          SymbolUsageImpl = {
+            fg = { from = 'Keyword' },
+            bg = { from = 'CursorLine' },
+            italic = true,
+          },
+        },
       })
     end,
-    config = {
+    opts = {
       text_format = function(symbol)
         local res = {}
         local ins = table.insert
@@ -224,7 +276,10 @@ return {
   --------------------------------------------------------------------------------
   -- Utilities {{{1
   --------------------------------------------------------------------------------
-  { 'famiu/bufdelete.nvim', keys = { { '<leader>qq', '<Cmd>Bdelete<CR>', desc = 'buffer delete' } } },
+  {
+    'famiu/bufdelete.nvim',
+    keys = { { '<leader>qq', '<Cmd>Bdelete<CR>', desc = 'buffer delete' } },
+  },
   {
     'smoka7/multicursors.nvim',
     event = 'VeryLazy',
@@ -261,7 +316,12 @@ return {
       { 's', function() require('flash').jump() end, mode = { 'n', 'x', 'o' } },
       { 'S', function() require('flash').treesitter() end, mode = { 'o', 'x' } },
       { 'r', function() require('flash').remote() end, mode = 'o', desc = 'Remote Flash' },
-      { '<c-s>', function() require('flash').toggle() end, mode = { 'c' }, desc = 'Toggle Flash Search' },
+      {
+        '<c-s>',
+        function() require('flash').toggle() end,
+        mode = { 'c' },
+        desc = 'Toggle Flash Search',
+      },
       {
         'R',
         function() require('flash').treesitter_search() end,
@@ -370,7 +430,7 @@ return {
     'willothy/flatten.nvim',
     lazy = false,
     priority = 1001,
-    config = {
+    opts = {
       window = { open = 'alternate' },
       callbacks = {
         block_end = function() require('toggleterm').toggle() end,
@@ -403,7 +463,9 @@ return {
   {
     'kevinhwang91/nvim-bqf',
     ft = 'qf',
-    config = function() highlight.plugin('bqf', { { BqfPreviewBorder = { fg = { from = 'Comment' } } } }) end,
+    config = function()
+      highlight.plugin('bqf', { { BqfPreviewBorder = { fg = { from = 'Comment' } } } })
+    end,
   },
   {
     'kevinhwang91/nvim-fundo',
@@ -589,7 +651,9 @@ return {
   {
     'echasnovski/mini.ai',
     event = 'VeryLazy',
-    config = function() require('mini.ai').setup({ mappings = { around_last = '', inside_last = '' } }) end,
+    config = function()
+      require('mini.ai').setup({ mappings = { around_last = '', inside_last = '' } })
+    end,
   },
   {
     'glts/vim-textobj-comment',

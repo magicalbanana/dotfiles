@@ -81,28 +81,77 @@ end
 ---@param client vim.lsp.Client
 ---@param bufnr integer
 local function setup_mappings(client, bufnr)
-  local ts = { 'typescript', 'typescriptreact' }
   local mappings = {
-    { 'n', ']c', function() diagnostic.goto_prev({ float = true }) end, desc = 'go to prev diagnostic' },
-    { 'n', '[c', function() diagnostic.goto_next({ float = true }) end, desc = 'go to next diagnostic' },
-    { { 'n', 'x' }, '<leader>ca', lsp.buf.code_action, desc = 'code action', capability = M.textDocument_codeAction },
-    { 'n', 'gd', lsp.buf.definition, desc = 'definition', capability = M.textDocument_definition, exclude = ts },
-    { 'n', 'gr', lsp.buf.references, desc = 'references', capability = M.textDocument_references },
-    { 'n', 'gI', lsp.buf.incoming_calls, desc = 'incoming calls', capability = M.textDocument_prepareCallHierarchy },
-    { 'n', 'gi', lsp.buf.implementation, desc = 'implementation', capability = M.textDocument_implementation },
+    {
+      'n',
+      ']c',
+      function() diagnostic.goto_prev({ float = true }) end,
+      desc = 'go to prev diagnostic',
+    },
+    {
+      'n',
+      '[c',
+      function() diagnostic.goto_next({ float = true }) end,
+      desc = 'go to next diagnostic',
+    },
+    {
+      { 'n', 'x' },
+      '<leader>ca',
+      lsp.buf.code_action,
+      desc = 'code action',
+      capability = M.textDocument_codeAction,
+    },
+    {
+      'n',
+      'gd',
+      lsp.buf.definition,
+      desc = 'definition',
+      capability = M.textDocument_definition,
+      exclude = { 'typescript', 'typescriptreact' },
+    },
+    {
+      'n',
+      'gr',
+      lsp.buf.references,
+      desc = 'references',
+      capability = M.textDocument_references,
+    },
+    {
+      'n',
+      'gI',
+      lsp.buf.incoming_calls,
+      desc = 'incoming calls',
+      capability = M.textDocument_prepareCallHierarchy,
+    },
+    {
+      'n',
+      'gi',
+      lsp.buf.implementation,
+      desc = 'implementation',
+      capability = M.textDocument_implementation,
+    },
     -- stylua: ignore start
-    { 'n', '<leader>gd', lsp.buf.type_definition, desc = 'go to type definition', capability = M.textDocument_definition },
+    {
+      'n',
+      '<leader>gd',
+      lsp.buf.type_definition,
+      desc = 'go to type definition',
+      capability = M.textDocument_definition,
+    },
     -- stylua: ignore end
-    { 'n', '<leader>cl', lsp.codelens.run, desc = 'run code lens', capability = M.textDocument_codeLens },
+    {
+      'n',
+      '<leader>cl',
+      lsp.codelens.run,
+      desc = 'run code lens',
+      capability = M.textDocument_codeLens,
+    },
     {
       'n',
       '<leader>ci',
-      function()
-        local enabled = lsp.inlay_hint.is_enabled(0)
-        lsp.inlay_hint.enable(0, not enabled)
-      end,
+      '<CMD>InlayHintsToggle<CR>',
       desc = 'inlay hints toggle',
-      M.textDocument_inlayHint,
+      capability = M.textDocument_inlayHint,
     },
     { 'n', '<leader>ri', lsp.buf.rename, desc = 'rename', capability = M.textDocument_rename },
     { 'n', '<leader>rm', rename_file, desc = 'rename file', capability = M.textDocument_rename },

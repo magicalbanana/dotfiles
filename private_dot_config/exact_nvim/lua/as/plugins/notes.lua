@@ -1,17 +1,16 @@
 local mein_wissen_path = vim.g.mein_wissen_path
 if as.falsy(mein_wissen_path) then return {} end
 
-local fmt, fn, ui = string.format, vim.fn, vim.ui
-local highlight, border = as.highlight, as.ui.current.border
+local fmt = string.format
+local highlight = as.highlight
 local function mein_wissen_dir(path) return fmt('%s/%s', mein_wissen_path, path) end
 
 return {
   {
     'nvim-neorg/neorg',
     ft = 'norg',
+    config = true,
     version = '*',
-    dependencies = { 'luarocks.nvim' },
-    build = ':Neorg sync-parsers',
     opts = {
       configure_parsers = true,
       load = {

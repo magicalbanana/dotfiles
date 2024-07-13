@@ -10,15 +10,19 @@ return {
       require('oil').setup({
         columns = {
           'icon',
-          'permissions',
-          'size',
-          'mtime',
+        },
+        view_options = {
+          show_hidden = true,
         },
       })
     end,
     delete_to_trash = true,
     keys = {
       { '-', '<Cmd>Oil<CR>', mode = 'n', desc = 'Open Oil parent directory' },
+    },
+    dependencies = {
+      'nvim-tree/nvim-web-devicons',
+      'echasnovski/mini.icons',
     },
   },
   {
