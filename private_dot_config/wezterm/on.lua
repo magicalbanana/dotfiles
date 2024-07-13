@@ -150,7 +150,7 @@ end)
 -- workspace
 wezterm.on(
   'update-right-status',
-  function(window, pane) window:set_right_status(window:active_workspace()) end
+  function(window, _) window:set_right_status(window:active_workspace()) end
 )
 
 local io = require('io')
