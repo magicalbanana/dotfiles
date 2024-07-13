@@ -25,7 +25,7 @@ return {
         { DropBarMenuNormalFloat = { inherit = 'Pmenu' } },
       })
     end,
-    config = {
+    opts = {
       general = {
         update_interval = 100,
         enable = function(buf, win)
@@ -41,7 +41,9 @@ return {
       },
       icons = {
         ui = { bar = { separator = ' ' .. ui.icons.misc.arrow_right .. ' ' } },
-        kinds = { symbols = vim.tbl_map(function(value) return value .. ' ' end, lspkind.symbol_map) },
+        kinds = {
+          symbols = vim.tbl_map(function(value) return value .. ' ' end, lspkind.symbol_map),
+        },
       },
       menu = {
         win_configs = {
@@ -279,7 +281,9 @@ return {
               },
               {
                 name = 'Kubernetes',
-                matcher = function(buf) return buf.name:match('kubernetes') and buf.name:match('%.yaml') end,
+                matcher = function(buf)
+                  return buf.name:match('kubernetes') and buf.name:match('%.yaml')
+                end,
               },
               {
                 name = 'SQL',
@@ -297,7 +301,9 @@ return {
                 name = 'docs',
                 icon = '',
                 matcher = function(buf)
-                  if vim.bo[buf.id].filetype == 'man' or buf.path:match('man://') then return true end
+                  if vim.bo[buf.id].filetype == 'man' or buf.path:match('man://') then
+                    return true
+                  end
                   for _, ext in ipairs({ 'md', 'txt', 'org', 'norg', 'wiki' }) do
                     if ext == fn.fnamemodify(buf.path, ':e') then return true end
                   end
