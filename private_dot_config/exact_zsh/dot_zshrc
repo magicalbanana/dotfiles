@@ -75,6 +75,8 @@ zi light srijanshetty/zsh-pandoc-completion
 zi wait has'brew' pack atload=+"zicompinit_fast; zicdreplay" for brew-completions
 zi wait pack atload=+"zicompinit_fast; zicdreplay" for system-completions
 
+zi ice lucid wait as'completion' blockf has'chezmoi'
+zi snippet "$ZDOTDIR/completions/_chezmoi"
 zi ice lucid wait as'completion' blockf has'kind'
 zi snippet "$ZDOTDIR/completions/_kind"
 zi ice lucid wait as'completion' blockf has'just'
