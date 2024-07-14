@@ -13,11 +13,12 @@ return {
   --   priority = 1000, -- We'd like this plugin to load first out of the rest
   --   config = true, -- This automatically runs `require("luarocks-nvim").setup()`
   -- },
-  -- {
-  --   '3rd/image.nvim',
-  --   ft = { 'markdown', 'norg' },
-  --   opts = {},
-  -- },
+  {
+    '3rd/image.nvim',
+    disable = true,
+    ft = { 'markdown', 'norg' },
+    opts = {},
+  },
   {
     'olimorris/persisted.nvim',
     lazy = false,

@@ -29,13 +29,11 @@ return {
               },
             },
           },
-          -- ['core.integrations.image'] = {},
           ['core.keybinds'] = {
             config = {
               default_keybinds = false,
             },
           },
-          ['core.latex.renderer'] = {},
         },
       })
     end,
