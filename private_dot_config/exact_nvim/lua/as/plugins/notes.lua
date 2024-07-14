@@ -8,25 +8,32 @@ local function mein_wissen_dir(path) return fmt('%s/%s', mein_wissen_path, path)
 return {
   {
     'nvim-neorg/neorg',
-    ft = 'norg',
-    config = true,
     version = '*',
-    opts = {
-      configure_parsers = true,
-      load = {
-        ['core.defaults'] = {},
-        ['core.completion'] = { config = { engine = 'nvim-cmp' } },
-        ['core.concealer'] = {},
-        ['core.export'] = {},
-        ['core.dirman'] = {
-          config = {
-            workspaces = {
-              notes = mein_wissen_dir('notes/'),
+    lazy = false,
+    config = function()
+      require('neorg').setup({
+        configure_parsers = true,
+        load = {
+          ['core.defaults'] = {},
+          ['core.completion'] = {
+            config = {
+              engine = 'nvim-cmp',
             },
           },
+          ['core.concealer'] = {},
+          ['core.export'] = {},
+          ['core.dirman'] = {
+            config = {
+              workspaces = {
+                notes = mein_wissen_dir('norg/'),
+              },
+            },
+          },
+          ['core.integrations.image'] = {},
+          ['core.latex.renderer'] = {},
         },
-      },
-    },
+      })
+    end,
   },
   {
     'renerocksai/telekasten.nvim',
