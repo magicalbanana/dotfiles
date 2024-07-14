@@ -77,6 +77,8 @@ zi wait pack atload=+"zicompinit_fast; zicdreplay" for system-completions
 
 zi ice lucid wait as'completion' blockf has'kind'
 zi snippet "$ZDOTDIR/completions/_kind"
+zi ice lucid wait as'completion' blockf has'just'
+zi snippet "$ZDOTDIR/completions/_just"
 zi ice lucid wait as'completion' blockf has'kubectl'
 zi snippet "$ZDOTDIR/completions/_kubectl"
 
