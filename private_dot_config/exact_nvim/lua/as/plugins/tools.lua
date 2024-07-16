@@ -1,28 +1,32 @@
-local parrot_cmd_prefix = "Prt"
+local parrot_cmd_prefix = 'Prt'
 return {
   {
     'terrastruct/d2-vim',
   },
   {
     'frankroeder/parrot.nvim',
-    event = "VeryLazy",
     dependencies = {
       'ibhagwan/fzf-lua',
-      'nvim-lua/plenary.nvim'
+      'nvim-lua/plenary.nvim',
     },
-    cond = os.getenv "PARROT_NVIM_OPENAI_API_KEY" ~= nil or os.getenv "PARROT_NVIM_ANTHROPIC_API_KEY" ~= nil,
+    cond = os.getenv('PARROT_NVIM_OPENAI_API_KEY') ~= nil or os.getenv(
+      'PARROT_NVIM_ANTHROPIC_API_KEY'
+    ) ~= nil or os.getenv('PARROT_NVIM_GEMINI_API_KEY') ~= nil,
     config = function()
-      require("parrot").setup {
+      require('parrot').setup({
         providers = {
           openai = {
-            api_key = os.getenv 'PARROT_NVIM_OPENAI_API_KEY',
+            api_key = os.getenv('PARROT_NVIM_OPENAI_API_KEY'),
           },
           anthropic = {
-            api_key = os.getenv 'PARROT_NVIM_ANTHROPIC_API_KEY',
+            api_key = os.getenv('PARROT_NVIM_ANTHROPIC_API_KEY'),
+          },
+          gemini = {
+            api_key = os.getenv('PARROT_NVIM_GEMINI_API_KEY'),
           },
         },
         cmd_prefx = parrot_cmd_prefix,
-      }
+      })
     end,
   },
   {
@@ -47,7 +51,7 @@ return {
     config = function(_, opts)
       require('conform').setup(opts)
       require('conform.formatters.sql_formatter').args = function(ctx)
-        local config_path = ctx.dirname .. '/.sql-formatter.json'
+        local config_path = ctx.cwd .. '/.sql-formatter.json'
         if vim.uv.fs_stat(config_path) then return { '--config', config_path } end
         return { '--language', 'postgresql' }
       end
