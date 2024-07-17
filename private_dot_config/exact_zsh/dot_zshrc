@@ -83,6 +83,8 @@ zi ice lucid wait as'completion' blockf has'just'
 zi snippet "$ZDOTDIR/completions/_just"
 zi ice lucid wait as'completion' blockf has'kubectl'
 zi snippet "$ZDOTDIR/completions/_kubectl"
+zi ice lucid wait as'completion' blockf has'rg'
+zi snippet "$ZDOTDIR/completions/_rg"
 
 if command_exists zoxide; then
   typeset -A ZEC
