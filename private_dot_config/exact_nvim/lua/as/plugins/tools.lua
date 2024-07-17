@@ -11,9 +11,9 @@ return {
       'ibhagwan/fzf-lua',
       'nvim-lua/plenary.nvim',
     },
-    cond = os.getenv('PARROT_NVIM_OPENAI_API_KEY') ~= nil or os.getenv(
-      'PARROT_NVIM_ANTHROPIC_API_KEY'
-    ) ~= nil or os.getenv('PARROT_NVIM_GEMINI_API_KEY') ~= nil,
+    cond = os.getenv('OPENAI_API_KEY_PARROT_NVIM') ~= nil or os.getenv(
+      'ANTHROPIC_API_KEY_PARROT_NVIM'
+    ) ~= nil or os.getenv('GEMINI_API_KEY_PARROT_NVIM') ~= nil,
     config = function()
       require('parrot').setup({
         providers = {
@@ -31,7 +31,7 @@ return {
       })
     end,
   },
-  {
+
     'pasky/claude.vim',
     lazy = false,
     enabled = true,
