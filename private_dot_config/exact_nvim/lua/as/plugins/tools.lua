@@ -2,9 +2,11 @@ local parrot_cmd_prefix = 'Prt'
 return {
   {
     'terrastruct/d2-vim',
+    lazy = false,
   },
   {
     'frankroeder/parrot.nvim',
+    lazy = false,
     dependencies = {
       'ibhagwan/fzf-lua',
       'nvim-lua/plenary.nvim',
@@ -31,6 +33,7 @@ return {
   },
   {
     'stevearc/conform.nvim',
+    lazy = false,
     event = 'BufReadPre',
     opts = {
       formatters_by_ft = {
@@ -59,6 +62,7 @@ return {
   },
   {
     'mfussenegger/nvim-lint',
+    lazy = false,
     event = 'BufReadPre',
     init = function()
       vim.api.nvim_create_autocmd({ 'TextChanged' }, {
