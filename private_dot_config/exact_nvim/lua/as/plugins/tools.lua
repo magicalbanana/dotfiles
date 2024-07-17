@@ -31,7 +31,7 @@ return {
       })
     end,
   },
-
+  {
     'pasky/claude.vim',
     lazy = false,
     enabled = true,
