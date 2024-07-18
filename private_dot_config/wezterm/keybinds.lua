@@ -36,7 +36,7 @@ M.tmux_keybinds = {
   { key = '-', mods = 'CMD', action = act({ SplitVertical = { domain = 'CurrentPaneDomain' } }) },
   {
     key = '\\',
-    mods = 'ALT',
+    mods = 'CMD',
     action = act({ SplitHorizontal = { domain = 'CurrentPaneDomain' } }),
   },
   { key = 'h', mods = 'CMD|SHIFT', action = act({ ActivatePaneDirection = 'Left' }) },
