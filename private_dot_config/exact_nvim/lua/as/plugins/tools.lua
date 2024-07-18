@@ -46,10 +46,11 @@ return {
       formatters_by_ft = {
         go = { 'goimports', 'gofumpt' },
         javascript = { { 'prettierd', 'prettier' } },
+        json = { 'jq' },
         lua = { 'stylua' },
-        python = { 'isort', 'black' },
         markdown = { 'prettier' },
         pgsql = { 'sql_formatter' },
+        python = { 'isort', 'black' },
         sh = { 'shfmt' },
         sql = { 'sql_formatter' },
       },
