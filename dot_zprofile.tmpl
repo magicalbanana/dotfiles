@@ -1,5 +1,15 @@
 # vim:ft=zsh
 
+source "${HOME}/.shtils"
+
+# this shouldn't be needed since we handle the external deps using chezmoi
+if [ ! -d "${HOME}/.asdf" ]; then
+  echo-info "asdf not found, dowloading"
+  git clone https://github.com/asdf-vm/asdf.git "${HOME}/.asdf"
+fi
+
+source "${HOME}/.asdf/asdf.sh"
+
 export BREW_PREFIX=$([[ "$(arch)" == "arm64" ]] && echo "/opt/homebrew" || echo "/usr/local")
 [[ "$PATH" != "*$BREW_PREFIX/bin*" ]] && export PATH="$BREW_PREFIX/bin:$PATH"
 
@@ -38,7 +48,6 @@ if command -v fzf >/dev/null 2>&1; then
     --color=separator:#ff9e64
     --color=spinner:#ff007c
   '
-
 
   if command -v fd >/dev/null 2>&1; then
     export FZF_DEFAULT_COMMAND="${FZF_DEFAULT_COMMAND:-fd --type f --hidden --exclude .git}"
@@ -93,13 +102,6 @@ else
 fi
 
 PATH="${LOCAL_SBIN}:${LOCAL_BIN}:${PATH}"
-
-if [ ! -d "${HOME}/.asdf" ]; then
-  echo-info "asdf not found, dowloading"
-  git clone https://github.com/asdf-vm/asdf.git "${HOME}/.asdf"
-fi
-
-source "${HOME}/.asdf/asdf.sh"
 
 if asdf where golang >/dev/null 2>&1; then
   GOBIN_PATH="$(asdf where golang)/bin"
