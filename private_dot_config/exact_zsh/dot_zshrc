@@ -65,15 +65,15 @@ zi wait has'brew' pack atload=+"zicompinit_fast; zicdreplay" for brew-completion
 zi wait pack atload=+"zicompinit_fast; zicdreplay" for system-completions
 
 zi ice lucid wait as'completion' blockf has'chezmoi'
-zi snippet "$HOME/.config/zsh/completions/_chezmoi"
+zi snippet "${ZDOTDIR}/completions/_chezmoi"
 zi ice lucid wait as'completion' blockf has'just'
-zi snippet "$HOME/.config/zsh/completions/_just"
+zi snippet "${ZDOTDIR}/completions/_just"
 zi ice lucid wait as'completion' blockf has'kind'
-zi snippet "$HOME/.config/zsh/completions/_kind"
+zi snippet "${ZDOTDIR}/completions/_kind"
 zi ice lucid wait as'completion' blockf has'kubectl'
-zi snippet "$HOME/.config/zsh/completions/_kubectl"
+zi snippet "${ZDOTDIR}/completions/_kubectl"
 zi ice lucid wait as'completion' blockf has'rg'
-zi snippet "$HOME/.config/zsh/completions/_rg"
+zi snippet "${ZDOTDIR}/completions/_rg"
 
 if command_exists zoxide; then
   typeset -A ZEC
