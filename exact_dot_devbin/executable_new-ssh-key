@@ -1,19 +1,26 @@
 #!/bin/sh
 
-FILENAME=id_ed25519
+DEFAULT_FILENAME=id_ed25519
 DEFAULT_EMAIL=kareem@hepburn.info
 
 if [ -r "${HOME}/.ssh/${FILENAME}.pub" ]; then
-	echo "Backing up old keys to ~/.ssh/id_rsa.bak and ~/.ssh/id_rsa.pub.bak"
-	echo-run mv ~/.ssh/id_rsa ~/.ssh/id_rsa.bak
-	echo-run mv ~/.ssh/id_rsa.pub ~/.ssh/id_rsa.pub.bak
+  echo "Backing up old keys to ~/.ssh/id_rsa.bak and ~/.ssh/id_rsa.pub.bak"
+  echo-run mv ~/.ssh/id_rsa ~/.ssh/id_rsa.bak
+  echo-run mv ~/.ssh/id_rsa.pub ~/.ssh/id_rsa.pub.bak
 fi
 
 printf "Email: "
 read -r EMAIL
 
 if [ -z "$EMAIL" ]; then
-	EMAIL="$DEFAULT_EMAIL"
+  EMAIL="$DEFAULT_EMAIL"
+fi
+
+printf "Filename: "
+read -r FILENAME
+
+if [ -z "$FILENAME" ]; then
+  FILENAME="$DEFAULT_FILENAME"
 fi
 
 echo-run ssh-keygen -C "$EMAIL" -N "" -b 4096 -t ed25519 -f "${HOME}/.ssh/${FILENAME}" || exit 1
@@ -24,16 +31,16 @@ printf "Enter the server url (user@host): "
 read -r SERVER
 
 if [ -z "$SERVER" ]; then
-	echo "Server empty, not copying"
-	echo "Use ssh-copy-id script to manually copy"
-	exit 1
+  echo "Server empty, not copying"
+  echo "Use ssh-copy-id script to manually copy"
+  exit 1
 fi
 
 echo-run ssh-copy-id "$SERVER" || exit 1
 
 if [ -x "$(command -v pbcopy)" ]; then
-	echo "Copying public key to clipboard."
-	echo "Add key to GitHub here: https://github.com/settings/keys"
+  echo "Copying public key to clipboard."
+  echo "Add key to GitHub here: https://github.com/settings/keys"
 
-	pbcopy <"${HOME}/.ssh/${FILENAME}.pub"
+  pbcopy <"${HOME}/.ssh/${FILENAME}.pub"
 fi
