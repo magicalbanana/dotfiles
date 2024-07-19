@@ -3,15 +3,11 @@
 export BREW_PREFIX=$([[ "$(arch)" == "arm64" ]] && echo "/opt/homebrew" || echo "/usr/local")
 [[ "$PATH" != "*$BREW_PREFIX/bin*" ]] && export PATH="$BREW_PREFIX/bin:$PATH"
 
-export DEVBIN="${HOME}/.devbin"
-PATH="${DEVBIN}:${PATH}"
-
 # Don't write python .pyc files, because they're not necessary and clutter
 # directories with binary files
 export PYTHONDONTWRITEBYTECODE=1
 
 if command -v fzf >/dev/null 2>&1; then
-  echo-info "fzf found, setting up fzf"
   export FZF_DEFAULT_OPTS='
     --multi
     --preview-window=:hidden

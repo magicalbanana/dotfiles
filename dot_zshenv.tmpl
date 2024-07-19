@@ -1,12 +1,6 @@
 # -*- mode: sh; sh-set-shell: zsh -*-
 # vim: ft=zsh
 
-export ZDOTDIR="${HOME}/.config/zsh"
-if [[ -f "${ZDOTDIR}/.zshenv" ]]; then
-  source "${ZDOTDIR}/.zshenv"
-fi
-
-
 {{ if eq .chezmoi.os "darwin" }}
 # https://github.com/Homebrew/brew/pull/10374
 export HOMEBREW_BOOTSNAP=1

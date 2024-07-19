@@ -15,11 +15,11 @@ pathmunge() {
 }
 
 if [ -z "$DEVBIN" ]; then
-	echo "DEVBIN not set, checking if DEVBIN dir exists"
 	if [ ! -d "${HOME}/.devbin" ]; then
 		echo "DEVBIN dir does not exist, custom functions will fail"
 	else
-		pathmunge "${HOME}/.devbin"
+		export DEVBIN="${HOME}/.devbin"
+		pathmunge "${DEVBIN}"
 	fi
 fi
 
