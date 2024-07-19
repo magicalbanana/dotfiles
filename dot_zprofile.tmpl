@@ -11,6 +11,7 @@ PATH="${DEVBIN}:${PATH}"
 export PYTHONDONTWRITEBYTECODE=1
 
 if command -v fzf >/dev/null 2>&1; then
+  echo-info "fzf found, setting up fzf"
   export FZF_DEFAULT_OPTS='
     --multi
     --preview-window=:hidden
