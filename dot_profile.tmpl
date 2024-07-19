@@ -11,39 +11,37 @@ PATH="${DEVBIN}:${PATH}"
 export PYTHONDONTWRITEBYTECODE=1
 
 if command -v fzf >/dev/null 2>&1; then
-  FZF_DEFAULT_OPTS='
-    --multi \
-    --preview-window=:hidden \
-    --bind="?:toggle-preview" \
-    --bind="ctrl-u:preview-page-up" \
-    --bind="ctrl-d:preview-page-down" \
-    --bind="ctrl-a:select-all" \
+  export FZF_DEFAULT_OPTS='
+    --multi
+    --preview-window=:hidden
+    --bind="?:toggle-preview"
+    --bind="ctrl-u:preview-page-up"
+    --bind="ctrl-d:preview-page-down"
+    --bind="ctrl-a:select-all"
     --bind="ctrl-y:execute-silent(echo {+} | pbcopy)"
+    --highlight-line
+    --info=inline-right
+    --ansi
+    --layout=reverse
+    --border=none
+    --color=bg+:#283457
+    --color=bg:#16161e
+    --color=border:#27a1b9
+    --color=fg:#c0caf5
+    --color=gutter:#16161e
+    --color=header:#ff9e64
+    --color=hl+:#2ac3de
+    --color=hl:#2ac3de
+    --color=info:#545c7e
+    --color=marker:#ff007c
+    --color=pointer:#ff007c
+    --color=prompt:#2ac3de
+    --color=query:#c0caf5:regular
+    --color=scrollbar:#27a1b9
+    --color=separator:#ff9e64
+    --color=spinner:#ff007c
   '
 
-  export FZF_DEFAULT_OPTS='$FZF_DEFAULT_OPTS \
-    --highlight-line \
-    --info=inline-right \
-    --ansi \
-    --layout=reverse \
-    --border=none
-    --color=bg+:#283457 \
-    --color=bg:#16161e \
-    --color=border:#27a1b9 \
-    --color=fg:#c0caf5 \
-    --color=gutter:#16161e \
-    --color=header:#ff9e64 \
-    --color=hl+:#2ac3de \
-    --color=hl:#2ac3de \
-    --color=info:#545c7e \
-    --color=marker:#ff007c \
-    --color=pointer:#ff007c \
-    --color=prompt:#2ac3de \
-    --color=query:#c0caf5:regular \
-    --color=scrollbar:#27a1b9 \
-    --color=separator:#ff9e64 \
-    --color=spinner:#ff007c \
-  '
 
   if command -v fd >/dev/null 2>&1; then
     export FZF_DEFAULT_COMMAND="${FZF_DEFAULT_COMMAND:-fd --type f --hidden --exclude .git}"
