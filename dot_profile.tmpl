@@ -1,4 +1,4 @@
-# vim: ft=zsh
+# vim:ft=zsh
 
 export BREW_PREFIX=$([[ "$(arch)" == "arm64" ]] && echo "/opt/homebrew" || echo "/usr/local")
 [[ "$PATH" != "*$BREW_PREFIX/bin*" ]] && export PATH="$BREW_PREFIX/bin:$PATH"
@@ -48,7 +48,9 @@ if command -v fzf >/dev/null 2>&1; then
   fi
 
   if command -v bat >/dev/null 2>&1 && command -v tree >/dev/null 2>&1; then
-    export FZF_PREVIEW_OPTS="--preview-window 'right:60%:hidden:wrap' --preview '([[ -d {} ]] && tree -C {}) || ([[ -f {} ]] && bat --style=full --color=always {}) || echo {}'"
+    export FZF_PREVIEW_OPTS='
+      --preview-window="right:60%:hidden:wrap" --preview="([[ -d {} ]] && tree -C {}) || ([[ -f {} ]] && bat --style=full --color=always {}) || echo {}"
+    '
     export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} ${FZF_PREVIEW_OPTS}"
   fi
 
