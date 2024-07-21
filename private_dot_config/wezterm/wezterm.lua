@@ -72,7 +72,7 @@ local local_config = load_local_config('local')
 ---------------------------------------------------------------
 local config = {
   font = wezterm.font('Cartograph CF'),
-  font_size = 13.5,
+  font_size = 13.0,
   cell_width = 1.1,
   line_height = 1.1,
   font_rules = {
@@ -88,7 +88,7 @@ local config = {
   },
   check_for_updates = true,
   use_ime = true,
-  -- ime_preedit_rendering = "System",
+  ime_preedit_rendering = 'System',
   use_dead_keys = false,
   warn_about_missing_glyphs = false,
   enable_kitty_graphics = true,
@@ -101,7 +101,7 @@ local config = {
   enable_wayland = false,
   color_scheme = 'tokyonight_storm',
   color_scheme_dirs = { os.getenv('HOME') .. '/.config/wezterm/colors/' },
-  hide_tab_bar_if_only_one_tab = false,
+  hide_tab_bar_if_only_one_tab = true,
   adjust_window_size_when_changing_font_size = false,
   selection_word_boundary = ' \t\n{}[]()"\'`,;:│=&!%',
   window_padding = {
@@ -110,7 +110,8 @@ local config = {
     top = 0,
     bottom = 0,
   },
-  use_fancy_tab_bar = false,
+  use_fancy_tab_bar = true,
+  show_new_tab_button_in_tab_bar = false,
   colors = {
     tab_bar = {
       background = scheme.background,
@@ -121,9 +122,9 @@ local config = {
       --   intensity = 'Bold',
       -- },
       -- format-tab-title
-      -- active_tab = { bg_color = "#121212", fg_color = "#FCE8C3" },
-      -- inactive_tab = { bg_color = scheme.background, fg_color = "#FCE8C3" },
-      -- inactive_tab_hover = { bg_color = scheme.ansi[1], fg_color = "#FCE8C3" },
+      -- active_tab = { bg_color = '#121212', fg_color = '#FCE8C3' },
+      -- inactive_tab = { bg_color = scheme.background, fg_color = '#FCE8C3' },
+      -- inactive_tab_hover = { bg_color = scheme.ansi[1], fg_color = '#FCE8C3' },
     },
   },
   exit_behavior = 'CloseOnCleanExit',
