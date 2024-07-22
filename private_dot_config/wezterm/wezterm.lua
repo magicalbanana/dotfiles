@@ -72,9 +72,9 @@ local local_config = load_local_config('local')
 ---------------------------------------------------------------
 local config = {
   font = wezterm.font('Cartograph CF'),
-  font_size = 13.0,
-  cell_width = 1.1,
-  line_height = 1.1,
+  font_size = 13.5,
+  cell_width = 1.0,
+  line_height = 1.0,
   font_rules = {
     {
       italic = true,
