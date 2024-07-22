@@ -18,13 +18,13 @@ return {
       require('parrot').setup({
         providers = {
           openai = {
-            api_key = os.getenv('PARROT_NVIM_OPENAI_API_KEY'),
+            api_key = os.getenv('OPENAI_API_KEY_PARROT_NVIM'),
           },
           anthropic = {
-            api_key = os.getenv('PARROT_NVIM_ANTHROPIC_API_KEY'),
+            api_key = os.getenv('ANTHROPIC_API_KEY_PARROT_NVIM'),
           },
           gemini = {
-            api_key = os.getenv('PARROT_NVIM_GEMINI_API_KEY'),
+            api_key = os.getenv('GEMINI_API_KEY_PARROT_NVIM'),
           },
         },
         cmd_prefx = parrot_cmd_prefix,
