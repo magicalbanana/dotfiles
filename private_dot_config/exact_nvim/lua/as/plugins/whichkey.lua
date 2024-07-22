@@ -14,8 +14,8 @@ return {
     local wk = require('which-key')
     wk.setup({
       plugins = { spelling = { enabled = true } },
-      window = { border = as.ui.current.border },
       layout = { align = 'center' },
+      win = { border = as.ui.current.border },
     })
 
     wk.add({
