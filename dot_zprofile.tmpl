@@ -18,6 +18,7 @@ export BREW_PREFIX=$([[ "$(arch)" == "arm64" ]] && echo "/opt/homebrew" || echo 
 export PYTHONDONTWRITEBYTECODE=1
 if command -v fzf >/dev/null 2>&1; then
   export FZF_DEFAULT_OPTS="--multi \
+    --tmux=right,40% \
     --preview-window=:hidden \
     --bind='?:toggle-preview' \
     --bind='ctrl-u:preview-page-up' \
