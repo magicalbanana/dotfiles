@@ -1,5 +1,6 @@
 local fn = vim.fn
-local icons, highlight, border, palette = as.ui.icons, as.highlight, as.ui.current.border, as.ui.palette
+local icons, highlight, border, palette =
+  as.ui.icons, as.highlight, as.ui.current.border, as.ui.palette
 
 as.debug = { layout = { ft = { dart = 2 } } }
 
@@ -53,8 +54,20 @@ return {
       })
 
       fn.sign_define({
-        { name = 'DapBreakpoint', texthl = 'DapBreakpoint', text = icons.misc.bug, linehl = '', numhl = '' },
-        { name = 'DapStopped', texthl = 'DapStopped', text = icons.misc.bookmark, linehl = '', numhl = '' },
+        {
+          name = 'DapBreakpoint',
+          texthl = 'DapBreakpoint',
+          text = icons.misc.bug,
+          linehl = '',
+          numhl = '',
+        },
+        {
+          name = 'DapStopped',
+          texthl = 'DapStopped',
+          text = icons.misc.bookmark,
+          linehl = '',
+          numhl = '',
+        },
       })
 
       -- DON'T automatically stop at exceptions
@@ -63,7 +76,9 @@ return {
       if not ui_ok then return end
       dap.listeners.before.event_exited['dapui_config'] = function() dapui.close() end
       dap.listeners.before.event_terminated['dapui_config'] = function() dapui.close() end
-      dap.listeners.after.event_initialized['dapui_config'] = function() dapui.open(as.debug.layout.ft[vim.bo.ft]) end
+      dap.listeners.after.event_initialized['dapui_config'] = function()
+        dapui.open(as.debug.layout.ft[vim.bo.ft])
+      end
     end,
     dependencies = {
       {

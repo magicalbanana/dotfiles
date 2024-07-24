@@ -534,7 +534,13 @@ return {
   {
     'olexsmir/gopher.nvim',
     ft = 'go',
-    dependencies = { 'nvim-lua/plenary.nvim', 'nvim-treesitter/nvim-treesitter' },
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'nvim-treesitter/nvim-treesitter',
+      'nvim-dap',
+    },
+    build = function() vim.cmd.GoInstallDeps() end,
+    config = function() require('gopher.dap').setup() end,
   },
   {
     'iamcco/markdown-preview.nvim',
@@ -599,7 +605,6 @@ return {
   { 'mtdl9/vim-log-highlighting', lazy = false },
   {
     'javiorfo/nvim-soil',
-
     -- Optional for puml syntax highlighting:
     dependencies = { 'javiorfo/nvim-nyctophilia' },
     lazy = true,
@@ -609,7 +614,6 @@ return {
       image = {
         darkmode = true, -- Enable or disable darkmode
         format = 'svg', -- Choose between png or svg
-
         -- This is a default implementation of using nsxiv to open the resultant image
         -- Edit the string to use your preferred app to open the image (as if it were a command line)
         -- Some examples:
