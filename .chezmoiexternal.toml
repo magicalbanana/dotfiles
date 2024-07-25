@@ -16,6 +16,10 @@ refreshPeriod = "168h"
 url = "https://github.com/unixorn/fzf-zsh-plugin.git"
 type = "git-repo"
 refreshPeriod = "168h"
+[".config/yazi/plugins/starship.yazi"]
+url = "https://github.com/Rolv-Apneseth/starship.yazi.git"
+type = "git-repo"
+refreshPeriod = "168h"
 [".local/share/eclipse/eclipse-java-google-style.xml"]
 url = "https://github.com/google/styleguide/blob/gh-pages/eclipse-java-google-style.xml"
 type = "file"
