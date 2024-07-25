@@ -129,6 +129,8 @@
 [merge]
   # Include summaries of merged commits in newly created merge commit messages
   log = true
+  command = "nvim"
+  args = ["-d", "{{ `{{ .Source }}` }}", "{{ `{{ .Destination }}` }}", "{{ `{{ .Target }}` }}"]
 
 [delta]
   line-numbers-minus-style      = "#914c54"

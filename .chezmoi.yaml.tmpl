@@ -1,0 +1,26 @@
+# vim: ft=yaml
+sourceDir: ~/dev-workspace/repos/github.com/neumachen/dotfiles
+diff:
+  command: nvim
+  args:
+    - -d
+    - "{{ "{{ .Source }}" }}"
+    - "{{ "{{ .Destination }}" }}"
+    - "{{ "{{ .Target }}" }}"
+data:
+  is_dev: false
+  is_work: false
+  git:
+    default_profile: |
+      [user]
+        email = kareem@hepburn.info
+        name = Kareem Hepburn
+        signingKey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKkF+ya2eh9ezdaZFo3oQ6GZbMR/oLq8OkH051duMH/1
+      [gpg]
+        format = ssh
+      [gpg "ssh"]
+        program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+      [commit]
+        gpgsign = true
+
+  envvars: []
