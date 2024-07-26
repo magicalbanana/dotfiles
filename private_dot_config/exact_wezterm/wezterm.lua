@@ -101,7 +101,7 @@ local config = {
   enable_wayland = false,
   color_scheme = 'tokyonight_storm',
   color_scheme_dirs = { os.getenv('HOME') .. '/.config/wezterm/colors/' },
-  hide_tab_bar_if_only_one_tab = true,
+  hide_tab_bar_if_only_one_tab = false,
   adjust_window_size_when_changing_font_size = false,
   selection_word_boundary = ' \t\n{}[]()"\'`,;:│=&!%',
   window_padding = {
@@ -110,7 +110,9 @@ local config = {
     top = 0,
     bottom = 0,
   },
-  use_fancy_tab_bar = true,
+  window_decorations = 'INTEGRATED_BUTTONS|RESIZE',
+  integrated_title_buttons = { 'Close' },
+  use_fancy_tab_bar = false,
   show_new_tab_button_in_tab_bar = false,
   -- colors = {
   --   tab_bar = {
