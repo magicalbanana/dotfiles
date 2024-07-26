@@ -48,11 +48,11 @@ if command -v fzf >/dev/null 2>&1; then
     --color=spinner:#ff007c \
   "
 
-  if command -v fd >/dev/null 2>&1; then
+  if command_exists fd; then
     export FZF_DEFAULT_COMMAND="${FZF_DEFAULT_COMMAND:-fd --type f --hidden --exclude .git}"
   fi
 
-  if command -v bat >/dev/null 2>&1 && command -v tree >/dev/null 2>&1; then
+  if command_exists bat && command_exists tree; then
     export FZF_PREVIEW_OPTS="--preview-window='right:60%:hidden:wrap' \
       --preview='([[ -d {} ]] && tree -C {}) || ([[ -f {} ]] && bat --style=full --color=always {}) || echo {}' \
     "
@@ -65,7 +65,9 @@ if command -v fzf >/dev/null 2>&1; then
   export FORGIT_LOG_FZF_OPTS="--bind='ctrl-e:execute(echo {} |grep -Eo [a-f0-9]+ |head -1 |xargs git show |vim -)'"
 fi
 
-export RIPGREP_CONFIG_PATH="${HOME}/.config/rg/.ripgreprc"
+if command_exists rg; then
+  export RIPGREP_CONFIG_PATH="${HOME}/.config/rg/.ripgreprc"
+fi
 
 # this should only be used when gpg was installed using brew
 # https://stackoverflow.com/questions/39494631/gpg-failed-to-sign-the-data-fatal-failed-to-write-commit-object-git-2-10-0
@@ -114,16 +116,23 @@ if asdf where golang >/dev/null 2>&1; then
   PATH="${GOBIN_PATH}:${PATH}"
 fi
 
-if [ -d "${HOME}/.cargo/bin" ]; then
-  PATH="${HOME}/.cargo/bin:${PATH}"
-fi
+if command_exists task; then
+  taskwarrior_data_dir="${HOME}/.local/share/task"
+  if [ -d "${HOME}/Documents/taskwarrior" ]; then
+    taskwarrior_data_dir="${HOME}/Documents/taskwarrior"
+  fi
 
-taskwarrior_data_dir="${HOME}/.local/share/task"
-if [ -d "${HOME}/Documents/taskwarrior" ]; then
-  taskwarrior_data_dir="${HOME}/Documents/taskwarrior"
+  export TASKWARRIOR_DATA="${taskwarrior_data_dir}"
+  export TASKRC="${HOME}/.config/taskwarrior/taskrc"
+
+  if command_exists taskd; then
+    export TASKDDATA="${HOME}/.config/taskwarrior/taskd"
+  fi
+
+  if command_exists taskwarrior-tui; then
+    alias taskui="taskwarrior-tui"
+  fi
 fi
-export TASKWARRIOR_DATA="${taskwarrior_data_dir}"
-export TASKRC="${HOME}/.config/taskwarrior/taskrc"
 
 if [ -S "${HOME}/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock" ]; then
   export SSH_AUTH_SOCK="${HOME}/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
