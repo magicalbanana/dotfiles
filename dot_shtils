@@ -4,6 +4,22 @@ command_exists() {
 	command -v "$1" >/dev/null 2>&1
 }
 
+# Function: pathmunge
+# Description: Adds a directory to the PATH environment variable if it's not already present.
+# Usage: pathmunge <directory> [after]
+# Parameters:
+#   $1 - The directory to add to PATH
+#   $2 - Optional. If set to "after", the directory is appended to PATH instead of prepended
+#
+# This `pathmunge` function is used to add a new directory to the system's PATH environment variable, but only if it's not already present. Here's a breakdown of its functionality:
+#
+# 1. It first checks if the given directory ($1) is already in the PATH using grep with a regular expression.
+# 2. If the directory is not in the PATH, it then checks for a second argument:
+#    - If the second argument is "after", it appends the new directory to the end of the PATH.
+#    - Otherwise, it prepends the new directory to the beginning of the PATH.
+# 3. If the directory is already in the PATH, it does nothing to avoid duplicates.
+#
+# This function helps maintain a clean PATH by preventing duplicate entries while allowing flexibility in where new directories are added (beginning or end of PATH).
 pathmunge() {
 	if ! echo "$PATH" | grep -Eq "(^|:)$1($|:)"; then
 		if [ "${2}" = "after" ]; then
@@ -53,7 +69,7 @@ if command_exists op; then
 fi
 
 bootstrap() {
-	if ! command_exists op >/dev/null 2>&1; then
+	if ! command_exists op; then
 		echo-err "1Password CLI needs to be installed to run bootstrap scripts."
 		return 1
 	fi
