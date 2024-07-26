@@ -3,11 +3,11 @@ sourceDir: ~/dev-workspace/repos/github.com/neumachen/dotfiles
 diff:
   command: nvim
   args:
-    - -d
-    - "{{ "{{ .Source }}" }}"
-    - "{{ "{{ .Destination }}" }}"
-    - "{{ "{{ .Target }}" }}"
     # https://github.com/twpayne/chezmoi/discussions/1706#discussioncomment-1745869
+    - -d
+    - "{{ `{{` .Source `}}` }}"
+    - "{{ `{{` .Destination `}}` }}"
+    - "{{ `{{` .Target `}}` }}"
 data:
   is_dev: false
   is_work: false
