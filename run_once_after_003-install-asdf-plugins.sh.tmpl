@@ -2,7 +2,7 @@
 
 set -e
 
-. "${HOME}/.shtils"
+. "${HOME}/.zprofile"
 
 if [ -n "$GITHUB_WORKFLOW" ]; then
 	echo-info "::group::Adding asdf plugins"
@@ -16,10 +16,6 @@ asdf_tool_versions="${HOME}/.tool-versions"
 if [ ! -f "$asdf_tool_versions" ]; then
 	echo-err "$asdf_tool_versions not found."
 	exit 1
-fi
-
-if [ ! -d "${HOME}/.asdf" ]; then
-	git clone -b v0.11.3 --single-branch https://github.com/asdf-vm/asdf.git "${HOME}/.asdf"
 fi
 
 . "${HOME}/.asdf/asdf.sh"

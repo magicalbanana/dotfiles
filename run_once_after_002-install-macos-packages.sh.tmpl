@@ -4,13 +4,11 @@
 {{ template "script_no_root" . }}
 {{ template "script_brew_path" . }}
 
-. "${HOME}/.shtils"
 . "${HOME}/.zprofile"
 
 if [ -n "$GITHUB_WORKFLOW" ]; then
   echo "::group::Installing macOS packages"
 fi
-
 
 {{ template "script_caffeinate" . }}
 
