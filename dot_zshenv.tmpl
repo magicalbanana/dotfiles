@@ -22,13 +22,17 @@ export LC_ALL=en_US.UTF-8
 export LC_MONETARY=en_FI.UTF-8
 export LC_TIME=en_FI.UTF-8
 
-export LESSOPEN="|/usr/local/bin/lesspipe.sh %s"
-
-export VISUAL="vim"
-export EDITOR="${VISUAL}"
+export CLICOLOR=1
+export VISUAL="nvim --cmd 'let g:flatten_wait=1'"
+export EDITOR="nvim"
 export PAGER=less
 export MANPAGER='less -is'
-export CLICOLOR=1
+export LESSOPEN="|/usr/local/bin/lesspipe.sh %s"
+
+export MANPATH="/usr/local/man:$MANPATH"
+if which nvim >/dev/null; then
+  export MANPAGER='nvim +Man!'
+fi
 
 export DEV_WORKSPACE_ROOT="${HOME}/dev-workspace"
 export VCS_REPOSITORIES_DIR="${DEV_WORKSPACE_ROOT}/repos"
