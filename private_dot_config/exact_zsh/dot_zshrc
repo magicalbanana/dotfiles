@@ -79,6 +79,11 @@ if command_exists zoxide; then
     z-shell/zsh-zoxide
 fi
 
+if command_exists fzf; then
+  zi ice wait lucid
+  zi load unixorn/fzf-zsh-plugin
+fi
+
 zi ice wait lucid
 zi load wfxr/forgit
 
@@ -200,12 +205,6 @@ if command_exists broot; then
   if [ -f "${br_path}" ]; then
     source "${br_path}"
   fi
-fi
-
-if [[ ! -d "${HOME}/.config/fzf/fzf-zsh-plugin" ]]; then
-  echo-warn "fzf-zsh-plugin not found"
-else
-  source "/${HOME}/.config/fzf/fzf-zsh-plugin/fzf-zsh-plugin.plugin.zsh"
 fi
 
 if command_exists chezmoi; then
