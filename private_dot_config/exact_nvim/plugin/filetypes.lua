@@ -93,56 +93,6 @@ settings({
       { 'n', 'o', '<CR>' },
     },
   },
-  norg = {
-    plugins = {
-      cmp = function(cmp)
-        cmp.setup.filetype('norg', {
-          sources = {
-            { name = 'neorg', group_index = 1 },
-            { name = 'dictionary', group_index = 1 },
-            { name = 'spell', group_index = 1 },
-            { name = 'emoji', group_index = 1 },
-            { name = 'buffer', group_index = 2 },
-          },
-        })
-      end,
-      ['nvim-surround'] = function(surround)
-        surround.buffer_setup({
-          surrounds = {
-            l = { add = function() return { { '[' }, { ']{' .. vim.fn.getreg('*') .. '}' } } end },
-          },
-        })
-      end,
-    },
-  },
-  org = {
-    opt = {
-      spell = true,
-      signcolumn = 'yes',
-    },
-    plugins = {
-      cmp = function(cmp)
-        cmp.setup.filetype('org', {
-          sources = {
-            { name = 'orgmode', group_index = 1 },
-            { name = 'dictionary', group_index = 1 },
-            { name = 'spell', group_index = 1 },
-            { name = 'emoji', group_index = 1 },
-            { name = 'buffer', group_index = 2 },
-          },
-        })
-      end,
-      ['nvim-surround'] = function(surround)
-        surround.buffer_setup({
-          surrounds = {
-            l = {
-              add = function() return { { ('[[%s]['):format(fn.getreg('*')) }, { ']]' } } end,
-            },
-          },
-        })
-      end,
-    },
-  },
   [{ 'javascript', 'javascriptreact' }] = {
     bo = { textwidth = 100 },
     opt = { spell = true },

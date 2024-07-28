@@ -39,7 +39,6 @@ return {
       { '<localleader>', group = 'local leader' },
       { '<localleader>d', group = 'dap' },
       { '<localleader>g', group = 'git' },
-      { '<localleader>o', group = 'neorg' },
       { '<localleader>t', group = 'neotest' },
       { '<localleader>w', group = 'window' },
       { '[', group = 'prev' },

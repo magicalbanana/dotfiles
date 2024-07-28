@@ -79,7 +79,7 @@ return {
         filetypes = {
           'dbout', 'neo-tree-popup', 'log', 'gitcommit',
           'txt', 'help', 'NvimTree', 'git', 'flutterToolsOutline',
-          'undotree', 'markdown', 'norg', 'org', 'orgagenda',
+          'undotree', 'markdown',
         },
       },
       indent = {
@@ -133,16 +133,6 @@ return {
               fzf_lua = as.fzf.cursor_dropdown({
                 winopts = { title = opts.prompt },
               }),
-            }
-          end
-          if opts.kind == 'orgmode' then
-            return {
-              backend = 'nui',
-              nui = {
-                position = '97%',
-                border = { style = rect },
-                min_width = vim.o.columns - 2,
-              },
             }
           end
           return {
@@ -304,7 +294,7 @@ return {
                   if vim.bo[buf.id].filetype == 'man' or buf.path:match('man://') then
                     return true
                   end
-                  for _, ext in ipairs({ 'md', 'txt', 'org', 'norg', 'wiki' }) do
+                  for _, ext in ipairs({ 'md', 'txt', 'wiki' }) do
                     if ext == fn.fnamemodify(buf.path, ':e') then return true end
                   end
                 end,

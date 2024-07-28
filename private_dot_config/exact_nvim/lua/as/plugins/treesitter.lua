@@ -15,7 +15,7 @@ return {
         auto_install = true,
         highlight = {
           enable = true,
-          additional_vim_regex_highlighting = { 'org', 'sql' },
+          additional_vim_regex_highlighting = { 'sql' },
         },
         incremental_selection = {
           enable = true,

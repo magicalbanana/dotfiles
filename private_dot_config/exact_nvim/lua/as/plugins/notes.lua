@@ -7,38 +7,6 @@ local function mein_wissen_dir(path) return fmt('%s/%s', mein_wissen_path, path)
 
 return {
   {
-    'nvim-neorg/neorg',
-    version = '*',
-    lazy = false,
-    config = function()
-      require('neorg').setup({
-        configure_parsers = true,
-        load = {
-          ['core.defaults'] = {},
-          ['core.completion'] = {
-            config = {
-              engine = 'nvim-cmp',
-            },
-          },
-          ['core.concealer'] = {},
-          ['core.export'] = {},
-          ['core.dirman'] = {
-            config = {
-              workspaces = {
-                notes = mein_wissen_dir('norg/'),
-              },
-            },
-          },
-          ['core.keybinds'] = {
-            config = {
-              default_keybinds = false,
-            },
-          },
-        },
-      })
-    end,
-  },
-  {
     'renerocksai/telekasten.nvim',
     lazy = false,
     dependencies = {
@@ -99,24 +67,17 @@ return {
   },
   {
     'lukas-reineke/headlines.nvim',
-    enabled = false,
-    ft = { 'org', 'norg', 'markdown', 'yaml' },
+    enabled = true,
+    ft = { 'markdown', 'yaml' },
     config = function()
-      highlight.plugin('Headlines', {
-        theme = {
-          ['*'] = {
-            { Dash = { bg = '#0B60A1', bold = true } },
-          },
-          ['horizon'] = {
-            { Headline = { bold = true, italic = true, bg = { from = 'Normal', alter = 0.2 } } },
-            { Headline1 = { inherit = 'Headline', fg = { from = 'Type' } } },
+      require('headlines').setup({
+        markdown = {
+          headline_highlights = {
+            'Headline1',
+            'Headline2',
+            'Headline3',
           },
         },
-      })
-      require('headlines').setup({
-        org = { headline_highlights = false },
-        norg = { headline_highlights = { 'Headline' }, codeblock_highlight = false },
-        markdown = { headline_highlights = { 'Headline1' } },
       })
     end,
   },

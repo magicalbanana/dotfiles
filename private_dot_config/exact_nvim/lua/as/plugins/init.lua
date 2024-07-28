@@ -8,15 +8,10 @@ return {
   'nvim-lua/plenary.nvim', -- THE LIBRARY
   'nvim-tree/nvim-web-devicons',
   'echasnovski/mini.icons',
-  -- {
-  --   'vhyrro/luarocks.nvim', -- https://vhyrro.github.io/posts/neorg-and-luarocks/#changing-the-configuration
-  --   priority = 1000, -- We'd like this plugin to load first out of the rest
-  --   config = true, -- This automatically runs `require("luarocks-nvim").setup()`
-  -- },
   {
     '3rd/image.nvim',
     disable = true,
-    ft = { 'markdown', 'norg' },
+    ft = { 'markdown' },
     opts = {},
   },
   {
@@ -196,7 +191,7 @@ return {
         },
         highlighter = {
           auto_enable = true,
-          excludes = { 'dart', 'lazy', 'orgagenda', 'org', 'NeogitStatus', 'toggleterm' },
+          excludes = { 'dart', 'lazy', 'NeogitStatus', 'toggleterm' },
         },
       })
     end,
@@ -374,7 +369,7 @@ return {
     event = 'VeryLazy',
     opts = {
       minimal_jump = 20,
-      ignore_buffers = { 'terminal', 'nofile', 'neorg://Quick Actions' },
+      ignore_buffers = { 'terminal', 'nofile' },
       ignore_filetypes = {
         'qf',
         'dap_watches',
