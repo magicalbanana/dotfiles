@@ -162,11 +162,6 @@ Plug 'mechatroner/rainbow_csv', {'for':'csv'}
 Plug 'keith/swift.vim'
 " \}\}\}
 
-" project folders \{\{\{
-" this conflicts with fl floatterm so try this out
-Plug 'vifm/vifm.vim'
-" \}\}\}
-
 " cucumber \{\{\{
 Plug 'tpope/vim-cucumber', {'for':'cucumber'}
 " \}\}\}
