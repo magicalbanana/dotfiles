@@ -116,6 +116,10 @@ if asdf where golang >/dev/null 2>&1; then
   PATH="${GOBIN_PATH}:${PATH}"
 fi
 
+if [ -d "${HOME}/.cargo/bin" ]; then
+  PATH="${HOME}/.cargo/bin:${PATH}"
+fi
+
 if command_exists task; then
   taskwarrior_data_dir="${HOME}/.local/share/task"
   if [ -d "${HOME}/Documents/taskwarrior" ]; then
