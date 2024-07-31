@@ -1,3 +1,8 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+command_timeout = 2000
+add_newline = true
+
 ## FIRST LINE/ROW: Info & Status
 # First param ─┌
 [username]
