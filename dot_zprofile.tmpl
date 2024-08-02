@@ -2,16 +2,21 @@
 
 source "${HOME}/.shtils"
 
-# this shouldn't be needed since we handle the external deps using chezmoi
-if [ ! -d "${HOME}/.asdf" ]; then
-  echo-info "asdf not found, dowloading"
-  git clone https://github.com/asdf-vm/asdf.git "${HOME}/.asdf"
+{{- if eq .chezmoi.os "darwin" }}
+if [ -f "${HOME}/.gnubin_path" ]; then
+  source "${HOME}/.gnubin_path"
 fi
+{{ end -}}
 
-source "${HOME}/.asdf/asdf.sh"
-
-export BREW_PREFIX=$([[ "$(arch)" == "arm64" ]] && echo "/opt/homebrew" || echo "/usr/local")
-[[ "$PATH" != "*$BREW_PREFIX/bin*" ]] && export PATH="$BREW_PREFIX/bin:$PATH"
+if [ ! -d "${HOME}/.asdf" ]; then
+  echo-err "asdf not found!"
+  exit 1
+else
+  source "${HOME}/.asdf/asdf.sh"
+  if [ -d "${HOME}/.asdf/shims" ]; then
+    pathmunge "${HOME}/.asdf/shims"
+  fi
+fi
 
 # Don't write python .pyc files, because they're not necessary and clutter
 # directories with binary files
@@ -73,11 +78,6 @@ fi
 # https://stackoverflow.com/questions/39494631/gpg-failed-to-sign-the-data-fatal-failed-to-write-commit-object-git-2-10-0
 export GPG_TTY=$(command tty)
 
-if [ -f "${HOME}/.gnubin_path" ]; then
-  export GNUBIN_PATH="${HOME}/.gnubin_path"
-  source "${GNUBIN_PATH}"
-fi
-
 local_bin="${HOME}/.local/bin"
 if [[ ! -d "${local_bin}" ]]; then
   echo-info "local bin directory not found, creating"
@@ -98,8 +98,8 @@ if [[ ! -d "${fzf_zsh_plugin_path}/bin" ]]; then
 else
   export LOCAL_BIN="${LOCAL_BIN}:${fzf_zsh_plugin_path}/bin"
 fi
-
-PATH="${LOCAL_SBIN}:${LOCAL_BIN}:${PATH}"
+pathmunge "${LOCAL_BIN}"
+pathmunge "${LOCAL_SBIN}"
 
 if asdf where golang >/dev/null 2>&1; then
   GOBIN_PATH="$(asdf where golang)/bin"
@@ -113,11 +113,11 @@ if asdf where golang >/dev/null 2>&1; then
 
   go env -w GOBIN=$GOBIN_PATH
   export GOBIN_PATH
-  PATH="${GOBIN_PATH}:${PATH}"
+  pathmunge "${GOBIN_PATH}"
 fi
 
 if [ -d "${HOME}/.cargo/bin" ]; then
-  PATH="${HOME}/.cargo/bin:${PATH}"
+  pathmunge "${HOME}/.cargo/bin"
 fi
 
 if command_exists task; then

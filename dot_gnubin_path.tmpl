@@ -1,81 +1,85 @@
 # vim: ft=bash
 {{- if eq .chezmoi.os "darwin" }}
-BREW_HOME=$(brew --prefix)
+source "${HOME}/.shtils"
+
+BREW_PREFIX=$([[ "$(arch)" == "arm64" ]] && echo "/opt/homebrew" || echo "/usr/local")
+BREW_HOME=$(${BREW_PREFIX}/bin/brew --prefix)
 
 # most programs
-export PATH="${BREW_HOME}/bin:$PATH"
+pathmunge "${BREW_HOME}/bin"
 export MANPATH="${BREW_HOME}/share/man:$MANPATH"
 export INFOPATH="${BREW_HOME}/share/info:$INFOPATH"
 
 # coreutils
-export PATH="${BREW_HOME}/opt/coreutils/libexec/gnubin:$PATH"
+pathmunge "${BREW_HOME}/opt/coreutils/libexec/gnubin"
 export MANPATH="${BREW_HOME}/opt/coreutils/libexec/gnuman:$MANPATH"
 
 # make
-export PATH="${BREW_HOME}/opt/make/libexec/gnubin:$PATH"
+pathmunge "${BREW_HOME}/opt/make/libexec/gnubin"
 export MANPATH="${BREW_HOME}/opt/make/libexec/gnuman:$MANPATH"
 
 # m4
-export PATH="${BREW_HOME}/opt/m4/bin:$PATH"
+pathmunge "${BREW_HOME}/opt/m4/bin"
 
 # file-formula
-export PATH="${BREW_HOME}/opt/file-formula/bin:$PATH"
+pathmunge "${BREW_HOME}/opt/file-formula/bin"
 
 # unzip
-export PATH="${BREW_HOME}/opt/unzip/bin:$PATH"
+pathmunge "${BREW_HOME}/opt/unzip/bin"
 
 # python
-export PATH="${BREW_HOME}/opt/python/libexec/bin:$PATH"
+pathmunge "${BREW_HOME}/opt/python/libexec/bin"
 
 # flex
-export PATH="${BREW_HOME}/opt/flex/bin:$PATH"
+pathmunge "${BREW_HOME}/opt/flex/bin"
 # export LDFLAGS="-L${BREW_HOME}/opt/flex/lib"
 # export CPPFLAGS="-I${BREW_HOME}/opt/flex/include"
 
 # bison
-export PATH="${BREW_HOME}/opt/bison/bin:$PATH"
+pathmunge "${BREW_HOME}/opt/bison/bin"
 # export LDFLAGS="-L${BREW_HOME}/opt/bison/lib"
 
 # libressl
-export PATH="${BREW_HOME}/opt/libressl/bin:$PATH"
+pathmunge "${BREW_HOME}/opt/libressl/bin"
 # export LDFLAGS="-L${BREW_HOME}/opt/libressl/lib"
 # export CPPFLAGS="-I${BREW_HOME}/opt/libressl/include"
 # export PKG_CONFIG_PATH="${BREW_HOME}/opt/libressl/lib/pkgconfig"
 
 # ed
-export PATH="${BREW_HOME}/opt/ed/libexec/gnubin:$PATH"
+pathmunge "${BREW_HOME}/opt/ed/libexec/gnubin"
 
 # findutils
-export PATH="${BREW_HOME}/opt/findutils/libexec/gnubin:$PATH"
+pathmunge "${BREW_HOME}/opt/findutils/libexec/gnubin"
 
 # gcc
-export PATH="${BREW_HOME}/opt/gcc/bin:$PATH"
+pathmunge "${BREW_HOME}/opt/gcc/bin"
 
 # gnu-awk
-export PATH="${BREW_HOME}/opt/gawk/libexec/gnubin:$PATH"
+pathmunge "${BREW_HOME}/opt/gawk/libexec/gnubin"
 
 # gnu-indent
-export PATH="${BREW_HOME}/opt/gnu-indent/libexec/gnubin:$PATH"
+pathmunge "${BREW_HOME}/opt/gnu-indent/libexec/gnubin"
 
 # gnu-sed
-export PATH="${BREW_HOME}/opt/gnu-sed/libexec/gnubin:$PATH"
+pathmunge "${BREW_HOME}/opt/gnu-sed/libexec/gnubin"
 
 # gnu-tar
-export PATH="${BREW_HOME}/opt/gnu-tar/libexec/gnubin:$PATH"
+pathmunge "${BREW_HOME}/opt/gnu-tar/libexec/gnubin"
 
 # gnu-which
-export PATH="${BREW_HOME}/opt/gnu-which/libexec/gnubin:$PATH"
+pathmunge "${BREW_HOME}/opt/gnu-which/libexec/gnubin"
 
 # grep
-export PATH="${BREW_HOME}/opt/grep/libexec/gnubin:$PATH"
+pathmunge "${BREW_HOME}/opt/grep/libexec/gnubin"
 
-{{ if (and (eq .chezmoi.os "darwin") (eq .chezmoi.arch "arm64")) }}
-# ncurses PATH
-export PATH="${BREW_HOME}/opt/ncurses/bin:$PATH"
-{{ end }}
+{{- if (and (eq .chezmoi.os "darwin") (eq .chezmoi.arch "arm64")) }}
+# ncurses
+pathmunge "${BREW_HOME}/opt/ncurses/bin"
+{{ end -}}
 
 unset BREW_HOME
+unset BREW_PREFIX
 
-{{ else }}
+{{ else -}}
 # empty. only for MacOS
 {{ end -}}
