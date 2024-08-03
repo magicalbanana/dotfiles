@@ -1,38 +1,69 @@
-# default
-# data.location=~/.local/share/task
-
 data.location=$TASKWARRIOR_DATA
 hooks.location=~/.config/task/hooks
+confirmation=yes
 
-# Color theme (uncomment one to use)
-#include light-16.theme
-#include light-256.theme
-#include dark-16.theme
-#include dark-256.theme
-#include dark-red-256.theme
-#include dark-green-256.theme
-#include dark-blue-256.theme
-#include dark-violets-256.theme
-#include dark-yellow-green.theme
-#include dark-gray-256.theme
-#include dark-gray-blue-256.theme
-include solarized-dark-256.theme
-#include solarized-light-256.theme
-#include no-color.theme
-
-news.version=2.6.0
-
-# color.uda.priority.0=color255
-# color.uda.priority.1=color245
-# color.uda.priority.2=color250
+include ~/.config/taskwarrior/themes/violet.theme
 
 uda.priority.label=Priority
 uda.priority.type=string
-uda.priority.values=0,1,2,3
 
-urgency.uda.priority.0.coefficient=6.0
-urgency.uda.priority.1.coefficient=3.9
-urgency.uda.priority.2.coefficient=1.8
-urgency.uda.priority.3.coefficient=1.0
+# Urgent: Tasks that require prompt action and should be addressed as soon as possible to prevent negative outcomes or delays.
+# High: Tasks that attention action and should be addressed soon to prevent negative outcomes or delays.
+# Normal: Routine tasks that need to be completed in due course but do not have immediate deadlines or critical importance.
+# Deferred: Tasks that have been consciously postponed to a later date due to current priorities or resource constraints.
+# Backlog: Tasks that are pending and can be addressed when resources become available or when higher-priority tasks are completed.
+# Wishlist: Tasks or ideas that are desirable but not essential, often serving as future enhancements or improvements that can be pursued when time allows.
+# Future Consideration: Tasks that may be important later but are not currently relevant or actionable. They can be revisited when the time is right.
+uda.priority.values=urgent,high,normal,deferred,backlog,wishlist,future-consideration
+uda.priority.default=backlog
+
+urgency.blocking.coefficient=0.5
+urgency.annotations.coefficient=0.1
+
+urgency.uda.priority.urgent.coefficient=10.0
+urgency.uda.priority.high.coefficient=7.5
+urgency.uda.priority.normal.coefficient=5.0
+urgency.uda.priority.deferred.coefficient=3.0
+urgency.uda.priority.backlog.coefficient=2.0
+urgency.uda.priority.wishlist.coefficient=-2.0
+urgency.uda.priority.future-consideration.coefficient=-3.0
 
 regex=on
+
+# taskwarrior-tui settings
+uda.taskwarrior-tui.keyconfig.quit=q
+uda.taskwarrior-tui.keyconfig.refresh=r
+uda.taskwarrior-tui.keyconfig.go-to-bottom=G
+uda.taskwarrior-tui.keyconfig.go-to-top=g
+uda.taskwarrior-tui.keyconfig.down=j
+uda.taskwarrior-tui.keyconfig.up=k
+uda.taskwarrior-tui.keyconfig.page-down=J
+uda.taskwarrior-tui.keyconfig.page-up=K
+uda.taskwarrior-tui.keyconfig.delete=X
+uda.taskwarrior-tui.keyconfig.done=d
+uda.taskwarrior-tui.keyconfig.start-stop=s
+uda.taskwarrior-tui.keyconfig.undo=u
+# https://github.com/kdheepak/taskwarrior-tui/issues/579
+# uda.taskwarrior-tui.keyconfig.edit=e
+uda.taskwarrior-tui.keyconfig.modify=m
+uda.taskwarrior-tui.keyconfig.shell=!
+uda.taskwarrior-tui.keyconfig.log=l
+uda.taskwarrior-tui.keyconfig.add=A
+uda.taskwarrior-tui.keyconfig.annotate=a
+uda.taskwarrior-tui.keyconfig.filter=/
+uda.taskwarrior-tui.keyconfig.zoom=z
+uda.taskwarrior-tui.keyconfig.context-menu=c
+uda.taskwarrior-tui.keyconfig.next-tab=]
+uda.taskwarrior-tui.keyconfig.previous-tab=[
+uda.taskwarrior-tui.selection.indicator=■
+uda.taskwarrior-tui.selection.bold=no
+uda.taskwarrior-tui.selection.italic=no
+uda.taskwarrior-tui.selection.dim=no
+uda.taskwarrior-tui.selection.blink=no
+uda.taskwarrior-tui.mark.indicator=✔
+uda.taskwarrior-tui.unmark.indicator=■
+uda.taskwarrior-tui.calendar.months-per-row=4
+uda.taskwarrior-tui.task-report.show-info=true
+uda.taskwarrior-tui.task-report.looping=false
+# uda.taskwarrior-tui.style.context.active=black on rgb444
+# uda.taskwarrior-tui.style.calendar.title=black on rgb444
