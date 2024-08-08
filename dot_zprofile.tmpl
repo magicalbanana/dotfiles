@@ -2,11 +2,11 @@
 
 source "${HOME}/.shtils"
 
-{{- if eq .chezmoi.os "darwin" }}
+{{ if eq .chezmoi.os "darwin" -}}
 if [ -f "${HOME}/.gnubin_path" ]; then
   source "${HOME}/.gnubin_path"
 fi
-{{ end -}}
+{{- end }}
 
 if [ ! -d "${HOME}/.asdf" ]; then
   echo-err "asdf not found!"
