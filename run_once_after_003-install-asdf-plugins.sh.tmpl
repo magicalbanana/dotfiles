@@ -1,7 +1,5 @@
 #!/bin/sh
 
-set -e
-
 . "${HOME}/.zprofile"
 
 if [ -n "$GITHUB_WORKFLOW" ]; then
@@ -26,7 +24,8 @@ while IFS= read -r line; do
 	plugin=$(echo "$line" | awk '{print $1}')
 
 	# Execute the command for the extracted plugin name
-	asdf plugin add "$plugin" || true
+	echo-info "Adding/updating asdf plugin: $plugin"
+	asdf plugin add "$plugin"
 done <"$asdf_tool_versions"
 
 if [ -n "$GITHUB_WORKFLOW" ]; then
