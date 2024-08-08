@@ -20,13 +20,18 @@ fi
 
 # File exists, proceed with reading and processing each line
 while IFS= read -r line; do
-	# Extract the first word (plugin name) from each line
-	plugin=$(echo "$line" | awk '{print $1}')
+    # Extract the first word (plugin name) from each line
+    plugin=$(echo "$line" | awk '{print $1}')
 
-	# Execute the command for the extracted plugin name
-	echo-info "Adding/updating asdf plugin: $plugin"
-	asdf plugin add "$plugin"
-done <"$asdf_tool_versions"
+    # Check if the plugin name is blank, if so, skip to the next iteration
+    if [ -z "$plugin" ]; then
+        continue
+    fi
+
+    # Execute the command for the extracted plugin name
+    echo-info "Adding/updating asdf plugin: $plugin"
+    asdf plugin add "$plugin"
+done < "$asdf_tool_versions"
 
 if [ -n "$GITHUB_WORKFLOW" ]; then
 	echo-info "::endgroup::"
