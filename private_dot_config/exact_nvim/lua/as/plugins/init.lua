@@ -8,12 +8,12 @@ return {
   'nvim-lua/plenary.nvim', -- THE LIBRARY
   'nvim-tree/nvim-web-devicons',
   'echasnovski/mini.icons',
-  {
-    '3rd/image.nvim',
-    disable = true,
-    ft = { 'markdown' },
-    opts = {},
-  },
+  -- {
+  --   '3rd/image.nvim',
+  --   disable = true,
+  --   ft = { 'markdown' },
+  --   opts = {},
+  -- },
   {
     'olimorris/persisted.nvim',
     lazy = false,
