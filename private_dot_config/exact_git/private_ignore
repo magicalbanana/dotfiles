@@ -77,3 +77,6 @@ tagged
 
 # Go
 .cover
+
+# Aider
+.aider.conf.yml
