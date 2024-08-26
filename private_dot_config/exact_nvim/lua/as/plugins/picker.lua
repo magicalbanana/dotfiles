@@ -102,9 +102,9 @@ return {
       { '<leader>fo', fzf_lua.buffers, desc = 'buffers' },
       { '<leader>fs', fzf_lua.live_grep, desc = 'live grep' },
       { '<leader>fva', fzf_lua.autocmds, desc = 'autocommands' },
-      { '<localleader>p', fzf_lua.registers, desc = 'Registers' },
       { '<leader>fd', function() file_picker(vim.env.DOTFILES) end, desc = 'dotfiles' },
       { '<leader>fc', function() file_picker(vim.g.vim_dir) end, desc = 'nvim config' },
+      { '<localleader>p', fzf_lua.registers, desc = 'Registers' },
     },
     config = function()
       local lsp_kind = require('lspkind')
