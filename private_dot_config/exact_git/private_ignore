@@ -79,4 +79,4 @@ tagged
 .cover
 
 # Aider
-.aider.conf.yml
+.aider*
