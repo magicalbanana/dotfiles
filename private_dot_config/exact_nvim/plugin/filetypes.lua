@@ -1,6 +1,6 @@
 if not as then return end
 local settings, highlight = as.filetype_settings, as.highlight
-local cmd, fn = vim.cmd, vim.fn
+local cmd = vim.cmd
 
 vim.treesitter.language.register('gitcommit', 'NeogitCommitMessage')
 
