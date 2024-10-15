@@ -118,11 +118,7 @@ return {
               },
             },
             { 'Bilal2453/luvit-meta', lazy = true }, -- optional `vim.uv` typings
-            {
-              'folke/neoconf.nvim',
-              cmd = { 'Neoconf' },
-              opts = { local_settings = '.nvim.json', global_settings = 'nvim.json' },
-            },
+            { 'folke/neoconf.nvim' },
           },
           config = function()
             highlight.plugin('lspconfig', { { LspInfoBorder = { link = 'FloatBorder' } } })

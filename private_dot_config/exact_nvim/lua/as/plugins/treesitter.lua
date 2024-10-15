@@ -3,65 +3,98 @@ local highlight = as.highlight
 return {
   {
     'nvim-treesitter/nvim-treesitter',
-    event = 'VeryLazy',
-    build = ':TSUpdate',
-    config = function()
-      require('nvim-treesitter.configs').setup({
-        ensure_installed = {
-          'c', 'vim', 'vimdoc', 'query', 'lua', 'luadoc', 'luap',
-          'diff', 'regex', 'gitcommit', 'git_config', 'git_rebase', 'markdown', 'markdown_inline',
+    version = false, -- last release is way too old and doesn't work on Windows
+    build = ":TSUpdate",
+    event = { "LazyFile", "VeryLazy" },
+    lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
+    init = function(plugin)
+      -- PERF: add nvim-treesitter queries to the rtp and it's custom query predicates early
+      -- This is needed because a bunch of plugins no longer `require("nvim-treesitter")`, which
+      -- no longer trigger the **nvim-treesitter** module to be loaded in time.
+      -- Luckily, the only things that those plugins need are the custom queries, which we make available
+      -- during startup.
+      require("lazy.core.loader").add_to_rtp(plugin)
+      require("nvim-treesitter.query_predicates")
+    end,
+    opts_extend = { "ensure_installed" },
+    opts = {
+      ensure_installed = {
+        "bash",
+        "c",
+        "diff",
+        "html",
+        "javascript",
+        "jsdoc",
+        "json",
+        "jsonc",
+        "lua",
+        "luadoc",
+        "luap",
+        "markdown",
+        "markdown_inline",
+        "printf",
+        "python",
+        "query",
+        "regex",
+        "toml",
+        "tsx",
+        "typescript",
+        "vim",
+        "vimdoc",
+        "xml",
+        "yaml",
+      },
+      sync_install = false,
+      auto_install = true,
+      highlight = {
+        enable = true,
+        additional_vim_regex_highlighting = { 'sql' },
+      },
+      incremental_selection = {
+        enable = true,
+        disable = { 'help' },
+        keymaps = {
+          init_selection = '<CR>', -- maps in normal mode to init the node/scope selection
+          node_incremental = '<CR>', -- increment to the upper named parent
+          node_decremental = '<C-CR>', -- decrement to the previous node
         },
-        sync_install = false,
-        auto_install = true,
-        highlight = {
+      },
+      indent = {
+        enable = true,
+        disable = { 'yaml' },
+      },
+      textobjects = {
+        lookahead = true,
+        select = {
           enable = true,
-          additional_vim_regex_highlighting = { 'sql' },
-        },
-        incremental_selection = {
-          enable = true,
-          disable = { 'help' },
+          include_surrounding_whitespace = true,
           keymaps = {
-            init_selection = '<CR>', -- maps in normal mode to init the node/scope selection
-            node_incremental = '<CR>', -- increment to the upper named parent
-            node_decremental = '<C-CR>', -- decrement to the previous node
+            ['af'] = { query = '@function.outer', desc = 'ts: all function' },
+            ['if'] = { query = '@function.inner', desc = 'ts: inner function' },
+            ['ac'] = { query = '@class.outer', desc = 'ts: all class' },
+            ['ic'] = { query = '@class.inner', desc = 'ts: inner class' },
+            ['aC'] = { query = '@conditional.outer', desc = 'ts: all conditional' },
+            ['iC'] = { query = '@conditional.inner', desc = 'ts: inner conditional' },
+            ['aL'] = { query = '@assignment.lhs', desc = 'ts: assignment lhs' },
+            ['aR'] = { query = '@assignment.rhs', desc = 'ts: assignment rhs' },
           },
         },
-        indent = {
+        move = {
           enable = true,
-          disable = { 'yaml' },
+          set_jumps = true,
+          goto_next_start = { [']m'] = '@function.outer', [']M'] = '@class.outer' },
+          goto_previous_start = { ['[m'] = '@function.outer', ['[M'] = '@class.outer' },
         },
-        textobjects = {
-          lookahead = true,
-          select = {
-            enable = true,
-            include_surrounding_whitespace = true,
-            keymaps = {
-              ['af'] = { query = '@function.outer', desc = 'ts: all function' },
-              ['if'] = { query = '@function.inner', desc = 'ts: inner function' },
-              ['ac'] = { query = '@class.outer', desc = 'ts: all class' },
-              ['ic'] = { query = '@class.inner', desc = 'ts: inner class' },
-              ['aC'] = { query = '@conditional.outer', desc = 'ts: all conditional' },
-              ['iC'] = { query = '@conditional.inner', desc = 'ts: inner conditional' },
-              ['aL'] = { query = '@assignment.lhs', desc = 'ts: assignment lhs' },
-              ['aR'] = { query = '@assignment.rhs', desc = 'ts: assignment rhs' },
-            },
-          },
-          move = {
-            enable = true,
-            set_jumps = true,
-            goto_next_start = { [']m'] = '@function.outer', [']M'] = '@class.outer' },
-            goto_previous_start = { ['[m'] = '@function.outer', ['[M'] = '@class.outer' },
-          },
-        },
-        autopairs = { enable = true },
-        playground = { persist_queries = true },
-        query_linter = {
-          enable = true,
-          use_virtual_text = true,
-          lint_events = { 'BufWrite', 'CursorHold' },
-        },
-      })
-
+      },
+      autopairs = { enable = true },
+      playground = { persist_queries = true },
+      query_linter = {
+        enable = true,
+        use_virtual_text = true,
+        lint_events = { 'BufWrite', 'CursorHold' },
+      },
+    },
+    config = function(_, opts)
       local parser_config = require('nvim-treesitter.parsers').get_parser_configs()
       parser_config.d2 = {
         install_info = {
@@ -71,6 +104,10 @@ return {
         },
         filetype = 'd2',
       };
+      if type(opts.ensure_installed) == "table" then
+        opts.ensure_installed = LazyVim.dedup(opts.ensure_installed)
+      end
+      require("nvim-treesitter.configs").setup(opts)
     end,
     dependencies = {
       { 'nvim-treesitter/nvim-treesitter-textobjects' },
@@ -79,7 +116,14 @@ return {
   { 'JoosepAlviste/nvim-ts-context-commentstring' },
   {
     'windwp/nvim-ts-autotag',
-    ft = { 'typescriptreact', 'javascript', 'javascriptreact', 'html', 'vue', 'svelte' },
+    ft = {
+      'typescriptreact',
+      'javascript',
+      'javascriptreact',
+      'html',
+      'vue',
+      'svelte',
+    },
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     config = true,
   },
