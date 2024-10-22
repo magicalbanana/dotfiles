@@ -31,12 +31,12 @@ return {
       })
     end,
   },
-  {
-    'pasky/claude.vim',
-    lazy = false,
-    cond = os.getenv('ANTHROPIC_API_KEY_CLAUDE_VIM') ~= nil,
-    init = function() vim.g.claude_api_key = os.getenv('ANTHROPIC_API_KEY_CLAUDE_VIM') end,
-  },
+  -- {
+  --   'pasky/claude.vim',
+  --   lazy = false,
+  --   cond = os.getenv('ANTHROPIC_API_KEY_CLAUDE_VIM') ~= nil,
+  --   init = function() vim.g.claude_api_key = os.getenv('ANTHROPIC_API_KEY_CLAUDE_VIM') end,
+  -- },
   {
     'stevearc/conform.nvim',
     lazy = false,
