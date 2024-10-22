@@ -66,19 +66,13 @@ return {
     end,
   },
   {
-    'lukas-reineke/headlines.nvim',
+    'MeanderingProgrammer/render-markdown.nvim',
+    lazy = false,
     enabled = true,
-    ft = { 'markdown', 'yaml' },
-    config = function()
-      require('headlines').setup({
-        markdown = {
-          headline_highlights = {
-            'Headline1',
-            'Headline2',
-            'Headline3',
-          },
-        },
-      })
-    end,
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter',
+      'nvim-tree/nvim-web-devicons',
+    },
+    opts = {},
   },
 }
