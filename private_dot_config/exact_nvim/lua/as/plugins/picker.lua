@@ -182,6 +182,9 @@ return {
         grep = {
           prompt = ' ',
           winopts = { title = format_title('Grep', '󰈭') },
+          -- See: https://github.com/ibhagwan/fzf-lua/discussions/1288#discussioncomment-9844613
+          -- rg_opts = '--column --hidden --line-number --no-heading --color=always --smart-case --max-columns=4096 -e',
+          RIPGREP_CONFIG_PATH = vim.env.RIPGREP_CONFIG_PATH,
           fzf_opts = {
             ['--keep-right'] = '',
           },
