@@ -131,6 +131,7 @@
   log = true
   command = "nvim"
   args = ["-d", "{{ `{{ .Source }}` }}", "{{ `{{ .Destination }}` }}", "{{ `{{ .Target }}` }}"]
+  conflictstyle = diff3
 
 [delta]
   line-numbers-minus-style      = "#914c54"
@@ -144,11 +145,10 @@
   plus-empty-line-marker-style  = syntax "#283b4d"
   plus-non-emph-style           = syntax "#283b4d"
   plus-style                    = syntax "#283b4d"
-  features                      = line-numbers decorations
 
-[delta "decorations"]
-  commit-decoration-style = bold yellow box ul
-  file-style = bold yellow ul
+  line-numbers = true
+  navigate     = true
+  side-by-side = true
 
 [interactive]
   diffFilter = delta --color-only
