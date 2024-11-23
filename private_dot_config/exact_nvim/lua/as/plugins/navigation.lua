@@ -12,14 +12,32 @@ return {
           show_hidden = true,
         },
         keymaps = {
-          ["gd"] = {
-            desc = "Toggle file detail view",
+          ['<leader>os'] = {
+            'actions.select',
+            opts = { vertical = true },
+            desc = 'Open the entry in a vertical split',
+          },
+          ['<leader>oh'] = {
+            'actions.select',
+            opts = { horizontal = true },
+            desc = 'Open the entry in a horizontal split',
+          },
+          ['<leader>ot'] = {
+            'actions.select',
+            opts = { tab = true },
+            desc = 'Open the entry in new tab',
+          },
+          ['<leader>op'] = 'actions.preview',
+          ['<leader>oc'] = 'actions.close',
+          ['<leader>or'] = 'actions.refresh',
+          ['<leader>otd'] = {
+            desc = 'Toggle file detail view',
             callback = function()
               detail = not detail
               if detail then
-                require("oil").set_columns({ "icon", "permissions", "size", "mtime" })
+                require('oil').set_columns({ 'icon', 'permissions', 'size', 'mtime' })
               else
-                require("oil").set_columns({ "icon" })
+                require('oil').set_columns({ 'icon' })
               end
             end,
           },
