@@ -41,7 +41,7 @@ services:
 git:
     paging:
         colorArg: always
-        pager: delta --dark --paging=never --24-bit-color=never
+        pager: delta --dark --paging=never
     merging:
         manualCommit: false
         args: ""
@@ -50,9 +50,6 @@ git:
 update:
     method: prompt # can be: prompt | background | never
     days: 14 # how often a update is checked for
-reporting: "off"
-startuppopupversion: 1
-splashUpdatesIndex: 0
 confirmOnQuit: false
 keybinding:
     universal:
@@ -90,7 +87,6 @@ keybinding:
         scrollDownMain-alt1: "J"
         scrollUpMain-alt2: "<c-u>"
         scrollDownMain-alt2: "<c-d>"
-        executeCustomCommand: ":"
         createRebaseOptionsMenu: "m"
         pushFiles: "P"
         pullFiles: "p"
@@ -146,7 +142,6 @@ keybinding:
         pickCommit: "p"
         revertCommit: "t"
         cherryPickCopy: "c"
-        cherryPickCopyRange: "C"
         pasteCommits: "v"
         tagCommit: "T"
         checkoutCommit: "<space>"
@@ -156,7 +151,5 @@ keybinding:
     commitFiles:
         checkoutCommitFile: "c"
     main:
-        toggleDragSelect: "v"
-        toggleDragSelect-alt: "V"
         toggleSelectHunk: "a"
         pickBothHunks: "b"
