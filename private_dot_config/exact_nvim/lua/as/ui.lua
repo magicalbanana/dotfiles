@@ -189,8 +189,9 @@ local presets = {
   }),
   minimal_editing = Preset:new({
     number = true,
+    wrap = true,
     winbar = true,
-    colorcolumn = false,
+    colorcolumn = true,
     statusline = 'minimal',
     statuscolumn = false,
   }),
