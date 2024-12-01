@@ -175,32 +175,32 @@ return {
   -----------------------------------------------------------------------------//
   -- UI {{{1
   -----------------------------------------------------------------------------//
-  {
-    'uga-rosa/ccc.nvim',
-    ft = { 'vim', 'typescript', 'typescriptreact', 'javascriptreact', 'svelte' },
-    cmd = { 'CccHighlighterToggle' },
-    opts = function()
-      local ccc = require('ccc')
-      local p = ccc.picker
-      ccc.setup({
-        win_opts = { border = border },
-        pickers = {
-          p.hex_long,
-          p.css_rgb,
-          p.css_hsl,
-          p.css_hwb,
-          p.css_lab,
-          p.css_lch,
-          p.css_oklab,
-          p.css_oklch,
-        },
-        highlighter = {
-          auto_enable = true,
-          excludes = { 'dart', 'lazy', 'NeogitStatus', 'toggleterm' },
-        },
-      })
-    end,
-  },
+  -- {
+  --   'uga-rosa/ccc.nvim',
+  --   ft = { 'vim', 'typescript', 'typescriptreact', 'javascriptreact', 'svelte' },
+  --   cmd = { 'CccHighlighterToggle' },
+  --   opts = function()
+  --     local ccc = require('ccc')
+  --     local p = ccc.picker
+  --     ccc.setup({
+  --       win_opts = { border = border },
+  --       pickers = {
+  --         p.hex_long,
+  --         p.css_rgb,
+  --         p.css_hsl,
+  --         p.css_hwb,
+  --         p.css_lab,
+  --         p.css_lch,
+  --         p.css_oklab,
+  --         p.css_oklch,
+  --       },
+  --       highlighter = {
+  --         auto_enable = true,
+  --         excludes = { 'dart', 'lazy', 'NeogitStatus', 'toggleterm' },
+  --       },
+  --     })
+  --   end,
+  -- },
   {
     'folke/todo-comments.nvim',
     event = 'VeryLazy',
