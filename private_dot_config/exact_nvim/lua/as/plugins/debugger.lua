@@ -101,6 +101,9 @@ return {
               { elements = { { id = 'repl', size = 0.9 } }, position = 'bottom', size = 10 },
             },
           },
+          dependencies = {
+            { 'nvim-neotest/nvim-nio'},
+          },
         },
         { 'theHamsta/nvim-dap-virtual-text', opts = { all_frames = true } },
       },
