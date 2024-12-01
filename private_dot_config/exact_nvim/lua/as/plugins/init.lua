@@ -532,15 +532,18 @@ return {
   -----------------------------------------------------------------------------//
   { 'lifepillar/pgsql.vim', lazy = false },
   {
-    'olexsmir/gopher.nvim',
-    ft = 'go',
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      'nvim-treesitter/nvim-treesitter',
-      'nvim-dap',
+    "ray-x/go.nvim",
+    dependencies = {  -- optional packages
+      "ray-x/guihua.lua",
+      "neovim/nvim-lspconfig",
+      "nvim-treesitter/nvim-treesitter",
     },
-    build = function() vim.cmd.GoInstallDeps() end,
-    config = function() require('gopher.dap').setup() end,
+    config = function()
+      require("go").setup()
+    end,
+    event = {"CmdlineEnter"},
+    ft = {"go", 'gomod'},
+    build = ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
   },
   {
     'iamcco/markdown-preview.nvim',
