@@ -204,7 +204,12 @@ local presets = {
   }),
 }
 
-local commit_buffer = presets.minimal_editing:with({ colorcolumn = '50,72', winbar = false })
+local commit_buffer = presets.minimal_editing:with({
+  colorcolumn = '50,72',
+  winbar = false,
+  number = true,
+  relnumber = true,
+})
 
 local buftypes = {
   ['quickfix'] = presets.tool_panel,
