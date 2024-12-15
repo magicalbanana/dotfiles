@@ -2,26 +2,25 @@
 -- Styles
 ----------------------------------------------------------------------------------------------------
 
-as.ui.palette = {
-  green = '#98c379',
-  dark_green = '#10B981',
-  blue = '#82AAFE',
-  dark_blue = '#4e88ff',
-  bright_blue = '#51afef',
-  teal = '#15AABF',
-  pale_pink = '#b490c0',
-  magenta = '#c678dd',
-  pale_red = '#E06C75',
-  light_red = '#c43e1f',
-  dark_red = '#be5046',
-  dark_orange = '#FF922B',
-  bright_yellow = '#FAB005',
-  light_yellow = '#e5c07b',
-  whitesmoke = '#9E9E9E',
-  light_gray = '#626262',
-  comment_grey = '#5c6370',
-  grey = '#3E4556',
-}
+-- as.ui.palette = {
+--   green = '#98c379',
+--   blue = '#82AAFE',
+--   dark_blue = '#4e88ff',
+--   bright_blue = '#51afef',
+--   teal = '#15AABF',
+--   pale_pink = '#b490c0',
+--   magenta = '#c678dd',
+--   pale_red = '#E06C75',
+--   light_red = '#c43e1f',
+--   dark_red = '#be5046',
+--   dark_orange = '#FF922B',
+--   bright_yellow = '#FAB005',
+--   light_yellow = '#e5c07b',
+--   whitesmoke = '#9E9E9E',
+--   light_gray = '#626262',
+--   comment_grey = '#5c6370',
+--   grey = '#3E4556',
+-- }
 
 as.ui.border = {
   line = { '🭽', '▔', '🭾', '▕', '🭿', '▁', '🭼', '▏' },
@@ -109,12 +108,12 @@ as.ui.icons = {
   },
 }
 as.ui.lsp = {
-  colors = {
-    error = as.ui.palette.pale_red,
-    warn = as.ui.palette.dark_orange,
-    hint = as.ui.palette.bright_blue,
-    info = as.ui.palette.teal,
-  },
+  -- colors = {
+  --   error = as.ui.palette.pale_red,
+  --   warn = as.ui.palette.dark_orange,
+  --   hint = as.ui.palette.bright_blue,
+  --   info = as.ui.palette.teal,
+  -- },
   --- This is a mapping of LSP Kinds to highlight groups. LSP Kinds come via the LSP spec
   --- see: https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#symbolKind
   highlights = {
@@ -189,14 +188,15 @@ local presets = {
   }),
   minimal_editing = Preset:new({
     number = true,
-    wrap = true,
+    relativenumber = true,
     winbar = true,
+    wrap = 'soft wrap',
     colorcolumn = true,
     statusline = 'minimal',
     statuscolumn = false,
   }),
   tool_panel = Preset:new({
-    number = false,
+    number = true,
     winbar = false,
     colorcolumn = false,
     statusline = 'minimal',

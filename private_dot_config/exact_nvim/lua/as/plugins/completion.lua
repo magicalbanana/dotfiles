@@ -1,6 +1,5 @@
 local highlight, ui, k = as.highlight, as.ui, vim.keycode
 local api, fn = vim.api, vim.fn
-local border = ui.current.border
 
 return {
   {
@@ -80,7 +79,7 @@ return {
           ['<TAB>'] = cmp.mapping(tab, { 'i', 's' }),
         }),
         formatting = {
-          deprecated = true,
+          expandable_indicator = true,
           fields = { 'kind', 'abbr', 'menu' },
           format = lspkind.cmp_format({
             mode = 'symbol',

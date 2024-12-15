@@ -48,10 +48,10 @@ return {
       local dap = require('dap') -- NOTE: must be loaded before the signs can be tweaked
       local ui_ok, dapui = pcall(require, 'dapui')
 
-      highlight.plugin('dap', {
-        { DapBreakpoint = { fg = palette.light_red } },
-        { DapStopped = { fg = palette.green } },
-      })
+      -- highlight.plugin('dap', {
+      --   { DapBreakpoint = { fg = palette.light_red } },
+      --   { DapStopped = { fg = palette.green } },
+      -- })
 
       fn.sign_define({
         {

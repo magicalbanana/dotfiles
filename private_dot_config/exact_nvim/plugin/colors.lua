@@ -10,7 +10,6 @@ local function general_overrides()
     { VertSplit = { fg = { from = 'Comment' } } },
     { WinSeparator = { fg = { from = 'Comment' } } },
     { CursorLineNr = { bg = 'NONE' } },
-    { iCursor = { bg = P.dark_blue } },
     { PmenuSbar = { link = 'Normal' } },
     { Folded = { bg = { from = 'Normal', alter = 0.1 } } },
     --------------------------------------------//
@@ -23,7 +22,7 @@ local function general_overrides()
     -- Created highlights
     -----------------------------------------------------------------------------//
     { Dim = { fg = { from = 'Normal', attr = 'bg', alter = 0.25 } } },
-    { PickerBorder = { fg = P.grey, bg = 'bg' } },
+    -- { PickerBorder = { fg = P.grey, bg = 'bg' } },
     { UnderlinedTitle = { bold = true, underline = true } },
     { StatusColSep = { link = 'LineNr' } },
     -----------------------------------------------------------------------------//

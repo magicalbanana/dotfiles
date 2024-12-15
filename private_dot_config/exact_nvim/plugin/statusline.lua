@@ -88,11 +88,11 @@ local function colors()
   --- terminal emulators like kitty handle this by fetching nerd fonts elsewhere
   --- but this is not universal across terminals so should be avoided
 
-  local indicator_color = P.bright_blue
-  local warning_fg = lsp.colors.warn
+  -- local indicator_color = P.bright_blue
+  -- local warning_fg = lsp.colors.warn
 
-  local error_color = lsp.colors.error
-  local info_color = lsp.colors.info
+  -- local error_color = lsp.colors.error
+  -- local info_color = lsp.colors.info
   local normal_fg = highlight.get('Normal', 'fg')
   local string_fg = highlight.get('String', 'fg')
   local number_fg = highlight.get('Number', 'fg')
@@ -104,15 +104,15 @@ local function colors()
   highlight.all({
     { [hls.metadata] = { bg = bg_color, inherit = 'Comment' } },
     { [hls.metadata_prefix] = { bg = bg_color, fg = { from = 'Comment' } } },
-    { [hls.indicator] = { bg = bg_color, fg = indicator_color } },
+    -- { [hls.indicator] = { bg = bg_color, fg = indicator_color } },
     { [hls.modified] = { fg = string_fg, bg = bg_color } },
-    { [hls.git] = { fg = P.light_gray, bg = bg_color } },
+    -- { [hls.git] = { fg = P.light_gray, bg = bg_color } },
     { [hls.green] = { fg = string_fg, bg = bg_color } },
-    { [hls.blue] = { fg = P.dark_blue, bg = bg_color, bold = true } },
+    -- { [hls.blue] = { fg = P.dark_blue, bg = bg_color, bold = true } },
     { [hls.number] = { fg = number_fg, bg = bg_color } },
-    { [hls.count] = { fg = 'bg', bg = indicator_color, bold = true } },
+    -- { [hls.count] = { fg = 'bg', bg = indicator_color, bold = true } },
     { [hls.client] = { bg = bg_color, fg = normal_fg, bold = true } },
-    { [hls.env] = { bg = bg_color, fg = error_color, italic = true, bold = true } },
+    -- { [hls.env] = { bg = bg_color, fg = error_color, italic = true, bold = true } },
     { [hls.directory] = { bg = bg_color, fg = 'Gray', italic = true } },
     { [hls.directory_inactive] = { bg = bg_color, italic = true, fg = { from = 'Normal', alter = 0.4 } } },
     { [hls.parent_directory] = { bg = bg_color, fg = string_fg, bold = true } },
@@ -120,17 +120,17 @@ local function colors()
     { [hls.comment] = { bg = bg_color, inherit = 'Comment' } },
     { [hls.statusline] = { bg = bg_color } },
     { [hls.statusline_nc] = { link = 'VertSplit' } },
-    { [hls.info] = { fg = info_color, bg = bg_color, bold = true } },
-    { [hls.warn] = { fg = warning_fg, bg = bg_color } },
-    { [hls.error] = { fg = error_color, bg = bg_color } },
+    -- { [hls.info] = { fg = info_color, bg = bg_color, bold = true } },
+    -- { [hls.warn] = { fg = warning_fg, bg = bg_color } },
+    -- { [hls.error] = { fg = error_color, bg = bg_color } },
     { [hls.filename] = { bg = bg_color, fg = 'LightGray', bold = true } },
     { [hls.filename_inactive] = { inherit = 'Comment', bg = bg_color, bold = true } },
-    { [hls.mode_normal] = { bg = bg_color, fg = P.light_gray, bold = true } },
-    { [hls.mode_insert] = { bg = bg_color, fg = P.dark_blue, bold = true } },
-    { [hls.mode_visual] = { bg = bg_color, fg = P.magenta, bold = true } },
-    { [hls.mode_replace] = { bg = bg_color, fg = P.dark_red, bold = true } },
-    { [hls.mode_command] = { bg = bg_color, fg = P.light_yellow, bold = true } },
-    { [hls.mode_select] = { bg = bg_color, fg = P.teal, bold = true } },
+    -- { [hls.mode_normal] = { bg = bg_color, fg = P.light_gray, bold = true } },
+    -- { [hls.mode_insert] = { bg = bg_color, fg = P.dark_blue, bold = true } },
+    -- { [hls.mode_visual] = { bg = bg_color, fg = P.magenta, bold = true } },
+    -- { [hls.mode_replace] = { bg = bg_color, fg = P.dark_red, bold = true } },
+    -- { [hls.mode_command] = { bg = bg_color, fg = P.light_yellow, bold = true } },
+    -- { [hls.mode_select] = { bg = bg_color, fg = P.teal, bold = true } },
   })
 end
 
