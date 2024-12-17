@@ -26,87 +26,84 @@ echo-assoc-array() {
 alias echo-path="echo-array path"
 alias echo-fpath="echo-array fpath"
 
-typeset -A ZI
-ZI[BIN_DIR]="${ZDOTDIR}/.zi/bin"
-source "${ZI[BIN_DIR]}/zi.zsh"
+typeset -A ZINIT
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+[ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
+[ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+source "${ZINIT_HOME}/zinit.zsh"
 
-(( ${+_comps} )) && _comps[zi]=_zi
+zinit snippet OMZL::clipboard.zsh
+zinit snippet OMZL::directories.zsh
+zinit snippet OMZ::plugins/git/git.plugin.zsh
 
-ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
-zi ice wait"0a" lucid atload"_zsh_autosuggest_start"
-zi light zsh-users/zsh-autosuggestions
-  bindkey '^ ' autosuggest-accept
+zinit wait lucid for \
+ atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
+    zdharma-continuum/fast-syntax-highlighting \
+ blockf \
+    zsh-users/zsh-completions \
+ atload"!_zsh_autosuggest_start" \
+    zsh-users/zsh-autosuggestions
 
-zi snippet OMZL::clipboard.zsh
-zi snippet OMZL::directories.zsh
+zinit wait lucid as=program pick="$ZPFX/bin/(fzf|fzf-tmux)" \
+    atclone="cp shell/completion.zsh _fzf_completion; \
+      cp bin/(fzf|fzf-tmux) $ZPFX/bin" \
+    make="PREFIX=$ZPFX install" for \
+        junegunn/fzf
 
-zi ice lucid wait as"completion" blockf has"asdf"
-zi snippet https://raw.githubusercontent.com/asdf-vm/asdf/master/completions/_asdf
-zi ice lucid wait as'completion' blockf has'cargo'
-zi snippet https://github.com/rust-lang/cargo/blob/master/src/etc/_cargo
-zi ice lucid wait as"completion" blockf has"docker"
-zi snippet https://raw.githubusercontent.com/docker/cli/master/contrib/completion/zsh/_docker
-zi ice lucid wait as"completion" blockf has"fd"
-zi snippet https://raw.githubusercontent.com/sharkdp/fd/master/contrib/completion/_fd
-zi ice lucid wait as'completion' blockf has'ghq'
-zi snippet https://github.com/x-motemen/ghq/blob/master/misc/zsh/_ghq
-zi ice lucid wait as'completion' blockf has'kubectx'
-zi snippet https://raw.githubusercontent.com/ahmetb/kubectx/master/completion/_kubectx.zsh
-zi ice lucid wait as'completion' blockf has'kubens'
-zi snippet https://raw.githubusercontent.com/ahmetb/kubectx/master/completion/_kubens.zsh
-zi ice lucid wait as'completion' blockf has'mpv'
-zi snippet https://github.com/mpv-player/mpv/blob/master/etc/_mpv.zsh
-zi ice lucid wait as'completion' blockf has'pandoc'
-zi light srijanshetty/zsh-pandoc-completion
-zi ice lucid wait as'completion' blockf has'rustc'
-zi snippet https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/rust/_rustc
+zinit ice from"gh-r" as"command" atload'eval "$(starship init zsh)"'
+zinit load starship/starship
 
-zi wait has'brew' pack atload=+"zicompinit_fast; zicdreplay" for brew-completions
-zi wait pack atload=+"zicompinit_fast; zicdreplay" for system-completions
+zinit load 'zsh-users/zsh-history-substring-search'
+zinit ice wait atload'_history_substring_search_config'
 
-zi ice lucid wait as'completion' blockf has'chezmoi'
-zi snippet "${ZDOTDIR}/completions/_chezmoi"
-zi ice lucid wait as'completion' blockf has'just'
-zi snippet "${ZDOTDIR}/completions/_just"
-zi ice lucid wait as'completion' blockf has'kind'
-zi snippet "${ZDOTDIR}/completions/_kind"
-zi ice lucid wait as'completion' blockf has'rg'
-zi snippet "${ZDOTDIR}/completions/_rg"
+zinit ice lucid wait as"completion" blockf has"asdf"
+zinit snippet https://raw.githubusercontent.com/asdf-vm/asdf/master/completions/_asdf
+zinit ice lucid wait as'completion' blockf has'cargo'
+zinit snippet https://github.com/rust-lang/cargo/blob/master/src/etc/_cargo
+zinit ice lucid wait as"completion" blockf has"docker"
+zinit snippet https://raw.githubusercontent.com/docker/cli/master/contrib/completion/zsh/_docker
+zinit ice lucid wait as"completion" blockf has"fd"
+zinit snippet https://raw.githubusercontent.com/sharkdp/fd/master/contrib/completion/_fd
+zinit ice lucid wait as'completion' blockf has'ghq'
+zinit snippet https://github.com/x-motemen/ghq/blob/master/misc/zsh/_ghq
+zinit ice lucid wait as'completion' blockf has'kubectx'
+zinit snippet https://raw.githubusercontent.com/ahmetb/kubectx/master/completion/_kubectx.zsh
+zinit ice lucid wait as'completion' blockf has'kubens'
+zinit snippet https://raw.githubusercontent.com/ahmetb/kubectx/master/completion/_kubens.zsh
+zinit ice lucid wait as'completion' blockf has'mpv'
+zinit snippet https://github.com/mpv-player/mpv/blob/master/etc/_mpv.zsh
+zinit ice lucid wait as'completion' blockf has'pandoc'
+zinit light srijanshetty/zsh-pandoc-completion
+zinit ice lucid wait as'completion' blockf has'rustc'
+zinit snippet https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/rust/_rustc
 
-if command_exists zoxide; then
-  typeset -A ZEC
-  zi wait lucid for \
-    z-shell/zsh-zoxide
-fi
+zinit ice lucid wait as'completion' blockf has'chezmoi'
+zinit snippet "${ZDOTDIR}/completions/_chezmoi"
+zinit ice lucid wait as'completion' blockf has'just'
+zinit snippet "${ZDOTDIR}/completions/_just"
+zinit ice lucid wait as'completion' blockf has'kind'
+zinit snippet "${ZDOTDIR}/completions/_kind"
+zinit ice lucid wait as'completion' blockf has'rg'
+zinit snippet "${ZDOTDIR}/completions/_rg"
 
-if command_exists fzf; then
-  zi ice wait lucid
-  zi load unixorn/fzf-zsh-plugin
-fi
+zinit has'zoxide' wait lucid for \
+  z-shell/zsh-zoxide
 
-zi ice wait lucid
-zi load wfxr/forgit
+zinit has'fzf' wait lucid for \
+  unixorn/fzf-zsh-plugin
 
-zi ice wait"0" lucid;
-zi load zdharma-continuum/history-search-multi-word
+zinit ice wait lucid
+zinit load wfxr/forgit
 
-zi ice lucid wait"0" atclone"sed -ie 's/fc -rl 1/fc -rli 1/' shell/key-bindings.zsh" \
-  atpull"%atclone" multisrc"shell/{completion,key-bindings}.zsh" id-as"junegunn/fzf_completions" \
-  pick"/dev/null"
-zi light junegunn/fzf
+zinit lucid as=program pick="$ZPFX/bin/(fzf|fzf-tmux)" \
+    atclone="cp shell/completion.zsh _fzf_completion; \
+      cp bin/(fzf|fzf-tmux) $ZPFX/bin" \
+    make="PREFIX=$ZPFX install" for \
+        junegunn/fzf
 
-zi ice wait"1" lucid
-zi light Aloxaf/fzf-tab
+zinit ice wait lucid
+zinit light Aloxaf/fzf-tab
 
-zi ice as"command" from"gh-r" \
-  atclone"./starship init zsh > init.zsh; ./starship completions zsh > _starship" \
-  atpull"%atclone" src"init.zsh"
-zi light starship/starship
-
-zi ice lucid wait"1" lucid atload"!_zsh_autosuggest_start"
-zi load "zsh-users/zsh-autosuggestions"
-zi ice wait"1" atinit"zpcompinit; zpcdreplay" lucid
-zi light zdharma-continuum/fast-syntax-highlighting
 zi light zsh-users/zsh-history-substring-search
   zmodload zsh/terminfo
   [ -n "${terminfo[kcuu1]}" ] && bindkey "${terminfo[kcuu1]}" history-substring-search-up
@@ -179,12 +176,24 @@ if command_exists kubectl; then
 fi
 
 if command_exists eza; then
-  unalias -m 'll'
+  zi ice from'gh-r' as'program' sbin'**/eza -> eza' atclone'cp -vf completions/eza.zsh _eza'
+  zi light eza-community/eza
   unalias -m 'l'
   unalias -m 'la'
+  unalias -m 'll'
+  unalias -m 'llm'
   unalias -m 'ls'
-  alias ls='eza -G  --color auto --icons -a -s type'
-  alias ll='eza -l --color always --icons -a -s type'
+  unalias -m 'lt'
+  unalias -m 'lx'
+  unalias -m 'tree'
+  alias l='eza --git-ignore $eza_params'
+  alias la='eza -lbhHigUmuSa'
+  alias ll='eza --all --header --long $eza_params'
+  alias llm='eza --all --header --long --sort=modified $eza_params'
+  alias ls='eza $eza_params'
+  alias lt='eza --tree $eza_params'
+  alias lx='eza -lbhHigUmuSa@'
+  alias tree='eza --tree $eza_params'
 fi
 
 if command_exists nvim; then

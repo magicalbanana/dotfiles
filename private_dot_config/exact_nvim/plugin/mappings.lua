@@ -50,6 +50,9 @@ as.augroup('AddTerminalMappings', {
 xnoremap('@', function()
   vim.ui.input({ prompt = 'Macro Register: ' }, function(reg) vim.cmd([['<,'>normal @]] .. reg) end)
 end, { silent = false })
+
+nnoremap('<F2>', ':', { desc = 'colonless entrance to command mode' })
+nnoremap('<F3>', '@:', { desc = 'colonless replaying of recent command' })
 --}}}
 ------------------------------------------------------------------------------
 -- Credit: JGunn Choi ?il | inner line
@@ -295,24 +298,28 @@ vnoremap('$', 'g_')
 -- NOTE: this is a recursive mapping so anything bound (by a plugin) to <esc> still works
 imap('jk', [[col('.') == 1 ? '<esc>' : '<esc>l']], { expr = true })
 -- Toggle top/center/bottom
-nmap('zz', [[(winline() == (winheight (0) + 1)/ 2) ?  'zt' : (winline() == 1)? 'zb' : 'zz']], { expr = true })
+nmap(
+  'zz',
+  [[(winline() == (winheight (0) + 1)/ 2) ?  'zt' : (winline() == 1)? 'zb' : 'zz']],
+  { expr = true }
+)
 
 -----------------------------------------------------------------------------//
 -- Open Common files
 -----------------------------------------------------------------------------//
-nnoremap('<leader>ev', [[<Cmd>edit $MYVIMRC<CR>]], { desc = 'open $VIMRC' })
-nnoremap('<leader>ez', '<Cmd>edit $ZDOTDIR/.zshrc<CR>', { desc = 'open zshrc' })
-nnoremap('<leader>et', '<Cmd>edit $XDG_CONFIG_HOME/tmux/tmux.conf<CR>', {
-  desc = 'open tmux.conf',
-})
-nnoremap('<leader>ep', fmt('<Cmd>edit %s/lua/as/plugins/init.lua<CR>', fn.stdpath('config')), {
-  desc = 'open plugins file',
-})
--- This line allows the current file to source the vimrc allowing me use bindings as they're added
-nnoremap('<leader>sv', [[<Cmd>source $MYVIMRC<cr> <bar> :lua vim.notify('Sourced init.vim')<cr>]], {
-  desc = 'source $VIMRC',
-})
-nnoremap('<leader>yf', ":let @*=expand('%:p')<CR>", { desc = 'yank file path into the clipboard' })
+-- nnoremap('<leader>ev', [[<Cmd>edit $MYVIMRC<CR>]], { desc = 'open $VIMRC' })
+-- nnoremap('<leader>ez', '<Cmd>edit $ZDOTDIR/.zshrc<CR>', { desc = 'open zshrc' })
+-- nnoremap('<leader>et', '<Cmd>edit $XDG_CONFIG_HOME/tmux/tmux.conf<CR>', {
+--   desc = 'open tmux.conf',
+-- })
+-- nnoremap('<leader>ep', fmt('<Cmd>edit %s/lua/as/plugins/init.lua<CR>', fn.stdpath('config')), {
+--   desc = 'open plugins file',
+-- })
+-- -- This line allows the current file to source the vimrc allowing me use bindings as they're added
+-- nnoremap('<leader>sv', [[<Cmd>source $MYVIMRC<cr> <bar> :lua vim.notify('Sourced init.vim')<cr>]], {
+--   desc = 'source $VIMRC',
+-- })
+-- nnoremap('<leader>yf', ":let @*=expand('%:p')<CR>", { desc = 'yank file path into the clipboard' })
 -----------------------------------------------------------------------------//
 -- Quotes
 -----------------------------------------------------------------------------//
@@ -332,14 +339,20 @@ nnoremap('cN', '*``cgN')
 -- 2. Hit cq to start recording the macro.
 -- 3. Once you are done with the macro, go back to normal mode.
 -- 4. Hit Enter to repeat the macro over search matches.
-function as.mappings.setup_map() nnoremap('M', [[:nnoremap M n@z<CR>q:<C-u>let @z=strpart(@z,0,strlen(@z)-1)<CR>n@z]]) end
+function as.mappings.setup_map()
+  nnoremap('M', [[:nnoremap M n@z<CR>q:<C-u>let @z=strpart(@z,0,strlen(@z)-1)<CR>n@z]])
+end
 
 vim.g.mc = vim.keycode([[y/\V<C-r>=escape(@", '/')<CR><CR>]])
 xnoremap('cn', [[g:mc . "``cgn"]], { expr = true, silent = true })
 xnoremap('cN', [[g:mc . "``cgN"]], { expr = true, silent = true })
 nnoremap('cq', [[:\<C-u>call v:lua.as.mappings.setup_map()<CR>*``qz]])
 nnoremap('cQ', [[:\<C-u>call v:lua.as.mappings.setup_map()<CR>#``qz]])
-xnoremap('cq', [[":\<C-u>call v:lua.as.mappings.setup_map()<CR>gv" . g:mc . "``qz"]], { expr = true })
+xnoremap(
+  'cq',
+  [[":\<C-u>call v:lua.as.mappings.setup_map()<CR>gv" . g:mc . "``qz"]],
+  { expr = true }
+)
 xnoremap(
   'cQ',
   [[":\<C-u>call v:lua.as.mappings.setup_map()<CR>gv" . substitute(g:mc, '/', '?', 'g') . "``qz"]],
@@ -389,7 +402,10 @@ inoremap('<s-tab>', [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]], { expr = true })
 -----------------------------------------------------------------------------//
 -- Commands
 -----------------------------------------------------------------------------//
-command('ToggleBackground', function() vim.o.background = vim.o.background == 'dark' and 'light' or 'dark' end)
+command(
+  'ToggleBackground',
+  function() vim.o.background = vim.o.background == 'dark' and 'light' or 'dark' end
+)
 nnoremap('<leader>Ow', function()
   vim.wo.wrap = not vim.wo.wrap
   vim.notify('wrap ' .. (vim.o.wrap and 'on' or 'off'))

@@ -11,26 +11,29 @@ return {
         view_options = {
           show_hidden = true,
         },
+        use_default_keymaps = false,
+        delete_to_trash = true,
         keymaps = {
-          ['<leader>os'] = {
+          ['<CR>'] = 'actions.select',
+          ['<C-v>'] = {
             'actions.select',
             opts = { vertical = true },
             desc = 'Open the entry in a vertical split',
           },
-          ['<leader>oh'] = {
+          ['<C-h>'] = {
             'actions.select',
             opts = { horizontal = true },
             desc = 'Open the entry in a horizontal split',
           },
-          ['<leader>ot'] = {
+          ['<C-t>'] = {
             'actions.select',
             opts = { tab = true },
             desc = 'Open the entry in new tab',
           },
-          ['<leader>op'] = 'actions.preview',
-          ['<leader>oc'] = 'actions.close',
-          ['<leader>or'] = 'actions.refresh',
-          ['<leader>otd'] = {
+          ['<localleader>op'] = 'actions.preview',
+          ['<localleader>oc'] = 'actions.close',
+          ['<localleader>or'] = 'actions.refresh',
+          ['<localleader>otd'] = {
             desc = 'Toggle file detail view',
             callback = function()
               detail = not detail
@@ -41,10 +44,17 @@ return {
               end
             end,
           },
+          ['-'] = { 'actions.parent', mode = 'n' },
+          ['_'] = { 'actions.open_cwd', mode = 'n' },
+          ['`'] = { 'actions.cd', mode = 'n' },
+          ['~'] = { 'actions.cd', opts = { scope = 'tab' }, mode = 'n' },
+          ['gs'] = { 'actions.change_sort', mode = 'n' },
+          ['gx'] = 'actions.open_external',
+          ['g.'] = { 'actions.toggle_hidden', mode = 'n' },
+          ['g\\'] = { 'actions.toggle_trash', mode = 'n' },
         },
       })
     end,
-    delete_to_trash = true,
     keys = {
       { '-', '<Cmd>Oil<CR>', mode = 'n', desc = 'Open Oil parent directory' },
     },
