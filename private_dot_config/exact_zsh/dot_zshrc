@@ -57,7 +57,7 @@ zinit load 'zsh-users/zsh-history-substring-search'
 zinit ice wait atload'_history_substring_search_config'
 
 zinit ice lucid wait as"completion" blockf has"asdf"
-zinit snippet https://raw.githubusercontent.com/asdf-vm/asdf/master/completions/_asdf
+zinit snippet https://raw.githubusercontent.com/asdf-vm/asdf/refs/heads/master/cli/completions/asdf.zsh
 zinit ice lucid wait as'completion' blockf has'cargo'
 zinit snippet https://github.com/rust-lang/cargo/blob/master/src/etc/_cargo
 zinit ice lucid wait as"completion" blockf has"docker"
