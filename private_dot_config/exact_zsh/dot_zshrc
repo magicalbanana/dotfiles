@@ -86,7 +86,7 @@ zinit snippet "${ZDOTDIR}/completions/_kind"
 zinit ice lucid wait as'completion' blockf has'rg'
 zinit snippet "${ZDOTDIR}/completions/_rg"
 
-zinit has'zoxide' wait lucid for \
+zinit has'zoxide' wait lucid for atload="eval $(zoxide init --cmd cd zsh)" \
   z-shell/zsh-zoxide
 
 zinit has'fzf' wait lucid for \
