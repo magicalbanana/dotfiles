@@ -257,7 +257,7 @@ cnoremap('::', "<C-r>=fnameescape(expand('%:p:h'))<cr>/")
 -----------------------------------------------------------------------------//
 -- NOTE: this uses write specifically because we need to trigger a filesystem event
 -- even if the file isn't changed so that things like hot reload work
-nnoremap('<c-s>', '<Cmd>silent! write ++p<CR>')
+nnoremap('<F4>', '<Cmd>silent! write ++p<CR>')
 -- Write and quit all files, ZZ is NOT equivalent to this
 nnoremap('qa', '<cmd>qa<CR>')
 ------------------------------------------------------------------------------

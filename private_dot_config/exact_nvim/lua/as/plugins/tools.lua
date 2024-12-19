@@ -5,39 +5,6 @@ return {
     lazy = false,
   },
   {
-    'frankroeder/parrot.nvim',
-    lazy = false,
-    dependencies = {
-      'ibhagwan/fzf-lua',
-      'nvim-lua/plenary.nvim',
-    },
-    cond = os.getenv('OPENAI_API_KEY_PARROT_NVIM') ~= nil or os.getenv(
-      'ANTHROPIC_API_KEY_PARROT_NVIM'
-    ) ~= nil or os.getenv('GEMINI_API_KEY_PARROT_NVIM') ~= nil,
-    config = function()
-      require('parrot').setup({
-        providers = {
-          openai = {
-            api_key = os.getenv('OPENAI_API_KEY_PARROT_NVIM'),
-          },
-          anthropic = {
-            api_key = os.getenv('ANTHROPIC_API_KEY_PARROT_NVIM'),
-          },
-          gemini = {
-            api_key = os.getenv('GEMINI_API_KEY_PARROT_NVIM'),
-          },
-        },
-        cmd_prefx = parrot_cmd_prefix,
-      })
-    end,
-  },
-  -- {
-  --   'pasky/claude.vim',
-  --   lazy = false,
-  --   cond = os.getenv('ANTHROPIC_API_KEY_CLAUDE_VIM') ~= nil,
-  --   init = function() vim.g.claude_api_key = os.getenv('ANTHROPIC_API_KEY_CLAUDE_VIM') end,
-  -- },
-  {
     'stevearc/conform.nvim',
     lazy = false,
     event = 'BufReadPre',
