@@ -3,6 +3,8 @@ local highlight = as.highlight
 local icons = as.ui.icons
 local autocmd = api.nvim_create_autocmd
 
+local oil_detail_view = false
+
 return {
   {
     'stevearc/oil.nvim',
@@ -13,6 +15,17 @@ return {
         },
         use_default_keymaps = false,
         delete_to_trash = true,
+        case_insensitive = true,
+        win_options = {
+          wrap = false,
+          signcolumn = "yes",
+          cursorcolumn = true,
+          foldcolumn = "0",
+          spell = true,
+          list = true,
+          conceallevel = 3,
+          concealcursor = "nvic",
+        },
         keymaps = {
           ["g?"] = { "actions.show_help", mode = "n" },
           ['<CR>'] = 'actions.select',
@@ -37,8 +50,8 @@ return {
           ['<localleader>od'] = {
             desc = 'Toggle file detail view',
             callback = function()
-              detail = not detail
-              if detail then
+              oil_detail_view = not oil_detail_view
+              if oil_detail_view then
                 require('oil').set_columns({ 'icon', 'permissions', 'size', 'mtime' })
               else
                 require('oil').set_columns({ 'icon' })

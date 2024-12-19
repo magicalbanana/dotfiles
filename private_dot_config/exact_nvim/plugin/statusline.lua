@@ -25,10 +25,9 @@ local state = { lsp_clients_visible = true }
 local str = require('as.strings')
 
 local section, spacer, display = str.section, str.spacer, str.display
-local icons, lsp, highlight, decorations = as.ui.icons, as.ui.lsp, as.highlight, as.ui.decorations
+local icons, highlight, decorations = as.ui.icons, as.highlight, as.ui.decorations
 local api, fn, fs, fmt, strwidth = vim.api, vim.fn, vim.fs, string.format, vim.api.nvim_strwidth
-local P, falsy = as.ui.palette, as.falsy
-
+local falsy = as.falsy
 local sep = package.config:sub(1, 1)
 local space = ' '
 ----------------------------------------------------------------------------------------------------
@@ -217,10 +216,7 @@ local function adopt_window_highlights()
     local name = part.hl(api.nvim_get_current_win())
     local hl = highlight.get(name)
     if not falsy(hl) then return end
-    highlight.set(name, {
-      inherit = part.fallback,
-      bg = { from = curr_winhl.StatusLine, attr = 'bg' },
-    })
+    highlight.set(name, { inherit = part.fallback, bg = { from = curr_winhl.StatusLine, attr = 'bg' } })
   end
 end
 
