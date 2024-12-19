@@ -14,18 +14,19 @@ return {
         use_default_keymaps = false,
         delete_to_trash = true,
         keymaps = {
+          ["g?"] = { "actions.show_help", mode = "n" },
           ['<CR>'] = 'actions.select',
-          ['<C-v>'] = {
+          ['<localleader>ov'] = {
             'actions.select',
             opts = { vertical = true },
             desc = 'Open the entry in a vertical split',
           },
-          ['<C-h>'] = {
+          ['<localleader>os'] = {
             'actions.select',
             opts = { horizontal = true },
             desc = 'Open the entry in a horizontal split',
           },
-          ['<C-t>'] = {
+          ['<localleader>ot'] = {
             'actions.select',
             opts = { tab = true },
             desc = 'Open the entry in new tab',
@@ -33,7 +34,7 @@ return {
           ['<localleader>op'] = 'actions.preview',
           ['<localleader>oc'] = 'actions.close',
           ['<localleader>or'] = 'actions.refresh',
-          ['<localleader>otd'] = {
+          ['<localleader>od'] = {
             desc = 'Toggle file detail view',
             callback = function()
               detail = not detail
