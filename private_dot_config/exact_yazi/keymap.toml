@@ -78,7 +78,7 @@ prepend_keymap = [
   ], run = "arrow 1" },
 ]
 
-[select]
+[pick]
 
 prepend_keymap = [
   { on = [
