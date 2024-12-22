@@ -23,11 +23,11 @@ disabled = false
 
 # Third param
 [directory]
-truncation_length = 5
+truncation_length = 8
 read_only = "🔒"
 style = "purple"
 truncate_to_repo = false
-truncation_symbol = "~/../"
+truncation_symbol = "~/.../"
 
 # Before all the version info (go, rust, python, nodejs, ruby, etc.)
 [git_status]
@@ -45,7 +45,7 @@ disabled = false
 
 # Prompt: optional param 1
 [time]
-format = '[ ╟](bright-yellow) 🕙[\[ $time \]]($style) '
+format = '[ ╟](bright-yellow) [\[$time\]]($style) '
 time_format = "%T"
 style = "bright-cyan"
 disabled = false
@@ -55,7 +55,7 @@ disabled = false
 # Unicode Character “╙” (U+2559)
 success_symbol = "\n [╙ λ](bold yellow)"
 error_symbol = "\n [╙ ](bold red)"
-vimcmd_symbol = " "
+vimcmd_symbol = "\n [╙ ](bold green)"
 
 # SYMBOLS
 [status]
