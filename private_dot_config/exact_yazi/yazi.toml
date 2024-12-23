@@ -44,7 +44,6 @@ rules = [
     "open",
     "reveal",
   ] },
-
   { mime = "text/*", use = [
     "edit",
     "reveal",

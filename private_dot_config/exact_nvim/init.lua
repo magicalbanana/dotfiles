@@ -96,7 +96,7 @@ require('lazy').setup({
   },
   concurrency = vim.uv.available_parallelism() * 2,
   ui = { border = as.ui.current.border },
-  defaults = { lazy = false },
+  defaults = { lazy = true },
   checker = {
     concurrency = 15,
     enabled = true,

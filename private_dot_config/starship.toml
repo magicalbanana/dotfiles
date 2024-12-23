@@ -3,7 +3,56 @@
 command_timeout = 2000
 add_newline = true
 
-format = '$all$time$cmd_duration$status$character'
+format = """
+$all\
+$cmd_duration\
+$c\
+$cmake\
+$cobol\
+$daml\
+$dart\
+$deno\
+$dotnet\
+$elixir\
+$elm\
+$erlang\
+$fennel\
+$gleam\
+$golang\
+$guix_shell\
+$haskell\
+$haxe\
+$helm\
+$java\
+$julia\
+$kotlin\
+$gradle\
+$lua\
+$nim\
+$nodejs\
+$ocaml\
+$opa\
+$perl\
+$php\
+$pulumi\
+$purescript\
+$python\
+$quarto\
+$raku\
+$rlang\
+$red\
+$ruby\
+$rust\
+$scala\
+$solidity\
+$swift\
+$terraform\
+$typst\
+$vlang\
+$vagrant\
+$zig\
+$status\
+$character"""
 
 ## FIRST LINE/ROW: Info & Status
 # First param ─┌
@@ -41,7 +90,7 @@ deleted = "x"
 [cmd_duration]
 min_time = 1
 format = "[took](bold yellow) [$duration]($style)"
-disabled = false
+disabled = true
 
 # Prompt: optional param 1
 [time]
@@ -140,6 +189,7 @@ symbol = " "
 
 [lua]
 symbol = " "
+detect_files = ['.lua-version', '.tool-versions', '.luarc.json']
 
 [memory_usage]
 symbol = "󰍛 "
