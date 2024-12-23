@@ -1,39 +1,50 @@
 # vim: ft=zsh
 
+# Profiling Start
+# zmodload zsh/zprof
+
 source "${HOME}/.shtils"
 
-echo-eval() { echo_eval "$@" }
-echo-run() { echo_run "$@" }
-safe-run() { safe_run "$@" }
+function error() { print -P "%F{160}[ERROR] ---%f%b $1" >&2 && exit 1; }
+function info() { print -P "%F{34}[INFO] ---%f%b $1"; }
 
-echo-array() {
-  local variable_name="${1:-path}"
-  local count="${#${(P)variable_name}}"
-  local width="${#count}"
-  local i
-  for i in {1..$count}; do
-    echo "${(l:$width:)i}: ${${(P)variable_name}[$i]}"
-  done
-}
+typeset -gAH ZINIT;
+ZINIT[HOME_DIR]="${XDG_DATA_HOME:-${HOME}/.local/share}/zsh/zinit"
+ZPFX=$ZINIT[HOME_DIR]/polaris
+ZINIT[BIN_DIR]=$ZINIT[HOME_DIR]/zinit.git
+ZINIT[OPTIMIZE_OUT_DISK_ACCESSES]=1
+ZINIT[COMPLETIONS_DIR]=$ZINIT[HOME_DIR]/completions
+ZINIT[SNIPPETS_DIR]=$ZINIT[HOME_DIR]/snippets
+ZINIT[ZCOMPDUMP_PATH]=$ZINIT[HOME_DIR]/zcompdump
+ZINIT[PLUGINS_DIR]=$ZINIT[HOME_DIR]/plugins
+if [[ ! -e $ZINIT[BIN_DIR] ]]; then
+  info 'Downloading Zinit' \
+    && command git clone \
+        https://github.com/zdharma-continuum/zinit.git \
+        $ZINIT[BIN_DIR] \
+    || error 'Unable to download zinit' \
+    && info 'Installing Zinit' \
+    && command chmod g-rwX $ZINIT[HOME_DIR] \
+    && zcompile $ZINIT[BIN_DIR]/zinit.zsh \
+    && info 'Successfully installed Zinit' \
+    || error 'Unable to install Zinit'
+fi
+source $ZINIT[BIN_DIR]/zinit.zsh \
+  && autoload -Uz _zinit \
+  && (( ${+_comps} )) \
+  && _comps[zinit]=_zinit
 
-echo-assoc-array() {
-  local key val var_name="$1"
-  for key val ("${(@Pkv)var_name}"); do
-    echo "$key -> $val"
-  done
-}
+zinit lucid for \
+  as"command" \
+  from"gh-r" \
+  atload'eval "$(starship init zsh)"' \
+  starship/starship
 
-alias echo-path="echo-array path"
-alias echo-fpath="echo-array fpath"
-
-typeset -A ZINIT
-ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
-[ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
-[ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
-source "${ZINIT_HOME}/zinit.zsh"
-
+zinit ice wait lucid
 zinit snippet OMZL::clipboard.zsh
+zinit ice wait lucid
 zinit snippet OMZL::directories.zsh
+zinit ice wait lucid
 zinit snippet OMZ::plugins/git/git.plugin.zsh
 
 zinit wait lucid for \
@@ -50,11 +61,9 @@ zinit wait lucid as=program pick="$ZPFX/bin/(fzf|fzf-tmux)" \
     make="PREFIX=$ZPFX install" for \
         junegunn/fzf
 
-zinit ice from"gh-r" as"command" atload'eval "$(starship init zsh)"'
-zinit load starship/starship
-
+zinit ice wait lucid
 zinit load 'zsh-users/zsh-history-substring-search'
-zinit ice wait atload'_history_substring_search_config'
+zinit ice wait lucid atload'_history_substring_search_config'
 
 zinit ice lucid wait as"completion" blockf has"asdf"
 zinit snippet https://raw.githubusercontent.com/asdf-vm/asdf/refs/tags/v0.14.1/completions/_asdf
@@ -113,13 +122,15 @@ zi light zsh-users/zsh-history-substring-search
   bindkey -M vicmd 'k' history-substring-search-up
   bindkey -M vicmd 'j' history-substring-search-down
 
-autoload -Uz compinit
+autoload -U compinit && compinit
 
-if [ $(date +'%j') != $(date -r ${ZDOTDIR:-$HOME}/.zcompdump +'%j') ]; then
-  compinit;
-else
-  compinit -C;
-fi
+zinit cdreplay -q
+
+# if [ $(date +'%j') != $(date -r ${ZDOTDIR:-$HOME}/.zcompdump +'%j') ]; then
+#   compinit;
+# else
+#   compinit -C;
+# fi
 
 if command_exists kubectl; then
   source <(kubectl completion zsh)
@@ -241,3 +252,6 @@ source-env() {
 reload-shell() {
   exec zsh -il
 }
+
+# Profiling End
+# zprof
