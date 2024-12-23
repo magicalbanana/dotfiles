@@ -99,9 +99,6 @@ zinit snippet "${ZDOTDIR}/completions/_kind"
 zinit ice lucid wait as'completion' blockf has'rg'
 zinit snippet "${ZDOTDIR}/completions/_rg"
 
-zinit has'zoxide' wait lucid for atload="eval $(zoxide init --cmd cd zsh)" \
-  z-shell/zsh-zoxide
-
 zinit has'fzf' wait lucid for \
   unixorn/fzf-zsh-plugin
 
@@ -134,14 +131,6 @@ else
 fi
 zinit cdreplay -q
 
-if command_exists kubectl; then
-  source <(kubectl completion zsh)
-fi
-
-if command_exists helm; then
-  source <(helm completion zsh)
-fi
-
 HISTFILE="${HOME}/.local/share/zsh/history"
 
 # make some commands not show up in history
@@ -171,6 +160,15 @@ setopt autocd                 # no need ot put CD when traversing directories
 unsetopt BEEP
 setopt vi
 
+if command_exists kubectl; then
+  alias ktl="kubectl"
+  source <(kubectl completion zsh)
+fi
+
+if command_exists helm; then
+  source <(helm completion zsh)
+fi
+
 if command_exists docker; then
   if docker compose >/dev/null 2>&1; then
     alias dcomp="docker compose"
@@ -179,10 +177,6 @@ if command_exists docker; then
       alias dcomp="docker-compose"
     fi
   fi
-fi
-
-if command_exists kubectl; then
-  alias ktl="kubectl"
 fi
 
 if command_exists eza; then
@@ -224,6 +218,10 @@ if command_exists broot; then
   if [ -f "${br_path}" ]; then
     source "${br_path}"
   fi
+fi
+
+if command_exists zoxide; then
+  eval "$(zoxide init --cmd cd zsh)"
 fi
 
 if command_exists chezmoi; then
