@@ -5,6 +5,8 @@ add_newline = true
 
 format = """
 $all\
+$time\
+$status\
 $cmd_duration\
 $c\
 $cmake\
@@ -51,7 +53,6 @@ $typst\
 $vlang\
 $vagrant\
 $zig\
-$status\
 $character"""
 
 ## FIRST LINE/ROW: Info & Status
@@ -108,9 +109,7 @@ vimcmd_symbol = "\n [╙ ](bold green)"
 
 # SYMBOLS
 [status]
-# format = ' [\[$symbol$status$common_meaning$signal_name$maybe_int\]]($style)'
-# format = ' [\[$symbol\]\$?:](bold green) [$status]($style)'
-format = ' [\[[>_: ](bold blue)[$status](bold yellow)\]](bold red)'
+format = '[\[[>_: ](bold blue)[$status](bold yellow)\]](bold red) '
 map_symbol = true
 disabled = false
 
