@@ -9,7 +9,7 @@ return {
   {
     'mikavilpas/yazi.nvim',
     lazy = false,
-    even = 'VeryLazy',
+    event = 'VeryLazy',
     opts = {
       log_level = vim.log.levels.DEBUG,
       -- if you want to open yazi instead of netrw, see below for more info

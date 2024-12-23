@@ -59,12 +59,6 @@ zinit wait lucid for \
  atload"!_zsh_autosuggest_start" \
     zsh-users/zsh-autosuggestions
 
-zinit wait lucid as=program pick="$ZPFX/bin/(fzf|fzf-tmux)" \
-    atclone="cp shell/completion.zsh _fzf_completion; \
-      cp bin/(fzf|fzf-tmux) $ZPFX/bin" \
-    make="PREFIX=$ZPFX install" for \
-        junegunn/fzf
-
 zinit ice wait lucid
 zinit load 'zsh-users/zsh-history-substring-search'
 zinit ice wait lucid atload'_history_substring_search_config'
@@ -90,6 +84,8 @@ zinit light srijanshetty/zsh-pandoc-completion
 zinit ice lucid wait as'completion' blockf has'rustc'
 zinit snippet https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/rust/_rustc
 
+zinit ice lucid wait as'completion' blockf has'fzf'
+zinit snippet "${ZDOTDIR}/completions/_fzf"
 zinit ice lucid wait as'completion' blockf has'chezmoi'
 zinit snippet "${ZDOTDIR}/completions/_chezmoi"
 zinit ice lucid wait as'completion' blockf has'just'
@@ -99,20 +95,37 @@ zinit snippet "${ZDOTDIR}/completions/_kind"
 zinit ice lucid wait as'completion' blockf has'rg'
 zinit snippet "${ZDOTDIR}/completions/_rg"
 
-zinit has'fzf' wait lucid for \
-  unixorn/fzf-zsh-plugin
+if command_exists eza; then
+  zinit ice lucid wait as'completion'
+  zinit snippet https://raw.githubusercontent.com/eza-community/eza/refs/heads/main/completions/zsh/_eza
+  unalias -m 'l'
+  unalias -m 'la'
+  unalias -m 'll'
+  unalias -m 'llm'
+  unalias -m 'ls'
+  unalias -m 'lt'
+  unalias -m 'lx'
+  unalias -m 'tree'
+  alias l='eza --git-ignore $eza_params'
+  alias la='eza -lbhHigUmuSa'
+  alias ll='eza --all --header --long $eza_params'
+  alias llm='eza --all --header --long --sort=modified $eza_params'
+  alias ls='eza $eza_params'
+  alias lt='eza --tree $eza_params'
+  alias lx='eza -lbhHigUmuSa@'
+  alias tree='eza --tree $eza_params'
+fi
 
-zinit ice wait lucid
-zinit load wfxr/forgit
+if command_exists fzf; then
+  source <(fzf --zsh)
+  zinit ice wait lucid
+  zinit load Aloxaf/fzf-tab
+fi
 
-zinit lucid as=program pick="$ZPFX/bin/(fzf|fzf-tmux)" \
-    atclone="cp shell/completion.zsh _fzf_completion; \
-      cp bin/(fzf|fzf-tmux) $ZPFX/bin" \
-    make="PREFIX=$ZPFX install" for \
-        junegunn/fzf
-
-zinit ice wait lucid
-zinit light Aloxaf/fzf-tab
+if command_exists git; then
+  zinit ice wait lucid
+  zinit load wfxr/forgit
+fi
 
 zi light zsh-users/zsh-history-substring-search
   zmodload zsh/terminfo
@@ -177,27 +190,6 @@ if command_exists docker; then
       alias dcomp="docker-compose"
     fi
   fi
-fi
-
-if command_exists eza; then
-  zi ice from'gh-r' as'program' sbin'**/eza -> eza' atclone'cp -vf completions/eza.zsh _eza'
-  zi light eza-community/eza
-  unalias -m 'l'
-  unalias -m 'la'
-  unalias -m 'll'
-  unalias -m 'llm'
-  unalias -m 'ls'
-  unalias -m 'lt'
-  unalias -m 'lx'
-  unalias -m 'tree'
-  alias l='eza --git-ignore $eza_params'
-  alias la='eza -lbhHigUmuSa'
-  alias ll='eza --all --header --long $eza_params'
-  alias llm='eza --all --header --long --sort=modified $eza_params'
-  alias ls='eza $eza_params'
-  alias lt='eza --tree $eza_params'
-  alias lx='eza -lbhHigUmuSa@'
-  alias tree='eza --tree $eza_params'
 fi
 
 if command_exists nvim; then

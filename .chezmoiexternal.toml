@@ -8,9 +8,15 @@ url = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
 type = "file"
 exact = true
 refreshPeriod = "168h"
-[".config/fzf/fzf-zsh-plugin"]
-url = "https://github.com/unixorn/fzf-zsh-plugin.git"
-type = "git-repo"
+[".config/zsh/completions/_fzf"]
+url = "https://raw.githubusercontent.com/junegunn/fzf/refs/heads/master/shell/completion.zsh"
+type = "file"
+exact = true
+refreshPeriod = "168h"
+[".config/zsh/completions/_chezmoi"]
+url = "https://raw.githubusercontent.com/twpayne/chezmoi/refs/heads/master/completions/chezmoi.zsh"
+type = "file"
+exact = true
 refreshPeriod = "168h"
 [".config/yazi/plugins/starship.yazi"]
 url = "https://github.com/Rolv-Apneseth/starship.yazi.git"
