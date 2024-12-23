@@ -8,6 +8,10 @@ source "${HOME}/.shtils"
 function error() { print -P "%F{160}[ERROR] ---%f%b $1" >&2 && exit 1; }
 function info() { print -P "%F{34}[INFO] ---%f%b $1"; }
 
+if [ ! -d "${HOME}/.local/share/zsh" ]; then
+  mkdir -p "${HOME}/.local/share/zsh"
+fi
+
 typeset -gAH ZINIT;
 ZINIT[HOME_DIR]="${XDG_DATA_HOME:-${HOME}/.local/share}/zsh/zinit"
 ZPFX=$ZINIT[HOME_DIR]/polaris
@@ -122,15 +126,13 @@ zi light zsh-users/zsh-history-substring-search
   bindkey -M vicmd 'k' history-substring-search-up
   bindkey -M vicmd 'j' history-substring-search-down
 
-autoload -U compinit && compinit
-
+autoload -Uz compinit
+if [ $(date +'%j') != $(date -r ${ZDOTDIR:-$HOME}/.zcompdump +'%j') ]; then
+  compinit;
+else
+  compinit -C;
+fi
 zinit cdreplay -q
-
-# if [ $(date +'%j') != $(date -r ${ZDOTDIR:-$HOME}/.zcompdump +'%j') ]; then
-#   compinit;
-# else
-#   compinit -C;
-# fi
 
 if command_exists kubectl; then
   source <(kubectl completion zsh)
@@ -140,9 +142,6 @@ if command_exists helm; then
   source <(helm completion zsh)
 fi
 
-if [ ! -d "${HOME}/.local/share/zsh" ]; then
-  mkdir -p "${HOME}/.local/share/zsh"
-fi
 HISTFILE="${HOME}/.local/share/zsh/history"
 
 # make some commands not show up in history
