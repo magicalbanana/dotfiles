@@ -205,7 +205,7 @@ symbol = " "
 
 [nodejs]
 symbol = "󰎙 "
-format = "via [ Node.js $version](bold green) "
+format = "via [$symbol($version )]($style)"
 detect_files = ["package.json", ".node-version", ".tool-versions", ".nvmrc"]
 detect_folders = ["node_modules"]
 
