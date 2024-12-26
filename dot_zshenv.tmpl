@@ -1,6 +1,10 @@
 # -*- mode: sh; sh-set-shell: zsh -*-
 # vim: ft=zsh
 
+source "${HOME}/.shtils"
+
+manual_pathmunge "/usr/local/man" before
+
 export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
 export ZDOTDIR=${ZDOTDIR:-$XDG_CONFIG_HOME/zsh}
 
@@ -8,12 +12,6 @@ export ZDOTDIR=${ZDOTDIR:-$XDG_CONFIG_HOME/zsh}
 if [[ ( "$SHLVL" -eq 1 && ! -o LOGIN ) && -s "${ZDOTDIR:-$HOME}/.zprofile" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprofile"
 fi
-
-{{ if eq .chezmoi.os "darwin" }}
-# https://github.com/Homebrew/brew/pull/10374
-export HOMEBREW_BOOTSNAP=1
-export HOMEBREW_NO_ANALYTICS=1
-{{ end }}
 
 # Lang stuff
 export LANG=en_US.UTF-8
@@ -29,11 +27,12 @@ export PAGER=less
 export MANPAGER='less -is'
 export LESSOPEN="|/usr/local/bin/lesspipe.sh %s"
 
-export MANPATH="/usr/local/man:$MANPATH"
-if which nvim >/dev/null; then
+if command_exists nvim; then
   export MANPAGER='nvim +Man!'
 fi
 
 export DEV_WORKSPACE_ROOT="${HOME}/dev-workspace"
+export REPOS_GITHUB="${DEV_WORKSPACE_ROOT}/repos/github"
+export REPOS_GITHUB_PERSONAL="${REPOS_GITHUB}/neumachen"
 export VCS_REPOSITORIES_DIR="${DEV_WORKSPACE_ROOT}/repos"
 export TASKWARRIOR_CONFIG="${XDG_CONFIG_HOME}/taskwarrior"

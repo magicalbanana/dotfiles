@@ -6,6 +6,12 @@ source "${HOME}/.shtils"
 if [ -f "${HOME}/.gnubin_path" ]; then
   source "${HOME}/.gnubin_path"
 fi
+{{ end -}}
+
+{{ if eq .chezmoi.os "darwin" -}}
+BREW_PREFIX=$([[ "$(arch)" == "arm64" ]] && echo "/opt/homebrew" || echo "/usr/local")
+BREW_HOME=$(${BREW_PREFIX}/bin/brew --prefix)
+pathmunge "${BREW_HOME}/bin" after
 {{- end }}
 
 if [ ! -d "${HOME}/.asdf" ]; then
@@ -14,9 +20,25 @@ if [ ! -d "${HOME}/.asdf" ]; then
 else
   source "${HOME}/.asdf/asdf.sh"
   if [ -d "${HOME}/.asdf/shims" ]; then
-    pathmunge "${HOME}/.asdf/shims"
+    pathmunge "${HOME}/.asdf/shims" before
   fi
 fi
+
+if command_exists aqua; then
+  pathmunge "$(aqua root-dir)/bin" after
+
+  export AQUA_GLOBAL_CONFIG="${HOME}/.config/aquaproj-aqua/aqua.yaml"
+fi
+
+if [ -z "$DEVBIN" ]; then
+  if [ ! -d "${HOME}/.devbin" ]; then
+    echo "DEVBIN dir does not exist, custom functions will fail"
+  else
+    export DEVBIN="${HOME}/.devbin"
+    pathmunge "${DEVBIN}" after
+  fi
+fi
+
 
 # Don't write python .pyc files, because they're not necessary and clutter
 # directories with binary files
@@ -98,8 +120,8 @@ if [[ ! -d "${fzf_zsh_plugin_path}/bin" ]]; then
 else
   export LOCAL_BIN="${LOCAL_BIN}:${fzf_zsh_plugin_path}/bin"
 fi
-pathmunge "${LOCAL_BIN}"
-pathmunge "${LOCAL_SBIN}"
+pathmunge "${LOCAL_BIN}" after
+pathmunge "${LOCAL_SBIN}" after
 
 if asdf where golang >/dev/null 2>&1; then
   GOBIN_PATH="$(asdf where golang)/bin"
@@ -113,34 +135,14 @@ if asdf where golang >/dev/null 2>&1; then
 
   go env -w GOBIN=$GOBIN_PATH
   export GOBIN_PATH
-  pathmunge "${GOBIN_PATH}"
+  pathmunge "${GOBIN_PATH}" after
 fi
 
-if [ -d "${HOME}/.cargo/bin" ]; then
-  pathmunge "${HOME}/.cargo/bin"
-fi
-
-if command_exists task; then
-  taskwarrior_data_dir="${HOME}/.local/share/task"
-  if [ -d "${HOME}/Documents/taskwarrior" ]; then
-    taskwarrior_data_dir="${HOME}/Documents/taskwarrior"
-  fi
-
-  export TASKWARRIOR_DATA="${taskwarrior_data_dir}"
-  export TASKRC="${HOME}/.config/taskwarrior/taskrc"
-
-  if command_exists taskd; then
-    export TASKDDATA="${HOME}/.config/taskwarrior/taskd"
-  fi
-
-  if command_exists taskwarrior-tui; then
-    alias taskui="taskwarrior-tui"
-  fi
-fi
-
+{{ if eq .chezmoi.os "darwin" -}}
 if [ -S "${HOME}/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock" ]; then
   export SSH_AUTH_SOCK="${HOME}/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
 fi
+{{ end -}}
 
 {{- if (hasKey . "envvars") }}
  {{ range .envvars }}

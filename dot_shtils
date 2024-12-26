@@ -30,31 +30,25 @@ pathmunge() {
 	fi
 }
 
-if [ -z "$DEVBIN" ]; then
-	if [ ! -d "${HOME}/.devbin" ]; then
-		echo "DEVBIN dir does not exist, custom functions will fail"
-	else
-		export DEVBIN="${HOME}/.devbin"
-		pathmunge "${DEVBIN}"
+manual_pathmunge() {
+	if ! echo "$MANPATH" | grep -Eq "(^|:)$1($|:)"; then
+		if [ "${2}" = "after" ]; then
+			MANPATH="${MANPATH}:${1}"
+		else
+			MANPATH="${1}:${MANPATH}"
+		fi
 	fi
-fi
+}
 
-# Tmux sessions
-alias default='new_or_switch_tab default ${HOME}'
-alias misc='default'
-
-alias ll='ls -l --color=auto'
-alias la='ls -la --color=auto'
-
-alias vim.='vim .'
-
-if ! command_exists sudoedit; then
-	alias sudoedit='sudo --edit'
-fi
-
-if command_exists shfmt; then
-	alias my-shfmt="shfmt -i 2 -w -ci"
-fi
+info_pathmunge() {
+	if ! echo "$INFOPATH" | grep -Eq "(^|:)$1($|:)"; then
+		if [ "${2}" = "after" ]; then
+			INFOPATH="${INFOPATH}:${1}"
+		else
+			INFOPATH="${1}:${INFOPATH}"
+		fi
+	fi
+}
 
 # 1Password
 if command_exists op; then
@@ -76,8 +70,6 @@ bootstrap() {
 	op_signin || return "$?"
 	command bootstrap "$@"
 }
-
-alias c='clear'
 
 if command_exists brew; then
 	if [ -d "$PYENV_ROOT" ]; then
@@ -136,10 +128,6 @@ restart_sh() {
 	set -- "${1#-}"
 	set -- "$(command -v "$1")"
 
-	if command -v zplug >/dev/null 2>&1; then
-		echo_run zplug reinit
-	fi
-
 	if [ "$(jobs)" != "" ]; then
 		echo-warn "Current shell has backgrounded jobs. Not restarting ${1}"
 		return 1
@@ -182,8 +170,7 @@ new_or_switch_tmux() {
 	fi
 }
 
-alias exit='_exit'
-_exit() {
+_tmux_exit() {
 	# NOTE: The exit calls are prefixed with a \ so that they ignore alias
 	# expansion and prevent infinite loops
 	if [ "$TMUX" = "" ]; then

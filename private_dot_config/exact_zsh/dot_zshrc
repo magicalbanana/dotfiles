@@ -1,4 +1,5 @@
 # vim: ft=zsh
+# shellcheck shell=bash
 
 # Profiling Start
 # zmodload zsh/zprof
@@ -96,8 +97,8 @@ zinit ice lucid wait as'completion' blockf has'rg'
 zinit snippet "${ZDOTDIR}/completions/_rg"
 
 if command_exists eza; then
-  zinit ice lucid wait as'completion'
-  zinit snippet https://raw.githubusercontent.com/eza-community/eza/refs/heads/main/completions/zsh/_eza
+  zinit ice lucid wait as'completion' blockf
+  zinit snippet "${ZDOTDIR}/completions/_eza"
   unalias -m 'l'
   unalias -m 'la'
   unalias -m 'll'
@@ -173,36 +174,14 @@ setopt autocd                 # no need ot put CD when traversing directories
 unsetopt BEEP
 setopt vi
 
+source "${ZDOTDIR}/aliases"
+
 if command_exists kubectl; then
-  alias ktl="kubectl"
   source <(kubectl completion zsh)
 fi
 
 if command_exists helm; then
   source <(helm completion zsh)
-fi
-
-if command_exists docker; then
-  if docker compose >/dev/null 2>&1; then
-    alias dcomp="docker compose"
-  else
-    if command_exists docker-compose >/dev/null 2>&1; then
-      alias dcomp="docker-compose"
-    fi
-  fi
-fi
-
-if command_exists nvim; then
-  unalias -m 'vim'
-  alias vim='nvim'
-
-  export VISUAL='nvim'
-  export EDITOR='nvim'
-fi
-
-if command_exists bat; then
-  unalias -m 'cat'
-  alias cat='bat -pp'
 fi
 
 if command_exists broot; then
@@ -219,6 +198,10 @@ fi
 if command_exists chezmoi; then
   chemzoi_source_path=$(chezmoi source-path)
   export DOTFILES_DIR="$chemzoi_source_path"
+fi
+
+if command_exists starship; then
+  eval "$(starship init zsh)"
 fi
 
 source-env() {

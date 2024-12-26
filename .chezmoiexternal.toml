@@ -18,6 +18,11 @@ url = "https://raw.githubusercontent.com/twpayne/chezmoi/refs/heads/master/compl
 type = "file"
 exact = true
 refreshPeriod = "168h"
+[".config/zsh/completions/_eza"]
+url = "https://raw.githubusercontent.com/eza-community/eza/refs/heads/main/completions/zsh/_eza"
+type = "file"
+exact = true
+refreshPeriod = "168h"
 [".config/yazi/plugins/starship.yazi"]
 url = "https://github.com/Rolv-Apneseth/starship.yazi.git"
 type = "git-repo"
