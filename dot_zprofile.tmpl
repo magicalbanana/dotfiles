@@ -12,6 +12,7 @@ fi
 BREW_PREFIX=$([[ "$(arch)" == "arm64" ]] && echo "/opt/homebrew" || echo "/usr/local")
 BREW_HOME=$(${BREW_PREFIX}/bin/brew --prefix)
 pathmunge "${BREW_HOME}/bin" after
+pathmunge "${BREW_HOME}/sbin" after
 {{- end }}
 
 if [ ! -d "${HOME}/.asdf" ]; then
