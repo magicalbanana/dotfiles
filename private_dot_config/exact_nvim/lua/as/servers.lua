@@ -26,13 +26,7 @@ local servers = {
   buf_ls = {},
   prosemd_lsp = {},
   dockerls = {},
-  docker_compose_language_service = function()
-    local lspconfig = require('lspconfig')
-    return {
-      root_dir = lspconfig.util.root_pattern('docker-compose.yml'),
-      filetypes = { 'yaml' },
-    }
-  end,
+  docker_compose_language_service = {},
   graphql = {
     on_attach = function(client)
       -- Disable workspaceSymbolProvider because this prevents
@@ -80,6 +74,8 @@ local servers = {
       yaml = {
         customTags = {
           '!reference sequence', -- necessary for gitlab-ci.yaml files
+          -- home assistant tags
+          '!secret mapping',
         },
       },
     },
