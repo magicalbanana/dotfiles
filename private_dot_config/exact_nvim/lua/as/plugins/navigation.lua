@@ -1,14 +1,8 @@
-local fn, api = vim.fn, vim.api
-local highlight = as.highlight
-local icons = as.ui.icons
-local autocmd = api.nvim_create_autocmd
-
 local oil_detail_view = false
 
 return {
   {
     'mikavilpas/yazi.nvim',
-    lazy = false,
     event = 'VeryLazy',
     opts = {
       log_level = vim.log.levels.DEBUG,
@@ -31,6 +25,7 @@ return {
   },
   {
     'stevearc/oil.nvim',
+    event = 'VeryLazy',
     init = function()
       require('oil').setup({
         default_file_explorer = false,
@@ -99,7 +94,6 @@ return {
     },
     dependencies = {
       'nvim-tree/nvim-web-devicons',
-      'echasnovski/mini.icons',
     },
   },
   {
