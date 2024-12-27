@@ -51,8 +51,8 @@ xnoremap('@', function()
   vim.ui.input({ prompt = 'Macro Register: ' }, function(reg) vim.cmd([['<,'>normal @]] .. reg) end)
 end, { silent = false })
 
-nnoremap('<F2>', ':', { desc = 'colonless entrance to command mode' })
-nnoremap('<F3>', '@:', { desc = 'colonless replaying of recent command' })
+nnoremap('<F1>', ':', { desc = 'colonless entrance to command mode' })
+nnoremap('<F2>', '@:', { desc = 'colonless replaying of recent command' })
 --}}}
 ------------------------------------------------------------------------------
 -- Credit: JGunn Choi ?il | inner line
@@ -257,7 +257,7 @@ cnoremap('::', "<C-r>=fnameescape(expand('%:p:h'))<cr>/")
 -----------------------------------------------------------------------------//
 -- NOTE: this uses write specifically because we need to trigger a filesystem event
 -- even if the file isn't changed so that things like hot reload work
-nnoremap('<F4>', '<Cmd>silent! write ++p<CR>')
+nnoremap('<F3>', '<Cmd>silent! write ++p<CR>')
 -- Write and quit all files, ZZ is NOT equivalent to this
 nnoremap('qa', '<cmd>qa<CR>')
 ------------------------------------------------------------------------------
