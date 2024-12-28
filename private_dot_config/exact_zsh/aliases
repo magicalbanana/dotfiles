@@ -55,7 +55,4 @@ fi
 if command_exists nvim; then
   unalias -m 'vim'
   alias vim='nvim'
-
-  export VISUAL='nvim'
-  export EDITOR='nvim'
 fi
