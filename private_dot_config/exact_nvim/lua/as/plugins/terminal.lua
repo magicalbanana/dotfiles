@@ -3,7 +3,6 @@ local fn = vim.fn
 return {
   'akinsho/toggleterm.nvim',
   event = 'VeryLazy',
-  dev = true,
   opts = {
     open_mapping = [[<c-\>]],
     shade_filetypes = {},
