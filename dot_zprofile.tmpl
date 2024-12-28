@@ -115,11 +115,11 @@ if [ ! -d "${local_sbin}" ]; then
 fi
 export LOCAL_SBIN="${local_sbin}"
 
-fzf_zsh_plugin_path="${HOME}/.config/fzf/fzf-zsh-plugin"
-if [[ ! -d "${fzf_zsh_plugin_path}/bin" ]]; then
-  echo-warn "fzf-zsh-plugin not found"
+fzf_bin="${HOME}/.local/share/fzf/bin"
+if [[ ! -d "${fzf_bin}" ]]; then
+  echo-warn "${fzf_bin} not found"
 else
-  export LOCAL_BIN="${LOCAL_BIN}:${fzf_zsh_plugin_path}/bin"
+  export LOCAL_BIN="${LOCAL_BIN}:${fzf_bin}"
 fi
 pathmunge "${LOCAL_BIN}" after
 pathmunge "${LOCAL_SBIN}" after

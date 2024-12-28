@@ -35,3 +35,7 @@ exact = true
 url = "https://projectlombok.org/downloads/lombok.jar"
 type = "file"
 exact = true
+[".local/share/fzf"]
+url = "https://github.com/junegunn/fzf"
+type = "git-repo"
+refreshPeriod = "168h"
