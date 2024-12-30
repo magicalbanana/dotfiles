@@ -1,5 +1,5 @@
 if not as then return end
-local P = as.ui.palette
+-- local P = as.ui.palette
 local highlight = as.highlight
 
 local function general_overrides()
