@@ -3,10 +3,9 @@ local highlight = as.highlight
 return {
   {
     'nvim-treesitter/nvim-treesitter',
-    version = false, -- last release is way too old and doesn't work on Windows
     build = ":TSUpdate",
     event = { "VeryLazy" },
-    lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
+    -- lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
     init = function(plugin)
       -- PERF: add nvim-treesitter queries to the rtp and it's custom query predicates early
       -- This is needed because a bunch of plugins no longer `require("nvim-treesitter")`, which
@@ -16,28 +15,55 @@ return {
       require("lazy.core.loader").add_to_rtp(plugin)
       require("nvim-treesitter.query_predicates")
     end,
-    opts_extend = { "ensure_installed" },
     opts = {
       ensure_installed = {
         "bash",
         "c",
+        "cmake",
+        "cpp",
+        "css",
+        "csv",
         "diff",
+        "dockerfile",
+        "editorconfig",
+        "elixir",
+        "erlang",
+        "git_config",
+        "git_rebase",
+        "gleam",
+        "go",
+        "goctl",
+        "gomod",
+        "gosum",
+        "gotmpl",
+        "gowork",
+        "gpg",
+        "haskell",
+        "helm",
         "html",
+        "hurl",
         "javascript",
         "jsdoc",
         "json",
         "jsonc",
+        "just",
         "lua",
         "luadoc",
         "luap",
         "markdown",
         "markdown_inline",
         "printf",
+        "proto",
         "python",
         "query",
         "regex",
+        "regex",
+        "ruby",
+        "rust",
+        "ssh_config",
         "toml",
         "tsx",
+        "typescript",
         "typescript",
         "vim",
         "vimdoc",
