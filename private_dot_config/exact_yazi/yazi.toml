@@ -19,7 +19,7 @@ ueberzug_offset = [0, 0, 0, 0]
 
 [opener]
 edit = [
-  { run = '${EDITOR:=vi} "$@"', desc = "$EDITOR", block = true },
+  { run = '${EDITOR:=nvim} "$@"', desc = "$EDITOR", block = true },
   { run = 'code "$@"', orphan = true },
 ]
 open = [
@@ -113,9 +113,9 @@ rules = [
 prepend_previewers = [{ mime = "audio/*", run = "exifaudio" }]
 
 [tasks]
-micro_workers = 5
-macro_workers = 10
-bizarre_retry = 5
+micro_workers = 10
+macro_workers = 20
+bizarre_retry = 10
 image_alloc = 536870912 # 512MB
 image_bound = [0, 0]
 
