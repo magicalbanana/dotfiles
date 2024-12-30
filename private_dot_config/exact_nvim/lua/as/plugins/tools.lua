@@ -19,12 +19,10 @@ return {
         sh = { 'shfmt' },
         sql = { 'sql_formatter' },
       },
-      format_on_save = function(buf)
-        if vim.g.formatting_disabled or vim.b[buf].formatting_disabled then
-          return
-        end
-        return { timeout_ms = 500, lsp_fallback = true }
-      end,
+      format_on_save = {
+        lsp_format = 'fallback',
+        timeout_ms = 500,
+      },
     },
     config = function(_, opts)
       require('conform').setup(opts)
