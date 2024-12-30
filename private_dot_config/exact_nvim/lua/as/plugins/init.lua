@@ -282,23 +282,6 @@ return {
     keys = { { '<leader>qq', '<Cmd>Bdelete<CR>', desc = 'buffer delete' } },
   },
   {
-    'smoka7/multicursors.nvim',
-    event = 'VeryLazy',
-    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvimtools/hydra.nvim' },
-    opts = {
-      hint_config = { border = border },
-    },
-    cmd = { 'MCstart', 'MCvisual', 'MCclear', 'MCpattern', 'MCvisualPattern', 'MCunderCursor' },
-    keys = {
-      {
-        '<M-e>',
-        '<cmd>MCstart<cr>',
-        mode = { 'v', 'n' },
-        desc = 'Create a selection for selected text or word under the cursor',
-      },
-    },
-  },
-  {
     'folke/flash.nvim',
     opts = {
       modes = {
@@ -368,7 +351,7 @@ return {
       { '<BS>', function() require('fold-cycle').open() end, desc = 'fold-cycle: toggle' },
     },
   },
-  { 'AndrewRadev/linediff.vim', cmd = 'Linediff' },
+  { 'AndrewRadev/linediff.vim', cmd = 'Linediff' }, -- TODO: conver this to lua
   {
     'rainbowhxch/beacon.nvim',
     event = 'VeryLazy',
