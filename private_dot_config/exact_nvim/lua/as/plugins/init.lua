@@ -284,7 +284,7 @@ return {
   {
     'smoka7/multicursors.nvim',
     event = 'VeryLazy',
-    dependencies = { 'nvim-treesitter/nvim-treesitter', 'smoka7/hydra.nvim' },
+    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvimtools/hydra.nvim' },
     opts = {
       hint_config = { border = border },
     },
@@ -449,24 +449,15 @@ return {
   -- Quickfix
   -----------------------------------------------------------------------------//
   {
-    url = 'https://gitlab.com/yorickpeterse/nvim-pqf',
+    'yorickpeterse/nvim-pqf',
     event = 'VeryLazy',
     config = function()
-      highlight.plugin('pqf', {
-        theme = {
-          ['doom-one'] = { { qfPosition = { link = 'Todo' } } },
-          ['horizon'] = { { qfPosition = { link = 'String' } } },
-        },
-      })
       require('pqf').setup()
     end,
   },
   {
     'kevinhwang91/nvim-bqf',
     ft = 'qf',
-    config = function()
-      highlight.plugin('bqf', { { BqfPreviewBorder = { fg = { from = 'Comment' } } } })
-    end,
   },
   {
     'kevinhwang91/nvim-fundo',
@@ -556,15 +547,12 @@ return {
   },
   {
     'vuki656/package-info.nvim',
+    ft = 'json',
     event = 'BufRead package.json',
-    requires = 'MunifTanjim/nui.nvim',
-    opts = {},
-    init = function()
-      highlight.plugin('packageInfo', {
-        { PackageInfoOutdatedVersion = { fg = '#d19a66' } },
-        { PackageInfoUpToDateVersion = { fg = '#3C4048' } },
-      })
-    end,
+    dependencies = { 'MunifTanjim/nui.nvim' },
+    opts = {
+      autostart = true,
+    },
   },
   {
     'saecki/crates.nvim',
