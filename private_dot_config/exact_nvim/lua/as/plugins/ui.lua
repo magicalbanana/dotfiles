@@ -11,6 +11,7 @@ return {
     cmd = 'ZenMode',
     opts = {
       plugins = {
+        wezterm = { enabled = true, font = '+4' },
         kitty = { enabled = true, font = '+2' },
         tmux = { enabled = true },
       },
@@ -80,7 +81,7 @@ return {
         filetypes = {
           'dbout', 'neo-tree-popup', 'log', 'gitcommit',
           'txt', 'help', 'NvimTree', 'git', 'flutterToolsOutline',
-          'undotree', 'markdown',
+          'undotree', 'markdown', 'oil',
         },
       },
       indent = {
@@ -199,7 +200,6 @@ return {
   },
   {
     'akinsho/bufferline.nvim',
-    dev = true,
     event = 'UIEnter',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
