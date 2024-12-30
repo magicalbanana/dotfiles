@@ -496,8 +496,8 @@ return {
   },
   {
     'kevinhwang91/nvim-fundo',
-    requires = 'kevinhwang91/promise-async',
-    run = function() require('fundo').install() end,
+    dependencies = { 'kevinhwang91/promise-async' },
+    build = function() require('fundo').install() end,
   },
   -- }}}
   --------------------------------------------------------------------------------
