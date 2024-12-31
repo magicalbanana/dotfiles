@@ -1,4 +1,4 @@
-# vim:ft=zsh
+# vim: ft=zsh
 
 source "${HOME}/.shtils"
 
@@ -39,7 +39,6 @@ if [ -z "$DEVBIN" ]; then
     pathmunge "${DEVBIN}" after
   fi
 fi
-
 
 # Don't write python .pyc files, because they're not necessary and clutter
 # directories with binary files
@@ -124,19 +123,21 @@ fi
 pathmunge "${LOCAL_BIN}" after
 pathmunge "${LOCAL_SBIN}" after
 
-if asdf where golang >/dev/null 2>&1; then
-  GOBIN_PATH="$(asdf where golang)/bin"
+if [ -z "${GOBIN_PATH+x}" ] || [ -z "$GOBIN_PATH" ]; then
+  if asdf where golang >/dev/null 2>&1; then
+    GOBIN_PATH="$(asdf where golang)/bin"
 
-  if [ ! -d "${GOBIN_PATH}" ]; then
-    mkdir -p "${GOBIN_PATH}"
-  fi
-  if [ -z $(go env GOBIN) ]; then
-    go env -u $GOBIN_PATH
-  fi
+    if [ ! -d "${GOBIN_PATH}" ]; then
+      mkdir -p "${GOBIN_PATH}"
+    fi
+    if [ -z $(go env GOBIN) ]; then
+      go env -u $GOBIN_PATH
+    fi
 
-  go env -w GOBIN=$GOBIN_PATH
-  export GOBIN_PATH
-  pathmunge "${GOBIN_PATH}" after
+    go env -w GOBIN=$GOBIN_PATH
+    export GOBIN_PATH
+    pathmunge "${GOBIN_PATH}" after
+  fi
 fi
 
 {{ if eq .chezmoi.os "darwin" -}}

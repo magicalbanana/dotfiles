@@ -43,16 +43,11 @@ return {
         if luasnip.jumpable(-1) then luasnip.jump(-1) end
       end
 
-      local function tab(fallback) -- make TAB behave like Android Studio
-        if not cmp.visible() then return fallback() end
-        if not cmp.get_selected_entry() then
-          return cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
-        end
-        if luasnip.expand_or_jumpable() then return luasnip.expand_or_jump() end
-        cmp.confirm()
+      local has_words_before = function()
+        if vim.api.nvim_buf_get_option(0, 'buftype') == 'prompt' then return false end
+        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+        return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match('^%s*$') == nil
       end
-
-      local function copilot() api.nvim_feedkeys(fn['copilot#Accept'](k('<Tab>')), 'n', true) end
 
       cmp.setup({
         completion = {
@@ -70,13 +65,19 @@ return {
         },
         snippet = { expand = function(args) luasnip.lsp_expand(args.body) end },
         mapping = cmp.mapping.preset.insert({
-          ['<C-]>'] = cmp.mapping(copilot),
+          -- ['<C-]>'] = cmp.mapping(copilot),
           ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i' }),
           ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i' }),
           ['<C-space>'] = cmp.mapping.complete(),
           ['<CR>'] = cmp.mapping.confirm({ select = false }),
           ['<S-TAB>'] = cmp.mapping(shift_tab, { 'i', 's' }),
-          ['<TAB>'] = cmp.mapping(tab, { 'i', 's' }),
+          ['<Tab>'] = vim.schedule_wrap(function(fallback)
+            if cmp.visible() and has_words_before() then
+              cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+            else
+              fallback()
+            end
+          end),
         }),
         formatting = {
           expandable_indicator = true,
@@ -87,22 +88,21 @@ return {
             ellipsis_char = ellipsis,
             before = function(_, vim_item)
               local label, length = vim_item.abbr, api.nvim_strwidth(vim_item.abbr)
-              if length < MIN_MENU_WIDTH then
-                vim_item.abbr = label .. string.rep(' ', MIN_MENU_WIDTH - length)
-              end
+              if length < MIN_MENU_WIDTH then vim_item.abbr = label .. string.rep(' ', MIN_MENU_WIDTH - length) end
               return vim_item
             end,
             menu = {
-              nvim_lsp = '[LSP]',
-              nvim_lua = '[LUA]',
-              emoji = '[EMOJI]',
-              path = '[PATH]',
-              luasnip = '[SNIP]',
-              dictionary = '[DIC]',
-              buffer = '[BUF]',
-              spell = '[SPELL]',
-              rg = '[RG]',
-              git = '[GIT]',
+              nvim_lsp = '',
+              nvim_lua = '',
+              copilot = '',
+              emoji = '󰞅',
+              path = '',
+              luasnip = '',
+              dictionary = '',
+              buffer = '',
+              spell = '',
+              rg = '',
+              git = '',
             },
           }),
         },
@@ -110,6 +110,7 @@ return {
           { name = 'lazydev', group_index = 0 },
           { name = 'nvim_lsp', group_index = 1 },
           { name = 'luasnip', group_index = 1 },
+          { name = 'copilot', group_index = 1 },
           { name = 'path', group_index = 1 },
           {
             name = 'rg',
@@ -130,42 +131,23 @@ return {
     end,
   },
   {
-    'github/copilot.vim',
-    event = 'InsertEnter',
-    dependencies = { 'nvim-cmp' },
-    init = function() vim.g.copilot_no_tab_map = true end,
+    'zbirenbaum/copilot-cmp',
+    event = { 'InsertEnter', 'LspAttach' },
     config = function()
-      local function accept_word()
-        fn['copilot#Accept']('')
-        local output = fn['copilot#TextQueuedForInsertion']()
-        return fn.split(output, [[[ .]\zs]])[1]
-      end
-
-      local function accept_line()
-        fn['copilot#Accept']('')
-        local output = fn['copilot#TextQueuedForInsertion']()
-        return fn.split(output, [[[\n]\zs]])[1]
-      end
-      map('i', '<Plug>(as-copilot-accept)', "copilot#Accept('<Tab>')", {
-        expr = true,
-        remap = true,
-        silent = true,
+      require('copilot_cmp').setup({
+        event = { 'InsertEnter', 'LspAttach' },
+        fix_pairs = true,
       })
-      map('i', '<M-]>', '<Plug>(copilot-next)', { desc = 'next suggestion' })
-      map('i', '<M-[>', '<Plug>(copilot-previous)', { desc = 'previous suggestion' })
-      map('i', '<C-\\>', '<Cmd>vertical Copilot panel<CR>', { desc = 'open copilot panel' })
-      map('i', '<M-w>', accept_word, { expr = true, remap = false, desc = 'accept word' })
-      map('i', '<M-l>', accept_line, { expr = true, remap = false, desc = 'accept line' })
-      vim.g.copilot_filetypes = {
-        ['*'] = true,
-        gitcommit = false,
-        NeogitCommitMessage = false,
-        DressingInput = false,
-        TelescopePrompt = false,
-        ['neo-tree-popup'] = false,
-        ['dap-repl'] = false,
-      }
-      highlight.plugin('copilot', { { CopilotSuggestion = { link = 'Comment' } } })
     end,
+    dependencies = {
+      'zbirenbaum/copilot.lua',
+      cmd = 'Copilot',
+      config = function()
+        require('copilot').setup({
+          suggestion = { enabled = false },
+          panel = { enabled = false },
+        })
+      end,
+    },
   },
 }

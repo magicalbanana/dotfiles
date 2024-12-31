@@ -4,6 +4,14 @@ command_exists() {
 	command -v "$1" >/dev/null 2>&1
 }
 
+# Usage: is_not_set_or_empty VAR_NAME
+# Returns 0 if the variable is not set OR is empty; 1 otherwise.
+is_not_set_or_empty() {
+	var_name=$1
+	# We use 'eval' to dynamically check the variable whose name is in $var_name.
+	eval '[ -z "${'"$var_name"'+x}" ] || [ -z "${'"$var_name"'}" ]'
+}
+
 # Function: pathmunge
 # Description: Adds a directory to the PATH environment variable if it's not already present.
 # Usage: pathmunge <directory> [after]
