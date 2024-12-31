@@ -26,7 +26,7 @@ else
 fi
 
 if command_exists aqua; then
-  pathmunge "$(aqua root-dir)/bin" after
+  pathmunge "$(aqua root-dir)/bin" before
 
   export AQUA_GLOBAL_CONFIG="${HOME}/.config/aquaproj-aqua/aqua.yaml"
 fi

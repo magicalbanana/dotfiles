@@ -105,7 +105,7 @@ return {
       { '<leader>fch', fzf_lua.command_history, desc = 'command history' },
       { '<localleader>fcd', function() file_picker(vim.env.DOTFILES) end, desc = 'dotfiles' },
       { '<localleader>fcn', function() file_picker(vim.g.vim_dir) end, desc = 'nvim config' },
-      { '<localleader>fp', fzf_lua.registers, desc = 'Registers' },
+      { '<localleader>fr', fzf_lua.registers, desc = 'Registers' },
     },
     config = function()
       local lsp_kind = require('lspkind')
