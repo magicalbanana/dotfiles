@@ -64,7 +64,7 @@ else
 end
 
 ----------------------------------------------------------------------------------------------------
-g.border = not vim.g.vscode and as.ui.current.border or 'single'
+g.border = not vim.g.vscode and g.border or 'single'
 ------------------------------------------------------------------------------------------------------
 -- Plugins
 ------------------------------------------------------------------------------------------------------
@@ -94,8 +94,9 @@ require('lazy').setup({
     { import = 'as.plugins', cond = function() return not vim.g.vscode end },
     { import = 'as.vscode.plugins', cond = function() return vim.g.vscode end },
   },
+  defaults = { lazy = true },
   concurrency = vim.uv.available_parallelism() * 2,
-  ui = { border = as.ui.current.border },
+  ui = { border = g.border },
   checker = {
     concurrency = 15,
     enabled = true,
