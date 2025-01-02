@@ -112,7 +112,7 @@ M.default_keybinds = {
   },
   {
     key = 'W',
-    mods = 'CTRL|SHIFT',
+    mods = 'CMD|SHIFT',
     action = act.PromptInputLine({
       description = wezterm.format({
         { Attribute = { Intensity = 'Bold' } },
@@ -136,13 +136,13 @@ M.default_keybinds = {
   },
   {
     key = '9',
-    mods = 'CTRL|ALT',
+    mods = 'ALT',
     action = act.ShowLauncherArgs({
       flags = 'FUZZY|WORKSPACES',
     }),
   },
   {
-    key = 'T',
+    key = 'Z',
     mods = 'CMD',
     action = wezterm.action.TogglePaneZoomState,
   },
@@ -153,8 +153,8 @@ M.default_keybinds = {
       local panes = tab:panes_with_info()
       if #panes == 1 then
         pane:split({
-          direction = 'Right',
-          size = 0.4,
+          direction = 'bottom',
+          size = 0.3,
         })
       elseif not panes[1].is_zoomed then
         panes[1].pane:activate()
