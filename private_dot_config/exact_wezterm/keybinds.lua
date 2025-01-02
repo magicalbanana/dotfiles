@@ -142,7 +142,7 @@ M.default_keybinds = {
     }),
   },
   {
-    key = 'z',
+    key = 'Z',
     mods = 'CMD',
     action = wezterm.action.TogglePaneZoomState,
   },
@@ -154,7 +154,7 @@ M.default_keybinds = {
       if #panes == 1 then
         pane:split({
           direction = 'Bottom',
-          size = 0.3,
+          size = 0.35,
         })
       elseif not panes[1].is_zoomed then
         panes[1].pane:activate()
