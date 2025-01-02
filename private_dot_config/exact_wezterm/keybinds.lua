@@ -141,6 +141,30 @@ M.default_keybinds = {
       flags = 'FUZZY|WORKSPACES',
     }),
   },
+  {
+    key = 'T',
+    mods = 'CMD',
+    action = wezterm.action.TogglePaneZoomState,
+  },
+  {
+    key = 'F12',
+    action = wezterm.action_callback(function(_, pane)
+      local tab = pane:tab()
+      local panes = tab:panes_with_info()
+      if #panes == 1 then
+        pane:split({
+          direction = 'Right',
+          size = 0.4,
+        })
+      elseif not panes[1].is_zoomed then
+        panes[1].pane:activate()
+        tab:set_zoomed(true)
+      elseif panes[1].is_zoomed then
+        tab:set_zoomed(false)
+        panes[2].pane:activate()
+      end
+    end),
+  },
 }
 
 function M.create_keybinds() return utils.merge_lists(M.default_keybinds, M.tmux_keybinds) end
