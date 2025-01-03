@@ -6,25 +6,15 @@ local fzf_lua = reqcall('fzf-lua') ---@module 'fzf-lua'
 ------------------------------------------------------------------------------------------------------------------------
 -- FZF-LUA HELPERS
 ------------------------------------------------------------------------------------------------------------------------
-local function format_title(str, icon, icon_hl)
-  return {
-    { ' ' },
-    { (icon and icon .. ' ' or ''), icon_hl or 'DevIconDefault' },
-    { str, 'Bold' },
-    { ' ' },
-  }
-end
-
 local file_picker = function(cwd) fzf_lua.files({ cwd = cwd }) end
 
 local function dropdown(opts)
   opts = opts or { winopts = {} }
-  local title = vim.tbl_get(opts, 'winopts', 'title') ---@type string?
-  if title and type(title) == 'string' then opts.winopts.title = format_title(title) end
   return vim.tbl_deep_extend('force', {
     prompt = prompt,
     fzf_opts = { ['--layout'] = 'reverse' },
     winopts = {
+      title = opts.winopts.title,
       title_pos = opts.winopts.title and 'center' or nil,
       height = 0.70,
       width = 0.45,
@@ -36,12 +26,7 @@ end
 
 local function cursor_dropdown(opts)
   return dropdown(vim.tbl_deep_extend('force', {
-    winopts = {
-      row = 1,
-      relative = 'cursor',
-      height = 0.33,
-      width = 0.25,
-    },
+    winopts = { row = 1, relative = 'cursor', height = 0.33, width = 0.25 },
   }, opts))
 end
 
@@ -53,11 +38,10 @@ local function list_sessions()
   fzf.fzf_exec(
     vim.tbl_map(function(s) return s.name end, sessions),
     dropdown({
-      winopts = { title = format_title('Sessions', '󰆔'), height = 0.33, row = 0.5 },
+      winopts = { title = '󰆔 Sessions', height = 0.33, row = 0.5 },
       previewer = false,
       actions = {
         ['default'] = function(selected)
-          local session = vim.tbl_filter(function(s) return s.name == selected[1] end, sessions)[1]
           local session = vim.iter(sessions):find(function(s) return s.name == selected[1] end)
           if not session then return end
           persisted.load({ session = session.file_path })
@@ -91,18 +75,18 @@ return {
       { '<leader>fr', fzf_lua.resume, desc = 'resume picker' },
       { '<leader>fvh', fzf_lua.highlights, desc = 'highlights' },
       { '<leader>fvk', fzf_lua.keymaps, desc = 'keymaps' },
-      { '<leader>fd', fzf_lua.diagnostics_workspace, desc = 'workspace diagnostics' },
-      { '<leader>fs', fzf_lua.lsp_document_symbols, desc = 'document symbols' },
-      { '<leader>fS', fzf_lua.lsp_live_workspace_symbols, desc = 'workspace symbols' },
+      { '<leader>fle', fzf_lua.diagnostics_workspace, desc = 'workspace diagnostics' },
+      { '<leader>fld', fzf_lua.lsp_document_symbols, desc = 'document symbols' },
+      { '<leader>fls', fzf_lua.lsp_live_workspace_symbols, desc = 'workspace symbols' },
       { '<leader>f?', fzf_lua.help_tags, desc = 'help' },
       { '<leader>fR', fzf_lua.oldfiles, desc = 'Most (f)recently used files' },
       { '<leader>fgb', fzf_lua.git_branches, desc = 'branches' },
       { '<leader>fgc', fzf_lua.git_commits, desc = 'commits' },
       { '<leader>fgB', fzf_lua.git_bcommits, desc = 'buffer commits' },
-      { '<leader>fb', fzf_lua.buffers, desc = 'buffers' },
+      { '<leader>flb', fzf_lua.buffers, desc = 'buffers' },
       { '<leader>fs', fzf_lua.live_grep, desc = 'live grep' },
-      { '<leader>fva', fzf_lua.autocmds, desc = 'autocommands' },
-      { '<leader>fch', fzf_lua.command_history, desc = 'command history' },
+      { '<leader>fla', fzf_lua.autocmds, desc = 'autocommands' },
+      { '<leader>flc', fzf_lua.command_history, desc = 'command history' },
       { '<localleader>fcd', function() file_picker(vim.env.DOTFILES) end, desc = 'dotfiles' },
       { '<localleader>fcn', function() file_picker(vim.g.vim_dir) end, desc = 'nvim config' },
       { '<localleader>fr', fzf_lua.registers, desc = 'Registers' },
@@ -112,6 +96,7 @@ return {
       local fzf = require('fzf-lua')
 
       fzf.setup({
+        prompt = prompt,
         fzf_opts = {
           ['--info'] = 'default', -- hidden OR inline:⏐
           ['--reverse'] = false,
@@ -119,31 +104,33 @@ return {
           ['--scrollbar'] = '▓',
           ['--ellipsis'] = icons.misc.ellipsis,
         },
-        -- fzf_colors = {
-        --   ['fg'] = { 'fg', 'CursorLine' },
-        --   ['bg'] = { 'bg', 'Normal' },
-        --   ['hl'] = { 'fg', 'Comment' },
-        --   ['fg+'] = { 'fg', 'Normal' },
-        --   ['bg+'] = { 'bg', 'PmenuSel' },
-        --   ['hl+'] = { 'fg', 'Statement', 'italic' },
-        --   ['info'] = { 'fg', 'Comment', 'italic' },
-        --   ['prompt'] = { 'fg', 'Underlined' },
-        --   ['pointer'] = { 'fg', 'Exception' },
-        --   ['marker'] = { 'fg', '@character' },
-        --   ['spinner'] = { 'fg', 'DiagnosticOk' },
-        --   ['header'] = { 'fg', 'Comment' },
-        --   ['gutter'] = { 'bg', 'Normal' },
-        --   ['separator'] = { 'fg', 'Comment' },
-        -- },
-        previewers = {
-          builtin = { toggle_behavior = 'extend' },
+        fzf_colors = {
+          ['fg'] = { 'fg', 'CursorLine' },
+          ['bg'] = { 'bg', 'Normal' },
+          ['hl'] = { 'fg', 'Comment' },
+          ['fg+'] = { 'fg', 'Normal' },
+          ['bg+'] = { 'bg', 'PmenuSel' },
+          ['hl+'] = { 'fg', 'Statement', 'italic' },
+          ['info'] = { 'fg', 'Comment', 'italic' },
+          ['prompt'] = { 'fg', 'Underlined' },
+          ['pointer'] = { 'fg', 'Exception' },
+          ['marker'] = { 'fg', '@character' },
+          ['spinner'] = { 'fg', 'DiagnosticOk' },
+          ['header'] = { 'fg', 'Comment' },
+          ['gutter'] = { 'bg', 'Normal' },
+          ['separator'] = { 'fg', 'Comment' },
         },
-        winopts = {
-          border = ui.border.rectangle,
-          hl = { border = 'PickerBorder', preview_border = 'PickerBorder' },
+        previewers = { builtin = { toggle_behavior = 'extend' } },
+        hls = {
+          title = 'PickerTitle',
+          border = 'PickerBorder',
+          preview_border = 'PickerBorder',
         },
+        winopts = { border = ui.current.border },
         keymap = {
           builtin = {
+            true,
+            ['<Esc>'] = 'hide',
             ['<c-/>'] = 'toggle-help',
             ['<c-e>'] = 'toggle-preview',
             ['<c-=>'] = 'toggle-fullscreen',
@@ -151,38 +138,31 @@ return {
             ['<c-b>'] = 'preview-page-up',
           },
           fzf = {
-            ['esc'] = 'abort',
             ['ctrl-q'] = 'select-all+accept',
           },
         },
-        highlights = {
-          prompt = prompt,
-          winopts = { title = format_title('Highlights') },
-        },
-        helptags = {
-          prompt = prompt,
-          winopts = { title = format_title('Help', '󰋖') },
-        },
+        highlights = { winopts = { title = ' Highlights ' } },
+        helptags = { winopts = { title = ' 󰋖 Help ' } },
         oldfiles = dropdown({
           cwd_only = true,
-          winopts = { title = format_title('History', '') },
+          winopts = { title = '   History ' },
         }),
         files = dropdown({
-          winopts = { title = format_title('Files', '') },
+          winopts = { title = '  Files ' },
         }),
         buffers = dropdown({
           fzf_opts = { ['--delimiter'] = ' ', ['--with-nth'] = '-1..' },
-          winopts = { title = format_title('Buffers', '󰈙') },
+          winopts = { title = ' 󰈙 Buffers ' },
         }),
         keymaps = dropdown({
-          winopts = { title = format_title('Keymaps', ''), width = 0.7 },
+          winopts = { title = '   Keymaps ', width = 0.7 },
         }),
         registers = cursor_dropdown({
-          winopts = { title = format_title('Registers', ''), width = 0.6 },
+          winopts = { title = '  Registers ', width = 0.6 },
         }),
         grep = {
           prompt = ' ',
-          winopts = { title = format_title('Grep', '󰈭') },
+          winopts = { title = ' 󰈭 Grep ' },
           -- See: https://github.com/ibhagwan/fzf-lua/discussions/1288#discussioncomment-9844613
           -- rg_opts = '--column --hidden --line-number --no-heading --color=always --smart-case --max-columns=4096 -e',
           RIPGREP_CONFIG_PATH = vim.env.RIPGREP_CONFIG_PATH,
@@ -198,55 +178,54 @@ return {
             symbol_hl = function(s) return lsp_hls[s] end,
           },
           code_actions = cursor_dropdown({
-            winopts = { title = format_title('Code Actions', '󰌵', '@type') },
+            winopts = { title = ' 󰌵 Code Actions ', '@type' },
           }),
         },
         jumps = dropdown({
-          winopts = { title = format_title('Jumps', ''), preview = { hidden = 'nohidden' } },
+          winopts = { title = '  Jumps ', preview = { hidden = 'nohidden' } },
         }),
         changes = dropdown({
           prompt = '',
-          winopts = { title = format_title('Changes', '⟳'), preview = { hidden = 'nohidden' } },
+          winopts = { title = ' ⟳ Changes ', preview = { hidden = 'nohidden' } },
         }),
         diagnostics = dropdown({
-          winopts = { title = format_title('Diagnostics', '', 'DiagnosticError') },
+          winopts = { title = '  Diagnostics ', 'DiagnosticError' },
         }),
         git = {
           files = dropdown({
             path_shorten = false, -- this doesn't use any clever strategy unlike telescope so is somewhat useless
             cmd = 'git ls-files --others --cached --exclude-standard',
-            winopts = { title = format_title('Git Files', '') },
+            winopts = { title = '  Git Files ' },
           }),
           branches = dropdown({
-            winopts = { title = format_title('Branches', ''), height = 0.3, row = 0.4 },
+            winopts = { title = '  Branches ', height = 0.3, row = 0.4 },
           }),
           status = {
             prompt = '',
             preview_pager = 'delta --width=$FZF_PREVIEW_COLUMNS',
-            winopts = { title = format_title('Git Status', '') },
+            winopts = { title = '  Git Status ' },
           },
           bcommits = {
             prompt = '',
             preview_pager = 'delta --width=$FZF_PREVIEW_COLUMNS',
-            winopts = { title = format_title('', 'Buffer Commits') },
+            winopts = { title = '  Buffer Commits ' },
           },
           commits = {
             prompt = '',
             preview_pager = 'delta --width=$FZF_PREVIEW_COLUMNS',
-            winopts = { title = format_title('', 'Commits') },
+            winopts = { title = ' Commits' },
           },
-          -- icons = {
-          --   ['M'] = { icon = icons.git.mod, color = 'yellow' },
-          --   ['D'] = { icon = icons.git.remove, color = 'red' },
-          --   ['A'] = { icon = icons.git.staged, color = 'green' },
-          --   ['R'] = { icon = icons.git.rename, color = 'yellow' },
-          --   ['C'] = { icon = icons.git.conflict, color = 'yellow' },
-          --   ['T'] = { icon = icons.git.mod, color = 'magenta' },
-          --   ['?'] = { icon = icons.git.untracked, color = 'magenta' },
-          -- },
+          icons = {
+            ['M'] = { icon = icons.git.mod, color = 'yellow' },
+            ['D'] = { icon = icons.git.remove, color = 'red' },
+            ['A'] = { icon = icons.git.staged, color = 'green' },
+            ['R'] = { icon = icons.git.rename, color = 'yellow' },
+            ['C'] = { icon = icons.git.conflict, color = 'yellow' },
+            ['T'] = { icon = icons.git.mod, color = 'magenta' },
+            ['?'] = { icon = icons.git.untracked, color = 'magenta' },
+          },
         },
       })
-
       as.command('SessionList', list_sessions)
     end,
   },
