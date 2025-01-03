@@ -1,6 +1,18 @@
 local opt, api, fn, cmd, fmt = vim.opt, vim.api, vim.fn, vim.cmd, string.format
 local border, highlight, icons = as.ui.current.border, as.highlight, as.ui.icons
 
+vim.g.rainbow_delimiters = {
+  highlight = {
+    'RainbowDelimiterRed',
+    'RainbowDelimiterYellow',
+    'RainbowDelimiterBlue',
+    'RainbowDelimiterOrange',
+    'RainbowDelimiterGreen',
+    'RainbowDelimiterViolet',
+    'RainbowDelimiterCyan',
+  },
+}
+
 return {
   -----------------------------------------------------------------------------//
   -- Core {{{3
@@ -106,19 +118,12 @@ return {
         {
           'neovim/nvim-lspconfig',
           dependencies = {
-            {
-              'folke/lazydev.nvim',
-              ft = 'lua', -- only load on lua files
-              opts = {
-                library = {
-                  -- See the configuration section for more details
-                  -- Load luvit types when the `vim.uv` word is found
-                  { path = 'luvit-meta/library', words = { 'vim%.uv' } },
-                },
-              },
-            },
             { 'Bilal2453/luvit-meta', lazy = true }, -- optional `vim.uv` typings
-            { 'folke/neoconf.nvim' },
+            {
+              'folke/neoconf.nvim',
+              cmd = { 'Neoconf' },
+              opts = { local_settings = '.nvim.json', global_settings = 'nvim.json' },
+            },
           },
           config = function()
             highlight.plugin('lspconfig', { { LspInfoBorder = { link = 'FloatBorder' } } })
@@ -143,6 +148,11 @@ return {
     event = 'LspAttach',
     dependencies = { 'neovim/nvim-lspconfig' },
     config = function() require('inlay-hints').setup() end,
+  },
+  {
+    'folke/lazydev.nvim',
+    ft = 'lua',
+    opts = { library = { { path = 'luvit-meta/library', words = { 'vim%.uv' } } } },
   },
   {
     'DNLHC/glance.nvim',
@@ -170,37 +180,32 @@ return {
       },
     },
   },
-  { 'simrat39/rust-tools.nvim', dependencies = { 'nvim-lspconfig' } },
+  {
+    'mrcjkb/rustaceanvim',
+    version = '^5', -- Recommended
+    lazy = false, -- This plugin is already lazy
+  },
   -- }}}
   -----------------------------------------------------------------------------//
   -- UI {{{1
   -----------------------------------------------------------------------------//
-  -- {
-  --   'uga-rosa/ccc.nvim',
-  --   ft = { 'vim', 'typescript', 'typescriptreact', 'javascriptreact', 'svelte' },
-  --   cmd = { 'CccHighlighterToggle' },
-  --   opts = function()
-  --     local ccc = require('ccc')
-  --     local p = ccc.picker
-  --     ccc.setup({
-  --       win_opts = { border = border },
-  --       pickers = {
-  --         p.hex_long,
-  --         p.css_rgb,
-  --         p.css_hsl,
-  --         p.css_hwb,
-  --         p.css_lab,
-  --         p.css_lch,
-  --         p.css_oklab,
-  --         p.css_oklch,
-  --       },
-  --       highlighter = {
-  --         auto_enable = true,
-  --         excludes = { 'dart', 'lazy', 'NeogitStatus', 'toggleterm' },
-  --       },
-  --     })
-  --   end,
-  -- },
+  {
+    'uga-rosa/ccc.nvim',
+    ft = { 'typescript', 'typescriptreact', 'javascriptreact', 'svelte' },
+    cmd = { 'CccHighlighterToggle' },
+    config = function()
+      local ccc = require('ccc')
+      local p = ccc.picker
+      ccc.setup({
+        win_opts = { border = border },
+        pickers = { p.hex_long, p.css_rgb, p.css_hsl, p.css_hwb, p.css_lab, p.css_lch, p.css_oklab, p.css_oklch },
+        highlighter = {
+          auto_enable = true,
+          excludes = { 'dart', 'lazy', 'orgagenda', 'org', 'NeogitStatus', 'toggleterm' },
+        },
+      })
+    end,
+  },
   {
     'folke/todo-comments.nvim',
     event = 'VeryLazy',
@@ -217,26 +222,12 @@ return {
       highlight.plugin('SymbolUsage', {
         { SymbolUsageRounding = { fg = { from = 'CursorLine', attr = 'bg' }, italic = true } },
         { SymbolUsageContent = { bg = { from = 'CursorLine' }, fg = { from = 'Comment' } } },
-        {
-          SymbolUsageRef = {
-            fg = { from = 'Function' },
-            bg = { from = 'CursorLine' },
-            italic = true,
-          },
-        },
-        {
-          SymbolUsageDef = { fg = { from = 'Type' }, bg = { from = 'CursorLine' }, italic = true },
-        },
-        {
-          SymbolUsageImpl = {
-            fg = { from = 'Keyword' },
-            bg = { from = 'CursorLine' },
-            italic = true,
-          },
-        },
+        { SymbolUsageRef = { fg = { from = 'Function' }, bg = { from = 'CursorLine' }, italic = true } },
+        { SymbolUsageDef = { fg = { from = 'Type' }, bg = { from = 'CursorLine' }, italic = true } },
+        { SymbolUsageImpl = { fg = { from = 'Keyword' }, bg = { from = 'CursorLine' }, italic = true } },
       })
     end,
-    opts = {
+    config = {
       text_format = function(symbol)
         local res = {}
         local ins = table.insert
@@ -286,31 +277,22 @@ return {
     opts = {
       modes = {
         char = {
-          keys = { 'f', 'F', 't', 'T', ';' }, -- remove "," from keys
+          keys = { 'f', 'F', 't', 'T', ';' }, -- remove "," from keys },
+          search = { enabled = false },
         },
-        search = {
-          enabled = false,
+        jump = { nohlsearch = true },
+      },
+      keys = {
+        { 's', function() require('flash').jump() end, mode = { 'n', 'x', 'o' } },
+        { 'S', function() require('flash').treesitter() end, mode = { 'o', 'x' } },
+        { 'r', function() require('flash').remote() end, mode = 'o', desc = 'Remote Flash' },
+        { '<c-s>', function() require('flash').toggle() end, mode = { 'c' }, desc = 'Toggle Flash Search' },
+        {
+          'R',
+          function() require('flash').treesitter_search() end,
+          mode = { 'o', 'x' },
+          desc = 'Flash Treesitter Search',
         },
-      },
-      jump = {
-        nohlsearch = true,
-      },
-    },
-    keys = {
-      { 's', function() require('flash').jump() end, mode = { 'n', 'x', 'o' } },
-      { 'S', function() require('flash').treesitter() end, mode = { 'o', 'x' } },
-      { 'r', function() require('flash').remote() end, mode = 'o', desc = 'Remote Flash' },
-      {
-        '<c-s>',
-        function() require('flash').toggle() end,
-        mode = { 'c' },
-        desc = 'Toggle Flash Search',
-      },
-      {
-        'R',
-        function() require('flash').treesitter_search() end,
-        mode = { 'o', 'x' },
-        desc = 'Flash Treesitter Search',
       },
     },
   },
@@ -351,33 +333,11 @@ return {
       { '<BS>', function() require('fold-cycle').open() end, desc = 'fold-cycle: toggle' },
     },
   },
-  { 'AndrewRadev/linediff.vim', cmd = 'Linediff' }, -- TODO: conver this to lua
-  {
-    'rainbowhxch/beacon.nvim',
-    event = 'VeryLazy',
-    opts = {
-      minimal_jump = 20,
-      ignore_buffers = { 'terminal', 'nofile' },
-      ignore_filetypes = {
-        'qf',
-        'dap_watches',
-        'dap_scopes',
-        'neo-tree',
-        'NeogitCommitMessage',
-        'NeogitPopup',
-        'NeogitStatus',
-      },
-    },
-  },
   {
     'windwp/nvim-autopairs',
     event = 'InsertEnter',
-    dependencies = { 'hrsh7th/nvim-cmp' },
     config = function()
-      local autopairs = require('nvim-autopairs')
-      local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-      require('cmp').event:on('confirm_done', cmp_autopairs.on_confirm_done())
-      autopairs.setup({
+      require('nvim-autopairs').setup({
         close_triple_quotes = true,
         disable_filetype = { 'neo-tree-popup' },
         check_ts = true,
@@ -409,9 +369,8 @@ return {
       vim.g.undotree_SetFocusWhenToggle = 1
     end,
   },
-  { 'nacro90/numb.nvim', event = 'CmdlineEnter', opts = {} },
   {
-    "willothy/flatten.nvim",
+    'willothy/flatten.nvim',
     dependencies = { 'willothy/wezterm.nvim' },
     opts = function()
       ---@type Terminal?
@@ -419,7 +378,7 @@ return {
 
       return {
         window = {
-          open = "alternate",
+          open = 'alternate',
         },
         hooks = {
           should_block = function(argv)
@@ -430,13 +389,13 @@ return {
             -- In this case, we would block if we find the `-b` flag
             -- This allows you to use `nvim -b file1` instead of
             -- `nvim --cmd 'let g:flatten_wait=1' file1`
-            return vim.tbl_contains(argv, "-b")
+            return vim.tbl_contains(argv, '-b')
 
             -- Alternatively, we can block if we find the diff-mode option
             -- return vim.tbl_contains(argv, "-d")
           end,
           pre_open = function()
-            local term = require("toggleterm.terminal")
+            local term = require('toggleterm.terminal')
             local termid = term.get_focused_id()
             saved_terminal = term.get(termid)
           end,
@@ -446,24 +405,20 @@ return {
               saved_terminal:close()
             else
               -- If it's a normal file, just switch to its window
-              vim.api.nvim_set_current_win(winnr)
+              api.nvim_set_current_win(winnr)
 
               -- If we're in a different wezterm pane/tab, switch to the current one
               -- Requires willothy/wezterm.nvim
-              require("wezterm").switch_pane.id(
-                tonumber(os.getenv("WEZTERM_PANE"))
-              )
+              require('wezterm').switch_pane.id(tonumber(os.getenv('WEZTERM_PANE')))
             end
 
             -- If the file is a git commit, create one-shot autocmd to delete its buffer on write
             -- If you just want the toggleable terminal integration, ignore this bit
-            if ft == "gitcommit" or ft == "gitrebase" then
-              vim.api.nvim_create_autocmd("BufWritePost", {
+            if ft == 'gitcommit' or ft == 'gitrebase' then
+              vim.api.nvim_create_autocmd('BufWritePost', {
                 buffer = bufnr,
                 once = true,
-                callback = vim.schedule_wrap(function()
-                  vim.api.nvim_buf_delete(bufnr, {})
-                end),
+                callback = vim.schedule_wrap(function() vim.api.nvim_buf_delete(bufnr, {}) end),
               })
             end
           end,
@@ -486,27 +441,12 @@ return {
   {
     'yorickpeterse/nvim-pqf',
     event = 'VeryLazy',
-    config = function()
-      require('pqf').setup()
-    end,
+    config = function() require('pqf').setup() end,
   },
   {
     'kevinhwang91/nvim-bqf',
     ft = 'qf',
-  },
-  {
-    'kevinhwang91/nvim-fundo',
-    dependencies = { 'kevinhwang91/promise-async' },
-    build = function() require('fundo').install() end,
-  },
-  -- }}}
-  --------------------------------------------------------------------------------
-  -- Profiling & Startup {{{1
-  --------------------------------------------------------------------------------
-  {
-    'dstein64/vim-startuptime',
-    cmd = 'StartupTime',
-    config = function() vim.g.startuptime_tries = 15 end,
+    config = function() highlight.plugin('bqf', { { BqfPreviewBorder = { fg = { from = 'Comment' } } } }) end,
   },
   -- }}}
   --------------------------------------------------------------------------------
@@ -558,18 +498,16 @@ return {
   -----------------------------------------------------------------------------//
   { 'lifepillar/pgsql.vim', lazy = false },
   {
-    "ray-x/go.nvim",
-    dependencies = {  -- optional packages
-      "ray-x/guihua.lua",
-      "neovim/nvim-lspconfig",
-      "nvim-treesitter/nvim-treesitter",
+    'ray-x/go.nvim',
+    dependencies = { -- optional packages
+      'ray-x/guihua.lua',
+      'neovim/nvim-lspconfig',
+      'nvim-treesitter/nvim-treesitter',
     },
-    config = function()
-      require("go").setup()
-    end,
-    event = {"CmdlineEnter"},
-    ft = {"go", 'gomod'},
-    build = ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
+    config = function() require('go').setup() end,
+    event = { 'CmdlineEnter' },
+    ft = { 'go', 'gomod' },
+    build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
   },
   {
     'iamcco/markdown-preview.nvim',
@@ -579,15 +517,6 @@ return {
       vim.g.mkdp_auto_start = 0
       vim.g.mkdp_auto_close = 1
     end,
-  },
-  {
-    'vuki656/package-info.nvim',
-    ft = 'json',
-    event = 'BufRead package.json',
-    dependencies = { 'MunifTanjim/nui.nvim' },
-    opts = {
-      autostart = true,
-    },
   },
   {
     'saecki/crates.nvim',
@@ -628,27 +557,6 @@ return {
     },
   },
   { 'fladson/vim-kitty', lazy = false },
-  { 'mtdl9/vim-log-highlighting', lazy = false },
-  {
-    'javiorfo/nvim-soil',
-    -- Optional for puml syntax highlighting:
-    dependencies = { 'javiorfo/nvim-nyctophilia' },
-    lazy = true,
-    ft = 'plantuml',
-    opts = {
-      -- If you want to customize the image showed when running this plugin
-      image = {
-        darkmode = true, -- Enable or disable darkmode
-        format = 'svg', -- Choose between png or svg
-        -- This is a default implementation of using nsxiv to open the resultant image
-        -- Edit the string to use your preferred app to open the image (as if it were a command line)
-        -- Some examples:
-        -- return "feh " .. img
-        -- return "xdg-open " .. img
-        execute_to_open = function(img) return 'open ' .. img end,
-      },
-    },
-  },
   -- }}}
   --------------------------------------------------------------------------------
   -- Syntax {{{1
@@ -704,9 +612,7 @@ return {
   {
     'echasnovski/mini.ai',
     event = 'VeryLazy',
-    config = function()
-      require('mini.ai').setup({ mappings = { around_last = '', inside_last = '' } })
-    end,
+    config = function() require('mini.ai').setup({ mappings = { around_last = '', inside_last = '' } }) end,
   },
   {
     'glts/vim-textobj-comment',
@@ -738,22 +644,6 @@ return {
   { 'tweekmonster/helpful.vim', cmd = 'HelpfulVersion', ft = 'help' },
   { 'rafcamlet/nvim-luapad', cmd = 'Luapad' },
   -- }}}
-  ---------------------------------------------------------------------------------
-  -- Personal plugins {{{1
-  ---------------------------------------------------------------------------------
-  {
-    'akinsho/pubspec-assist.nvim',
-    ft = { 'dart' },
-    event = 'BufEnter pubspec.yaml',
-    dev = true,
-    opts = {},
-  },
-  {
-    'akinsho/git-conflict.nvim',
-    event = 'VeryLazy',
-    dev = true,
-    opts = { disable_diagnostics = true },
-  },
 }
 --}}}
 ---------------------------------------------------------------------------------
