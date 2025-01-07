@@ -74,3 +74,4 @@ packages:
 - name: xo/usql@v0.19.15
 - name: yoheimuta/protolint@v0.51.0
 - name: denoland/deno@v2.1.4
+- name: bcicen/ctop@v0.7.7
