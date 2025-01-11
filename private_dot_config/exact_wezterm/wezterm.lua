@@ -72,7 +72,7 @@ local local_config = load_local_config('local')
 ---------------------------------------------------------------
 local config = {
   font = wezterm.font('Cartograph CF'),
-  font_size = 15.0,
+  font_size = 13.75,
   cell_width = 1.0,
   line_height = 1.0,
   font_rules = {
@@ -159,7 +159,4 @@ table.insert(config.hyperlink_rules, {
 })
 
 local merged_config = utils.merge_tables(config, local_config)
-return utils.merge_tables(
-  merged_config,
-  create_ssh_domain_from_ssh_config(merged_config.ssh_domains)
-)
+return utils.merge_tables(merged_config, create_ssh_domain_from_ssh_config(merged_config.ssh_domains))
