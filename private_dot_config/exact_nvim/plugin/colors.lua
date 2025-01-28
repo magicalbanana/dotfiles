@@ -123,7 +123,6 @@ local function set_sidebar_highlight()
 end
 
 local sidebar_fts = {
-  'flutterToolsOutline',
   'undotree',
   'Outline',
   'dbui',

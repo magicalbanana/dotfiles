@@ -80,7 +80,7 @@ return {
         -- stylua: ignore
         filetypes = {
           'dbout', 'neo-tree-popup', 'log', 'gitcommit',
-          'txt', 'help', 'NvimTree', 'git', 'flutterToolsOutline',
+          'txt', 'help', 'NvimTree', 'git',
           'undotree', 'markdown', 'oil',
         },
       },
@@ -231,12 +231,6 @@ return {
               separator = true,
             },
             {
-              text = ' FLUTTER OUTLINE',
-              filetype = 'flutterToolsOutline',
-              highlight = 'PanelHeading',
-              separator = true,
-            },
-            {
               text = 'UNDOTREE',
               filetype = 'undotree',
               highlight = 'PanelHeading',
@@ -272,9 +266,7 @@ return {
               },
               {
                 name = 'Kubernetes',
-                matcher = function(buf)
-                  return buf.name:match('kubernetes') and buf.name:match('%.yaml')
-                end,
+                matcher = function(buf) return buf.name:match('kubernetes') and buf.name:match('%.yaml') end,
               },
               {
                 name = 'SQL',
@@ -292,9 +284,7 @@ return {
                 name = 'docs',
                 icon = '',
                 matcher = function(buf)
-                  if vim.bo[buf.id].filetype == 'man' or buf.path:match('man://') then
-                    return true
-                  end
+                  if vim.bo[buf.id].filetype == 'man' or buf.path:match('man://') then return true end
                   for _, ext in ipairs({ 'md', 'txt', 'wiki' }) do
                     if ext == fn.fnamemodify(buf.path, ':e') then return true end
                   end
@@ -314,40 +304,40 @@ return {
     end,
   },
   {
-    "folke/trouble.nvim",
+    'folke/trouble.nvim',
     lazy = false,
     opts = {}, -- for default options, refer to the configuration section for custom setup.
-    cmd = "Trouble",
+    cmd = 'Trouble',
     keys = {
       {
-        "<leader>xx",
-        "<cmd>Trouble diagnostics toggle<cr>",
-        desc = "Diagnostics (Trouble)",
+        '<leader>xx',
+        '<cmd>Trouble diagnostics toggle<cr>',
+        desc = 'Diagnostics (Trouble)',
       },
       {
-        "<leader>xX",
-        "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
-        desc = "Buffer Diagnostics (Trouble)",
+        '<leader>xX',
+        '<cmd>Trouble diagnostics toggle filter.buf=0<cr>',
+        desc = 'Buffer Diagnostics (Trouble)',
       },
       {
-        "<leader>cs",
-        "<cmd>Trouble symbols toggle focus=false<cr>",
-        desc = "Symbols (Trouble)",
+        '<leader>cs',
+        '<cmd>Trouble symbols toggle focus=false<cr>',
+        desc = 'Symbols (Trouble)',
       },
       {
-        "<leader>cl",
-        "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
-        desc = "LSP Definitions / references / ... (Trouble)",
+        '<leader>cl',
+        '<cmd>Trouble lsp toggle focus=false win.position=right<cr>',
+        desc = 'LSP Definitions / references / ... (Trouble)',
       },
       {
-        "<leader>xL",
-        "<cmd>Trouble loclist toggle<cr>",
-        desc = "Location List (Trouble)",
+        '<leader>xL',
+        '<cmd>Trouble loclist toggle<cr>',
+        desc = 'Location List (Trouble)',
       },
       {
-        "<leader>xQ",
-        "<cmd>Trouble qflist toggle<cr>",
-        desc = "Quickfix List (Trouble)",
+        '<leader>xQ',
+        '<cmd>Trouble qflist toggle<cr>',
+        desc = 'Quickfix List (Trouble)',
       },
     },
   },

@@ -201,7 +201,7 @@ return {
         pickers = { p.hex_long, p.css_rgb, p.css_hsl, p.css_hwb, p.css_lab, p.css_lch, p.css_oklab, p.css_oklch },
         highlighter = {
           auto_enable = true,
-          excludes = { 'dart', 'lazy', 'orgagenda', 'org', 'NeogitStatus', 'toggleterm' },
+          excludes = { 'lazy', 'orgagenda', 'org', 'NeogitStatus', 'toggleterm' },
         },
       })
     end,
@@ -344,7 +344,6 @@ return {
         fast_wrap = { map = '<c-e>' },
         ts_config = {
           lua = { 'string' },
-          dart = { 'string' },
           javascript = { 'template_string' },
         },
       })

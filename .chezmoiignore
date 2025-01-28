@@ -11,6 +11,7 @@
 .config/erlang_ls/snippets
 .config/git/profiles
 .config/nvim/plug.vim
+.config/nvim/.luarc.json
 .config/ranger/plugins
 .config/vifm/scripts
 .config/vifm/vifm-help.txt

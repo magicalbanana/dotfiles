@@ -40,7 +40,6 @@ return {
         quickfix = { enabled = false, open = true },
         adapters = {
           require('neotest-plenary'),
-          require('neotest-dart')({ command = 'flutter' }),
           require('neotest-go'),
           require('neotest-rust')({
             args = { '--verbose' },
@@ -53,7 +52,6 @@ return {
       })
     end,
     dependencies = {
-      { 'sidlatau/neotest-dart' },
       { 'rouge8/neotest-rust' },
       { 'haydenmeade/neotest-jest' },
       { 'nvim-neotest/neotest-go', dev = true },

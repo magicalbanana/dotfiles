@@ -1,8 +1,5 @@
 local fn = vim.fn
-local icons, highlight, border, palette =
-  as.ui.icons, as.highlight, as.ui.current.border, as.ui.palette
-
-as.debug = { layout = { ft = { dart = 2 } } }
+local icons, border = as.ui.icons, as.ui.current.border
 
 return {
   {
@@ -76,9 +73,7 @@ return {
       if not ui_ok then return end
       dap.listeners.before.event_exited['dapui_config'] = function() dapui.close() end
       dap.listeners.before.event_terminated['dapui_config'] = function() dapui.close() end
-      dap.listeners.after.event_initialized['dapui_config'] = function()
-        dapui.open(as.debug.layout.ft[vim.bo.ft])
-      end
+      dap.listeners.after.event_initialized['dapui_config'] = function() dapui.open(as.debug.layout.ft[vim.bo.ft]) end
     end,
     dependencies = {
       {
@@ -102,7 +97,7 @@ return {
             },
           },
           dependencies = {
-            { 'nvim-neotest/nvim-nio'},
+            { 'nvim-neotest/nvim-nio' },
           },
         },
         { 'theHamsta/nvim-dap-virtual-text', opts = { all_frames = true } },

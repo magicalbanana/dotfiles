@@ -267,9 +267,7 @@ end
 ---Only append the path separator if the path is not empty
 ---@param path string
 ---@return string
-local function with_sep(path)
-  return (not falsy(path) and path:sub(-1) ~= sep) and path .. sep or path
-end
+local function with_sep(path) return (not falsy(path) and path:sub(-1) ~= sep) and path .. sep or path end
 local SYNC_DIR = fn.resolve(vim.env.SYNC_DIR)
 
 --- Replace the directory path with an identifier if it matches a commonly visited
@@ -338,8 +336,7 @@ local function stl_file(ctx, minimal)
   local directory_hl = ctx.winhl and stl_winhl.directory.hl(ctx.win)
     or (minimal and hls.directory_inactive or hls.directory)
 
-  local parent_hl = ctx.winhl and stl_winhl.parent.hl(ctx.win)
-    or (minimal and directory_hl or hls.parent_directory)
+  local parent_hl = ctx.winhl and stl_winhl.parent.hl(ctx.win) or (minimal and directory_hl or hls.parent_directory)
 
   local env_hl = ctx.winhl and stl_winhl.env.hl(ctx.win) or (minimal and directory_hl or hls.env)
 
@@ -486,9 +483,7 @@ end
 ---@return table[]
 local function stl_lsp_clients(ctx)
   local clients = vim.lsp.get_clients({ bufnr = ctx.bufnum })
-  if not state.lsp_clients_visible then
-    return { { name = fmt('%d attached', #clients), priority = 7 } }
-  end
+  if not state.lsp_clients_visible then return { { name = fmt('%d attached', #clients), priority = 7 } } end
   if falsy(clients) then return { { name = 'No LSP clients available', priority = 7 } } end
   table.sort(clients, function(a, b) return a.name < b.name end)
 
@@ -510,9 +505,7 @@ local function run_task_on_interval(interval, task)
     pending_job = task()
   end
   local fail = timer:start(0, interval, vim.schedule_wrap(callback))
-  if fail ~= 0 then
-    vim.schedule(function() vim.notify('Failed to start git update job: ' .. fail) end)
-  end
+  if fail ~= 0 then vim.schedule(function() vim.notify('Failed to start git update job: ' .. fail) end) end
 end
 
 --- Check if in a git repository
@@ -566,9 +559,7 @@ end
 
 --- @param ctx StatuslineContext
 --- @param icon string | nil
-local function is_modified(ctx, icon)
-  return ctx.filetype == 'help' and '' or ctx.modified and (icon or '✎') or ''
-end
+local function is_modified(ctx, icon) return ctx.filetype == 'help' and '' or ctx.modified and (icon or '✎') or '' end
 
 --- @param ctx StatuslineContext
 --- @param icon string | nil
@@ -659,7 +650,6 @@ function as.ui.statusline.render()
   -----------------------------------------------------------------------------//
   -- LSP
   -----------------------------------------------------------------------------//
-  local flutter = vim.g.flutter_tools_decorations or {}
   local diagnostics = diagnostic_info(ctx)
   local lsp_clients = vim
     .iter(ipairs(stl_lsp_clients(ctx)))
@@ -729,8 +719,6 @@ function as.ui.statusline.render()
       priority = 3,
       cond = has_pending_updates,
     },
-    { { { flutter.app_version, hls.metadata } }, priority = 4 },
-    { { { flutter.device and flutter.device.name or '', hls.metadata } }, priority = 4 },
     -----------------------------------------------------------------------------//
     -- LSP Clients
     -----------------------------------------------------------------------------//
@@ -839,9 +827,7 @@ as.augroup('CustomStatusline', {
   event = 'LspAttach',
   command = function(args)
     local clients = vim.lsp.get_clients({ bufnr = args.buf })
-    if vim.o.columns < 200 and #clients > MAX_LSP_SERVER_COUNT then
-      state.lsp_clients_visible = false
-    end
+    if vim.o.columns < 200 and #clients > MAX_LSP_SERVER_COUNT then state.lsp_clients_visible = false end
   end,
 }, {
   event = 'User',
