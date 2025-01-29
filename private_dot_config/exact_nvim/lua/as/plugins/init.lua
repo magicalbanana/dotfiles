@@ -22,10 +22,15 @@ return {
   'echasnovski/mini.icons',
   -- {
   --   '3rd/image.nvim',
-  --   disable = true,
+  --   enabled = false,
   --   ft = { 'markdown' },
   --   opts = {},
   -- },
+  {
+    [1] = 'gregorias/toggle.nvim',
+    version = '2.0',
+    config = true,
+  },
   {
     'm4xshen/hardtime.nvim',
     lazy = false,
