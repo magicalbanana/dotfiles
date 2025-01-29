@@ -153,5 +153,5 @@ if not vim.g.vscode then
   -- Colour Scheme {{{1
   ------------------------------------------------------------------------------------------------------
   vim.g.high_contrast_theme = false -- set to true for themes like github_dark or night-owl
-  as.pcall('theme failed to load because', cmd.colorscheme, 'tokyonight-storm')
+  as.pcall('theme failed to load because', cmd.colorscheme, 'catppuccin-frappe')
 end

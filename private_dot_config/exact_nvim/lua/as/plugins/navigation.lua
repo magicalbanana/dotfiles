@@ -1,4 +1,4 @@
-local oil_detail_view = false
+-- local oil_detail_view = false
 
 return {
   {
@@ -7,95 +7,97 @@ return {
     opts = {
       log_level = vim.log.levels.DEBUG,
       -- if you want to open yazi instead of netrw, see below for more info
-      open_for_directories = false,
+      open_for_directories = true,
       keymaps = {
-        show_help = '<F9>',
+        show_help = '<F1>',
       },
       future_features = {
+        nvim_0_10_termopen_fallback = true,
         -- Whether to use `ya emit reveal` to reveal files in the file manager.
         -- Requires yazi 0.4.0 or later (from 2024-12-08).
-        ya_emit_reveal = true,
+        ya_emit_reveal = false,
 
         -- Use `ya emit open` as a more robust implementation for opening files
         -- in yazi. This can prevent conflicts with custom keymappings for the enter
         -- key. Requires yazi 0.4.0 or later (from 2024-12-08).
-        ya_emit_open = true,
+        ya_emit_open = false,
       },
     },
   },
-  {
-    'stevearc/oil.nvim',
-    event = 'VeryLazy',
-    init = function()
-      require('oil').setup({
-        default_file_explorer = false,
-        view_options = {
-          show_hidden = true,
-        },
-        use_default_keymaps = false,
-        delete_to_trash = true,
-        case_insensitive = true,
-        win_options = {
-          wrap = false,
-          signcolumn = 'yes',
-          cursorcolumn = true,
-          foldcolumn = '0',
-          spell = true,
-          list = true,
-          conceallevel = 3,
-          concealcursor = 'nvic',
-        },
-        keymaps = {
-          ['g?'] = { 'actions.show_help', mode = 'n' },
-          ['<CR>'] = 'actions.select',
-          ['<localleader>ov'] = {
-            'actions.select',
-            opts = { vertical = true },
-            desc = 'Open the entry in a vertical split',
-          },
-          ['<localleader>os'] = {
-            'actions.select',
-            opts = { horizontal = true },
-            desc = 'Open the entry in a horizontal split',
-          },
-          ['<localleader>ot'] = {
-            'actions.select',
-            opts = { tab = true },
-            desc = 'Open the entry in new tab',
-          },
-          ['<localleader>op'] = 'actions.preview',
-          ['<localleader>oc'] = 'actions.close',
-          ['<localleader>or'] = 'actions.refresh',
-          ['<localleader>od'] = {
-            desc = 'Toggle file detail view',
-            callback = function()
-              oil_detail_view = not oil_detail_view
-              if oil_detail_view then
-                require('oil').set_columns({ 'icon', 'permissions', 'size', 'mtime' })
-              else
-                require('oil').set_columns({ 'icon' })
-              end
-            end,
-          },
-          ['-'] = { 'actions.parent', mode = 'n' },
-          ['_'] = { 'actions.open_cwd', mode = 'n' },
-          ['`'] = { 'actions.cd', mode = 'n' },
-          ['~'] = { 'actions.cd', opts = { scope = 'tab' }, mode = 'n' },
-          ['gs'] = { 'actions.change_sort', mode = 'n' },
-          ['gx'] = 'actions.open_external',
-          ['g.'] = { 'actions.toggle_hidden', mode = 'n' },
-          ['g\\'] = { 'actions.toggle_trash', mode = 'n' },
-        },
-      })
-    end,
-    cmd = { 'Oil' },
-    keys = {
-      { '<F9>', '<Cmd>Oil<CR>', mode = 'n', desc = 'Open Oil parent directory' },
-    },
-    dependencies = {
-      'nvim-tree/nvim-web-devicons',
-    },
-  },
+  -- {
+  --   'stevearc/oil.nvim',
+  --   lazy = true,
+  --   cmd = 'Oil',
+  --   init = function()
+  --     require('oil').setup({
+  --       default_file_explorer = false,
+  --       view_options = {
+  --         show_hidden = true,
+  --       },
+  --       use_default_keymaps = false,
+  --       delete_to_trash = true,
+  --       case_insensitive = true,
+  --       win_options = {
+  --         wrap = false,
+  --         signcolumn = 'yes',
+  --         cursorcolumn = true,
+  --         foldcolumn = '0',
+  --         spell = true,
+  --         list = true,
+  --         conceallevel = 3,
+  --         concealcursor = 'nvic',
+  --       },
+  --       keymaps = {
+  --         ['g?'] = { 'actions.show_help', mode = 'n' },
+  --         ['<CR>'] = 'actions.select',
+  --         ['<localleader>ov'] = {
+  --           'actions.select',
+  --           opts = { vertical = true },
+  --           desc = 'Open the entry in a vertical split',
+  --         },
+  --         ['<localleader>os'] = {
+  --           'actions.select',
+  --           opts = { horizontal = true },
+  --           desc = 'Open the entry in a horizontal split',
+  --         },
+  --         ['<localleader>ot'] = {
+  --           'actions.select',
+  --           opts = { tab = true },
+  --           desc = 'Open the entry in new tab',
+  --         },
+  --         ['<localleader>op'] = 'actions.preview',
+  --         ['<localleader>oc'] = 'actions.close',
+  --         ['<localleader>or'] = 'actions.refresh',
+  --         ['<localleader>od'] = {
+  --           desc = 'Toggle file detail view',
+  --           callback = function()
+  --             oil_detail_view = not oil_detail_view
+  --             if oil_detail_view then
+  --               require('oil').set_columns({ 'icon', 'permissions', 'size', 'mtime' })
+  --             else
+  --               require('oil').set_columns({ 'icon' })
+  --             end
+  --           end,
+  --         },
+  --         ['-'] = { 'actions.parent', mode = 'n' },
+  --         ['_'] = { 'actions.open_cwd', mode = 'n' },
+  --         ['`'] = { 'actions.cd', mode = 'n' },
+  --         ['~'] = { 'actions.cd', opts = { scope = 'tab' }, mode = 'n' },
+  --         ['gs'] = { 'actions.change_sort', mode = 'n' },
+  --         ['gx'] = 'actions.open_external',
+  --         ['g.'] = { 'actions.toggle_hidden', mode = 'n' },
+  --         ['g\\'] = { 'actions.toggle_trash', mode = 'n' },
+  --       },
+  --     })
+  --   end,
+  --   cmd = { 'Oil' },
+  --   keys = {
+  --     { '<F9>', '<Cmd>Oil<CR>', mode = 'n', desc = 'Open Oil parent directory' },
+  --   },
+  --   dependencies = {
+  --     'nvim-tree/nvim-web-devicons',
+  --   },
+  -- },
   {
     'chentoast/marks.nvim',
     event = 'VeryLazy',

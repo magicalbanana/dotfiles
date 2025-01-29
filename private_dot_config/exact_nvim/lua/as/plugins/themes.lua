@@ -1,17 +1,13 @@
 return {
   {
-    'folke/tokyonight.nvim',
+    'catppuccin/nvim',
     lazy = false,
+    name = 'catppuccin',
     priority = 1000,
   },
   {
-    'tiagovla/tokyodark.nvim',
+    'folke/tokyonight.nvim',
     lazy = false,
-    opts = {
-      gamma = 0.75,
-    },
-    config = function(_, opts)
-      require('tokyodark').setup(opts) -- calling setup is optional
-    end,
+    priority = 1000,
   },
 }
