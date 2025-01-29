@@ -28,6 +28,7 @@ return {
   -- },
   {
     'gregorias/toggle.nvim',
+    lazy = false,
     version = '2.0',
     config = true,
   },
