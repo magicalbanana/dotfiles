@@ -13,13 +13,6 @@ if [[ ( "$SHLVL" -eq 1 && ! -o LOGIN ) && -s "${ZDOTDIR:-$HOME}/.zprofile" ]]; t
   source "${ZDOTDIR:-$HOME}/.zprofile"
 fi
 
-HISTFILE="${HOME}/.local/share/zsh/history"
-
-# make some commands not show up in history
-HISTIGNORE="ls:ll:la:cd:cd -:pwd:exit:date:* --help"
-HISTSIZE=10000000
-SAVEHIST=10000000
-
 # Lang stuff
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US
