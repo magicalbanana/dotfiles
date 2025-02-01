@@ -6,6 +6,7 @@ local map = map or vim.keymap.set
 opt.spell = true
 opt.number = true
 opt.relativenumber = true
+opt.wrap = true
 
 map('n', '<localleader>p', '<Plug>MarkdownPreviewToggle', { desc = 'markdown preview', buffer = 0 })
 
