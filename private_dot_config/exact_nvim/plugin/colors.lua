@@ -11,8 +11,11 @@ local function general_overrides()
     -----------------------------------------------------------------------------//
     { VertSplit = { fg = { from = 'Comment' } } },
     { WinSeparator = { fg = { from = 'Comment' } } },
+    { LineNr = { fg = '#7aa2f7' } },
+    { LineNrAbove = { fg = { from = 'LineNr' } } },
+    { LineNrBelow = { fg = { from = 'LineNr' } } },
     { CursorLine = { bg = { from = 'Normal', alter = dim_factor } } },
-    { CursorLineNr = { bg = 'NONE' } },
+    { CursorLineNr = { fg = '#f7768e', bg = 'NONE' } },
     { PmenuSbar = { link = 'Normal' } },
     { Folded = { clear = true } },
     --------------------------------------------//
