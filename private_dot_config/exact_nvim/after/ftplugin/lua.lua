@@ -5,6 +5,8 @@ local fmt = string.format
 
 opt.textwidth = 120
 opt.formatoptions:remove('o')
+opt.number = true
+opt.relativenumber = true
 
 local function find(word, ...)
   for _, str in ipairs({ ... }) do
