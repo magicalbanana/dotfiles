@@ -5,7 +5,7 @@ return {
     'mikavilpas/yazi.nvim',
     event = 'VeryLazy',
     opts = {
-      log_level = vim.log.levels.DEBUG,
+      log_level = vim.log.levels.INFO,
       -- if you want to open yazi instead of netrw, see below for more info
       open_for_directories = true,
       keymaps = {
@@ -111,6 +111,9 @@ return {
         },
       })
     end,
+    keys = {
+      { '<leader><leader>-', '<cmd>Oil<cr>', desc = 'Open oil' },
+    },
     dependencies = {
       cmd = { 'Oil' },
       'nvim-tree/nvim-web-devicons',
