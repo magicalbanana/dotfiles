@@ -1,5 +1,3 @@
-# based on dark-violets-256.theme but fixes legibility for me.
-
 ###############################################################################
 #
 # Copyright 2006 - 2021, Tomas Babej, Paul Beckingham, Federico Hernandez.
@@ -34,36 +32,37 @@ color.label.sort=
 color.alternate=on gray2
 color.header=rgb013
 color.footnote=rgb013
-color.warning=rgb520
-color.error=red
+color.warning=white on rgb103
+color.error=white on red
 color.debug=blue
 
 # Task state
 color.completed=
 color.deleted=
-color.active=rgb553
-color.recurring=bright rgb535
-color.scheduled=
+color.active=rgb445 on rgb213
+color.recurring=rgb115
+color.scheduled=white on rgb113
 color.until=
-color.blocked=gray10
-color.blocking=on rgb002
+color.blocked=white on rgb101
+color.blocking=white on rgb202
 
 # Project
 color.project.none=
 
 # Priority
-color.uda.priority.H=rgb435
-color.uda.priority.L=gray15
+color.uda.priority.H=rgb404
+color.uda.priority.M=rgb304
+color.uda.priority.L=rgb325
 
 # Tags
-color.tag.next=rgb253
+color.tag.next=
 color.tag.none=
 color.tagged=
 
 # Due
-color.due=
+color.due=rgb015
 color.due.today=rgb125
-color.overdue=bold inverse
+color.overdue=color5
 
 # Report: burndown
 color.burndown.pending=on rgb103
@@ -84,6 +83,7 @@ color.calendar.due=color0 on rgb325
 color.calendar.due.today=color0 on rgb404
 color.calendar.holiday=color15 on rgb102
 color.calendar.overdue=color0 on color5
+color.calendar.scheduled=
 color.calendar.today=color15 on rgb103
 color.calendar.weekend=gray12 on gray3
 color.calendar.weeknumber=rgb104

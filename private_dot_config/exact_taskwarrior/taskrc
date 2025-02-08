@@ -14,8 +14,8 @@ uda.priority.type=string
 # Backlog: Tasks that are pending and can be addressed when resources become available or when higher-priority tasks are completed.
 # Wishlist: Tasks or ideas that are desirable but not essential, often serving as future enhancements or improvements that can be pursued when time allows.
 # Future Consideration: Tasks that may be important later but are not currently relevant or actionable. They can be revisited when the time is right.
-uda.priority.values=urgent,high,normal,deferred,backlog,wishlist,future-consideration
-uda.priority.default=backlog
+uda.priority.values=urgent,high,normal,negligible
+uda.priority.default=normal
 
 urgency.blocking.coefficient=0.5
 urgency.annotations.coefficient=0.1
@@ -23,10 +23,7 @@ urgency.annotations.coefficient=0.1
 urgency.uda.priority.urgent.coefficient=10.0
 urgency.uda.priority.high.coefficient=7.5
 urgency.uda.priority.normal.coefficient=5.0
-urgency.uda.priority.deferred.coefficient=3.0
-urgency.uda.priority.backlog.coefficient=2.0
-urgency.uda.priority.wishlist.coefficient=-2.0
-urgency.uda.priority.future-consideration.coefficient=-3.0
+urgency.uda.priority.negligible.coefficient=-2.0
 
 regex=on
 

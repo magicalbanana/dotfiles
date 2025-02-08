@@ -7,6 +7,7 @@ manual_pathmunge "/usr/local/man" before
 
 export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
 export ZDOTDIR=${ZDOTDIR:-$XDG_CONFIG_HOME/zsh}
+export ZIM_HOME=${ZDOTDIR}/zim
 
 # You can use .zprofile to set environment vars for non-login, non-interactive shells.
 if [[ ( "$SHLVL" -eq 1 && ! -o LOGIN ) && -s "${ZDOTDIR:-$HOME}/.zprofile" ]]; then
