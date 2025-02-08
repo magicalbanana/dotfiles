@@ -10,10 +10,7 @@ uda.priority.type=string
 # Urgent: Tasks that require prompt action and should be addressed as soon as possible to prevent negative outcomes or delays.
 # High: Tasks that attention action and should be addressed soon to prevent negative outcomes or delays.
 # Normal: Routine tasks that need to be completed in due course but do not have immediate deadlines or critical importance.
-# Deferred: Tasks that have been consciously postponed to a later date due to current priorities or resource constraints.
-# Backlog: Tasks that are pending and can be addressed when resources become available or when higher-priority tasks are completed.
-# Wishlist: Tasks or ideas that are desirable but not essential, often serving as future enhancements or improvements that can be pursued when time allows.
-# Future Consideration: Tasks that may be important later but are not currently relevant or actionable. They can be revisited when the time is right.
+# Negligible: Tasks that are pending and can be addressed when resources become available or when higher-priority tasks are completed.
 uda.priority.values=urgent,high,normal,negligible
 uda.priority.default=normal
 
